@@ -17,10 +17,10 @@ infrastructure typical of a traditional Jenkins deployment.
 **Table of Contents**:
 
 - [Prerequisites](#prerequisites)
-- Install Jenkins in a development environment
-- Install Jenkins in a production environment
-- Build a Docker image and deploying it via Marathon
-- Uninstall Jenkins
+- Install Jenkins in a [development environment](#install-jenkins-in-a-development-environment)
+- Install Jenkins in a [production environment](#install-jenkins-in-a-production-environment)
+- Build a Docker image and [deploy it via Marathon](#build-a-docker-image-and-deploy-it-via-marathon)
+- [Uninstall Jenkins](#uninstall-jenkins)
 
 ## Prerequisites
 
@@ -208,7 +208,7 @@ echo $(curl -s http://169.254.169.254/latest/meta-data/placement/availability-zo
 
 Next, follow our documentation for [mounting NFS volumes](https://dcos.io/docs/1.8/administration/storage/nfs/) to mount your EFS NFS filesystem on each of your DC/OS agents.
 
-## Build a Docker image and deploying it via Marathon
+## Build a Docker image and deploy it via Marathon
 
 Note that in the following we assume you have an account on Docker Hub (or a similar Docker registry service).
 
