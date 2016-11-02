@@ -126,7 +126,7 @@ Once you've installed the necessary services as outlined above, navigate to the 
 
 By default, the WordPress package uses the `/tmp` directory on the node it runs on. If you plan to use this package for a production website, you will want to customize this to a well known directory, for example `/var/wordpress`, that you can backup easily. You will also want to specify the DC/OS host to pin the instance to, so if the package is ever upgraded or otherwise restarts, it is able to deploy to the same node.
 
-An example `config.json` might then look something like the following (again with `dcos.public.agent` replaced by the FQDN of your public agent node):
+An example `config.json` might then look something like the following (again with `$PUBLIC_AGENT` replaced by the FQDN of your public agent node):
 
 ```json
 {
