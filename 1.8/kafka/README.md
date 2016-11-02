@@ -67,13 +67,6 @@ Install a Kafka cluster with 3 brokers using the DC/OS CLI:
 
 ```bash
 $ dcos package install kafka
-Installing Marathon app for package [kafka] version [1.0.0-0.9.0.1]
-Installing CLI subcommand for package [kafka] version [1.0.0-0.9.0.1]
-New command available: dcos kafka
-DC/OS Kafka Service is being installed.
-
-	Documentation: https://docs.mesosphere.com/kafka-1-7/
-	Issues: https://docs.mesosphere.com/support/
 ```
 
 While the DC/OS command line interface (CLI) is immediately available, it takes a few minutes for the Kafka service to start.
@@ -160,6 +153,6 @@ Then, use the [framework cleaner](/docs/1.8/usage/managing-services/uninstall/#f
 
 ## Further resources
 
-- [DC/OS Kafka Official Documentation](http://docs.mesosphere.com/usage/service-guides/kafka)
+- [DC/OS Kafka Official Documentation](http://docs.mesosphere.com/1.8/usage/service-guides/kafka)
 
 - <a name=api-reference></a>[Kafka API Reference](https://kafka.apache.org/documentation.html)
