@@ -218,12 +218,12 @@ on your part.
 Mesosphere maintains an open source Marathon plugin for Jenkins, which allows you to easily deploy an application to Marathon. To install it, perform the
 following steps:
 
-  1. Download the `.hpi` file for the latest Marathon plugin from the [mesosphere/jenkins-marathon-plugin/](https://github.com/mesosphere/jenkins-marathon-plugin/releases) repo.
+  1. Download the `.hpi` file for the latest Marathon plugin from the [mesosphere/jenkins-marathon-plugin](https://github.com/mesosphere/jenkins-marathon-plugin/releases) repo.
   2. Upload the `.hpi` plugin file via the `Advanced` tab within the Jenkins plugin manager:
   ![Jenkins plugin installation](img/jenkins-plugin-install.png)
   3. Restart Jenkins to load the new plugin.
 
-Next, you configure a Jenkins job that clones the [mesosphere/cd-demo](https://github.com/mesosphere/cd-demo) GitHub repository, builds the image, pushes it to Docker Hub, and deploys it to Marathon:
+Next, you configure a Jenkins job that clones the [mhausenblas/cicd-demo](https://github.com/mhausenblas/cicd-demo) GitHub repository, builds the image, pushes it to Docker Hub, and deploys it to Marathon:
 
 ![Configure Git repository](img/jenkins-scm-repo.png)
 
