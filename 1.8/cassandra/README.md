@@ -23,8 +23,8 @@
   - [Typical installation](#typical-installation)
   - [Custom manual installation](#custom-manual-installation)
   - [Validate installation](#validate-installation)
-- [CRUD operations](#cassandra-crud-operations)
-- [Cleanup](#cleanup)
+- [CRUD operations](#perform-crud-operations)
+- [Uninstall](#uninstall)
 
 ## Prerequisites
 
@@ -282,9 +282,7 @@ cqlsh> SELECT * FROM demo.map;
 (2 rows)
 ```
 
-## Cleanup
-
-### Uninstalling
+## Uninstall
 
 ```bash
 $ dcos package uninstall cassandra
@@ -296,7 +294,7 @@ Use the [framework cleaner](/docs/1.8/usage/managing-services/uninstall/#framewo
 `framework-principal` is `cassandra-principal`
 `zk_path` is `dcos-service-cassandra`
 
-**Further resources**
+## Further resources
 
 1. [DC/OS Cassandra Official Documentation](https://docs.mesosphere.com/1.8/usage/services/cassandra/)
 1. [DataStax Cassandra Documentation](http://docs.datastax.com)

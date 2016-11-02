@@ -64,7 +64,7 @@ To make your proxy highly available or scale it, you can simply add a few more i
 
 ## Further reading
 
-### Deinstallation/Shutdown
+### Unintsall
 
 Use the following commands to shut down and delete your ArangoDB service and the
 command line tool:
