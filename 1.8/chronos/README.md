@@ -109,4 +109,4 @@ To uninstall Chronos enter the following command:
 $ dcos package uninstall chronos
 ```
 
-Finally, to get rid of all traces pf Chronos in ZooKeeper, follow the steps outlined in the [framework cleaner](https://docs.mesosphere.com/1.8/usage/managing-services/uninstall/#framework-cleaner).
+Finally, to get rid of all traces of Chronos in ZooKeeper, follow the steps outlined in the [framework cleaner](https://docs.mesosphere.com/1.8/usage/managing-services/uninstall/#framework-cleaner).
