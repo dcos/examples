@@ -1,4 +1,4 @@
-# Running ArangoDB on DC/OS
+# How to use ArangoDB on DC/OS
 
 [ArangoDB](https://www.arangodb.com/) is a distributed, multi-model database featuring JSON
 documents, graphs, and key/value pairs. It has a unified query language (AQL) that allows you
@@ -10,8 +10,8 @@ to mix all three data models and supports joins and transactions.
 
 ## Prerequisites
 
-- A running DC/OS 1.8 cluster with at least 3 nodes
-- [DC/OS CLI](https://dcos.io/docs/1.8/usage/cli/install/) installed
+- A running DC/OS 1.8 cluster with at least 3 nodes having 4.75 CPU, 22GB of memory and 20GB of persistent disk storage in total.
+- [DC/OS CLI](https://dcos.io/docs/1.8/usage/cli/install/) installed.
 
 ## Install ArangoDB
 
