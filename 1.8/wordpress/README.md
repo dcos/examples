@@ -133,7 +133,7 @@ Last but not least, to check if all required services (Marathon-LB, MySQL and Wo
 
 Once you've installed the necessary services as outlined above, navigate to the domain name of your DC/OS public agent in your browser. You should now see the WordPress welcome wizard:
 
-![WordPress welcome wizard](../img/wordpress-welcome.png)
+![WordPress welcome wizard](img/wordpress-welcome.png)
 
 ## Using WordPress in production
 
