@@ -15,7 +15,7 @@
 
 ## Prerequisites
 
-- A running DC/OS 1.8 cluster with at least 1 [public agent](https://dcos.io/docs/1.8/overview/concepts/#public) node
+- A running DC/OS 1.8 cluster with at least 1 [public agent](https://dcos.io/docs/1.8/overview/concepts/#public) node.
 - [DC/OS CLI](https://dcos.io/docs/1.8/usage/cli/install/) installed.
 - [jq](https://github.com/stedolan/jq/wiki/Installation) installed.
 - [SSH](https://dcos.io/docs/1.8/administration/access-node/sshcluster/) configured.
