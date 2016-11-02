@@ -1,30 +1,21 @@
----
-post_title: How to use NGINX
-nav_title: NGINX
-menu_order: 09
----
+# How to use NGINX on DC/OS
 
 [NGINX](https://www.nginx.com) is a high-performance HTTP server, reverse proxy, and an IMAP/POP3 proxy server. NGINX is known for its high performance, stability, rich feature set, simple configuration, and low resource consumption. DC/OS allows you to quickly configure, install and manage NGINX.
 
-**Terminology**
-
-- **Docker**: Docker is a piece of software that helps package an application with all of its dependencies into a standardized unit for software development.
-
-**Scope**
-
-In this tutorial you will learn:
-* How to install NGINX on DC/OS to serve a static website
-
-## Table of Contents
+- Estimated time for completion: 10 minutes
+- Target Audience: Anyone interested in running a HTTP (proxy) server
+- Scope: Learn how to install NGINX on DC/OS and to serve a static website
 
 ## Prerequisites
 
-- A running DC/OS cluster, with atleast 1 node having atleast 1 CPUs and 1 GB of RAM available.
-- [DC/OS CLI](/docs/1.7/usage/cli/install/) installed
+- A running DC/OS 1.8 cluster with at least 1 node having at least 1 CPUs and 1 GB of RAM available.
+- [DC/OS CLI](https://dcos.io/docs/1.8/usage/cli/install/) installed.
 
-## Installing NGINX to serve a static website
+## Install NGINX
 
-Assuming you have a DC/OS cluster up and running, we are going to install NGINX on DC/OS to serve up a [hello-nginx website](http://mesosphere.github.io/hello-nginx/). Let's get started by creating a file called `options.json` with following contents:
+Assuming you have a DC/OS cluster up and running, we install NGINX to serve up a static Web site, available via the GitHub repo [mesosphere/hello-nginx](https://github.com/mesosphere/hello-nginx).
+
+Let's get started by creating a file called `options.json` with following contents:
 
 ```json
 {
@@ -38,25 +29,22 @@ Assuming you have a DC/OS cluster up and running, we are going to install NGINX 
 }
 ```
 
-Here's how the above `options.json` file configures our NGINX docker container:
-* `cpus`: This parameter configures the number of CPU share to allocate to NGINX.
-* `mem`: This parameter configures the amount of RAM to allocate to NGINX.
-* `bridge`: This parameter configures whether the container should use `BRIDGE` mode networking or not. If this parameter is false, NGINX will be launched using `HOST` mode networking for docker. For more details, please refer to [Docker documentation](https://docs.docker.com/).
-* `contentUrl`: This parameter is the URL to a file archive of a static website that we would like to serve using NGINX.
-* `contentDir`: This parameter is the name of the directory that gets created when the file specified using `contentUrl` is downloaded and uncompressed.
+The above `options.json` file configures NGINX as follows:
+
+- `cpus`: This parameter configures the number of CPU share to allocate to NGINX.
+- `mem`: This parameter configures the amount of RAM to allocate to NGINX.
+- `bridge`: This parameter configures whether the container should use `BRIDGE` mode networking or not. If this parameter is false, NGINX will be launched using `HOST` mode networking for docker. For more details, please refer to [Docker documentation](https://docs.docker.com/).
+- `contentUrl`: This parameter is the URL to a file archive of a static website that we would like to serve using NGINX.
+- `contentDir`: This parameter is the name of the directory that gets created when the file specified using `contentUrl` is downloaded and uncompressed.
 
 Next, we are going to install nginx using this `options.json` file:
 
 ```bash
-dcos package install nginx --options=options.json
-```
-
-Once you run above command, you'll see following output:
-
-```bash
+$ dcos package install nginx --options=options.json
 Preparing to install nginx.
-Installing Marathon app for package [nginx] version [1.8.1]
-Nginx is getting installed.
+Continue installing? [yes/no] yes
+Installing Marathon app for package [nginx] version [1.10.2]
+Nginx has been installed.
 ```
 
 To verify that our NGINX instance is up and running, we can use `dcos task` command:
@@ -64,14 +52,14 @@ To verify that our NGINX instance is up and running, we can use `dcos task` comm
 ```bash
 $ dcos task
 NAME   HOST        USER  STATE  ID
-nginx  10.0.0.161  root    R    nginx.b1e20ff3-0500-11e6-83da-8a8d57d7c81f
+nginx  10.0.3.226  root    R    nginx.717adc72-a10e-11e6-a327-b293d3681090
 ```
 
-Let's try to access the hello-world website that our NGINX server is now hosting by opening following URL: `http://<YOUR-DCOS-MASTER-HOSTNAME>/service/nginx`. You should see a webpage similar to this:
+Let's try to access the `hello-world` website our NGINX server is serving by opening the URL `http://<YOUR-DCOS-MASTER-HOSTNAME>/service/nginx`. You should see a webpage similar to this:
 
 ![Hello World NGINX on DC/OS](img/hello-nginx-dcos.png)
 
-## Uninstalling NGINX
+## Uninstall NGINX
 
 To uninstall NGINX, run following command:
 
@@ -79,6 +67,3 @@ To uninstall NGINX, run following command:
 dcos package uninstall nginx
 ```
 
-## Further resources
-
-* [NGINX Website](https://nginx.com)

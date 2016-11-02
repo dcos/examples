@@ -2,7 +2,7 @@
 
 [Apache Kafka](https://kafka.apache.org/) is a distributed high-throughput publish-subscribe messaging system with strong ordering guarantees. Kafka clusters are highly available, fault tolerant, and very durable. The [DC/OS Kafka](https://docs.mesosphere.com/1.8/usage/service-guides/kafka/) service gives you direct access to the Kafka API so that existing producers and consumers can interoperate. You can configure and install DC/OS Kafka in moments. Multiple Kafka clusters can be installed on DC/OS and managed independently, so you can offer Kafka as a managed service to your organization. Kafka is written in Scala and uses [Apache ZooKeeper](https://zookeeper.apache.org/) for coordination.
 
-- Estimated time for completion: 10 minutes
+- Estimated time for completion: 20 minutes
 - Target Audience: Anyone interested in a pub-sub messaging system
 - Scope:
  - Install the DC/OS Kafka service.
