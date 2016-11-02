@@ -50,19 +50,6 @@ Next, we install and set up MySQL via the DC/OS CLI. For this, create a file cal
     "password": "password",
     "root_password": "wordpress"
   },
-  "storage": {
-    "host_volume": "/tmp",
-    "persistence": {
-      "enable": false,
-      "volume_size": 256,
-      "external": {
-        "enable": false,
-        "volume_name": "mysql",
-        "provider": "dvdi",
-        "driver": "rexray"
-      }
-    }
-  },
   "networking": {
     "port": 3306,
     "host_mode": true,
