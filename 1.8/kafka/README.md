@@ -142,7 +142,7 @@ Hello, World.
 
 Note that in order to stop consuming messages, hit `CTRL-C`. 
 
-## Uninstall
+## Uninstall Kafka
 
 To uninstall Kafka:
 

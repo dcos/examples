@@ -13,12 +13,19 @@
 - **Executor** ... A process launched for an application on a worker node.
 - **Mesos run modes** ... Spark can run in Mesos using two modes: `coarse-grained` (default) and `fine-grained`. The `coarse-grained` mode has a lower startup overhead and is good for interactive sessions; it launches one long-running Spark task on each worked node at the cost of reserving the resources for the complete duration of the application. The `fine-grained` mode shows better resource utilization and is good for batch and certain streaming jobs; it launches each Spark task as a separate Mesos task.
 
+**Table of Contents**:
+
+- [Prerequisites](#prerequisites)
+- [Install Spark](#install-spark)
+- [Launch a Spark job](#launch-a-spark-job)
+- [Uninstall Spark](#uninstall-spark)
+
 ## Prerequisites
 
 - A running DC/OS 1.8 cluster with at least 3 nodes with each 2 CPUs and 2 GB of RAM available.
 - [DC/OS CLI](https://dcos.io/docs/1.8/usage/cli/install/) installed.
 
-## Install
+## Install Spark
 
 Assuming you have a DC/OS cluster up and running, the first step is to install Spark:
 
@@ -135,6 +142,20 @@ Pi is roughly 3.1412853333333333
 ```
 
 So it turns out to be useful to use the `dcos spark log` command: we get the result of the computation, that is, an approximation for π, without having to dig into the logs.
+
+## Uninstall Spark
+
+To uninstall Spark:
+
+```bash
+$ dcos package uninstall spark
+```
+
+Use the [framework cleaner](https://docs.mesosphere.com/1.8/usage/managing-services/uninstall/#framework-cleaner) to remove your Spark instance from ZooKeeper and to destroy all data associated with it. The script requires several arguments, the values for which are derived from your service name:
+
+- `framework-role` is `spark-role`
+- `framework-principal` is `spark-principal`
+- `zk_path` is `dcos-service-spark`
 
 ## Further resources
 
