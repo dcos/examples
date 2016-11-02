@@ -20,25 +20,12 @@
 
 ## Install Zeppelin
 
-You typically want to access Zeppelin via a web browser outside of the DC/OS cluster. To access the Zeppelin UI from outside of the DC/OS cluster you have two of options available: launching it on a public node or via [Marathon-LB](https://dcos.io/docs/1.8/usage/service-discovery/marathon-lb/). The latter option is the recommended one for production usage.
+You typically want to access Zeppelin via a web browser outside of the DC/OS cluster. To access the Zeppelin UI from outside of the DC/OS cluster you can use [Marathon-LB](https://dcos.io/docs/1.8/usage/service-discovery/marathon-lb/), which is recommended for production usage.
 
-The following section will show you how to launch Zeppelin on a public node. This is fine for testing but be aware that this is going to make Zeppelin available on the public Internet (i.e. access from `0.0.0.0`) and with it, everyone out there can access your data and launch Spark jobs on your DC/OS cluster.
-
-To launch Zeppelin on a public node, create a JSON file `options.json` with the following content:
+In the following we will use the DC/OS [Admin Router](https://dcos.io/docs/1.8/development/dcos-integration/#-a-name-adminrouter-a-admin-router) to provide access to the Zeppelin UI, which is fine for dev/test setups:
 
 ```bash
-$ cat options.json
-{
-  "zeppelin": {
-    "role": "slave_public"
-  }
-}
-```
-
-Then, you can install Zeppelin like so:
-
-```bash
-$ dcos package install --options=options.json zeppelin
+$ dcos package install zeppelin
 Installing Marathon app for package [zeppelin] version [0.5.6]
 DC/OS Zeppelin is being installed!
 
