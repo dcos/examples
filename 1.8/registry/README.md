@@ -245,11 +245,11 @@ latest: digest: sha256:dedbce721065b2bcfae35d2b0690857bb6c3b4b7dd48bfe7fc7b53693
 
 ### Pull image from local registry
 
-The registry in “registry.marathon.l4lb.thisdcos.directory:5000” is now available for use in your Marathon applications. It can be used to launch applications from the GUI or the CLI interfaces.
+The Docker registry at `registry.marathon.l4lb.thisdcos.directory:5000` is now available for use in your Marathon applications. It can be used to launch applications from the GUI or the CLI interfaces.
 
-### From the Marathon UI
+#### From the Marathon UI
 
-Simply use ```registry.marathon.l4lb.thisdcos.directory:5000``` as a prefix in the “Container Settings”/“Container Image” field in the “Services” (Marathon) form:
+Simply use ```registry.marathon.l4lb.thisdcos.directory:5000``` as a prefix in the `Container Settings`/`Container Image` field of the `Services` form:
 
 ![Usage: From UI](img/usage_from_ui.png)
 
@@ -257,7 +257,7 @@ Launch your application normally and check it’s working correctly in the “Se
 
 ![Usage: Services View](img/usage_services_view.png)
 
-#### From the CLI
+##### From the CLI
 
 Check that your DC/OS CLI is connected properly to the DC/OS cluster:
 
@@ -490,7 +490,7 @@ See below for instructions on mounting an NFS volume on CoreOS.
 First, get the link to the EFS NFS fileshare you created in the previous step, replacing `xxxxxxxx` with your unique EFS ID:
 
 ```bash
-echo $(curl -s http://169.254.169.254/latest/meta-data/placement/availability-zone).fs-xxxxxxxx.efs.us-west-2.amazonaws.com:/
+$ echo $(curl -s http://169.254.169.254/latest/meta-data/placement/availability-zone).fs-xxxxxxxx.efs.us-west-2.amazonaws.com:/
 ```
 
 Next, follow our documentation for [mounting NFS volumes](https://dcos.io/docs/1.8/administration/storage/nfs/) to mount your EFS NFS filesystem on each of your DC/OS agents.
