@@ -15,7 +15,7 @@ Note that this package will install with the default parameters, but Docker regi
 - [Prerequisites](#prerequisites)
 - [Install](#install)
 - [Use](#use)
-- [Storage Options](#storage-options)
+- [Storage options](#storage-options)
 - [Uninstall](#uninstall)
 
 ## Prerequisites
@@ -119,13 +119,13 @@ Agent pid 10638
 Identity added: /home/centos/my_key.pem (/home/centos/my_key.pem)
 ```
 
-2. Make sure that `jq` is installed:
+1. Make sure that `jq` is installed:
 
 ```bash
 $ sudo yum install -y epel-release && sudo yum install -y jq
 ```
 
-3. Copy the domain.crt file from your terminal to the master node:
+1. Copy the domain.crt file from your terminal to the master node:
 
 ```bash
 $ export BOOTSTRAP_IP=[your bootstrap node IP address]
@@ -133,55 +133,55 @@ $ export BOOTSTRAP_PORT=[your bootstrap node’s TCP port]
 $ curl -O $BOOTSTRAP_IP:$BOOTSTRAP_PORT/domain.crt
 ```
 
-4. Find out and store the list of your agent nodes IP addresses:
+1. Find out and store the list of your agent nodes IP addresses:
 
 ```bash
 $ MESOS_AGENTS=$(curl -sS master.mesos:5050/slaves | jq '.slaves[] | .hostname' | tr -d '"');
 ```
 
-5. Configure your agents to accept liberal TCP connections:
+1. Configure your agents to accept liberal TCP connections:
 
 ```bash
 $ for i in $MESOS_AGENTS; do ssh "$i" -oStrictHostKeyChecking=no "sudo sysctl -w net.netfilter.nf_conntrack_tcp_be_liberal=1"; done
 ```
 
-6. Create a temporary `/etc/privateregistry/certs` directory in your agents:
+1. Create a temporary `/etc/privateregistry/certs` directory in your agents:
 
 ```bash
 $ for i in $MESOS_AGENTS; do ssh "$i" -oStrictHostKeyChecking=no "sudo mkdir --parent /etc/privateregistry/certs/"; done
 ```
 
-7. Copy the certificate and key to your home directory in the agents:
+1. Copy the certificate and key to your home directory in the agents:
 
 ```bash
 $ for i in $MESOS_AGENTS; do scp -o StrictHostKeyChecking=no ./domain.* "$i":~/; done
 ```
 
-8. Move the certificate and key files to the temporary directory:
+1. Move the certificate and key files to the temporary directory:
 
 ```bash
 $ for i in $MESOS_AGENTS; do ssh "$i" -oStrictHostKeyChecking=no "sudo mv ./domain.* /etc/privateregistry/certs/"; done
 ```
 
-9. Create the directory for holding the certificates of the registry that we will create in DC/OS:
+1. Create the directory for holding the certificates of the registry that we will create in DC/OS:
 
 ```bash
 $ for i in $MESOS_AGENTS; do ssh "$i" -oStrictHostKeyChecking=no "sudo mkdir --parent /etc/docker/certs.d/registry.marathon.l4lb.thisdcos.directory:5000"; done
 ```
 
-10. Copy the certificate and key files to the directory of the DC/OS registry:
+1. Copy the certificate and key files to the directory of the DC/OS registry:
 
 ```bash
 $ for i in $MESOS_AGENTS; do ssh "$i" -oStrictHostKeyChecking=no "sudo cp /etc/privateregistry/certs/domain.crt /etc/docker/certs.d/registry.marathon.l4lb.thisdcos.directory:5000/ca.crt"; done
 ```
 
-11. Restart the docker daemon:
+1. Restart the docker daemon:
 
 ```bash
 $ for i in $MESOS_AGENTS; do ssh "$i" -oStrictHostKeyChecking=no "sudo systemctl restart docker"; done
 ```
 
-12. OPTIONAL: modify permissions for additional security:
+1. OPTIONAL: modify permissions for additional security:
 
 ```bash
 $ for i in $MESOS_AGENTS; do ssh "$i" -oStrictHostKeyChecking=no 'sudo chown -R root:root /etc/docker/certs.d/registry.marathon.l4lb.thisdcos.directory:5000/'; done
