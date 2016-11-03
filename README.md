@@ -19,3 +19,4 @@ Currently, the following examples are available:
 - Apache [Tomcat](1.8/tomcat/)
 - [Wordpress](1.8/wordpress/)
 - Apache [Zeppelin](1.8/zeppelin/)
+- Docker [registry](1.8/registry/)
