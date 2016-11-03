@@ -11,6 +11,7 @@ Currently, the following examples are available:
 - [ArangoDB](1.8/arangodb/)
 - Apache [Cassandra](1.8/cassandra/)
 - [Chronos](1.8/chronos/)
+- [Docker registry](1.8/registry/)
 - [Jenkins](1.8/jenkins/)
 - Apache [Kafka](1.8/kafka/)
 - [NGINX](1.8/nginx/)
@@ -19,4 +20,3 @@ Currently, the following examples are available:
 - Apache [Tomcat](1.8/tomcat/)
 - [Wordpress](1.8/wordpress/)
 - Apache [Zeppelin](1.8/zeppelin/)
-- Docker [registry](1.8/registry/)
