@@ -109,9 +109,9 @@ Otherwise, you’ll run into this error when running the SSH command loops below
 
 Alternatively, you can also use other methods to copy this file to the right location in every agent of the cluster, such as a configuration management tool or script. The files could also come from a file share mounted to all of the nodes, like Azure Files.
 
-SSH to one of your Master nodes and execute the following steps:
+So, SSH to one of your Master nodes and execute the steps described in the following.
 
-1. Add the key that was copied to the Master in the step above to the SSH keychain:
+Add the key that was copied to the Master in the step above to the SSH keychain:
 
 ```bash
 $ eval `ssh-agent -s` && ssh-add ~/my_key.pem
@@ -119,13 +119,13 @@ Agent pid 10638
 Identity added: /home/centos/my_key.pem (/home/centos/my_key.pem)
 ```
 
-1. Make sure that `jq` is installed:
+Make sure that `jq` is installed:
 
 ```bash
 $ sudo yum install -y epel-release && sudo yum install -y jq
 ```
 
-1. Copy the domain.crt file from your terminal to the master node:
+Copy the `domain.crt` file from your terminal to the master node:
 
 ```bash
 $ export BOOTSTRAP_IP=[your bootstrap node IP address]
@@ -133,55 +133,55 @@ $ export BOOTSTRAP_PORT=[your bootstrap node’s TCP port]
 $ curl -O $BOOTSTRAP_IP:$BOOTSTRAP_PORT/domain.crt
 ```
 
-1. Find out and store the list of your agent nodes IP addresses:
+Find out and store the list of your agent nodes IP addresses:
 
 ```bash
 $ MESOS_AGENTS=$(curl -sS master.mesos:5050/slaves | jq '.slaves[] | .hostname' | tr -d '"');
 ```
 
-1. Configure your agents to accept liberal TCP connections:
+Configure your agents to accept liberal TCP connections:
 
 ```bash
 $ for i in $MESOS_AGENTS; do ssh "$i" -oStrictHostKeyChecking=no "sudo sysctl -w net.netfilter.nf_conntrack_tcp_be_liberal=1"; done
 ```
 
-1. Create a temporary `/etc/privateregistry/certs` directory in your agents:
+Create a temporary `/etc/privateregistry/certs` directory in your agents:
 
 ```bash
 $ for i in $MESOS_AGENTS; do ssh "$i" -oStrictHostKeyChecking=no "sudo mkdir --parent /etc/privateregistry/certs/"; done
 ```
 
-1. Copy the certificate and key to your home directory in the agents:
+Copy the certificate and key to your home directory in the agents:
 
 ```bash
 $ for i in $MESOS_AGENTS; do scp -o StrictHostKeyChecking=no ./domain.* "$i":~/; done
 ```
 
-1. Move the certificate and key files to the temporary directory:
+Move the certificate and key files to the temporary directory:
 
 ```bash
 $ for i in $MESOS_AGENTS; do ssh "$i" -oStrictHostKeyChecking=no "sudo mv ./domain.* /etc/privateregistry/certs/"; done
 ```
 
-1. Create the directory for holding the certificates of the registry that we will create in DC/OS:
+Create the directory for holding the certificates of the registry that we will create in DC/OS:
 
 ```bash
 $ for i in $MESOS_AGENTS; do ssh "$i" -oStrictHostKeyChecking=no "sudo mkdir --parent /etc/docker/certs.d/registry.marathon.l4lb.thisdcos.directory:5000"; done
 ```
 
-1. Copy the certificate and key files to the directory of the DC/OS registry:
+Copy the certificate and key files to the directory of the DC/OS registry:
 
 ```bash
 $ for i in $MESOS_AGENTS; do ssh "$i" -oStrictHostKeyChecking=no "sudo cp /etc/privateregistry/certs/domain.crt /etc/docker/certs.d/registry.marathon.l4lb.thisdcos.directory:5000/ca.crt"; done
 ```
 
-1. Restart the docker daemon:
+Restart the docker daemon:
 
 ```bash
 $ for i in $MESOS_AGENTS; do ssh "$i" -oStrictHostKeyChecking=no "sudo systemctl restart docker"; done
 ```
 
-1. OPTIONAL: modify permissions for additional security:
+Optionally, for additional security you can modify permissions as so:
 
 ```bash
 $ for i in $MESOS_AGENTS; do ssh "$i" -oStrictHostKeyChecking=no 'sudo chown -R root:root /etc/docker/certs.d/registry.marathon.l4lb.thisdcos.directory:5000/'; done
