@@ -4,7 +4,7 @@
 
 - Estimated time for completion: 8 minutes
 - Target audience: Data scientists and data engineers that want an interactive data analytics tool.
-- Scope: Install and use Zeppelin in DC/OS Kafka.
+- Scope: Install and use Zeppelin in DC/OS.
 
 **Table of Contents**:
 

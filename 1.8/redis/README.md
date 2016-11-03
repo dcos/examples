@@ -42,8 +42,7 @@ Note that the mr-redis framework scheduler is serving on `mrredis.mesos:5656`.
 
 ## Create a Redis instance
 
-While the mr-redis service we installed in the previous step is capable of supervising Redis instances, you will need to download the `mrr`, the mr-redis CLI
-to create and delete Redis instances. So, let's install the `mrr` (from within the DC/OS cluster):
+While the mr-redis service we installed in the previous step is capable of supervising Redis instances, you will need to download the `mrr`, the mr-redis CLI to create and delete Redis instances. So, let's install the `mrr` (from within the DC/OS cluster):
 
 ```bash
 $ dcos node ssh --master-proxy --leader
