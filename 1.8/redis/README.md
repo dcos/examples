@@ -4,7 +4,7 @@
 The DC/OS service [mr-redis](https://github.com/mesos/mr-redis), maintained by [Huawei](http://www.huawei.com/en/)
 is a Mesos framework allowing you to manage Redis datastores standalone or in a clustered setup.
 
-- Estimated time for completion: 15 minutes
+- Estimated time for completion: 5 minutes
 - Target audience: Anyone interested using an in-memory data store. 
 - Scope: Learn how to use Redis on DC/OS
 
@@ -38,7 +38,7 @@ To validate that the mr-redis service is running and healthy you can go to the D
 
 ![Services](img/services.png)
 
-Note that the mer-redis framework scheduler is serving on `mrredis.mesos:5656`.
+Note that the mr-redis framework scheduler is serving on `mrredis.mesos:5656`.
 
 ## Create a Redis instance
 
@@ -53,7 +53,7 @@ core@ip-10-0-6-55 ~ $ chmod +x mrr
 core@ip-10-0-6-55 ~ $ ./mrr init http://mrredis.mesos:5656
 ```
 
-Now that we have `mrr` running, we want to create a Redis instance with the name `test`, a memory capacity of 500 MB and 3 Redis slaves,
+Now that we have `mrr` installed, we want to create a Redis instance with the name `test`, a memory capacity of 500 MB and 3 Redis slaves,
 so we do the following:
 
 ```bash
@@ -63,7 +63,7 @@ Instance Creation accepted............
 Instance Created.
 ```
 
-To validate if the Redis Master and the three Redis slaves have been created and to discover their endpoints, execute this:
+To validate if the Redis Master and the three Redis slaves have been created and to discover their endpoints, execute the following command:
 
 ```bash
 core@ip-10-0-6-55 ~ $ ./mrr status --name test
