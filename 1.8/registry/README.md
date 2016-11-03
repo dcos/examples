@@ -1,12 +1,11 @@
-# How to use the Registry package on DC/OS
+# How to use Docker Registry on DC/OS
 
-The Docker [registry](https://docs.docker.com/registry/) is a stateless, highly scalable server side application that stores and lets you distribute Docker images. This DC/OS package provides a private registry that can be made available to any other component in the system through a virtual IP (default: `registry.marathon.l4lb.thisdcos.directory:5000`).
+The Docker [registry](https://docs.docker.com/registry/) is a stateless, highly scalable server side application that stores and lets you distribute Docker images. This DC/OS package provides a private registry that can be made available to any other component in the system through a [virtual IP](https://dcos.io/docs/1.8/usage/service-discovery/load-balancing-vips/virtual-ip-addresses/) with the default of `registry.marathon.l4lb.thisdcos.directory:5000`.
 
-- NOTE: this package will install with the default parameters, but Docker registry requires a valid TLS certificate and key to work properly and secure connections between the engines and registry hosting the cache. Follow this document to learn how to configure a download location for the certificate and key in the Advanced Installation “security” section.
-
+Note that this package will install with the default parameters, but Docker registry requires a valid TLS certificate and key to work properly and secure connections between the engines and registry hosting the cache. Follow this document to learn how to configure a download location for the certificate and key in the Advanced Installation “security” section.
 
 - Estimated time for completion: up to 30 minutes
-- Target Audience:
+- Target audience:
  - Operators
  - Application admins
 - Scope: You'll learn how to install the Docker registry and how to use it to push and pull docker images, and to act as a proxy for another registry.
@@ -14,10 +13,9 @@ The Docker [registry](https://docs.docker.com/registry/) is a stateless, highly 
 **Table of Contents**:
 
 - [Prerequisites](#prerequisites)
-- [Advanced Installation options](#advanced-installation-options)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Storage Options](#storage)
+- [Install](#install)
+- [Use](#use)
+- [Storage Options](#storage-options)
 - [Uninstall](#uninstall)
 
 ## Prerequisites
@@ -30,15 +28,15 @@ The Docker [registry](https://docs.docker.com/registry/) is a stateless, highly 
 The Docker registry requires a TLS certificate and a TLS key to operate. This certificate will also need to be installed in the nodes that need to access the Docker registry. This package uses two downloadable URIs to store the certificate and key. 
 The certificate and key will be shared with the application from a host with a web server installer. For the purposes of this example, we will generate the certificate in a local Linux or OSX host, and use the DC/OS Bootstrap node to host the certificate and key files, leveraging the fact that it already runs an NGINX web server by default. Any other web server accessible from the private nodes of the cluster could also be used.
 
-- NOTE: This means that the location of your secrets will be OPEN in the bootstrap node to download, at least during package installation, so this process is not considered adequate for production setups. Consider making these files available only during the process of booting up the registry, and then moving them outside of the “downloadable” path for security.
+Note that above means that the location of your secrets will be OPEN in the bootstrap node to download, at least during package installation, so this process is not considered adequate for production setups. Consider making these files available only during the process of booting up the registry, and then moving them outside of the “downloadable” path for security.
 
-A production install should count with proper valid certificates, or use a third party certificate authority (like, [Let’s Encrypt](https://letsencrypt.org/). During this tutorial, we will use self-signed certs as outlined in https://github.com/docker/distribution/blob/master/docs/insecure.md#using-self-signed-certificates 
+A production install should count with proper valid certificates, or use a third party certificate authority such as [Let’s Encrypt](https://letsencrypt.org/). During this tutorial, we will use self-signed certs as outlined in the Docker [docs](https://github.com/docker/distribution/blob/master/docs/insecure.md#using-self-signed-certificates).
 
-#### Create a a self-signed certificate in the *bootstrap* node with the correct common name and subject alternative names:
+#### Create a self-signed certificate
 
-Open a terminal in the *bootstrap* node, and generate a certificate in the /genconf/serve directory of your DC/OS installation:
+To create a self-signed certificate in the *bootstrap* node with the correct common name and subject alternative names do as follows.
 
-- NOTE: This assumes that your installation directory for DC/OS in the bootstrap node is `~`  If your installation path differs, please generate these files in the adequate `/genconf/serve` location):
+Open a terminal in the *bootstrap* node, and generate a certificate in the `/genconf/serve` directory of your DC/OS installation. Note that this assumes that your installation directory for DC/OS in the bootstrap node is `~`.  If your installation path differs, please generate these files in the adequate `/genconf/serve` location):
 
 ```bash
 $ cd ~/genconf/serve   #use the /genconf/serve location of your install
@@ -81,17 +79,17 @@ Ecp0VKA7+x7f2jBwzSIK8k5HJI/GCzJwre5RGTcYaIMxseQtVk+Mi6BJTg==
 -----END CERTIFICATE-----
 ```
 
-These “registry-certificate” and “registry-key” files will be used by the application to facilitate authentication to agents that request to download images from the registry. 
+These `registry-certificate` and `registry-key` files will be used by the application to facilitate authentication to agents that request to download images from the registry. 
 
-#### Copy the certificate to all agents in the cluster
+#### Copy certificate to all agents
 
-The next step to facilitate that authentication is to add the certificate to all of the agents in the cluster, so that whenever any of them wants to download an image from the registry, they can use this certificate to validate the connection. This is achieved by distributing  the domain.crt file to each of the agents running Docker, and saving it  in all agent nodes in the cluster as:
+The next step to facilitate that authentication is to add the certificate to all of the agents in the cluster, so that whenever any of them wants to download an image from the registry, they can use this certificate to validate the connection. This is achieved by distributing the `domain.crt` file to each of the agents running Docker, and saving it  in all agent nodes in the cluster as:
 
-```/etc/docker/certs.d/registry.marathon.l4lb.thisdcos.directory:5000/ca.crt```
+```
+/etc/docker/certs.d/registry.marathon.l4lb.thisdcos.directory:5000/ca.crt
+```
 
-We will upload the certificate file to one of the *MASTER* nodes, and then execute a loop to opens an SSH connection to each of the agents, and add the certificate to the agent’s trusted certificate list in the path above.
-
-- NOTE: For this to work, the MASTER  node must have a valid SSH key/ID stored allowing it to connect to other agents. If you have a working key in a .pem file in your computer that is valid for your agent nodes, you can copy it to the MASTER node with:
+We will upload the certificate file to one of the *MASTER* nodes, and then execute a loop to opens an SSH connection to each of the agents, and add the certificate to the agent’s trusted certificate list in the path above. Note that for this to work, the Master node must have a valid SSH key/ID stored allowing it to connect to other agents. If you have a working key in a `.pem` file in your computer that is valid for your agent nodes, you can copy it to the MASTER node with:
 
 ```bash
 $ scp -i my_key.pem my_key.pem  centos@master:~ 
@@ -99,86 +97,91 @@ $ scp -i my_key.pem my_key.pem  centos@master:~
 #"master" is the IP address or name of your MASTER node
 ```
 
-- Also, the nodes in your DC/OS cluster should be configured to allow sudo from non-tty. In order to enable that, some CentOS and RedHat nodes require to edit the `/etc/sudoers` file and remove or comment-out the line:
+Also, the nodes in your DC/OS cluster should be configured to allow sudo from non-tty. In order to enable that, some CentOS and RedHat nodes require to edit the `/etc/sudoers` file and remove or comment-out the line:
+
 ```bash
 Defaults requiretty
 ```
-- Otherwise, you’ll run into this error when running the SSH command loops below:
+
+Otherwise, you’ll run into this error when running the SSH command loops below:
 
 `sudo: sorry, you must have a tty to run sudo`
 
-- Alternatively, you can also use other methods to copy this file to the right location in every agent of the cluster, such as a configuration management tool or script. The files could also come from a file share mounted to all of the nodes, like Azure Files.
+Alternatively, you can also use other methods to copy this file to the right location in every agent of the cluster, such as a configuration management tool or script. The files could also come from a file share mounted to all of the nodes, like Azure Files.
 
-SSH to one of your *MASTER* nodes and execute the following steps:
+SSH to one of your Master nodes and execute the following steps:
 
-1.- Add the key that was copied to the *MASTER* in the step above to the SSH keychain:
+1. Add the key that was copied to the Master in the step above to the SSH keychain:
+
 ```bash
 $ eval `ssh-agent -s` && ssh-add ~/my_key.pem
 Agent pid 10638
 Identity added: /home/centos/my_key.pem (/home/centos/my_key.pem)
 ```
 
-2.- Make sure that jq is installed:
+2. Make sure that `jq` is installed:
+
 ```bash
 $ sudo yum install -y epel-release && sudo yum install -y jq
 ```
 
-3.- Copy the domain.crt file from your terminal to the master node
+3. Copy the domain.crt file from your terminal to the master node:
+
 ```bash
 $ export BOOTSTRAP_IP=[your bootstrap node IP address]
 $ export BOOTSTRAP_PORT=[your bootstrap node’s TCP port]
 $ curl -O $BOOTSTRAP_IP:$BOOTSTRAP_PORT/domain.crt
 ```
 
-4.- Find out and store the list of your agent nodes IP addresses:
+4. Find out and store the list of your agent nodes IP addresses:
 
 ```bash
 $ MESOS_AGENTS=$(curl -sS master.mesos:5050/slaves | jq '.slaves[] | .hostname' | tr -d '"');
 ```
 
-5.- Configure your agents to accept “liberal” TCP connections:
+5. Configure your agents to accept liberal TCP connections:
 
 ```bash
 $ for i in $MESOS_AGENTS; do ssh "$i" -oStrictHostKeyChecking=no "sudo sysctl -w net.netfilter.nf_conntrack_tcp_be_liberal=1"; done
 ```
 
-6.- Create a temporary /etc/privateregistry/certs directory in your agents:
+6. Create a temporary `/etc/privateregistry/certs` directory in your agents:
 
 ```bash
 $ for i in $MESOS_AGENTS; do ssh "$i" -oStrictHostKeyChecking=no "sudo mkdir --parent /etc/privateregistry/certs/"; done
 ```
 
-7.- Copy the certificate and key to your home directory in the agents:
+7. Copy the certificate and key to your home directory in the agents:
 
 ```bash
 $ for i in $MESOS_AGENTS; do scp -o StrictHostKeyChecking=no ./domain.* "$i":~/; done
 ```
 
-8.- Move the certificate and key files to the temporary directory:
+8. Move the certificate and key files to the temporary directory:
 
 ```bash
 $ for i in $MESOS_AGENTS; do ssh "$i" -oStrictHostKeyChecking=no "sudo mv ./domain.* /etc/privateregistry/certs/"; done
 ```
 
-9.- Create the directory for holding the certificates of the registry that we will create in DC/OS:
+9. Create the directory for holding the certificates of the registry that we will create in DC/OS:
 
 ```bash
 $ for i in $MESOS_AGENTS; do ssh "$i" -oStrictHostKeyChecking=no "sudo mkdir --parent /etc/docker/certs.d/registry.marathon.l4lb.thisdcos.directory:5000"; done
 ```
 
-10.- Copy the certificate and key files to the directory of the DC/OS registry:
+10. Copy the certificate and key files to the directory of the DC/OS registry:
 
 ```bash
 $ for i in $MESOS_AGENTS; do ssh "$i" -oStrictHostKeyChecking=no "sudo cp /etc/privateregistry/certs/domain.crt /etc/docker/certs.d/registry.marathon.l4lb.thisdcos.directory:5000/ca.crt"; done
 ```
 
-11.- Restart the docker daemon:
+11. Restart the docker daemon:
 
 ```bash
 $ for i in $MESOS_AGENTS; do ssh "$i" -oStrictHostKeyChecking=no "sudo systemctl restart docker"; done
 ```
 
-12.- OPTIONAL: modify permissions for additional security:
+12. OPTIONAL: modify permissions for additional security:
 
 ```bash
 $ for i in $MESOS_AGENTS; do ssh "$i" -oStrictHostKeyChecking=no 'sudo chown -R root:root /etc/docker/certs.d/registry.marathon.l4lb.thisdcos.directory:5000/'; done
@@ -187,15 +190,15 @@ $ for i in $MESOS_AGENTS; do ssh "$i" -oStrictHostKeyChecking=no 'sudo chmod 400
 $ for i in $MESOS_AGENTS; do ssh "$i" -oStrictHostKeyChecking=no 'sudo systemctl restart docker'; done
 ```
 
-The package can now be installed from the Universe, using the bootstrap’s node IP address and TCP port to download the certificate and key file
+The package can now be installed from the Universe, using the bootstrap’s node IP address and TCP port to download the certificate and key file.
 
-## Installation
+## Install
 
-Log into DC/OS, go to Universe, and select the “registry” package from Universe. Select “Advanced Installation”.  Enter the bootstrap node’s IP address and port in the “Advanced Installation” :
+Log into DC/OS, go to Universe, and select the Registry package from Universe. Select `Advanced Installation`.  Enter the bootstrap node’s IP address and port in the `Advanced Installation`:
 
 ![Installation: Advanced Installation Options](img/install_advanced_installation_options.png)
 
-After installation, the package will be running under the “Services” tab:
+After installation, the package will be running under the `Services` tab:
 
 ![Run: Services View](img/run_services_view.png)
 
@@ -207,7 +210,7 @@ Look at the logs and check the correct functioning:
 
 ![Run: Log View](img/run_log_view.png)
 
-## Usage
+## Use
 
 Now that the Docker registry is installed and running, we can push and pull images from it.
 
@@ -233,18 +236,18 @@ f96222d75c55: Pushed
 latest: digest: sha256:dedbce721065b2bcfae35d2b0690857bb6c3b4b7dd48bfe7fc7b53693731beff size: 948
 ```
 
-## Check the contents of the local registry
+### Check the contents of the local registry
 
 ```bash
 # curl --insecure https://registry.marathon.l4lb.thisdcos.directory:5000/v2/_catalog
 {"repositories":["nginx"]}
 ```
 
-## Use (pull) an image from the local registry in a Marathon app
+### Pull image from local registry
 
 The registry in “registry.marathon.l4lb.thisdcos.directory:5000” is now available for use in your Marathon applications. It can be used to launch applications from the GUI or the CLI interfaces.
 
-### From the Marathon UI:
+### From the Marathon UI
 
 Simply use ```registry.marathon.l4lb.thisdcos.directory:5000``` as a prefix in the “Container Settings”/“Container Image” field in the “Services” (Marathon) form:
 
@@ -254,7 +257,7 @@ Launch your application normally and check it’s working correctly in the “Se
 
 ![Usage: Services View](img/usage_services_view.png)
 
-## From the CLI:
+#### From the CLI
 
 Check that your DC/OS CLI is connected properly to the DC/OS cluster:
 
@@ -341,7 +344,7 @@ $ dcos marathon app add registry-example-app.json
 Check that the application is running properly:
 
 ```
-dcos marathon app list
+$ dcos marathon app list
 ID                     MEM   CPUS  TASKS  HEALTH  DEPLOYMENT  CONTAINER  CMD
 /marathon-lb           1024   1     1/1    1/1       ---        DOCKER   ['sse', '-m', 'http://master.mesos:8080', '--health-check', '--haproxy-map', '--group', 'external']
 /registry              256   0.2    1/1    1/1       ---        DOCKER   None
@@ -494,7 +497,7 @@ Next, follow our documentation for [mounting NFS volumes](https://dcos.io/docs/1
 
 
 
-## Uninstall the Docker Registry
+## Uninstall
 
 To uninstall the Docker registry using the DC/OS CLI, run the following command:
 
