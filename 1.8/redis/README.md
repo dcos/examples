@@ -12,7 +12,9 @@ is a Mesos framework allowing you to manage Redis datastores standalone or in a 
 **Table of Contents**:
 
 - [Prerequisites](#prerequisites)
-- [Install Redis](#install-)
+- [Install mr-redis](#install-mr-redis)
+- [Create a Redis instance](#create-a-redis-instance)
+- [Access the Redis instance](##access-the-redis-instance)
 
 ## Prerequisites
 
