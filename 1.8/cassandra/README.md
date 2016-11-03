@@ -3,7 +3,7 @@
 [Apache Cassandra](https://cassandra.apache.org/) is a distributed, structured storage system. Cassandra clusters are highly available, scalable, performant, and fault tolerant. DC/OS Cassandra allows you to quickly configure, install, and manage Apache Cassandra. Multiple Cassandra clusters can also be installed on DC/OS and managed independently, so you can offer Cassandra as a managed service to your organization.
 
 - Estimated time for completion: 10 minutes
-- Target Audience: Anyone who wants to deploy a distributed database on DC/OS. Beginner level.
+- Target audience: Anyone who wants to deploy a distributed database on DC/OS. Beginner level.
 - Scope:
  - Install the DC/OS Cassandra service.
  - Use the enhanced DC/OS CLI operations for Cassandra.

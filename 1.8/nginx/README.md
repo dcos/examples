@@ -3,7 +3,7 @@
 [NGINX](https://www.nginx.com) is a high-performance HTTP server, reverse proxy, and an IMAP/POP3 proxy server. NGINX is known for its high performance, stability, rich feature set, simple configuration, and low resource consumption. DC/OS allows you to quickly configure, install and manage NGINX.
 
 - Estimated time for completion: 10 minutes
-- Target Audience: Anyone interested in running a HTTP (proxy) server
+- Target audience: Anyone interested in running a HTTP (proxy) server
 - Scope: Learn how to install NGINX on DC/OS and to serve a static website
 
 ## Prerequisites

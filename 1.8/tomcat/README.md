@@ -3,7 +3,7 @@
 [Apache Tomcat](http://tomcat.apache.org/) provides implementations of Servlet, JSP, EL and WebSocket from the Java EE Web Application Container specification.
 
 - Estimated time for completion: 10 minutes
-- Target Audience: Anyone interested in using a Java app server.
+- Target audience: Anyone interested in using a Java app server.
 - Scope: Learn to install and run Tomcat.
 
 **Table of Contents**:

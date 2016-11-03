@@ -6,7 +6,7 @@ Note: DC/OS now includes a built-in [job scheduler](https://dcos.io/docs/1.8/usa
 
 
 - Estimated time for completion: 15 minutes
-- Target Audience:
+- Target audience:
  - Data engineers
  - Data scientists
  - DevOps engineers

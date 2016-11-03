@@ -5,7 +5,7 @@ documents, graphs, and key/value pairs. It has a unified query language (AQL) th
 to mix all three data models and supports joins and transactions.
 
 - Estimated time for completion: 5 minutes
-- Target Audience: Anyone who wants to deploy a distributed multi-model database on DC/OS. Beginner level.
+- Target audience: Anyone who wants to deploy a distributed multi-model database on DC/OS. Beginner level.
 - Scope: Covers the basics in order to get you started with ArangoDB on DC/OS.
 
 ## Prerequisites

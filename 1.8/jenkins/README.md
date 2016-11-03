@@ -7,7 +7,7 @@ Jenkins agents as demand increases or decreases, and enables you to avoid the st
 infrastructure typical of a traditional Jenkins deployment.
 
 - Estimated time for completion: up to 45 minutes
-- Target Audience:
+- Target audience:
  - Operators
  - Application admins
  - Quality/Release engineers

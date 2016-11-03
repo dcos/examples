@@ -3,7 +3,7 @@
 [Apache Spark](https://spark.apache.org/) is a general-purpose data processing engine. It supports batch and stream processing and comes with built-in APIs for SQL, machine learning and graph workloads. Spark is storage-layer agnostic, meaning it doesn't come with its own storage system but provides connectors to read data from and write data into, for example, the local filesystem, HDFS, Kafka, Cassandra, Elasticsearch, and HBase.
 
 - Estimated time for completion: 10 minutes
-- Target Audience: Anyone interested in a data processing engine.
+- Target audience: Anyone interested in a data processing engine.
 - Scope: Learn how to install Spark on DC/OS and how to launch a Spark job. 
 
 **Terminology**:

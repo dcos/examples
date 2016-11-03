@@ -3,7 +3,7 @@
 [WordPress](https://wordpress.com/) is a popular blogging platform.
 
 - Estimated time for completion: 10 minutes
-- Target Audience: Anyone interested using a blog.
+- Target audience: Anyone interested using a blog.
 - Scope: Learn how to use WordPress on DC/OS.
 
 

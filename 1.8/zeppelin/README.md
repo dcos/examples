@@ -3,7 +3,7 @@
 [Apache Zeppelin](https://zeppelin.apache.org/) is a web-based notebook that enables you to do interactive data analytics. For example, you can use it as a front-end for [Apache Spark](https://github.com/dcos/examples/tree/master/1.8/spark).
 
 - Estimated time for completion: 8 minutes
-- Target Audience: Data scientists and data engineers that want an interactive data analytics tool.
+- Target audience: Data scientists and data engineers that want an interactive data analytics tool.
 - Scope: Install and use Zeppelin in DC/OS Kafka.
 
 **Table of Contents**:
