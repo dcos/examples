@@ -15,6 +15,7 @@ is a Mesos framework allowing you to manage Redis datastores standalone or in a 
 - [Install mr-redis](#install-mr-redis)
 - [Create a Redis instance](#create-a-redis-instance)
 - [Access the Redis instance](##access-the-redis-instance)
+- [Uninstall mr-redis](#uninstall-mr-redis)
 
 ## Prerequisites
 
@@ -97,6 +98,13 @@ $3
 :42
 QUIT
 +OK
+```
+## Uninstall mr-redis
+
+To uninstall mr-redis:
+
+```bash
+$ dcos package uninstall mr-redis
 ```
 
 ## Further resources
