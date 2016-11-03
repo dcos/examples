@@ -14,6 +14,7 @@ Currently, the following examples are available:
 - [Jenkins](1.8/jenkins/)
 - Apache [Kafka](1.8/kafka/)
 - [NGINX](1.8/nginx/)
+- [Redis](1.8/redis/)
 - Apache [Spark](1.8/spark/)
 - Apache [Tomcat](1.8/tomcat/)
 - [Wordpress](1.8/wordpress/)
