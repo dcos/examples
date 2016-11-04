@@ -26,7 +26,7 @@ Note that this package will install with the default parameters, but Docker regi
 ### Creating a valid TLS certificate
 
 The Docker registry requires a TLS certificate and a TLS key to operate. This certificate will also need to be installed in the nodes that need to access the Docker registry. This package uses two downloadable URIs to store the certificate and key. 
-The certificate and key will be shared with the application from a host with a web server installer. For the purposes of this example, we will generate the certificate in a local Linux or OSX host, and use the DC/OS Bootstrap node to host the certificate and key files, leveraging the fact that it already runs an NGINX web server by default. Any other web server accessible from the private nodes of the cluster could also be used.
+The certificate and key will be shared with the application from a host with a running web server. For the purposes of this example, we will generate and host the certificate in the bootstrap node of the cluster, leveraging the fact that it already runs an NGINX web server by default. Any other web server accessible from the private nodes of the cluster could also be used.
 
 Note that above means that the location of your secrets will be OPEN in the bootstrap node to download, at least during package installation, so this process is not considered adequate for production setups. Consider making these files available only during the process of booting up the registry, and then moving them outside of the “downloadable” path for security.
 
