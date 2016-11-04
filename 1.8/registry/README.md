@@ -89,7 +89,7 @@ The next step to facilitate that authentication is to add the certificate to all
 /etc/docker/certs.d/registry.marathon.l4lb.thisdcos.directory:5000/ca.crt
 ```
 
-We will upload the certificate file to one of the *MASTER* nodes, and then execute a loop to opens an SSH connection to each of the agents, and add the certificate to the agent’s trusted certificate list in the path above. Note that for this to work, the Master node must have a valid SSH key/ID stored allowing it to connect to other agents. If you have a working key in a `.pem` file in your computer that is valid for your agent nodes, you can copy it to the MASTER node with:
+We will upload the certificate file to one of the *MASTER* nodes, and then execute a loop to open an SSH connection to each of the agents, and add the certificate to the agent’s trusted certificate list in the path above. Note that for this to work, the Master node must have a valid SSH key/ID stored allowing it to connect to other agents. If you have a working key in a `.pem` file in your computer that is valid for your agent nodes, you can copy it to the MASTER node with:
 
 ```bash
 $ scp -i my_key.pem my_key.pem  centos@master:~ 
