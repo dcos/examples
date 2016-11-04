@@ -38,6 +38,23 @@ After this, you should see the Storm service running via the `Services` tab of t
 
 ## Use Storm
 
+
+```bash
+$ docker run -i --rm mesos/storm:0.1.7-0.9.6-0.27.2-jdk8 /opt/storm/bin/storm -c nimbus.host=storm.mesos -c nimbus.thrift.port=11586 list
+
+
+$ docker run -i --rm storm:1.0 storm -c nimbus.host=storm.mesos -c nimbus.thrift.port=11586 list
+
+
+$ cat ~/.storm/storm.yaml
+nimbus.seeds: [storm.mesos]
+storm.zookeeper.servers:
+  - master.mesos
+
+$ docker run -i --rm -v /home/core/.storm/storm.yaml:/apache-storm-1.0.2/.storm/storm.yaml storm:1.0 storm list
+```
+
+
 ## Uninstall Storm
 
 To uninstall Storm:
@@ -49,6 +66,6 @@ $ dcos package uninstall storm
 ## Further resources
 
 1. [DC/OS Storm Official Documentation](https://github.com/mesos/storm)
-1. [Storm 2.3 docs](https://www.elastic.co/guide/en/elasticsearch/reference/2.3/index.html)
+1. [Apache Storm 1.0.1 docs](http://storm.apache.org/releases/1.0.1/)
 
 
