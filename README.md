@@ -15,6 +15,7 @@ Currently, the following examples are available:
 - [Elasticsearch](1.8/elasticsearch/)
 - [Jenkins](1.8/jenkins/)
 - Apache [Kafka](1.8/kafka/)
+- [linkerd](1.8/linkerd/)
 - [NGINX](1.8/nginx/)
 - [Redis](1.8/redis/)
 - Apache [Spark](1.8/spark/)
