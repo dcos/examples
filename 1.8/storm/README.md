@@ -48,7 +48,7 @@ $ dcos package uninstall storm
 
 ## Further resources
 
-1. [DC/OS Storm Official Documentation](http://mesos-elasticsearch.readthedocs.io/en/latest/)
+1. [DC/OS Storm Official Documentation](https://github.com/mesos/storm)
 1. [Storm 2.3 docs](https://www.elastic.co/guide/en/elasticsearch/reference/2.3/index.html)
 
 
