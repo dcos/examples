@@ -38,22 +38,33 @@ After this, you should see the Storm service running via the `Services` tab of t
 
 ## Use Storm
 
+To use Storm, we will use a DC/OS CLI extension called [tunnel](https://dcos.io/docs/1.8/administration/access-node/tunnel/), effectively allowing us to create a VPN to access the Storm UI running inside the DC/OS cluster.
+
+Now, once you've `dcos tunnel` set up and created a VPN tunnel you should see something like the following (in the example here we're using OpenVPN):
 
 ```bash
-$ docker run -i --rm mesos/storm:0.1.7-0.9.6-0.27.2-jdk8 /opt/storm/bin/storm -c nimbus.host=storm.mesos -c nimbus.thrift.port=11586 list
+ $ sudo dcos tunnel vpn --client=/Applications/Tunnelblick.app/Contents/Resources/openvpn/openvpn-2.3.12/openvpn
+Password:
+*** Unknown ssh-rsa host key for 52.50.225.76: 1565ae7d574857729b625205416eae1e
 
+ATTENTION: IF DNS DOESN'T WORK, add these DNS servers!
+198.51.100.1
+198.51.100.2
+198.51.100.3
 
-$ docker run -i --rm storm:1.0 storm -c nimbus.host=storm.mesos -c nimbus.thrift.port=11586 list
+Waiting for VPN server in container 'openvpn-28frfq1q' to come up...
 
-
-$ cat ~/.storm/storm.yaml
-nimbus.seeds: [storm.mesos]
-storm.zookeeper.servers:
-  - master.mesos
-
-$ docker run -i --rm -v /home/core/.storm/storm.yaml:/apache-storm-1.0.2/.storm/storm.yaml storm:1.0 storm list
+VPN server output at /tmp/tmp_62teeyl
+VPN client output at /tmp/tmpbm3_w8wp
 ```
 
+When the VPN is up and you can access cluster services directly from you local environment (try for example `curl leader.mesos`) you can access the Storm UI via the following URL: 
+
+```
+http://storm.mesos:$UI_PORT/index.html
+```
+
+With `$UI_PORT` being the first port assigned to the Storm service by the System Marathon. Note that you can either look up that port via the `Services` tab or directly using a DC/OS CLI command like `dcos marathon app show /storm | grep -A 30 tasks | grep -A 2 ports`.
 
 ## Uninstall Storm
 
