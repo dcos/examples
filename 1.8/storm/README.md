@@ -58,13 +58,22 @@ VPN server output at /tmp/tmp_62teeyl
 VPN client output at /tmp/tmpbm3_w8wp
 ```
 
-When the VPN is up and you can access cluster services directly from you local environment (try for example `curl leader.mesos`) you can access the Storm UI via the following URL: 
+When the VPN is up you can access cluster services directly from you local environment (try for example `curl leader.mesos`) you can access the Storm UI via the following URL: 
 
 ```
 http://storm.mesos:$UI_PORT/index.html
 ```
 
-With `$UI_PORT` being the first port assigned to the Storm service by the System Marathon. Note that you can either look up that port via the `Services` tab or directly using a DC/OS CLI command like `dcos marathon app show /storm | grep -A 30 tasks | grep -A 2 ports`.
+With `$UI_PORT` being the first port assigned to the Storm service by the System Marathon. Note that you can either look up that port via the `Services` tab or directly using a DC/OS CLI command like the following:
+
+```bash
+$ dcos marathon app show /storm | grep -A 30 tasks | grep -A 2 ports
+      "ports": [
+        11585,
+        11586
+```
+
+So in our example case the value for `$UI_PORT` (`ui.port` in the Storm config) would be `11585`. Note also that the second value you see here, `11586`, is `nimbus.thrift.port`.
 
 ## Uninstall Storm
 
