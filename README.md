@@ -23,6 +23,7 @@ Currently, the following examples are available:
 - [NGINX](1.8/nginx/)
 - [Redis](1.8/redis/)
 - Apache [Spark](1.8/spark/)
+- Apache [Storm](1.8/storm/)
 - Apache [Tomcat](1.8/tomcat/)
 - [Wordpress](1.8/wordpress/)
 - Apache [Zeppelin](1.8/zeppelin/)
