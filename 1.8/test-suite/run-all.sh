@@ -13,6 +13,7 @@ function setup_tests {
   type dcos >/dev/null 2>&1 || { echo >&2 "I require the DC/OS CLI but it's not installed. Aborting."; exit 1; }
   export MY_CLUSTER_URL=$(dcos config show core.dcos_url)
   export MY_OAUTH_TOKEN=$(dcos config show core.dcos_acs_token)
+  # TODO: check if env variables are set (that is, non-empty)
 } 
 
 ################################################

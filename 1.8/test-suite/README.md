@@ -20,7 +20,11 @@ To execute all tests (can take up to xx min):
     $  ./run-all.sh
     Setting up DC/OS 1.8 Examples Test Suite
     Trying to run [[test-elasticsearch]]
-    
+    Added test
+    Executed test
+    Cleaned up test
+    [[test-elasticsearch]] PASS
+
 ## Troubleshooting
 
 As a preparation, capture the HTTP API token in the environment variable `MY_OAUTH_TOKEN`:
