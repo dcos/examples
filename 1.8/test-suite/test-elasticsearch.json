@@ -5,7 +5,8 @@
     "cpus": 0.5,
     "mem": 100,
     "disk": 0,
-    "artifacts": [{
+    "artifacts": [
+      {
         "uri": "https://raw.githubusercontent.com/dcos/examples/master/1.8/test-suite/install-elasticsearch.sh",
         "executable": true,
         "extract": false,
@@ -13,12 +14,9 @@
       }
     ],
     "cmd": "./install-elasticsearch.sh",
-    "env": [
-      {
-        "name": "DCOS_URL",
-        "value": "http://dcos-exam-elasticl-1oslvib1dxn55-726953633.eu-west-1.elb.amazonaws.com/"
-      }
-    ],
+    "env": {
+      "DCOS_URL": "http://dcos-exam-elasticl-1oslvib1dxn55-726953633.eu-west-1.elb.amazonaws.com/"
+    },
     "restart": {
       "policy": "NEVER"
     }
