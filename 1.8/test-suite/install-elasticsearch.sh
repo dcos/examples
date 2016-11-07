@@ -21,4 +21,4 @@ MARATHON=leader.mesos:8080
 NUM_CLUSTER_NODES=`curl -s $MESOS_MASTER/slaves | ./jq '.slaves | length' | tr -d '[[:space:]]'`
 
 echo Installing Elasticsearch ...
-./dcos package install elasticsearch
+./dcos package install --yes elasticsearch
