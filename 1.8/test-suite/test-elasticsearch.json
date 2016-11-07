@@ -6,7 +6,7 @@
     "mem": 100,
     "disk": 0,
     "artifacts": [{
-        "uri": "/install-elasticsearch.sh",
+        "uri": "https://raw.githubusercontent.com/dcos/examples/master/1.8/test-suite/install-elasticsearch.sh",
         "executable": true,
         "extract": false,
         "cache": false
