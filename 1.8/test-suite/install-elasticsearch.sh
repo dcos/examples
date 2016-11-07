@@ -13,6 +13,7 @@ curl -fLsS https://github.com/stedolan/jq/releases/download/jq-1.5/jq-linux64 -o
 curl -fLsS --retry 20 -Y 100000 -y 60 https://downloads.dcos.io/binaries/cli/linux/x86-64/dcos-1.8/dcos -o dcos && 
  sudo chmod +x dcos && 
  ./dcos config set core.dcos_url $DCOS_URL 
+ ./dcos config set core.dcos_acs_token $DCOS_TOKEN
 
 ## globals
 MESOS_MASTER=leader.mesos:5050
