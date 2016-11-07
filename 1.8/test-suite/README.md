@@ -10,15 +10,33 @@ This is the DC/OS 1.8 examples test suite (ETS) to make sure all the examples he
 
 ## Run tests
 
-In order to run the ETS, clone the repo and change to the `1.8/test-suite/` directory. Now, do:
+In order to run the ETS, clone the repo and change to the `1.8/test-suite/` directory.
+The following assumes that you're logged in, that is, that `dcos auth login` has been executed
+(note that if you're unsure about this step, run `dcos config show core.dcos_acs_token` which should 
+show the HTTP API token).
 
-    $ export MY_OAUTH_TOKEN=$(dcos config show core.dcos_acs_token)
-    $ sed -i "s/MY_OAUTH_TOKEN/$MY_OAUTH_TOKEN/g" test-elasticsearch.json
-    
-    $ dcos job add test-elasticsearch.json
-    $ dcos job run test-elasticsearch
+To execute all tests (can take up to xx min):
+
+    $  ./run-all.sh
+    Setting up DC/OS 1.8 Examples Test Suite
+    Trying to run [[test-elasticsearch]]
     
 ## Troubleshooting
+
+As a preparation, capture the HTTP API token in the environment variable `MY_OAUTH_TOKEN`:
+
+    $ export MY_CLUSTER_URL=$(dcos config show core.dcos_url)
+    $ export MY_OAUTH_TOKEN=$(dcos config show core.dcos_acs_token)
+
+To run a certain test, say `test-elasticsearch`, do the following:
+
+    $ sed -i "" "s#MY_CLUSTER_URL#$MY_CLUSTER_URL#g" test-elasticsearch.json
+    $ sed -i "" "s/MY_OAUTH_TOKEN/$MY_OAUTH_TOKEN/g" test-elasticsearch.json
+    $ dcos job remove test-elasticsearch
+    $ dcos job add test-elasticsearch.json
+    $ dcos job run test-elasticsearch
+
+To see the results:
 
     $ export TARGET_TEST=test-elasticsearch
     

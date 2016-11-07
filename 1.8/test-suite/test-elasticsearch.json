@@ -15,8 +15,8 @@
     ],
     "cmd": "./install-elasticsearch.sh",
     "env": {
-      "DCOS_URL": "http://dcos-exam-elasticl-1oslvib1dxn55-726953633.eu-west-1.elb.amazonaws.com/",
-      "DCOS_TOKEN": "$MY_OAUTH_TOKEN"
+      "DCOS_URL": "MY_CLUSTER_URL",
+      "DCOS_TOKEN": "MY_OAUTH_TOKEN"
     },
     "restart": {
       "policy": "NEVER"
