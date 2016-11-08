@@ -47,7 +47,7 @@ Next, you will need to pick which node to run Koding on. This is to preserve dat
 
 After you select a node, you will be asked for a hostname. This hostname is used within the Koding application to define where Koding lives. Individual teams will live at subdomains of this hostname. It mostly exists to be displayed inside the application, but should be where you intend Koding to be accessed from. You may want to make a CNAME record of this host and a wildcard record for any subdomains to point to the FQDN you set up in the next step.
 
-Lastly, to make Koding accessible to the world, we need to use the fully qualified domain name of the public agent node running marathon-lb or the load balancer pointing to your public agent nodes (for instance "DCOS-PublicSlaveLo-1CHPNZSAH97SJ-604928754.eu-west-1.elb.amazonaws.com").
+Lastly, to make Koding accessible to the world, we need to use the fully qualified domain name of the public agent node running marathon-lb or the load balancer pointing to your public agent nodes (for instance ```DCOS-PublicSlaveLo-1CHPNZSAH97SJ-604928754.eu-west-1.elb.amazonaws.com```).
 
 After all options are configured, press Review and Install and the Install to set up Koding.  Please note that it may take up to 10 minutes for the Koding service to become available.
 
