@@ -56,4 +56,4 @@ do
   run_test $testn
 done
 
-echo "All tests submitted, see DC/OS Jobs UI for results"
+echo "All tests submitted, see DC/OS Jobs UI for results ..."
