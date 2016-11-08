@@ -1,0 +1,25 @@
+{
+  "id": "test-nginx",
+  "description": "Installs NGINX and tests it",
+  "run": {
+    "cpus": 0.5,
+    "mem": 100,
+    "disk": 0,
+    "artifacts": [
+      {
+        "uri": "https://raw.githubusercontent.com/dcos/examples/master/1.8/test-suite/install-nginx.sh",
+        "executable": true,
+        "extract": false,
+        "cache": false
+      }
+    ],
+    "cmd": "./install-nginx.sh",
+    "env": {
+      "DCOS_URL": "MY_CLUSTER_URL",
+      "DCOS_TOKEN": "MY_OAUTH_TOKEN"
+    },
+    "restart": {
+      "policy": "NEVER"
+    }
+  }
+}

@@ -17,13 +17,10 @@ show the HTTP API token).
 
 To execute all tests (can take up to xx min):
 
+    # make sure no local or cluster resources are hanging around:
+    $  ./clean-up.sh
+    
     $  ./run-all.sh
-    Setting up DC/OS 1.8 Examples Test Suite
-    Trying to run [[test-elasticsearch]]
-    Added test
-    Executed test
-    Cleaned up test
-    [[test-elasticsearch]] PASS
 
 ## Troubleshooting
 

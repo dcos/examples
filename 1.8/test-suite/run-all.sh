@@ -17,17 +17,6 @@ function setup_tests {
 } 
 
 ################################################
-## cleans up a test case locally and in 
-## the cluster; does nothing if test doesn't exist
-function cleanup_test {
-  test_id=$1
-  if [ -f $test_id.json.run ]; then
-    rm $test_id.json.run
-    dcos job remove $test_id
-  fi
-}
-
-################################################
 ## shows logs of test case execution 
 function display_test_result {
   test_id=$1
@@ -44,22 +33,15 @@ function display_test_result {
 function run_test { 
   test_id=$1
   echo "Trying to run [[$test_id]]"
-  # TODO: check if test job exists and remove if so
   if [ -f $test_id.json ]; then
     cp $test_id.json $test_id.json.run
     sed -i "" "s#MY_CLUSTER_URL#$MY_CLUSTER_URL#g" $test_id.json.run
     sed -i "" "s/MY_OAUTH_TOKEN/$MY_OAUTH_TOKEN/g" $test_id.json.run
     dcos job add $test_id.json.run
-    echo "Added test"
     dcos job run $test_id
-    echo "Executed test"
-    # TODO: make the following an optional command line parameter -details:
-    # display_test_result $test_id
-    cleanup_test $test_id
-    echo "Cleaned up test"
-    echo "[[$test_id]] PASS"
+    echo "[[$test_id]] submitted"
   else
-     echo "[[$test_id]] FAIL (does not exist)"
+     echo "[[$test_id]] does not exist, skipping it"
   fi
 } 
 
