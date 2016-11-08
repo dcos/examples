@@ -10,7 +10,6 @@ set -o pipefail
 ## checks if prerequisites are met and 
 ## sets up environment variables
 function init { 
-  echo "Setting up DC/OS 1.8 Examples Test Suite"
   type dcos >/dev/null 2>&1 || { echo >&2 "I require the DC/OS CLI but it's not installed. Aborting."; exit 1; }
   export MY_CLUSTER_URL=$(dcos config show core.dcos_url)
   export MY_OAUTH_TOKEN=$(dcos config show core.dcos_acs_token)
@@ -30,6 +29,8 @@ function cleanup_test {
 
 ###############################################################################
 ## MAIN
+
+echo "Cleaning up DC/OS 1.8 Examples Test Suite"
 
 init
 

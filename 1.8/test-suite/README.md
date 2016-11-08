@@ -19,8 +19,18 @@ To execute all tests (can take up to xx min):
 
     # make sure no local or cluster resources are hanging around:
     $  ./clean-up.sh
-    
+    # run all tests
     $  ./run-all.sh
+    etting up DC/OS 1.8 Examples Test Suite
+    Trying to run [[test-elasticsearch]]
+    [[test-elasticsearch]] submitted
+    Trying to run [[test-nginx]]
+    [[test-nginx]] submitted
+    All tests submitted, see DC/OS Jobs UI for results ...
+
+Once you see `run-all.sh` existing, head over to the DC/Os Jobs UI:
+
+![ETS test results in the DC/OS Jobs UI](img/test-results.png)
 
 ## Troubleshooting
 
