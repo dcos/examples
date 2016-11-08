@@ -28,7 +28,7 @@ To execute all tests (can take up to xx min):
     [[test-nginx]] submitted
     All tests submitted, see DC/OS Jobs UI for results ...
 
-Once you see `run-all.sh` existing, head over to the DC/Os Jobs UI:
+Once you see `run-all.sh` exiting, head over to the DC/Os Jobs UI where you see the test results:
 
 ![ETS test results in the DC/OS Jobs UI](img/test-results.png)
 
