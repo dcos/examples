@@ -12,6 +12,7 @@ One bookkeeper instance is called a bookie, By default this package deploy 1 boo
 - A running DC/OS 1.8 cluster with at least 3 nodes, each at least having 1 CPU, 1G of memory and 10GB of persistent disk storage in total.
 - [DC/OS CLI](https://dcos.io/docs/1.8/usage/cli/install/) installed.
 - Zookeeper service instance could be accessed(by default at: zk://master.mesos:2181).
+- By default, bookies will use agent dirs: /mnt/index /mnt/ledgers /mnt/journal to store bookie data.
 
 ## Install Bookkeeper
 
