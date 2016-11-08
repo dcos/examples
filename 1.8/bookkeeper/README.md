@@ -81,8 +81,8 @@ $ dcos package describe --config bookkeeper
 ### Further Information
 
 
-The BookKeeper user mailing list is: user@bookkeeper.apache.org.
-The BookKeeper developer mailing list is : dev@bookkeeper.apache.org.
-The Bookkeeper [JIRA](https://issues.apache.org/jira/browse/BOOKKEEPER)
+- The BookKeeper user mailing list is: user@bookkeeper.apache.org.
+- The BookKeeper developer mailing list is : dev@bookkeeper.apache.org.
+- The Bookkeeper [JIRA](https://issues.apache.org/jira/browse/BOOKKEEPER)
 
-[DistributedLog](http://distributedlog.incubator.apache.org/)
+- [DistributedLog](http://distributedlog.incubator.apache.org/)
