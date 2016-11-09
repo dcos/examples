@@ -21,7 +21,7 @@ To execute all tests (can take up to xx min):
     $  ./clean-up.sh
     # run all tests
     $  ./run-all.sh
-    etting up DC/OS 1.8 Examples Test Suite
+    Setting up DC/OS 1.8 Examples Test Suite
     Trying to run [[test-elasticsearch]]
     [[test-elasticsearch]] submitted
     Trying to run [[test-nginx]]
