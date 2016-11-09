@@ -125,15 +125,15 @@ Go to the Dashboards home screen by clicking on the Grafana button on the top le
 
 Click on the "Home" button at the top of the screen. This will create a drop-down menu with all the dashboards in the system. Find the "Import" button at the bottom of the screen and click on it. You will be presented with an "Import Dashboard" screen. Find the "Upload .json file" and click on it:
 
-![Grafana import dashboard](grafana-import-dashboard.png)
+![Grafana import dashboard](img/grafana-import-dashboard.png)
 
-Select the JSON file that you downloaded with the [example dashboard](./etc/dashboard_aggregate_resource_usage.json).
+Select the JSON file that you downloaded with the [example dashboard](etc/dashboard_aggregate_resource_usage.json).
 
-![Grafana import dashboard 2](grafana-import-dashboard-2.png)
+![Grafana import dashboard 2](img/grafana-import-dashboard-2.png)
 
 Click on "Save and Open". The Dashboard should now open up showing the different metrics.
 
-![Grafana dashboard](grafana-dashboard.png)
+![Grafana dashboard](img/grafana-dashboard.png)
 
 ## Uninstall
 
