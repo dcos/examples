@@ -25,5 +25,6 @@ Currently, the following examples are available:
 - Apache [Spark](1.8/spark/)
 - Apache [Storm](1.8/storm/)
 - Apache [Tomcat](1.8/tomcat/)
+- [VAMP](1.8/vamp/)
 - [Wordpress](1.8/wordpress/)
 - Apache [Zeppelin](1.8/zeppelin/)

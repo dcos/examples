@@ -59,7 +59,7 @@ To specify the connection details to Elasticsearch create a file called `vamp-co
 Then, from the command line run the following:
 
 ```bash
-$ dcos package install --options=config-vamp.json vamp
+$ dcos package install --options=vamp-config.json vamp
 In order to run Vamp you need to specify connection parameters to Elasticsearch and Logstash.
 See installation instruction at http://vamp.io/documentation/installation/dcos/
 
