@@ -37,7 +37,7 @@ Log into DC/OS, go to Universe, and select the `cadvisor` package from Universe.
 
 - Instances: this controls the amount of cAdvisor instances in your cluster. There should be one and just one instance of cAdvisor in each node of your cluster. The package is prepared to install a single instance per node, and is initially set to launch a maximum of 256 instances. This means that the deployment will deploy as many instances as nodes are there in your cluster, and then stay "Waiting" in case the number of nodes in the cluster is increased so that new instances are spawn. If you would like to keep the application in a "Running" state instead, you can just adjust this parameter to exactly the number of nodes in your cluster. If you add nodes to your cluster at a later time, you can simply increase the number of instances when cAdvisor is running in Marathon.
 
-- Networking / InfluxDB host and port: these parameters control the location of the the InfluxDB host to stream the metrics to. This is initially set to values of `influxdb.marathon.l4lb.thisdcos.directory` and `8086`, which are the default values that the InfluxDB DC/OS package will listen in. Change these to the IP address or DNS name of your InfluxDB host, and the port where it's listening on, respectively.
+- Networking / InfluxDB host and port: these parameters control the location of the the InfluxDB host to stream the metrics to. This is initially set to values of `influxdb.marathon.l4lb.thisdcos.directory` and `8086`, which are the default values that the InfluxDB DC/OS package will listen in. If you'll be using an InfluxDB instance running outside of DC/OS, or simply a different endpoint or name to your influxDB instance, you can hange these to the IP address or DNS name of your InfluxDB host, and the port where it's listening on, respectively. Otherwise, the defaults with work with the DC/OS `influxdb` package's defaults.
 
 - Networking / external access: Enable or disable creating a VIP for external access towards cAdvisor's web interface through a public node running Marathon-LB. Please note that the web interface of cAdvisor provides information about a single node. This VIP is be set to be "sticky", so that a browser session is always sent to the same cAdvisor instance.
 
@@ -51,13 +51,13 @@ Log into DC/OS, go to Universe, and select the `influxdb` package from Universe.
 
 - Storage / Pre-create database and pre-create database name: InfluxDB can be configured to automatically create databases on startup. For this use case, we will need it to create a database called `cadvisor` and launch it on startup.
 
-- Host_volume_influxdb: If storage persistence is not selected (see below), this package will use a subdirectory created under this path in the node where it runs to store data. If the container is restarted or destroyed, this data won't be automatically deleted. This can be modified to point to a directory where an NFS share is mounted, so that the contents of the database are stored in the NFS share. For example, we can mount our NFS sahre under `/mnt/nfs_share` in all nodes, and then use that value for the host_volume_influxdb parameter. This package will automatically create a subdirectory with the name used to deploy it (e.g. `/mnt/nfs_share/influxdb`)
+- Host_volume_influxdb: If storage persistence is not selected (see below), this package will use a subdirectory created under this path in the node where it runs to store data. If the container is restarted or destroyed, this data won't be automatically deleted. This can be modified to point to a directory where an NFS share is mounted, so that the contents of the database are stored in the NFS share. For example, we can mount our NFS sahre under `/mnt/nfs_share` in all nodes, and then use that value for the host_volume_influxdb parameter. This package will automatically create a subdirectory in there with the name used to deploy it (e.g. `/mnt/nfs_share/influxdb`)
 
 - Persistence: Enable persistent storage, with the usage of either Local or External Persistent Volumes. The persistent volumes will be local if the "external" checkbox commented below is not selected.
 
 - Persistence / external: Enable external persistent volumes. This allows to use an external storage system such as Amazon EBS, OpenStack Cinder, EMC Isilon, EMC ScaleIO, EMC XtremIO, EMC VMAX and Google Compute Engine persistent storage. Please note that in order to use external volumes with DC/OS, you MUST enable them during CLI or Advanced installation. 
 
-Once these parameters are set, you can simply click "Install". A copy of cAdvisor will be spawned in each node of your cluster and will automatically start streaming metrics.
+Once these parameters are set, you can simply click "Install".
 
 ### Grafana installation:
 
@@ -71,7 +71,7 @@ Log into DC/OS, go to Universe, and select the `influxdb` package from Universe.
 
 ## Use
 
-Once the three packages are up and running, the instances of cAdvisor running in each node of your cluster should be streaming metrics towards InfluxDB. These metrics can be displayed and graphed according to Grafana's powerful options. In order to display the metrics of a cluster, log into the Grafana cluster through your public node's IP address, and the port chosen to display the interface (by default, port 13000): 
+Once the three packages are up and running, the instances of cAdvisor running in each node of your cluster should be streaming metrics towards InfluxDB. These metrics can be displayed and graphed according to Grafana's powerful "dashboard" options. In order to display the metrics of a cluster, log into the Grafana cluster through your public node's IP address, and the port chosen to display the interface (by default, port 13000): 
 
 `http://[your_public_node_ip_address]:13000`
 
@@ -79,7 +79,7 @@ You will be presented with Grafana's login screen. Use the default `admin` accou
 
 ![Grafana login screen](img/grafana-login-screen.png)
 
-After logging in, you are presented with Grafana's "Home Dashboard" screen. Grafana launches with no data sources or dashboards pre-loaded, so we'll need to connect it to InfluxDB, and then load a dashboard that reads and graphs the information read in it.
+After logging in, you are presented with Grafana's "Home Dashboard" screen. Grafana boots with no data sources or dashboards pre-loaded, so we'll need to connect it to InfluxDB, and then load a dashboard that reads and graphs the information stored in it.
 
 ### Add InfluxdB Data Source to Grafana
 
