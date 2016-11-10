@@ -57,9 +57,9 @@ If you enter '.', the field will be left blank.
 Country Name (2 letter code) [XX]:US
 State or Province Name (full name) []:NY
 Locality Name (eg, city) [Default City]:NYC
-Organization Name (eg, company) [Default Company Ltd]:Mesosphere
-Organizational Unit Name (eg, section) []:SE
-Common Name (eg, your name or your servers hostname) []:'registry.marathon.l4lb.thisdcos.directory'
+Organization Name (eg, company) [Default Company Ltd]:mycompany
+Organizational Unit Name (eg, section) []:myorg
+Common Name (eg, your name or your servers hostname) []:registry.marathon.l4lb.thisdcos.directory
 Email Address []:myemailaddress@mesosphere.com
 ```
 After executing this command, your certificate and key should be available in the current directory:
