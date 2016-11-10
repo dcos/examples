@@ -20,6 +20,7 @@ Currently, the following examples are available:
 - [Jenkins](1.8/jenkins/)
 - Apache [Kafka](1.8/kafka/)
 - [linkerd](1.8/linkerd/)
+- [Nexus 3](1.8/nexus/)
 - [NGINX](1.8/nginx/)
 - [Redis](1.8/redis/)
 - Apache [Spark](1.8/spark/)
