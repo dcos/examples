@@ -71,7 +71,11 @@ Log into DC/OS, go to Universe, and select the `influxdb` package from Universe.
 
 ## Use
 
-Once the three packages are up and running, the instances of cAdvisor running in each node of your cluster should be streaming metrics towards InfluxDB. These metrics can be displayed and graphed according to Grafana's powerful "dashboard" options. In order to display the metrics of a cluster, log into the Grafana cluster through your public node's IP address, and the port chosen to display the interface (by default, port 13000): 
+Once the three packages are up and running, the instances of cAdvisor running in each node of your cluster should be streaming metrics towards InfluxDB. 
+
+![Running state](img/running-state.png)
+
+These metrics can be displayed and graphed according to Grafana's powerful "dashboard" options. In order to display the metrics of a cluster, log into the Grafana cluster through your public node's IP address, and the port chosen to display the interface (by default, port 13000): 
 
 `http://[your_public_node_ip_address]:13000`
 
