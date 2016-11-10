@@ -33,7 +33,8 @@ In this document, we will describe how to install and configure a DC/OS monitori
 
 ### cAdvisor installation:
 
-Log into DC/OS, go to Universe, and select the `cadvisor` package from Universe. Optionally, click on "Advanced Installation" and modify the following parameters according to your needs:
+Log into DC/OS, go to Universe, and select the `cadvisor` package from Universe.
+Click "Install" or, optionally, click on "Advanced Installation" and modify the following parameters according to your needs:
 
 - Instances: this controls the amount of cAdvisor instances in your cluster. There should be one and just one instance of cAdvisor in each node of your cluster. The package is prepared to install a single instance per node, and is initially set to launch a maximum of 256 instances. This means that the deployment will deploy as many instances as nodes are there in your cluster, and then stay "Waiting" in case the number of nodes in the cluster is increased so that new instances are spawn. If you would like to keep the application in a "Running" state instead, you can just adjust this parameter to exactly the number of nodes in your cluster. If you add nodes to your cluster at a later time, you can simply increase the number of instances when cAdvisor is running in Marathon.
 
@@ -45,7 +46,8 @@ Once these parameters are set, you can simply click "Install". A copy of cAdviso
 
 ### InfluxDB installation:
 
-Log into DC/OS, go to Universe, and select the `influxdb` package from Universe. Optionally, click on "Advanced Installation" and modify the following parameters according to your needs:
+Log into DC/OS, go to Universe, and select the `influxdb` package from Universe. 
+Click "Install" or, optionally, click on "Advanced Installation" and modify the following parameters according to your needs:
 
 - CPUs / Mem: This package is set by default to use 1 vCPU and 2G RAM to run. Depending on the amount of nodes and traffic received, you may want to increase these numbers to avoid application restarts due to resource exhaustion. 
 
@@ -61,7 +63,8 @@ Once these parameters are set, you can simply click "Install".
 
 ### Grafana installation:
 
-Log into DC/OS, go to Universe, and select the `influxdb` package from Universe. Optionally, click on "Advanced Installation" and modify the following parameters according to your needs:
+Log into DC/OS, go to Universe, and select the `influxdb` package from Universe. 
+Click "Install" or, optionally, click on "Advanced Installation" and modify the following parameters according to your needs:
 
 - Admin password: password to be used to access the Grafana interface as the "admin" user.
 
