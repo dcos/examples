@@ -146,7 +146,7 @@ Click on "Save and Open". The Dashboard should now open up showing the different
 
 You can uninstall any of these components from the User Interface, in the "Universe", "Installed" menu.
 
-To uninstall a component using the DC/OS CLI, run the `dcos package uninstall` command. For examplefollowing command:
+To uninstall a component using the DC/OS CLI, run the `dcos package uninstall` command. For example, to uninstall Grafana use the following command:
 
 ```
 $ dcos package uninstall grafana
