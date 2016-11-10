@@ -131,7 +131,7 @@ Click on the "Home" button at the top of the screen. This will create a drop-dow
 
 ![Grafana import dashboard](img/grafana-import-dashboard.png)
 
-Select the JSON file that you downloaded with the [example dashboard](etc/dashboard_aggregate_resource_usage.json).
+Select the JSON file that you downloaded with the [example dashboard](etc/dashboard_aggregate_resource_usage.json). Select the influxdb source of data that was previously configured.
 
 ![Grafana import dashboard 2](img/grafana-import-dashboard-2.png)
 
