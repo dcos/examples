@@ -23,16 +23,16 @@
 
 ## Prerequisites
 
-- A running DC/OS 1.8 cluster with at least 3 nodes with each 2 CPUs and 2 GB of RAM available.
+- A running DC/OS 1.8 cluster with at least 3 nodes with each 4 CPUs and 4 GB of RAM available.
 - [Elasticsearch](https://github.com/dcos/examples/tree/master/1.8/elasticsearch) package running within the DCOS cluster.
 - [DC/OS CLI](https://dcos.io/docs/1.8/usage/cli/install/) installed.
-- [AWS CLI](http://docs.aws.amazon.com/cli/latest/userguide/installing.html) installed.
+- [AWS CLI](http://docs.aws.amazon.com/cli/latest/userguide/installing.html) installed and configured with a user capable of S3, SNS, SQS and IAM resource provisioning.
 
 ## Install Scale
 
 Assuming you have a DC/OS cluster up and running with Elasticsearch, the first step is to install Scale:
 
-```bash
+```
 $ dcos package install scale
 This DC/OS Service is currently EXPERIMENTAL. There may be bugs, incomplete features, incorrect documentation, or other discrepancies.
 
@@ -119,6 +119,9 @@ $ dcos package uninstall scale
 This will only remove the Scale scheduler as there are the db, logstash and webserver components that are bootstrapped by the scheduler container. To fully remove all traces of scale the following commands should be run:
 
 ```bash
+dcos marathon app remove scale-db
+dcos marathon app remove scale-logstash
+dcos marathon app remove scale-webserver
 ```
 
 ## Further resources
