@@ -30,7 +30,7 @@ The certificate and key will be shared with the application from a host with a r
 
 Note that above means that the location of your secrets will be OPEN in the bootstrap node to download, at least during package installation, so this process is not considered adequate for production setups. Consider making these files available only during the process of booting up the registry, and then moving them outside of the “downloadable” path for security.
 
-A production install should count with proper valid certificates, or use a third party certificate authority such as [Let’s Encrypt](https://letsencrypt.org/). During this tutorial, we will use self-signed certs as outlined in the Docker [docs](https://github.com/docker/distribution/blob/master/docs/insecure.md#using-self-signed-certificates).
+A production install should count with proper valid certificates, or use a third party certificate authority such as [Let’s Encrypt](https://letsencrypt.org/). During this tutorial, we will use self-signed certs as outlined in the Docker [docs](https://docs.docker.com/registry/insecure/).
 
 #### Create a self-signed certificate
 
