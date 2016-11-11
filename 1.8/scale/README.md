@@ -102,7 +102,7 @@ Test Scale ingest. Now that our configuration is complete we can verify that Sca
 
 ```bash
 $ base64 /dev/urandom | head -c 2000000 > sample-data-2mb.txt
-$ aws s3 cp --acl public-read sample-data-2mb.txt s3://scale-bucket/
+$ aws s3 cp --acl public-read sample-data-2mb.txt s3://${BUCKET_NAME}/
 ```
 
 View processing results. In the Scale UI, navigate to Jobs. A Read Bytes job should have completed. Click on the job in the table and see the outputs in the detail view. You should be able to see that the file size is 1MiB. Feel free to download and inspect. Congratulations, you've processed your first file within Scale! For more advanced examples refer to the [Scale GitHub](https://github.com/ngageoint/scale) and [Docker Hub](https://hub.docker.com/r/geoint/scale) repositories, as well as the [documentation](http://ngageoint.github.io/scale/).
