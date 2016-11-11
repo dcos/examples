@@ -17,8 +17,8 @@
 
 - [Prerequisites](#prerequisites)
 - [Install Scale](#install-scale)
-- [Configure AWS Resources](#configure-aws)
-- [Process data in Scale](#process-data)
+- [Configure AWS Resources](#configure-aws-resources)
+- [Process data in Scale](#process-data-in-scale)
 - [Uninstall Scale](#uninstall-scale)
 
 ## Prerequisites
@@ -34,11 +34,19 @@ Assuming you have a DC/OS cluster up and running with Elasticsearch, the first s
 
 ```bash
 $ dcos package install scale
-Installing Marathon app for package [scale] version [4.0.0-0.0.1]
-DC/OS Scale is being installed!
+This DC/OS Service is currently EXPERIMENTAL. There may be bugs, incomplete features, incorrect documentation, or other discrepancies.
 
-	Documentation: https://docs.mesosphere.com/current/usage/service-guides/spark/
-	Issues: https://docs.mesosphere.com/support/
+We recommend a minimum of three nodes with at least 4 CPU and 6GB of RAM available for the Scale services and running Scale jobs.
+
+By default, Elasticsearch package *must* be running within your DCOS cluster. If you wish to use an externally hosted Elasticsearch cluster, specify one or more of the nodes in comma delimited format in the SCALE_ELASTICSEARCH_URLS variable. For quick-start purposes, Scale is bootstrapped with a Postgres database. This should *NEVER* be used for production purposes as it offers no underlying storage persistence. It can be replaced with an externally hosted Postgres by setting DB_HOST and associated settings appropriately.
+
+If you are running DCOS 1.8 Enterprise Edition or higher, you will need to set the DCOS_OAUTH_TOKEN in the DCOS section of the Advanced Settings. This value can be found within the dcos.toml file under in the dcos_acs_token value on a system with an authenticated DCOS CLI.
+Continue installing? [yes/no] yes
+Installing Marathon app for package [scale] version [4.0.0-0.0.1]
+The Scale DCOS Service has been successfully installed!
+
+        Documentation: https://ngageoint.github.io/scale/
+        Issues: https://github.com/ngageoint/scale/issues
 ```
 
 _Note_: The Scale package will install all required components, save for external dependency on Elasticsearch. This default is _not_ recommended for a production deployment, but will get you up and running quickly to experiment with the Scale system. The primary recommendation is to use an externally managed Postgres database for Scale state persistence. This can be accomplished by specifying the database connection information during installation in the `db` section of the config.json. A user name with ownership to an existing database containing the PostGIS extension is the only requirement.
@@ -52,8 +60,7 @@ The provided Scale example is specific to AWS Simple Storage Service (S3) proces
 Deploy S3 Bucket, SNS Topic and SQS Queue. A CloudFormation template is provided to get these resources quickly instantiated. The only parameter that must be specified is the BucketName. The below example command to launch the template uses shell syntax to generate a bucket name that is unique to satisfy the global uniqueness constraint. If you prefer a specific name, replace the ParameterValue with your chosen name.
 
 ```bash
-$ curl -L https://github.com/dcos/examples/tree/master/1.8/scale/scale-demo-cloudformation.json
-$ aws cloudformation create-stack --stack-name scale-s3-demo --template-body file://scale-demo-cloudformation.json --parameters "ParameterKey=S3BucketName,ParameterValue=scale-bucket-`date +"%Y%m%d-%H%M%S"`"
+$ aws cloudformation create-stack --stack-name scale-s3-demo --template-body https://raw.githubusercontent.com/dcos/examples/master/1.8/scale/scale-demo-cloudformation.json --parameters "ParameterKey=S3BucketName,ParameterValue=scale-bucket-`date +"%Y%m%d-%H%M%S"`"
 ```
 
 Describe Stack Resources. Creation of the CloudFormation stack from above should be completed in only a couple minutes. The following command may be used to extract information needed to set the IAM policy so Scale can access the created resources. If the Stack status is not CREATE_COMPLETE wait a minute and run it again. The OutputValues associated with UploadsQueueUrl and BucketName from this command are what will be needed.
@@ -72,8 +79,7 @@ $ aws iam create-access-key --user-name scale-test-user
 Create IAM policy and apply to user. The provided policy template will handle the ARNs of resources created by the above template. The policy will only need to be updated to reflect the ARNs if the defaults have been updated.
 
 ```bash
-$ curl -L https://github.com/dcos/examples/tree/master/1.8/scale/scale-demo-policy.json
-$ aws iam put-user-policy --user-name scale-test-user --policy-document file://scale-demo-policy.json --policy-name scale-demo-policy
+$ aws iam put-user-policy --user-name scale-test-user --policy-document https://raw.githubusercontent.com/dcos/examples/master/1.8/scale/scale-demo-policy.json --policy-name scale-demo-policy
 ```
 
 ## Process data in Scale
@@ -81,7 +87,7 @@ $ aws iam put-user-policy --user-name scale-test-user --policy-document file://s
 Configure Scale for processing. The final step to process data in our S3 bucket is to configure Scale with a workspace, Strike, job type and recipe type. The provided script can be used to quickly bootstrap Scale with the configuration necessary to extract the first MiB of input files and save them in the output workspace.
 
 ```bash
-$ curl -L https://github.com/dcos/examples/tree/master/1.8/scale/scale-init.sh 
+$ curl -L https://raw.githubusercontent.com/dcos/examples/master/1.8/scale/scale-init.sh  -o scale-init.sh
 $ export DCOS_TOKEN="DCOS token that can found within ~/.dcos/dcos.toml once DCOS CLI is authenticated against DCOS cluster."
 $ export DCOS_ROOT_URL="The externally routable Admin URL. Also found in ~/.dcos/dcos.toml."
 $ export REGION_NAME="AWS Region where SQS and S3 bucket reside."
@@ -96,7 +102,7 @@ Test Scale ingest. Now that our configuration is complete we can verify that Sca
 
 ```bash
 $ base64 /dev/urandom | head -c 2000000 > sample-data-2mb.txt
-$ aws s3 cp sample-data-2mb.txt s3://scale-bucket/
+$ aws s3 cp --acl public-read sample-data-2mb.txt s3://scale-bucket/
 ```
 
 View processing results. In the Scale UI, navigate to Jobs. A Read Bytes job should have completed. Click on the job in the table and see the outputs in the detail view. You should be able to see that the file size is 1MiB. Feel free to download and inspect. Congratulations, you've processed your first file within Scale! For more advanced examples refer to the [Scale GitHub](https://github.com/ngageoint/scale) and [Docker Hub](https://hub.docker.com/r/geoint/scale) repositories, as well as the [documentation](http://ngageoint.github.io/scale/).

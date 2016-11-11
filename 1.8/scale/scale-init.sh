@@ -24,7 +24,8 @@ cat << EOF > workspace.json
         }
     },
     "name": "s3-direct",
-    "title": "s3-direct"
+    "title": "s3-direct",
+    "base_url": "https://s3.amazonaws.com/${BUCKET_NAME}"
 }
 EOF
 
