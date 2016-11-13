@@ -201,6 +201,8 @@ In case you'd like to run an insecure registry without using any TLS certificate
 
 This basically tells the Docker engine in each node to entirely disregard security for your registry. While this is relatively easy to configure the daemon in this way, it is very insecure. It does expose your registry to trivial MITM. Only use this solution for isolated testing or in a tightly controlled, air-gapped environment.
 
+Run this in all agent nodes of your cluster:
+
 ```bash
 $ sudo tee /etc/systemd/system/docker.service.d/override.conf  <<-'EOF'
 [Service]
