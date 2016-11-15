@@ -63,7 +63,7 @@ Once these parameters are set, you can simply click "Install".
 
 ### Grafana installation:
 
-Log into DC/OS, go to Universe, and select the `influxdb` package from Universe. 
+Log into DC/OS, go to Universe, and select the `grafana` package from Universe. 
 Click "Install" or, optionally, click on "Advanced Installation" and modify the following parameters according to your needs:
 
 - Admin password: password to be used to access the Grafana interface as the "admin" user.
