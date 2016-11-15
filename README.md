@@ -21,6 +21,7 @@ Currently, the following examples are available:
 - Apache [Kafka](1.8/kafka/)
 - [linkerd](1.8/linkerd/)
 - Monitoring with [cAdvisor, InfluxDB and Grafana](1.8/cadvisor-influxdb-grafana) 
+- Monitoring with [Microsoft Operations Management Suite](1.8/msoms)
 - [NGINX](1.8/nginx/)
 - [Redis](1.8/redis/)
 - [Scale](1.8/scale)
