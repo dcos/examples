@@ -64,7 +64,7 @@ To make your proxy highly available or scale it, you can simply add a few more i
 
 ## Further reading
 
-### Unintsall
+### Uninstall
 
 Use the following commands to shut down and delete your ArangoDB service and the
 command line tool:
@@ -93,11 +93,216 @@ attribute values and their documentation see
 $ dcos package describe --config arangodb3
 ```
 
+#### Config options in detail
+
+* arangodb.framework-name[=arangodb3]
+
+	Identifier for the cluster.
+
+	This is a unique name for your arangodb cluster within DC/OS. If you want to deploy multiple clusters make sure this identifier is unique
+
+* arangodb.zk[=zk://master.mesos:2181/arangodb3]
+
+	ZooKeeper URL for storing state. Format: zk://host1:port1,host2:port2,.../path. Please note that the id is appended to the path.
+
+	This must be unique per arangodb instance as well.
+
+* arangodb.webui-host[=""]
+
+	For debugging: use this host for WEBUI request.
+
+* arangodb.proxy-port[=0]
+
+	Proxy port, use '0' to let Mesos select a port for you.
+
+	This configures the port on which the proxy will bind on the slave. This should generally be left untouched unless you are debugging.
+
+* arangodb.framework-port[=0]
+
+	Framework port, use '0' to let Mesos select a port for you.
+
+	This configures the port on which the framework will bind on the slave. This should generally be left untouched unless you are debugging.
+
+* arangodb.framework-cpus[=0.25]
+
+	cpus resources needed for each framework instance.
+
+	Controls how much cpus the framework is allowed to consume.
+
+* arangodb.framework-mem[=512]
+	
+	mem resources needed for each framework instance.
+
+	Controls how much memory the framework is allowed to consume.
+
+* arangodb.framework-instances[=1]
+
+	number of instances of the framework to run.
+
+	Controls the number of framework instances DC/OS should start
+
+* arangodb.framework-user[=""]
+
+	user under which to run the framework tasks
+
+	Used when Mesos authentication is enabled.
+
+* arangodb.principal[=arangodb3]
+	
+	Principal for persistent volumes
+
+	Check the Mesos documentation for details on how persistent volumes are working
+
+* arangodb.mode[=cluster]
+
+	Mode for framework, possible values: "standalone", "cluster"
+
+	"standalone" will deploy a single instance of ArangoDB. Whereas "cluster" will spawn a fully fledged cluster.
+
+* arangodb.async-replication[=false]
+
+    Whether we do asynchronous replication
+
+	If enabled Secondary DBServers will be deployed which will asynchronously replicate all data. The number of Secondaries will be aligned to the number of DBServers
+
+* arangodb.role[=arangodb3]
+
+	Role for framework
+
+	Mesos role for the framework to use. Check the Mesos documentation for details.
+
+* arangodb.minimal-resources-agent[=mem(*):2048;cpus(*):0.25;disk(*):2048]
+
+	Minimal mesos resources for an agent
+
+	Amount of resources specified in mesos resource format to use. Check the mesos documentation for details. An agent will need at least 1GB of RAM and 2GB of disk.
+
+* arangodb.minimal-resources-coordinator[=mem(*):4096;cpus(*):1;disk(*):1024]
+
+	Minimal mesos resources for a coordinator
+
+	Amount of resources specified in mesos resource format to use. Check the mesos documentation for details. A coordinator will need at least 2GB of RAM and 1GB of disk. It is not necessary to assign more diskspace unless you plan to hold many foxx applications. Coordinators do not contain any data. They however need proper computing power as most of the query work will be done on the coordinators.
+
+* arangodb.minimal-resources-dbserver[=mem(*):4096;cpus(*):1;disk(*):4096]
+
+	Minimal mesos resources for a DBserver
+
+	Amount of resources specified in mesos resource format to use. Check the mesos documentation for details. A DBServer will need mostly diskspace (all your data will be stored there) but also memory. The cluster will try to execute some of the data processing on the DBServer directly. So depending on your workload you might have to put more CPUs to it.
+
+
+* arangodb.minimal-resources-secondary[=mem(*):4096;cpus(*):1;disk(*):4096]
+
+	Minimal mesos resources for a secondary DBserver
+
+	Amount of resources specified in mesos resource format to use. Check the mesos documentation for details. A Secondary will need as much memory and diskspace as the DBServer but uses slightly less CPU.
+
+* arangodb.nr-agents[=3]
+    
+	Number of Agents
+
+	This should be an odd number stating how many agents you want to start. 1 is minimum (but not failsafe!). 3 will make the cluster fail safe.
+
+* arangodb.nr-dbservers[=2]
+
+	Initial number of DBservers
+
+	You may increase and decrease this number later.
+
+* arangodb.nr-coordinators[=2]
+	
+	Initial number of coordinators
+
+	You may increase and decrease this number later.
+
+* arangodb.failover-timeout[=604800]
+
+	Timeout after which an automatic failover is done.
+	
+	Mesos framework failover timeout. Check the mesos documentation for details. Should generally be left untouched and MUST be set to a high value!
+
+* arangodb.mesos-authenticate[=false]
+
+	If true use authentication with Mesos master.
+
+	Enable mesos authentication. Check mesos documentation for details.
+
+* arangodb.secret[=""]
+
+	Secret for authentication with Mesos.
+
+	Secret to use when doing authentication. Check mesos documentation for details.
+
+* arangodb.secondaries-with-dbservers[=false]
+
+	Flag, if each secondary must run on a node with a DBServer
+
+	If set to true secondaries will be spawned on the same machine as the DBServers. This makes deployment much more static but can improve performance slighly.
+
+
+* arangodb.coordinators-with-dbservers[=false]
+
+	Flag, if each coordinator must run on a node with a DBServer
+
+	If set to true coordinators will be spawned on the same machine as the DBServers. This makes deployment much more static but can improve performance slighly.
+
+* arangodb.arangodb-docker-image[=arangodb/arangodb-mesos:3.1]
+
+	Docker image to run ArangoDB.
+
+	This is the image which will be used to start ArangoDB instances. Please note that this is NOT the default arangodb image but rather an image which is has a special mesos start script (https://github.com/arangodb/arangodb-mesos-docker). Also note that the default is refering to the branch image meaning that any task will be started with the newest image in that branch. If you want to pin down the version use the full version (like 3.1.0).
+
+* arangodb.arangodb-privileged-image[=false]
+
+	Run arangodb image in privileged mode.
+
+	Mainly used for debugging purposes (allows using gdb within the image).
+
+* arangodb.arangodb-force-pull-image[=true]
+
+    Forcefully pull arangodb image. This overrides the docker cache and will make sure that you always get the latest image (will take some bandwidth though).
+
+* arangodb.arangodb-ssl-keyfile[=""]
+
+	Enable SSL using this base64 encoded SSL keyfile (see ArangoDB docs for keyfile specification)
+
+	Once you have created a keyfile as stated in the ArangoDB docs base64 encode the whole file and paste it here as a string to enable SSL in the cluster.
+
+* arangodb.arangodb-enterprise-key[=""]
+
+    Use enterprise edition using the following key
+
+	If you purchased the enterprise edition you will be provided with a key to use the enterprise edition instead of the community edition.
+
+* arangodb.arangodb-additional-agent-args[=""]
+
+    Additional arangod arguments to use when starting an agent (see arangod --help)
+
+	Customize the startup options of the agents. Anything pasted here will be appended to the agent command line.
+
+* arangodb.arangodb-additional-dbserver-args[=""]
+
+	Additional arangod arguments to use when starting a dbserver (see arangod --help)
+
+	Customize the startup options of the DBServers. Anything pasted here will be appended to the DBServer command line.
+
+* arangodb.arangodb-additional-secondary-args[=""]
+
+	Additional arangod arguments to use when starting a secondary dbserver (see arangod --help)
+
+	Customize the startup options of the secondaries. Anything pasted here will be appended to the secondary command line.
+
+
+* arangodb.arangodb-additional-coordinator-args[=""]
+	
+	Additional arangod arguments to use when starting a coordinator (see arangod --help)",
+    
+	Customize the startup options of the coordinators. Anything pasted here will be appended to the coordinator command line.
+
 ### Further Information
 
-For further information, visit the GitHub repo [arangoDB/arangodb-mesos-framework](https://github.com/arangoDB/arangodb-mesos-framework). Note that the ArangoDB service is also distributed as a Docker image (`arangodb/arangodb-mesos-framework`).
+For further information, visit the GitHub repo [arangoDB/arangodb-mesos-framework](https://github.com/arangodb/arangodb-mesos-framework). Note that the ArangoDB service is also distributed as a Docker image (`arangodb/arangodb-mesos-framework`).
 
-See the [README.md](https://github.com/ArangoDB/arangodb-mesos-framework) in the framework repository for details on how the framework scheduler is
+See the [README.md](https://github.com/arangodb/arangodb-mesos-framework) in the framework repository for details on how the framework scheduler is
 configured.
 
 ### Support and bug reports
