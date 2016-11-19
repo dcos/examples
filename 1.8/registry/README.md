@@ -2,7 +2,9 @@
 
 The Docker [registry](https://docs.docker.com/registry/) is a stateless, highly scalable server side application that stores and lets you distribute Docker images. This DC/OS package provides a private registry that can be made available to any other component in the system through a [virtual IP](https://dcos.io/docs/1.8/usage/service-discovery/load-balancing-vips/virtual-ip-addresses/) with the default of `registry.marathon.l4lb.thisdcos.directory:5000`.
 
-Note that this package will install with the default parameters, but Docker registry requires a valid TLS certificate and key to work properly and secure connections between the engines and registry hosting the cache. Follow this document to learn how to configure a download location for the certificate and key in the Advanced Installation “security” section.
+Note that this package will install with the default parameters, but in order to provide secure communication, Docker registry requires a valid TLS certificate and key to work properly and secure connections between the engines and registry hosting the cache. Follow this document to learn how to configure a download location for the certificate and key in the Advanced Installation “security” section.
+
+In case you'd like to configure your nodes to use the Docker Registry without TLS security and skip all configuration related to TLS security and certificates, please check out the section [Using an insecure Docker registry](#insecure) for details on how to configure the Docker engine in the nodes in your DC/OS cluster to work with an insecure registry.
 
 - Estimated time for completion: up to 30 minutes
 - Target audience:
@@ -14,6 +16,7 @@ Note that this package will install with the default parameters, but Docker regi
 
 - [Prerequisites](#prerequisites)
 - [Install](#install)
+- [Insecure Registry](#insecure)
 - [Use](#use)
 - [Storage options](#storage-options)
 - [Uninstall](#uninstall)
@@ -30,7 +33,7 @@ The certificate and key will be shared with the application from a host with a r
 
 Note that above means that the location of your secrets will be OPEN in the bootstrap node to download, at least during package installation, so this process is not considered adequate for production setups. Consider making these files available only during the process of booting up the registry, and then moving them outside of the “downloadable” path for security.
 
-A production install should count with proper valid certificates, or use a third party certificate authority such as [Let’s Encrypt](https://letsencrypt.org/). During this tutorial, we will use self-signed certs as outlined in the Docker [docs](https://github.com/docker/distribution/blob/master/docs/insecure.md#using-self-signed-certificates).
+A production install should count with proper valid certificates, or use a third party certificate authority such as [Let’s Encrypt](https://letsencrypt.org/). During this tutorial, we will use self-signed certs as outlined in the Docker [docs](https://docs.docker.com/registry/insecure/).
 
 #### Create a self-signed certificate
 
@@ -57,9 +60,9 @@ If you enter '.', the field will be left blank.
 Country Name (2 letter code) [XX]:US
 State or Province Name (full name) []:NY
 Locality Name (eg, city) [Default City]:NYC
-Organization Name (eg, company) [Default Company Ltd]:Mesosphere
-Organizational Unit Name (eg, section) []:SE
-Common Name (eg, your name or your servers hostname) []:'registry.marathon.l4lb.thisdcos.directory'
+Organization Name (eg, company) [Default Company Ltd]:mycompany
+Organizational Unit Name (eg, section) []:myorg
+Common Name (eg, your name or your servers hostname) []:registry.marathon.l4lb.thisdcos.directory
 Email Address []:myemailaddress@mesosphere.com
 ```
 After executing this command, your certificate and key should be available in the current directory:
@@ -191,6 +194,36 @@ $ for i in $MESOS_AGENTS; do ssh "$i" -oStrictHostKeyChecking=no 'sudo systemctl
 ```
 
 The package can now be installed from the Universe, using the bootstrap’s node IP address and TCP port to download the certificate and key file.
+
+## Insecure
+
+In case you'd like to run an insecure registry without using any TLS certificates, you can configure the nodes in your DC/OS cluster to work without certificates or security.
+
+This basically tells the Docker engine in each node to entirely disregard security for your registry. While this is relatively easy to configure the daemon in this way, it is very insecure. It does expose your registry to trivial MITM. Only use this solution for isolated testing or in a tightly controlled, air-gapped environment.
+
+Run this in all agent nodes of your cluster:
+
+```bash
+$ sudo tee /etc/systemd/system/docker.service.d/override.conf  <<-'EOF'
+[Service]
+EnvironmentFile=-/etc/sysconfig/docker
+EnvironmentFile=-/etc/sysconfig/docker-storage
+EnvironmentFile=-/etc/sysconfig/docker-network
+ExecStart=
+ExecStart=/usr/bin/docker daemon -H fd:// $OPTIONS \
+         $DOCKER_STORAGE_OPTIONS \
+         $DOCKER_NETWORK_OPTIONS \
+         $BLOCK_REGISTRY \
+         $INSECURE_REGISTRY \
+         --storage-driver=overlay \
+         --insecure-registry registry.marathon.l4lb.thisdcos.directory:5000 
+EOF
+
+systemctl daemon-reload
+systemctl restart docker
+```
+
+For more information on running without security, please check the [Docker documentation](https://docs.docker.com/registry/insecure/).
 
 ## Install
 

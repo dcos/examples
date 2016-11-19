@@ -1,0 +1,19 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Action": "*",
+            "Effect": "Allow",
+            "Resource": [
+                "arn:aws:sqs:*:*:scale-s3-demo-UploadsQueue-*"
+            ]
+        },
+        {
+            "Action": "*",
+            "Effect": "Allow",
+            "Resource": [
+                "arn:aws:s3:::scale-bucket-*"
+            ]
+        }
+    ]
+}
