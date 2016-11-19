@@ -1,6 +1,6 @@
 # How to use Nexus 3 repository manager on DC/OS
 
-[Nexus 3](http://www.sonatype.org/nexus/) is a repository manager that supports a broad variety of package managers, namely Bower, Docker, Maven 2, npm, NuGet, PyPI, and Raw site repositories. DC/OS allows you to quickly configure, install and manage NGINX.
+[Nexus 3](http://www.sonatype.org/nexus/) is a repository manager that supports a broad variety of package managers, namely Bower, Docker, Maven 2, npm, NuGet, PyPI, and Raw site repositories. DC/OS allows you to quickly configure, install and manage a Nexus 3 instance.
 
 - Estimated time for completion: 10 minutes
 - Target audience: Anyone interested in running a repository manager.
