@@ -36,7 +36,7 @@ Let's get started by creating a file called `options.json` with following conten
       "enabled": false
     }
   },
-  "routing": {
+  "networking": {
     "virtual-host": "nexus.dcos.mydomain.mytld"
   }
 }
@@ -49,11 +49,25 @@ The above `options.json` file configures Nexus 3 as follows:
 - `mem`: This parameter configures the amount of RAM to allocate to Nexus 3.
 - `role`: The role which should be used to launch the service. Default is `*`.
 - `local-volumes`: This parameter configures whether service should use local host volumes. If so, the following properties need to be defined as well:
- - `host-volume`: This is the folder/path which will be mounted in the container, and used to persist the Nexus 3 data on. You need to make sure that the folder exists on the host you used for host pinning, and that you did a 'chown -R 200:200' on the folder respectively.
+ - `host-volume`: This is the folder/path which will be mounted in the container, and used to persist the Nexus 3 data on. You need to make sure that the folder exists on the host you used for host pinning, and that it has the appropriate permissions/ownership. You can find a short guide below.
  - `pinned-hostname`: The hostname (or IP address) which should be used to run Nexus 3 on. This is important, because the `host-volume` folder needs to exist on that host (see above). Replace the value with an actual agent IP address.
-- `routing`: Use this if you want your Nexus 3 service to be available externally.
+- `networking`: Use this if you want your Nexus 3 service to be available externally.
  - `virtual-host`: Specify the CNAME (or FQDN) of your edge loadbalancer of the DC/OS cluster to be used to expose the service on.
-   
+
+**Creating the host volume**
+
+To create the host volume, you have to ssh into the host where you want to run the Nexus 3 service on (via host pinning). Then, you should create a folder for the Nexus 3 data. Once you did this, you need to change the ownership of the respective folder to `200:200`. 
+
+See the example below:
+
+```bash
+$ ssh user@hostname
+
+hostname $ mkdir -p /opt/nexus
+
+hostname $ chown -R 200:200 /opt/nexus
+```
+
 ### External persistent volumes
 
 ```json
@@ -68,7 +82,7 @@ The above `options.json` file configures Nexus 3 as follows:
       "enabled": true
     }
   },
-  "routing": {
+  "networking": {
     "virtual-host": "nexus.dcos.mydomain.mytld"
   }
 }
@@ -83,11 +97,13 @@ The above `options.json` file configures Nexus 3 as follows:
 - `local-volumes`: Can be left blank if using external persistent volumes.
 - `external-volumes`: This parameter configures whether service should use external persistent volumes. If so, the following property need to be defined as well:
  - `enabled`: Signals that external persistent volumes should be used.
-- `routing`: Use this if you want your Nexus 3 service to be available externally.
+- `networking`: Use this if you want your Nexus 3 service to be available externally.
  - `virtual-host`: Specify the CNAME (or FQDN) of your edge loadbalancer of the DC/OS cluster to be used to expose the service on.
 
 ## Usage
 
-If you defined `routing.virtual-host` you should be able to access Nexus 3 on the URL you specified there. The initial username/passowrd combination to log in is `admin` and `admin123`.
+If you defined `networking.virtual-host` you should be able to access Nexus 3 on the URL you specified there. Otherwise, you can access it from inside the DC/OS via `http://nexus.marathon.mesos:<hostPort>`, where the `hostPort` can be found under the Nexus task's details under the Services tab of the DC/OS UI. 
+
+The initial username/password combination to log in is `admin` and `admin123`.
 
 For further documentation on how to use Nexus 3, please refer to the [docs](http://books.sonatype.com/nexus-book/index.html).
