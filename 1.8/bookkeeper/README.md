@@ -1,7 +1,6 @@
-# How to use Bookkeeper package on DC/OS
+# How to use Bookkeeper on DC/OS
 
-[Bookkeeper](http://bookkeeper.apache.org/) BookKeeper is a replicated log service which can be used to build replicated state machines. A log contains a sequence of events which can be applied to a state machine. BookKeeper guarantees that each replica state machine will see all the same entries, in the same order. 
-One bookkeeper instance is called a bookie, By default this package deploy 1 bookie. Usually we should deploy at least 3 bookies to start a bookkeeper cluster.
+[Bookkeeper](http://bookkeeper.apache.org/) is a replicated log service which can be used to build replicated state machines. A log contains a sequence of events which can be applied to a state machine. Bookkeeper guarantees that each replica state machine will see all the same entries, in the same order. One bookkeeper instance is called a bookie, and by default this package deploys one bookie. Usually we should deploy at least 3 bookies to start a bookkeeper cluster.
 
 - Estimated time for completion: 5 minutes
 - Target audience: Anyone who wants to deploy a bookkeeper cluster
@@ -11,8 +10,8 @@ One bookkeeper instance is called a bookie, By default this package deploy 1 boo
 
 - A running DC/OS 1.8 cluster with at least 3 nodes, each at least having 1 CPU, 1G of memory and 10GB of persistent disk storage in total.
 - [DC/OS CLI](https://dcos.io/docs/1.8/usage/cli/install/) installed.
-- Zookeeper service instance could be accessed(by default at: zk://master.mesos:2181).
-- By default, bookies will use agent dirs: /mnt/index /mnt/ledgers /mnt/journal to store bookie data.
+- Zookeeper service instance should be accessed (by default at: `zk://master.mesos:2181`).
+- By default, bookies will use agent dirs: `/mnt/index`, `/mnt/ledgers`, and `/mnt/journal` to store bookie data.
 
 ## Install Bookkeeper
 
@@ -26,6 +25,7 @@ bookkeeper on DCOS installed successfully!
 ```
 
 This command installs the `bookkeeper` DC/OS CLI subcommand and starts an instance of the Bookkeer(a bookie) service with its default configuration under its default name, `bookkeeper`. Bookie instance use host mode of network, and by defaut it exports service at "agent_ip:3181". 
+
 Now click on the Services tab in the DC/OS UI to watch Bookkeeper start up:
 
 ![Services](img/services.png)
@@ -38,11 +38,11 @@ You now have a bookie running on DC/OS! You could click "Scale" tab at the top r
 
 ![Scale](img/scale.png)
 
-The zookeeper contains all the avilable bookies information, In this deploy, bookkeeper use the zookeeper instance provided by DCOS, and could access through exhibitor: "http://master.dcos/exhibitor". Congratulations, if you have find the avilable bookies here.
+Zookeeper contains all the avilable bookies information, In this deploy, bookkeeper use the zookeeper instance provided by DCOS, and could access through exhibitor: "http://master.dcos/exhibitor". Congratulations, if you have find the avilable bookies here.
 
 ![Zookeeper](img/zk.png)
 
-## Use bookkeeper 
+## Use Bookkeeper 
 
 Now that bookkeeper cluster is running you can create ledgers, fill bookie with log entries.
 
@@ -53,7 +53,7 @@ After this deploy of bookkeeper, [Download](http://distributedlog.incubator.apac
 
 ## Further reading
 
-### Unintsall
+### Uninstall Bookkeeper
 
 Use the following commands to shut down and delete your bookkeeper service:
 
@@ -81,9 +81,8 @@ $ dcos package describe --config bookkeeper
 
 ### Further Information
 
-
-- The BookKeeper user mailing list is: user@bookkeeper.apache.org.
-- The BookKeeper developer mailing list is : dev@bookkeeper.apache.org.
+- The BookKeeper user mailing list is: `user@bookkeeper.apache.org`.
+- The BookKeeper developer mailing list is : `dev@bookkeeper.apache.org`.
 - The Bookkeeper [JIRA](https://issues.apache.org/jira/browse/BOOKKEEPER)
 
 - [DistributedLog](http://distributedlog.incubator.apache.org/)
