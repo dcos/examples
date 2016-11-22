@@ -13,6 +13,7 @@ Got any questions? Please reach out Michael Hausenblas on the [DC/OS Community S
 Currently, the following examples are available:
 
 - [ArangoDB](1.8/arangodb/)
+- [Bookkeeper](1.8/bookkeeper/)
 - Apache [Cassandra](1.8/cassandra/)
 - [Chronos](1.8/chronos/)
 - [Docker registry](1.8/registry/)
