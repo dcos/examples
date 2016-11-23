@@ -34,6 +34,8 @@ See https://github.com/mesosphere/marathon-lb for documentation.
 ```
 Note that for advanced Marathon-LB configurations such as enabling HTTPS see the [Marathon-LB Quick Start](https://dcos.io/docs/1.8/usage/service-discovery/marathon-lb/quickstart/) guide.
 
+After installation, you will also need to modify the Marathon-LB installation to remove the haproxy-map property. Go to the Marathon-LB service and scale it down to zero instances.
+Then click edit. Switch to JSON mode. Under "args", remove the line "--harproxy-map". Then scale up to one instance.
 
 ## Install Koding
 
