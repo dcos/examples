@@ -1,6 +1,6 @@
 # How to use Koding on DC/OS
 
-[Koding](https://wwww.koding.com/) is cloud development platform. Through the use of Stacks, you can define server environments which include all of the necessary software for you to develop your code. You can then deploy these stacks to your local Mesosphere DC/OS instance or to any of our supported cloud providers.
+[Koding](https://www.koding.com/) is cloud development platform. Through the use of Stacks, you can define server environments which include all of the necessary software for you to develop your code. You can then deploy these stacks to your local Mesosphere DC/OS instance or to any of our supported cloud providers.
 
 - Estimated time for completion: 10 minutes
 - Target audience: Development teams
