@@ -20,6 +20,7 @@ Currently, the following examples are available:
 - [Elasticsearch](1.8/elasticsearch/)
 - [Jenkins](1.8/jenkins/)
 - Apache [Kafka](1.8/kafka/)
+- [koding](1.8/koding/)
 - [linkerd](1.8/linkerd/)
 - [Nexus 3](1.8/nexus/)
 - Monitoring with [cAdvisor, InfluxDB and Grafana](1.8/cadvisor-influxdb-grafana) 
