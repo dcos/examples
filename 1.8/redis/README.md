@@ -1,17 +1,21 @@
 # How to use Redis on DC/OS
 
 [Redis](http://redis.io/) is a popular in-memory data structure store, used as database, cache and message broker.
-The DC/OS service [mr-redis](https://github.com/mesos/mr-redis), maintained by [Huawei](http://www.huawei.com/en/)
-is a Mesos framework allowing you to manage Redis datastores standalone or in a clustered setup.
 
 - Estimated time for completion: 5 minutes
-- Target audience: Anyone interested using an in-memory data store. 
+- Target audience: Anyone interested using an in-memory data store.
 - Scope: Learn how to use Redis on DC/OS
 
+Note, that there are two different DC/OS services for redis:
+- redis: A single redis container, easy to install and test but not suited for production worksloads.
+- mr-redis: A framework allowing you to mange multiple Redis datastores standalone or in a clustered setup.
 
 **Table of Contents**:
 
+
 - [Prerequisites](#prerequisites)
+- [Use single container redis service](#single-container-redis)
+- [mr-redis framework](#mr-redis)
 - [Install mr-redis](#install-mr-redis)
 - [Create a Redis instance](#create-a-redis-instance)
 - [Access the Redis instance](##access-the-redis-instance)
@@ -21,6 +25,25 @@ is a Mesos framework allowing you to manage Redis datastores standalone or in a 
 
 - A running DC/OS 1.8 cluster with at least 2 nodes with 1 CPU and 128MB of RAM available.
 - [DC/OS CLI](https://dcos.io/docs/1.8/usage/cli/install/) installed.
+
+## Single container redis
+Note, that this service is targeted at testing redis and not for production workloads!
+You can install the single redis container with a simple `dcos package install redis`.
+Then the easiest option to test redis is by storing a key manually via the redis-cli
+- SSH into node where redis is running: 
+``` bash 
+dcos node ssh --master-proxy --mesos-id=$(dcos task redis --json | jq -r '.[] | .slave_id')
+```
+NOTE: This requires you to have the ssh-key required to conenct to the machines added to your local ssh agent (e.g., via ssh-add my_public_key).
+- Because redis is running in docker container, we can list all docker containers using docker ps and get the ContainerID.
+- Connect to a bash session to the running container: `sudo docker exec -i -t CONTAINER_ID /bin/bash`
+- Start the redis CLI: redis-cli
+  - Set key i`set mykey key1`
+  - Check value is there `get mykey`
+
+##  mr-redis
+The DC/OS service [mr-redis](https://github.com/mesos/mr-redis), maintained by [Huawei](http://www.huawei.com/en/)
+is a Mesos framework allowing you to manage Redis datastores standalone or in a clustered setup.
 
 ## Install mr-redis
 
