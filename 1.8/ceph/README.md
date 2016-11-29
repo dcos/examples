@@ -1,9 +1,22 @@
 ![DC/OS Logo](https://acomblogimages.blob.core.windows.net/media/Default/Windows-Live-Writer/dcoslogo.png) ![Ceph Logo](http://www.open-v.net/images/openv/o3/icons/ceph.png)
 
-Ceph is a distributed filesystem. [TODO] Add more information about Ceph. Add more information about the capabilities of the Ceph on Mesos framework.
+Ceph is a free-software storage platform that implements object storage on a single distributed computer cluster, and provides interfaces for object-, block- and file-level storage. Ceph aims primarily for completely distributed operation without a single point of failure, scalable to the exabyte level, and freely available.
+
+Ceph replicates data and makes it fault-tolerant,using commodity hardware and requiring no specific hardware support. As a result of its design, the system is both self-healing and self-managing, aiming to minimize administration time and other costs.
+
+This package streamlines the installation of the [Ceph-on-Mesos](https://github.com/vivint-smarthome/ceph-on-mesos) framework. Ceph on Mesos is a working Mesos Framework with a boring name. It can be used to reliably deploy and manage a persistent, Ceph cluster.
+
+Some highlights:
+
+Orchestrated bootstrap and deployment.
+Reserves and launches Monitors and OSDs on reserved resources. This keeps other tasks from taking resources away from an OSD when it restarts.
+Low dependencies.
+Launch OSD containers in a "paused" state to support manual intervention.
 
 - Estimated time for completion: 45 minutes
-- Target audience: Anyone who wants to deploy a distributed filesystem on DC/OS. This package requires an intermediate/advanced DC/OS skill set.
+- Target audience: Anyone who wants to deploy a distributed storage solution on DC/OS. 
+- This package requires an intermediate/advanced DC/OS skill set.
+
 - Scope:
  - Configure/format the DC/OS agents that will run the Ceph OSDs.
  - Configure and launch the Ceph-on-mesos package.
@@ -12,11 +25,10 @@ Ceph is a distributed filesystem. [TODO] Add more information about Ceph. Add mo
 
 **Terminology**:
 
-- **Monitor**: TODO.
-- **OSD**: TODO.
-- **Ceph node**:  TODO.
-- **Ceph client**:  TODO.
-- **Volume**: TODO.
+- **Monitor**:  (ceph-mon) processes that keep track of active and failed cluster nodes.
+- **OSD**: Object storage devices (ceph-osd) that actually store the content of files on a local filesystem.
+- **Ceph node**:  A DC/OS node running a Ceph OSD (and possibly a Ceph Monitor too.)
+- **Ceph client**:  A computer running the client part of Ceph to consume storage services provided by it.
 
 **Table of Contents**:
 
