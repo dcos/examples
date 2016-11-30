@@ -198,7 +198,7 @@ dcos package install --yes --options ./ceph-options.json ceph
 
 After installation, the package will be running under the `Services` tab:
 
-![Run: Services View](img/run_services_view.png)
+![Run: Services View](img/run_services_view.png.png)
 
 You can check the package instance’s correct functioning by clicking on the package name and looking at the task’s logs:
 
