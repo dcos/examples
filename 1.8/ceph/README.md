@@ -387,6 +387,7 @@ EOF
 
 #### ceph.client.admin.keyring
 
+```bash
 cat <<-EOF > /etc/ceph/ceph.client.admin.keyring
 [client.admin]
   key = $(echo "$SECRETS" | jq .adminRing -r)
@@ -395,6 +396,7 @@ cat <<-EOF > /etc/ceph/ceph.client.admin.keyring
   caps mon = "allow *"
   caps osd = "allow *"
 EOF
+```
 
 ### Ceph clients: Install Ceph client software
 
