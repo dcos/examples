@@ -273,7 +273,7 @@ Additionally, you will quickly notice how OSDs start reserving storage resources
 
 ![Run: Storage Reservations Dashboard](img/run_storage_reservations_dashboard.png)
 
-The Services tab also shows how Ceph is using storage resources:
+The Nodes tab also shows how Ceph is using storage resources upon selecting the "Grid" option and the "Disk" metric:
 
 ![Run: Storage Reservations Services](img/run_storage_reservations_services.png)
 
