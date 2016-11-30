@@ -107,7 +107,7 @@ You can check that the operations above worked with:
 mount | grep "/dcos/volume"
 ```
 
-The output should be similar to:
+Expected output:
 ```bash
 /dev/xvdb on /dcos/volume0 type xfs (rw,relatime,seclabel,attr2,inode64,noquota)
 ```
