@@ -325,6 +325,8 @@ One this string is copied, export it in the node that you want to use as a Ceph 
 
 ```bash
 export SECRETS='{<paste JSON blob here>}'
+export SECRETS='{"fsid":"bc74ca0d-ff9a-480d-ac18-ccad34d144d4","adminRing":"AQBAxDxYFv/CBRAALIZk22t8X3q3WS8+cHuoKQ==","monRing":"AQBAxDxY9o4BDBAA3hv1p/SJiHhwe5KwWOddug==","mdsRing":"AQBAxDxYa2YCDBAAXZjSsMWBNkdaKtjiXmNVig==","osdRing":"AQBAxDxYeiYDDBAANaBgkJi98oA1chOk4tvXUQ==","rgwRing":"AQBAxDxY4RAEDBAAV5APHwy6clkNAON8rwSP2w=="}'
+
 ```
 
 Check that the FSID was correctly parsed:
@@ -356,13 +358,13 @@ Then create each one of the configuration files as follows:
 NOTE: make sure to swap out HOST_NETWORK below with the value [configured in the Ceph package](#install-ceph) as HOST_NETWORK:
 
 ```bash
-export HOST_NETWORK=172.31.0.0/20 #use the value that matches your DC/OS node network.
-
+export HOST_NETWORK=172.31.0.0/20       #Use the value for the network where your DC/OS nodes live.
+rpm --rebuilddb && yum install -y bind-utils
+export MONITORS=$(for i in $(dig srv _mon._tcp.ceph.mesos|awk '/^_mon._tcp.ceph.mesos/'|awk '{print $8":"$7}'); do echo -n $i',';done)
 cat <<-EOF > /etc/ceph/ceph.conf
 [global]
 fsid = $(echo "$SECRETS" | jq .fsid)
-mon host = $(curl leader.mesos:8123/v1/services/_mon._tcp.ceph.mesos | jq '. | map(.ip + ":" + .port) | sort | join(",")')
-
+mon host = "${MONITORS::-1}"
 auth cluster required = cephx
 auth service required = cephx
 auth client required = cephx
@@ -377,7 +379,6 @@ osd_pool_default_pgp_num = 128
 osd_pool_default_size = 3
 rbd_default_features = 1
 EOF
-
 ```
 
 #### ceph.mon.keyring
@@ -404,7 +405,6 @@ EOF
 ### Ceph clients: Install Ceph client software
 
 ```bash
-rpm --rebuilddb
 yum install -y centos-release-ceph-jewel
 yum install -y ceph
 ```
@@ -418,14 +418,28 @@ Check ceph is working on the client by verifying it can get a correct connection
 ```
 
 Output should look like:
-[TODO]
+```bash
+got monmap epoch 3
 
 ```
 /bin/python /bin/ceph -s
 ```
 
 Output should look like:
-[TODO]
+```bash
+    cluster bc74ca0d-ff9a-480d-ac18-ccad34d144d4
+     health HEALTH_WARN
+            mon.172.31.30.125 low disk space
+            mon.172.31.30.126 low disk space
+            mon.172.31.30.127 low disk space
+     monmap e3: 3 mons at {172.31.30.125=172.31.30.125:1026/0,172.31.30.126=172.31.30.126:1026/0,172.31.30.127=172.31.30.127:1026/0}
+            election epoch 6, quorum 0,1,2 172.31.30.125,172.31.30.126,172.31.30.127
+     osdmap e7: 3 osds: 3 up, 3 in
+            flags sortbitwise
+      pgmap v55: 64 pgs, 1 pools, 0 bytes data, 0 objects
+            399 MB used, 24146 MB / 24546 MB avail
+                  64 active+clean
+```
 
 ## Use Ceph
 
@@ -453,11 +467,32 @@ mkdir -p $VOLUME_MOUNT_PATH
 mount $VOLUME_DEV $VOLUME_MOUNT_PATH
 ```
 
+Output should look like:
+
+```bash
+# echo $VOLUME_DEV
+/dev/rbd0
+
+# mkfs.xfs -f $VOLUME_DEV
+meta-data=/dev/rbd0              isize=256    agcount=9, agsize=31744 blks
+         =                       sectsz=512   attr=2, projid32bit=1
+         =                       crc=0        finobt=0
+data     =                       bsize=4096   blocks=262144, imaxpct=25
+         =                       sunit=1024   swidth=1024 blks
+naming   =version 2              bsize=4096   ascii-ci=0 ftype=0
+log      =internal log           bsize=4096   blocks=2560, version=2
+         =                       sectsz=512   sunit=8 blks, lazy-count=1
+realtime =none                   extsz=4096   blocks=0, rtextents=0
+```
+
+
 You can verify the correct functioning with:
 
 ```bash
+mount |grep rbd0
+/dev/rbd0 on /mnt/ceph/my_volume type xfs (rw,relatime,seclabel,attr2,inode64,sunit=8192,swidth=8192,noquota)
 cd $VOLUME_MOUNT_PATH
-touch "DOES_THIS_WORK_-_YES_IT_DOES"
+touch "DOES_THIS_WORK_-_YES_-_DCOS_ROCKS"
 ls
 ```
 
@@ -479,5 +514,5 @@ Use the [framework cleaner](https://docs.mesosphere.com/1.8/usage/managing-servi
 
 ## Further resources
 
-1. [Official Ceph project homepage](https://www.ceph.org)
+1. [Official Ceph project homepage](https://www.ceph.com)
 2. [Ceph on Mesos framework homepage](https://github.com/vivint-smarthome/ceph-on-mesos)
