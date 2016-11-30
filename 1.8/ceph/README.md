@@ -4,20 +4,11 @@ Ceph is a free-software storage platform that implements object storage on a sin
 
 Ceph replicates data and makes it fault-tolerant,using commodity hardware and requiring no specific hardware support. As a result of its design, the system is both self-healing and self-managing, aiming to minimize administration time and other costs.
 
-This package streamlines the installation of the [Ceph-on-Mesos](https://github.com/vivint-smarthome/ceph-on-mesos) framework. Ceph on Mesos is a working Mesos Framework with a boring name. It can be used to reliably deploy and manage a persistent, Ceph cluster.
-
-Some highlights:
-
-Orchestrated bootstrap and deployment.
-Reserves and launches Monitors and OSDs on reserved resources. This keeps other tasks from taking resources away from an OSD when it restarts.
-Low dependencies.
-Launch OSD containers in a "paused" state to support manual intervention.
-
 - Estimated time for completion: 45 minutes
 - Target audience: Anyone who wants to deploy a distributed storage solution on DC/OS. 
 - This package requires an intermediate/advanced DC/OS skill set.
 
-- Scope:
+**Scope**:
  - Configure/format the DC/OS agents that will run the Ceph OSDs.
  - Configure and launch the Ceph-on-mesos package.
  - Configure and launch the components of the Ceph Framework from the framework's UI.
@@ -25,8 +16,8 @@ Launch OSD containers in a "paused" state to support manual intervention.
 
 **Terminology**:
 
-- **Monitor**:  (ceph-mon) processes that keep track of active and failed cluster nodes.
-- **OSD**: Object storage devices (ceph-osd) that actually store the content of files on a local filesystem.
+- **Monitor**:  Processes that keep track of active and failed cluster nodes.
+- **OSD**: Object storage devices that actually store the content of files on a local filesystem of the DC/OS nodes where they run.
 - **Ceph node**:  A DC/OS node running a Ceph OSD (and possibly a Ceph Monitor too.)
 - **Ceph client**:  A computer running the client part of Ceph to consume storage services provided by it.
 
@@ -49,11 +40,11 @@ Launch OSD containers in a "paused" state to support manual intervention.
 # Prerequisites
 
 - A running DC/OS v1.8 cluster with at least 3 private agents. Ceph-on-Mesos REQUIRES at least 3 nodes to install monitors and OSDs on in order to achieve a quorum.
-- All nodes in the cluster that will be part of the Ceph installation MUST have a separate volume for Ceph OSDs to use
+- All nodes in the cluster that will be part of the Ceph installation MUST have a separate volume for Ceph OSDs to use.
   * As an example, this can be achieved in AWS EC2 by just adding a second volume to each instance before installing.
 - Marathon-LB MUST be running in the cluster.
-- A node in the cluster with a working DC/OS CLI, and working with Mesos-DNS for `*.mesos` address resolution
-- NTP (or an equivalent time sync service) needs to be running in all nodes of the cluster
+- A node in the cluster with a working DC/OS CLI.
+- NTP (or an equivalent time sync service) needs to be running in all nodes of the cluster.
 
 The installation/configuration process has 4 stages:
 
@@ -97,7 +88,7 @@ w
 "|fdisk $i;mkfs.xfs -f $i;done
 EOF
 chmod +x ./$CEPH_FDISK
-./$CEPH_FDISK
+./$CEPH_FDISK && rm $CEPH_FDISK
 
 # loop through the disks/volumes in $CEPH_DISKS, mount them under /dcos/volumeX
 WORDS=($CEPH_DISKS)
@@ -145,7 +136,10 @@ systemctl start dcos-mesos-slave
 Check that the new volumes are visible to Mesos-agent with:
 ```
 cat /var/lib/dcos/mesos-resources | grep volume
-# expected output:
+```
+
+Expected output:
+``` bash
 # MESOS_RESOURCES='[{"name": "ports", "type": "RANGES", "ranges": {"range": [{"begin": 1025, "end": 2180}, {"begin": 2182, "end": 3887}, {"begin": 3889, "end": 5049}, {"begin": 5052, "end": 8079}, {"begin": 8082, "end": 8180}, {"begin": 8182, "end": 32000}]}}, {"type": "SCALAR", "name": "disk", "role": "*", "disk": {"source": {"type": "MOUNT", "mount": {"root": "/dcos/volume0"}}}, "scalar": {"value": 8049}}, {"type": "SCALAR", "name": "disk", "role": "*", "scalar": {"value": 4031}}]'
 
 ``` 
@@ -154,9 +148,9 @@ After running these commands on at least three nodes of the DC/OS cluster, proce
 
 # Install Ceph
 
-## From the DC/OS GUI
+## Install Ceph from the DC/OS GUI
 
-Log into DC/OS, go to Universe, and select the Ceph package from Universe. Select `Advanced Installation`. Two parameters are ***mandatory***:
+Log into DC/OS, go to Universe, and select the Ceph package from Universe. Select `Advanced Installation`. Two parameters are ***MANDATORY***:
 
 - ***cluster_network*** : Network where the Ceph nodes live. This is usually the host network where the DC/OS nodes live. This network is assumed to be trusted. E.g. `172.31.0.0/20`
 
@@ -166,7 +160,7 @@ Once the package is configured according to your installation and needs, click o
 
 ![Install: Configure cluster and public networks](img/configure_cluster_and_public_networks.png)
 
-## From the DC/OS CLI
+## Install Ceph rom the DC/OS CLI
 
 Log into a terminal where the DC/OS CLI is installed and has connectivity with the cluster. The two mandatory parameters referenced above can be passed as options to the DC/OS CLI by creating a `ceph-options.json` file with the following content (Modify the values as per your own installation/desire) :
 
@@ -200,7 +194,7 @@ dcos package install --yes --options ./ceph-options.json ceph
 
 ## Validate installation
 
-### GUI
+### Validate from GUI
 
 After installation, the package will be running under the `Services` tab:
 
@@ -210,7 +204,7 @@ You can check the package instance’s correct functioning by clicking on the pa
 
 ![Run: Log View](img/run_log_view.png)
 
-### CLI
+### Validate from CLI
 
 After installation, you can check the correct functioning with:
 
@@ -223,7 +217,7 @@ Once this process is completed, the Ceph scheduler should be running in your clu
 
 # Configure Ceph
 
-Once the Ceph package has been installed in your DC/OS cluster, the Ceph configuration interface should have been published by Marathon-LB in the public node of your cluster. The port where it's available is configurable with the ***external_access_port*** parameter available in the "Advanced Installation" options. By default, it will be on port 5000. 
+Once the Ceph package has been installed in your DC/OS cluster, the Ceph configuration interface  will be available through Marathon-LB in the public node of your cluster. The port where it's available is configurable with the ***external_access_port*** parameter available in the "Advanced Installation" options. By default, it will be on port 5000. 
 
 In order to configure and launch the components of the Ceph package, open up the Ceph "config" page at `http://your_public_node:5000`.
 
@@ -289,7 +283,7 @@ Once the Ceph cluster is up, we can configure clients to consume volumes provide
 
 The parameter ***public_network*** [configured in the Ceph package](#install-ceph) controls the subnet/mask that authorized Ceph clients need to live in in order to be allowed to use Ceph services.
 
-***NOTE***: these commands are an example for CentOS 7.2. Ceph clients are available for all major Linux distributions and for other Operating Systems. These clients should be able to connect to Ceph running on DC/OS, but the configuration may be slightly different. Consult the documentation provided by your Operating System vendor for details.
+***NOTE***: these commands are an example for CentOS 7.2. Ceph clients are available for all major Linux distributions and other Operating Systems. These clients should be able to connect to Ceph running on DC/OS, but the configuration may be slightly different. Consult the documentation provided by your Operating System vendor for details.
 
 ### Ceph clients: prerequisites
 
@@ -306,10 +300,10 @@ cp jq /usr/bin
 In order for the clients to authenticate to the Ceph cluster, the Ceph package creates a set of Secrets that are stored in Zookeeper. In order to use these secrets in the Ceph clients, you can log into the Zookeeper instance running on your DC/OS cluster through the Exhibitor administration interface available at:
 
 ```
-http://DCOS_IP:8181
+http://$DCOS_IP:8181
 ```
 
-Where `DCOS_IP` is the IP or DNS name where your DC/OS cluster is available.
+Where `$DCOS_IP` is the IP or DNS name where your DC/OS cluster is available.
 
 In the Exhibitor interface, open the "Explorer". Open up the root ZK folder by expanding with the button on the left of the folder icon.
 Go to "ceph-on-mesos", click on "secrets.json", and finally copy the entire "Data as String" available at the bottom. 
@@ -335,7 +329,7 @@ Check that the FSID was correctly parsed:
 echo "$SECRETS" |jq .fsid
 ```
 
-Your output should look like:
+Expected output:
 
 ```bash
 "d8e57f50-c26f-43d6-b678-95640beb27f4"
