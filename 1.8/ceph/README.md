@@ -308,7 +308,7 @@ Where `$DCOS_IP` is the IP or DNS name where your DC/OS cluster is available.
 In the Exhibitor interface, open the "Explorer". Open up the root ZK folder by expanding with the button on the left of the folder icon.
 Go to "ceph-on-mesos", click on "secrets.json", and finally copy the entire "Data as String" available at the bottom. 
 
-![Configure: Secrets in Exhibitor](img/configure_secrets_in_exhibitor.png)
+![Configure: Secrets in Exhibitor](img/img:configure_secrets_in_exhibitor.png)
 
 Example:
 ```bash
