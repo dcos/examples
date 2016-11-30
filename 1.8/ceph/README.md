@@ -88,7 +88,7 @@ w
 "|fdisk $i;mkfs.xfs -f $i;done
 EOF
 chmod +x ./$CEPH_FDISK
-./$CEPH_FDISK && rm $CEPH_FDISK
+./$CEPH_FDISK && rm -f $CEPH_FDISK
 
 # loop through the disks/volumes in $CEPH_DISKS, mount them under /dcos/volumeX
 WORDS=($CEPH_DISKS)
