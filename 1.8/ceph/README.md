@@ -416,8 +416,8 @@ Check ceph is working on the client by verifying it can get a correct connection
 Output should look like:
 ```bash
 got monmap epoch 3
-
 ```
+```bash
 /bin/python /bin/ceph -s
 ```
 
