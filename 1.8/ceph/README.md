@@ -417,6 +417,9 @@ Output should look like:
 ```bash
 got monmap epoch 3
 ```
+
+As an additional test, check the status of the Ceph cluster:
+
 ```bash
 /bin/python /bin/ceph -s
 ```
