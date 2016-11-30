@@ -241,7 +241,7 @@ Modifying these values and clicking "Save Changes" will automatically launch the
 
 ### Validate Ceph Monitor configuration
 
-After clicking on "Save", go to the "Home" page and watch the monitor processes be created and progress until they all are in the `TASK_RUNNING` state.
+After clicking on "Save", go to the "Home" page and watch the monitor processes be created and progress until they all are in the `TASK_RUNNING` state. Please note this can take a few minutes.
 
 ![Configure: Monitors running](img/configure_monitors_running.png)
 
