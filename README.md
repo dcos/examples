@@ -19,6 +19,7 @@ Currently, the following examples are available:
 - [Docker registry](1.8/registry/)
 - [Elasticsearch](1.8/elasticsearch/)
 - [Gitlab](1.8/gitlab/)
+- [GeoServer](1.8/geoserver/)
 - [Jenkins](1.8/jenkins/)
 - Apache [Kafka](1.8/kafka/)
 - [koding](1.8/koding/)
