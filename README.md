@@ -17,6 +17,7 @@ Currently, the following examples are available:
 - [Chronos](1.8/chronos/)
 - [Docker registry](1.8/registry/)
 - [Elasticsearch](1.8/elasticsearch/)
+- [GitLab Runner](1.8/gitlab-runner/)
 - [Jenkins](1.8/jenkins/)
 - Apache [Kafka](1.8/kafka/)
 - [linkerd](1.8/linkerd/)
