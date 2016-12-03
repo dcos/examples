@@ -148,11 +148,49 @@ After running these commands on at least three nodes of the DC/OS cluster, proce
 
 # Install Ceph
 
+## Find out your cluster's network
+
+Ceph on DC/OS requires you to configure your cluster's network used for internal communication and to validate clients. This is the network where your DC/OS hosts live. You can find out the value of that network with the following code snippet:
+
+```bash
+# get the default gateway interface. Assumes this is the interface used for Ceph too
+default_if=$(ip route list | awk '/^default/ {print $5}')
+# Get IP@ and netmask for the interface above
+IP_ADDR=$( ifconfig $default_if|grep inet|awk -F ' ' '{print $2}'|sed -n 1p )
+NETMASK=$( ifconfig $default_if|grep inet|awk -F ' ' '{print $4}'|sed -n 1p )
+# Calculate the network from IP_ADDR and NETMASK above
+IFS=. read -r i1 i2 i3 i4 <<< "$IP_ADDR"
+IFS=. read -r m1 m2 m3 m4 <<< "$NETMASK"
+NETWORK=$( printf "%d.%d.%d.%d\n" "$((i1 & m1))" "$((i2 & m2))" "$((i3 & m3))" "$((i4 & m4))" )
+# Functions to convert from bitmap netmask (255.255.0.0) to cdr netmask (/16)
+# Assumes there's no "255." after a non-255 byte in the mask
+mask2cdr ()
+{
+local x=${1##*255.}
+set -- 0^^^128^192^224^240^248^252^254^ $(( (${#1} - ${#x})*2 )) ${x%%.*}
+x=${1%%$3*}
+echo $(( $2 + (${#x}/4) ))
+}
+# Get my CDR Mask from the function above
+CDRMASK=$(mask2cdr $NETMASK)
+#######
+# This is the parameter we need for the Ceph Framework
+HOST_NETWORK=$NETWORK"/"$CDRMASK
+# check value.
+echo $HOST_NETWORK
+```
+
+Output should be similar to:
+
+```bash
+172.31.0.0/20
+```
+
 ## Install Ceph from the DC/OS GUI
 
 Log into DC/OS, go to Universe, and select the Ceph package from Universe. Select `Advanced Installation`. Two parameters are ***MANDATORY***:
 
-- ***cluster_network*** : Network where the Ceph nodes live. This is usually the host network where the DC/OS nodes live. This network is assumed to be trusted. E.g. `172.31.0.0/20`
+- ***cluster_network*** : Network where the Ceph nodes live, obtained through the code snippet above. This is usually the host network where the DC/OS nodes live. This network is assumed to be trusted. E.g. `172.31.0.0/20`
 
 - ***public_network*** : Network that the Ceph services are exposed on, where the Ceph clients/consumers live. This is often the same as cluster_network unless Ceph is to be exposed outside the cluster. E.g. `172.31.0.0/20`
 
