@@ -544,12 +544,6 @@ touch "DOES_THIS_WORK_-_YES_-_DCOS_ROCKS"
 ls
 ```
 
-Optionally you can add the volume to `/etc/fstab` so that it's autoamtically mounted on reboot. For example, if your mounted Ceph volume is `dev/rbd0` and the directory you wish to mount it on is `/mnt/ceph/my_volume`, you can use:
-
-```bash
-echo "/dev/rbd0 /mnt/ceph/my_volume/ xfs defaults 0 0" >> /etc/fstab
-```
-
 You can repeat this sequence to create additional volumes that are hosted in your Ceph cluster.
 
 # Uninstall
