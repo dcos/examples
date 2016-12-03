@@ -548,7 +548,6 @@ Optionally you can add the volume to `/etc/fstab` so that it's autoamtically mou
 
 ```bash
 echo "/dev/rbd0 /mnt/ceph/my_volume/ xfs defaults 0 0" >> /etc/fstab
-/dev/rbd0 on  type xfs
 ```
 
 You can repeat this sequence to create additional volumes that are hosted in your Ceph cluster.
