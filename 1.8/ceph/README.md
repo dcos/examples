@@ -183,7 +183,7 @@ echo $HOST_NETWORK
 Output should be similar to:
 
 ```bash
-172.31.0.0/20
+172.31.16.0/20
 ```
 
 ## Install Ceph from the DC/OS GUI
