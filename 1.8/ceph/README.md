@@ -63,6 +63,8 @@ Save the name of the volumes to be used by Ceph as a list separated with space. 
 CEPH_DISKS="/dev/xvdb /dev/xvdc" 
 ```
 
+### Format volumes to be used for Ceph as XFS
+
 On each node of the cluster that will eventually become a Ceph node, run the code below (you can just copy&paste it on each node). NOTE: Substitute the value of `CEPH_DISKS` for the name of the volumes used for Ceph as explained above:
 
 ```bash
@@ -89,7 +91,11 @@ w
 EOF
 chmod +x ./$CEPH_FDISK
 ./$CEPH_FDISK && rm -f $CEPH_FDISK
+```
 
+### Mount the volumes to be used for Ceph, and add them to `/etc/fstab`
+
+```bash
 # loop through the disks/volumes in $CEPH_DISKS, mount them under /dcos/volumeX
 WORDS=($CEPH_DISKS)
 COUNT=${#WORDS[@]}
@@ -97,7 +103,10 @@ for  ((i=0; i<COUNT; i++)); do
   mkdir -p /dcos/volume$i
   #i-th word in string
   DISK=$( echo $CEPH_DISKS | cut -d " " -f $(($i+1)) )
+  #mount the $DISK as /dcos/volume$i
   mount $DISK /dcos/volume$i
+  #add $DISK to /etc/fstab for automatic re-mounting on reboot
+  echo "$DISK /dcos/volume$i xfs defaults 0 0" >> /etc/fstab
 done
 ```
 
@@ -111,6 +120,8 @@ Expected output:
 ```bash
 /dev/xvdb on /dcos/volume0 type xfs (rw,relatime,seclabel,attr2,inode64,noquota)
 ```
+
+### Restart Mesos agent to recognize and add the newly mounted volumes
 
 Finally, in all nodes to be used for Ceph, finish the configuration by stopping the `dcos-mesos-slave` process, clearing the resource cache, and restarting it:
 
