@@ -23,7 +23,8 @@ The instructions below use a pinned hostname constraint to success the applicati
 - [Prerequisites](#prerequisites)
 - [Setting up Gitlab](#setting-up-gitlab)
 - [Setting up the Repository](#setting-up-the-repository)
-
+- [Set up the Pipeline](#set-up-the-pipeline)
+- [Resources](#resources)
 
 ## Prerequisites
 
@@ -149,3 +150,41 @@ node { // Checkout source code from Git stage 'Checkout' checkout scm
 ```
 git add * git commit -m "Inital commit." git push
 ```
+
+
+## Set up the Pipeline
+
+Now that we've got the repository set up, we need to set up a job in Jenkins that runs on any change to our repository.
+
+1. Navigate to Jenkins. First we'll add the GitLab username and password. For now, we'll re-use the root user, but you can create new users as you see fit. Make sure to call these credentials `gitlab` as referenced in the Jenkinsfile:
+
+# IMAGE
+
+- Next, go back to the Jenkins homepage and and click on New Item. We'll create a new "Pipeline" job:
+
+# IMAGE
+
+- For this simple example, we'll just select `"Poll SCM" and set the schedule to * * * * *`. This asks us to poll every minute, which might be inefficient for large installations:
+
+# IMAGE
+
+Next, change the Pipeline definition to use "Pipeline script from SCM" and configure the demo repository:
+
+# IMAGE
+
+- Within a minute of pressing save, you should see the pipeline trigger (as it has never run before), and build agents spinning up on DC/OS. You can check that it's working by going to the GitLab project and viewing the "Registry" page. You should see a tagged image that corresponds to the SHA of the last commit of your `gitlab-demo` repository:
+
+# IMAGE
+
+- Finally, go back to the Services page of the DC/OS UI. You'll see a new "nginx" service. Clicking on the "Open Service" button for this will take you to a "hello-world" page being served by the Nginx we just built!
+
+# IMAGE
+
+You can test this pipeline further by pushing commits to the GitLab repository. These commits will trigger new Jenkins build, which will push an updated version of the application to GitLab and then trigger a Marathon deployment!
+
+
+## Resources
+
+- [About GitLab](https://about.gitlab.com/about/)
+
+- [Deploy GitLab on DC/OS today](https://mesosphere.com/blog/2016/09/16/gitlab-dcos/) on the Mesosphere blog
