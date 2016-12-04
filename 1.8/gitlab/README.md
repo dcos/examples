@@ -4,7 +4,7 @@
 
 Using GitLab on DC/OS now allows you to co-locate all of the tools you need for developers on one easy to manage cluster. Just as with any Universe package, you can robustly install several side by side instances of GitLab to provide segregated instances for each of your development teams. Alternatively, you can just as easily install GitLab in a highly available configuration that many teams use concurrently.
 
-#IMAGE
+![Continuous Delivery with GitLab](img/gitlab-cd.png)
 
 This quickstart installation uses the single node version of GitLab that includes an installation of Postgres and Redis in the same container.
 
@@ -40,21 +40,21 @@ You will need to do this for the Jenkins agent too using the [Advanced Configura
 
 1. Before starting, identify the hostname of a private agent that you'd like to install GitLab to. Typically this will be one that has an EBS volume or similar mounted, that you are regularly snapshotting or have set up some other sort of backup solution on. You can pick one of these by visiting the "Nodes" page on your cluster and choosing a private node. We'll use `10.0.0.134` for this example.
 
-#IMAGE
+![DC/OS Nodes](img/nodes.png)
 
 - Visit the Universe page in DC/OS, and click on the "Install Package" button underneath GitLab.
 - Click on "Advanced Installation" and navigate to the "routing" tab. Specify the virtual host you prepared earlier, e.g. `gitlab-test.mesosphere.com`:
 
-# IMAGE
+![Gitlab Routing Properties](img/routing.png)
 
 - Finally, let's enter the hostname we want GitLab to run on. Navigate to the "single-node" tab and put the node hostname you picked earlier into the pinned hostname field:
 
-# IMAGE
+![GitLab Single Node Properties](img/single-node.png)
 
 - We're ready to install! Click the green "Review and Install" button, verify your settings are correct and then click "Install". Navigate to the services UI to see GitLab deploying. The first run will take a few minutes while it initialises the built-in Postgres database.
 - Once GitLab has deployed, navigate to the hostname you used earlier for virtual host. You should see the following page inviting you to set up the root password:
 
-# IMAGE
+![GitLab Set Password](img/set-password.png)
 
 - Finally, you will want to ensure your DC/OS agents are authenticated against this registry. You can either run `docker login` on each of these nodes or [see the instructions](https://mesosphere.github.io/marathon/docs/native-docker-private-registry.html) on how you might distribute your Docker credentials.
 
@@ -62,7 +62,7 @@ You will need to do this for the Jenkins agent too using the [Advanced Configura
 
 1. Let's start by creating a new project in GitLab. Our application is going to use a simple customised Nginx container serving an HTML page. First, create a new project called gitlab-demo. For simplicity, we chose "Public" visibility.
 
-# IMAGE
+![New GitLab Project](img/new-project.png)
 
 1. Once this is done, clone the project to your local machine:
 
@@ -148,7 +148,9 @@ node { // Checkout source code from Git stage 'Checkout' checkout scm
 9. Now that we've got our four files, add, commit and push them to the repository:
 
 ```
-git add * git commit -m "Inital commit." git push
+git add *
+git commit -m "Inital commit."
+git push
 ```
 
 
@@ -158,27 +160,27 @@ Now that we've got the repository set up, we need to set up a job in Jenkins tha
 
 1. Navigate to Jenkins. First we'll add the GitLab username and password. For now, we'll re-use the root user, but you can create new users as you see fit. Make sure to call these credentials `gitlab` as referenced in the Jenkinsfile:
 
-# IMAGE
+![Add GitLab credentials](img/credentials.png)
 
 - Next, go back to the Jenkins homepage and and click on New Item. We'll create a new "Pipeline" job:
 
-# IMAGE
+![Create New Item](img/new-item.png)
 
 - For this simple example, we'll just select `"Poll SCM" and set the schedule to * * * * *`. This asks us to poll every minute, which might be inefficient for large installations:
 
-# IMAGE
+![Poll SCM](img/poll-scm.png)
 
-Next, change the Pipeline definition to use "Pipeline script from SCM" and configure the demo repository:
+- Next, change the Pipeline definition to use "Pipeline script from SCM" and configure the demo repository:
 
-# IMAGE
+![Pipeline Configuration](img/pipeline.png)
 
 - Within a minute of pressing save, you should see the pipeline trigger (as it has never run before), and build agents spinning up on DC/OS. You can check that it's working by going to the GitLab project and viewing the "Registry" page. You should see a tagged image that corresponds to the SHA of the last commit of your `gitlab-demo` repository:
 
-# IMAGE
+![Registry Tags](img/registry.png)
 
 - Finally, go back to the Services page of the DC/OS UI. You'll see a new "nginx" service. Clicking on the "Open Service" button for this will take you to a "hello-world" page being served by the Nginx we just built!
 
-# IMAGE
+![Hello World Page](img/hello-world.png)
 
 You can test this pipeline further by pushing commits to the GitLab repository. These commits will trigger new Jenkins build, which will push an updated version of the application to GitLab and then trigger a Marathon deployment!
 
