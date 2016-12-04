@@ -180,8 +180,6 @@ Now that we've got the repository set up, we need to set up a job in Jenkins tha
 
 - Finally, go back to the Services page of the DC/OS UI. You'll see a new "nginx" service. Clicking on the "Open Service" button for this will take you to a "hello-world" page being served by the Nginx we just built!
 
-![Hello World Page](img/hello-world.png)
-
 You can test this pipeline further by pushing commits to the GitLab repository. These commits will trigger new Jenkins build, which will push an updated version of the application to GitLab and then trigger a Marathon deployment!
 
 
