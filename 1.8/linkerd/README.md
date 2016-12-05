@@ -24,13 +24,80 @@ The linkerd package in the DC/OS Universe repository installs linkerd on each ag
 
 In order to use linkerd, applications must send traffic through it. Many HTTP applications (typically, those written in C, Go, Ruby, Python or PHP) can do this globally by setting an `http_proxy` environment variable to the address of their node-local linkerd instance. Other applications, including non-HTTP applications, will need to direct traffic to their local linkerd instances in other ways.
 
-You can install linkerd on your DC/OS cluster with this command:
+linkerd supports both Open Source DC/OS and Mesosphere Enterprise DC/OS. Mesosphere Enterprise DC/OS provides authenticated access to the Marathon API. Follow the appropriate section below depending on your DC/OS setup.
+
+### Open Source DC/OS
+
+#### Install linkerd
 
 ```bash
 $ dcos package install --options=<(echo '{"linkerd":{"instances":<node count>}}') linkerd
 ```
 
 Where `<node count>` is the number of agent nodes in your DC/OS cluster.
+
+### Mesosphere Enterprise DC/OS
+
+If authenticated Marathon API access is enabled, follow the steps below to set up a keypair, service account, and secret. More details available at https://docs.mesosphere.com/1.8/administration/id-and-access-mgt/service-auth/custom-service-auth/.
+
+#### Install Enterprise DC/OS CLI
+
+```bash
+$ dcos package install dcos-enterprise-cli
+```
+
+#### Generate a keypair
+```bash
+$ dcos security org service-accounts keypair private-key.pem public-key.pem
+```
+
+#### Modify keypair files for use in curl
+```bash
+$ PUBLIC_KEY=$(tr -d '\n' < public-key.pem | sed "s/BEGIN PUBLIC KEY-----/BEGIN PUBLIC KEY-----\\\\n/g" | sed "s/-----END PUBLIC KEY/\\\\n-----END PUBLIC KEY/g")
+$ PRIVATE_KEY=$(tr -d '\n' < private-key.pem | sed "s/BEGIN PRIVATE KEY-----/BEGIN PRIVATE KEY-----\\\\\\\\n/g" | sed "s/-----END PRIVATE KEY/\\\\\\\\n-----END PRIVATE KEY/g")
+```
+
+##### Create a service account
+```bash
+$ curl -X PUT -H "Content-Type: application/json" -H "Authorization: token=$(dcos config show core.dcos_acs_token)" -d "{\"description\":\"linkerd test service\",\"public_key\":\"$PUBLIC_KEY\"}" $(dcos config show core.dcos_url)/acs/api/v1/users/linkerd-service-acct
+```
+
+#### Add permissions to service account
+```bash
+$ curl -X PUT -H "Authorization: token=$(dcos config show core.dcos_acs_token)" $(dcos config show core.dcos_url)/acs/api/v1/acls/dcos:superuser/users/linkerd-service-acct/full
+```
+
+#### Create secret
+```bash
+$ curl -v -X PUT -H "Content-Type: application/json" -H "Authorization: token=$(dcos config show core.dcos_acs_token)" -d "{\"value\":\"{\\\"scheme\\\": \\\"RS256\\\",\\\"uid\\\": \\\"linkerd-service-acct\\\",\\\"private_key\\\": \\\"$PRIVATE_KEY\\\",\\\"login_endpoint\\\": \\\"https://leader.mesos/acs/api/v1/auth/login\\\"}\"}" $(dcos config show core.dcos_url)/secrets/v1/secret/default/linkerd-secret
+```
+
+#### Install linkerd
+
+Create an options file:
+
+```bash
+OPTIONS=$(cat <<EOF
+{
+  "linkerd": {
+    "instances": <node count>,
+    "marathon-host": "leader.mesos",
+    "marathon-port": 80,
+    "marathon-uri-prefix": "/marathon",
+    "secret_name": "linkerd-secret"
+  }
+}
+EOF
+)
+```
+
+Where `<node count>` is the number of agent nodes in your DC/OS cluster, and `secret_name` matches the secret created in the previous step. The additional `marathon-*` options are typical of a DC/OS Enterprise installation.
+
+```bash
+$ dcos package install --options=<(echo $OPTIONS) linkerd
+```
+
+## Verify Installation
 
 The linkerd service mesh will now be running on every agent node in your DC/OS cluster, ready to route requests by Marathon task name. To check that linkerd is working, [find the IP for a public node on your cluster](https://dcos.io/docs/1.8/administration/locate-public-agent/) and navigate to `http://<public node ip>:9990/`. You should see an admin page like this:
 
@@ -68,6 +135,10 @@ The dashboard includes three sections:
 
 As you send traffic through your system, you can the dashboard will update automatically to capture service performance, without configuration on your end.
 
-## Further Reading
+## Further Resources
 
-For a step-by-step example with a sample app, read the blog post: [DC/OS Blog: Service Discovery and Visibility with Ease on DC/OS](https://dcos.io/blog/2016/service-discovery-and-visibility-with-ease-on-dc-os/index.html)
+* [linkerd Documentation](https://linkerd.io/documentation/)
+* [linkerd Slack](http://slack.linkerd.io)
+* [linkerd Mailing List](https://groups.google.com/forum/#!forum/linkerd-users)
+* [Universe Package Maintainer Email](mailto:hello@buoyant.io)
+* [DC/OS Blog: Service Discovery and Visibility with Ease on DC/OS](https://dcos.io/blog/2016/service-discovery-and-visibility-with-ease-on-dc-os/index.html)
