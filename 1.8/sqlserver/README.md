@@ -4,7 +4,9 @@
 
 For official documentation on Microsoft SQL Server, please refer to the [oficial product documentation](https://docs.microsoft.com/en-us/sql/linux/)
 
-Microsoft SQL Server is a relational database management system developed by Microsoft. As a database server, it is a software product with the primary function of storing and retrieving data as requested by other software applications—which may run either on the same computer or on another computer across a network (including the Internet).\n\nMicrosoft SQL Server 2016 delivers breakthrough in-memory performance, unparalleled security, end-to-end mobile BI and advanced analytics.
+Microsoft SQL Server is a relational database management system developed by Microsoft. As a database server, it is a software product with the primary function of storing and retrieving data as requested by other software applications—which may run either on the same computer or on another computer across a network (including the Internet).
+
+Microsoft SQL Server 2016 delivers breakthrough in-memory performance, unparalleled security, end-to-end mobile BI and advanced analytics.
 
 This package installs an instance of Microsoft SQL Service and makes it available for use by any other applications running in the cluster at the virtual address ***sqlserver.marathon.l4lb.thisdcos.directory*** on port 1433, where "sqlserver" and "1433" are the values for service name and port number respectively. 
 
