@@ -137,14 +137,6 @@ model
 msdb
 
 (4 rows affected)
-Name
---------------------------------------------------------------------------------------------------------------------------------
-master
-tempdb
-model
-msdb
-
-(4 rows affected)
 1> CREATE DATABASE testdb;
 2> GO
 1> USE testdb;
