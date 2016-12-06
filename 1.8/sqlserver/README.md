@@ -121,7 +121,7 @@ sudo yum -y install mssql-tools
 
 # Test SQL server with SQL command-line tools
 
-Once Microsoft SQL tools are installed, connectivity and functioning tests can be achieved. A full set of tests is available in the official ![Microsoft Documentation](https://docs.microsoft.com/en-us/sql/linux/sql-server-linux-connect-and-query-sqlcmd). Here's a subset to test basic functioning:
+Once Microsoft SQL tools are installed, connectivity and functioning tests can be achieved. A full set of tests is available in the official [Microsoft Documentation](https://docs.microsoft.com/en-us/sql/linux/sql-server-linux-connect-and-query-sqlcmd). Here's a subset to test basic functioning:
 
 ```bash
 sqlcmd -S sqlserver.marathon.l4lb.thisdcos.directory -U SA -P 'YourStrong!Passw0rd'
