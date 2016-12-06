@@ -2,7 +2,7 @@
 
 ***NOTE: This is a community-contributed packaged. This package and tutorial are not maintained or supported by Microsoft***
 
-For official documentation on Microsoft SQL Server, please refer to the ![oficial product documentation](https://docs.microsoft.com/en-us/sql/linux/)
+For official documentation on Microsoft SQL Server, please refer to the [oficial product documentation](https://docs.microsoft.com/en-us/sql/linux/)
 
 Microsoft SQL Server is a relational database management system developed by Microsoft. As a database server, it is a software product with the primary function of storing and retrieving data as requested by other software applications—which may run either on the same computer or on another computer across a network (including the Internet).\n\nMicrosoft SQL Server 2016 delivers breakthrough in-memory performance, unparalleled security, end-to-end mobile BI and advanced analytics.
 
@@ -61,9 +61,8 @@ Log into DC/OS, go to Universe, and select the `sqlserver` package from Universe
 
 Once the package is configured according to your installation and needs, click on "Review and Install", and finally on "Install".
 
-![Install: Configure cluster and public networks](img/configure_cluster_and_public_networks.png)
 
-## Install Ceph rom the DC/OS CLI
+## Install SQL server rom the DC/OS CLI
 
 Log into a terminal where the DC/OS CLI is installed and has connectivity with the cluster. Install the package from the DC/OS CLI with the default values.
 
