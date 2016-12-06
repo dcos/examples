@@ -1,4 +1,4 @@
-![DC/OS Logo](https://acomblogimages.blob.core.windows.net/media/Default/Windows-Live-Writer/dcoslogo.png) ![SQL Server Logo](http://techbuzzbd.com/wp-content/uploads/2016/06/sql-logo-no-version.png)
+![DC/OS Logo](https://acomblogimages.blob.core.windows.net/media/Default/Windows-Live-Writer/dcoslogo.png) ![SQL Server Logo](img/sql-server-logo.jpg)
 
 ***NOTE: This is a community-contributed packaged. This package and tutorial are not maintained or supported by Microsoft***
 
