@@ -3,12 +3,12 @@
 [Neo4j](https://www.neo4j.com/) is a highly scalable, native graph database purpose-built to leverage not only data but also its relationships. Neo4j's native graph storage and processing engine deliver constant, real-time performance, helping enterprises build intelligent applications to meet today’s evolving data challenges.
 
 - Estimated time for completion: 5 minutes
-- Target audience: Anyone who wants to deploy a distributed graph-model database on DC/OS. Beginner level.
+- Target audience: Anyone who wants to deploy a clustered graph-model database on DC/OS. Beginner level.
 - Scope: Covers the basics in order to get you started with Neo4j on DC/OS.
 
 ## Prerequisites
 
-- A running DC/OS 1.8 cluster with at least 3 nodes having 6 CPU, 24GB of memory and 24GB of persistent disk storage in total.
+- A running DC/OS 1.8 cluster with at least 3 nodes having 3 CPU, 6GB of memory and 12GB of persistent disk storage in total. (Suggested: 3 nodes having 6 CPU, 24GB of memory and 24GB)
 - [DC/OS CLI](https://dcos.io/docs/1.8/usage/cli/install/) installed.
 
 ## Install Neo4j
@@ -17,7 +17,7 @@ The DC/OS CLI provides a convenient way to deploy applications on your DC/OS clu
 
 ```
 $ dcos package install neo4j
-The default configuration requires at least 3 nodes having 6 CPU, 24GB of memory and 24GB of persistent disk storage in total. This DC/OS Service is currently EXPERIMENTAL. There may be bugs, incomplete features, incorrect documentation, or other discrepancies. Default credentials are neo4j/dcos. Please change them on first use.
+The default configuration requires at least 3 nodes having 3 CPU, 6GB of memory and 12GB of persistent disk storage in total. This DC/OS Service is currently EXPERIMENTAL. There may be bugs, incomplete features, incorrect documentation, or other discrepancies. Default credentials are neo4j/dcos. Please change them on first use.
 Continue installing? [yes/no] yes
 Installing Marathon app for package [neo4j] version [1.0.0-3.1.0-RC1]
 Neo4j has been successfully installed.
@@ -28,7 +28,7 @@ If you want to install read replica servers as well, please do:
 
 ```
 $ dcos package install neo4j-replica
-The default configuration requires at least 2 nodes having 4 CPU, 8GB of memory and 16GB of persistent disk storage in total. This DC/OS Service is currently EXPERIMENTAL. There may be bugs, incomplete features, incorrect documentation, or other discrepancies. Default credentials are neo4j/dcos. Please change them on first use.
+The default configuration requires at least 2 nodes having 2 CPU, 4GB of memory and 8GB of persistent disk storage in total. This DC/OS Service is currently EXPERIMENTAL. There may be bugs, incomplete features, incorrect documentation, or other discrepancies. Default credentials are neo4j/dcos. Please change them on first use.
 Continue installing? [yes/no] yes
 Installing Marathon app for package [neo4j-replica] version [1.0.0-3.1.0-RC1]
 Neo4j has been successfully installed.
@@ -49,7 +49,7 @@ Congratulations, you now have Neo4j running on DC/OS!
 
 ## Public proxy for debugging purpose
 
-If you want to access your Neo4j cluster outside your DC/OS cluster, you need to install the public proxy:
+If you want to access your Neo4j cluster from outside your DC/OS cluster, you need to install the public proxy:
 
 ```
 $ dcos package install neo4j-proxy
@@ -60,16 +60,16 @@ Neo4j has been successfully installed.
 Documentation can be found at https://neo4j.com/docs and https://neo4j.com/developer
 ```
 
-After installation, point your web browser to the public IP of your agent and port 7474. If you login and enter `:sysinfo` you will see all your running cluster nodes.
+After installation, point your web browser to the public IP of the agent running the proxy on port 7474. If you login and enter `:sysinfo` you will see all your running cluster nodes.
 
-**Important:** Please check `Do not use Bolt`. Only port 7474 is exported through this proxy, therefore is Bolt not working on the outside. Inside DC/OS Bolt works as expected. 
+**Important:** Please check in the configuration sidebar `Do not use Bolt`. Only http via port 7474 is exported through this proxy, therefore the binary Bolt protocol is not working on the outside. Inside DC/OS Bolt works as expected. 
 
 ![Neo4j :sysinfo](img/neo4j.png)
 
 
 ## Scale Neo4j
 
-To scale out your Neo4j cluster, just use the functionality in the DC/OS service section. Select either `neo4j/core` or `neo4j/replica` and do `Scale` and select the wanted numbers of instances.
+To scale out your Neo4j cluster, just use the functionality in the DC/OS service section. Select either `neo4j/core` or `neo4j/replica` and do `Scale` and select the required numbers of instances.
 
 ![Scale](img/scale.png)
 
@@ -129,7 +129,7 @@ $ dcos package describe --config neo4j
 
 	The name of your existing DC/OS overlay network.
 
-* neo4j-core.mem[=8000]
+* neo4j-core.mem[=4000]
 
 	Memory [mb] allocated to one neo4j core instance.
 
@@ -159,11 +159,11 @@ $ dcos package describe --config neo4j
 
 	The name of your existing DC/OS overlay network.
 
-* neo4j-replica.mem[=8000]
+* neo4j-replica.mem[=4000]
 
 	Memory [mb] allocated to one neo4j replica instance.
 
-#### Config options in detail - replica
+#### Config options in detail - proxy
 
 * neo4j-replica.auth-password[=dcos]
 
