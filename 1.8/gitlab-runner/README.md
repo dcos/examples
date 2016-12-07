@@ -14,7 +14,7 @@
 
 ## Concepts
 
-The GitLab Runner comes with a Docker-in-Docker daemon installed. This means that it can be used for build _within_ Docker containers, and at the same time adhere to the resource constraints set by Mesos. There's an [interesting comment(https://github.com/mesosphere/jenkins-dind-agent/issues/1#issuecomment-203126275) about the pros and cons of running CI jobs with DinD or a `docker.socket` mount.
+The GitLab Runner comes with a Docker-in-Docker daemon installed. This means that it can be used for build _within_ Docker containers, and at the same time adhere to the resource constraints set by Mesos. There's an [interesting comment](https://github.com/mesosphere/jenkins-dind-agent/issues/1#issuecomment-203126275) about the pros and cons of running CI jobs with DinD or a `docker.socket` mount.
  
 This package supports two different GitLab Runner [executor types](https://docs.gitlab.com/runner/executors/#selecting-the-executor):
 
