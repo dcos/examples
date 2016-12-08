@@ -84,7 +84,7 @@ In this example, we also configured a insecure Docker registry via the `gitlab-r
 To install the package with the CLI, run the following:
 
 ```bash
-dcos package install --options=options.json gitlab-runner
+$ dcos package install --options=options.json gitlab-runner
 ```
 
 ## Usage in GitLab CI
