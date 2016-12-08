@@ -104,7 +104,7 @@ The above `options.json` file configures Nexus 3 as follows:
 
 To install the package with the CLI, run the following:
 ```
-dcos package install --options=options.json nexus
+$ dcos package install --options=options.json nexus
 ```
 
 ## Usage
