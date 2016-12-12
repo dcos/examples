@@ -548,17 +548,23 @@ You can repeat this sequence to create additional volumes that are hosted in you
 
 # Uninstall
 
-To uninstall Ceph:
-
-```bash
-$ dcos package uninstall ceph
-```
-
-Use the [framework cleaner](https://docs.mesosphere.com/1.8/usage/managing-services/uninstall/#framework-cleaner) script to remove your Ceph instance from ZooKeeper and to destroy all data associated with it. The script requires several arguments, the values for which are derived from your service name:
+1 - Access the Ceph framework configuration page at `http://your_public_node:5000` and set instances to 0.
+2 - Use the [framework cleaner](https://docs.mesosphere.com/1.8/usage/managing-services/uninstall/#framework-cleaner) script to remove your Ceph instance from ZooKeeper and to destroy all data associated with it. The script requires several arguments, the values for which are derived from your service name:
 
 - `framework-role` is `ceph-role`
 - `framework-principal` is `ceph-principal`
 - `zk_path` is `ceph-on-mesos`
+
+(Alternatively, you can manually access the Exhibitor/Zookeeper interface at `http://$DCOS_IP:8181` and delete the ceph/tasks node in Zookeeper (under `ceph_on_mesos`) )
+3 - Go into Marathon and Restart the service
+4 - Open again the framework configuration page, and go to the dangling resources tab of the UI and whitelist for removal.
+5 - Wait up to two minutes for those resources to be re-offered so they can be purged; restarting the framework again will help accelerate it.
+
+Finally, to uninstall, just go into the "Universe" tab, into "Installed" and uninstall the service. Alternatively, from the CLI:
+
+```bash
+$ dcos package uninstall ceph
+```
 
 ## Further resources
 
