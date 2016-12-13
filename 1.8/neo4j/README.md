@@ -89,7 +89,7 @@ There are a number of configuration options, which can be specified in the follo
 way:
 
 ```bash
-$ dcos package install --config=<JSON_FILE> arangodb3
+$ dcos package install --config=<JSON_FILE> neo4j
 ```
 
 where `JSON_FILE` is the path to a JSON file. For a list of possible
