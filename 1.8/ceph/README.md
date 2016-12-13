@@ -548,19 +548,31 @@ You can repeat this sequence to create additional volumes that are hosted in you
 
 # Uninstall
 
-To uninstall Ceph:
+## Set instances to 0
+Access the Ceph framework configuration page at `http://your_public_node:5000` and set instances to 0.
 
-```bash
-$ dcos package uninstall ceph
-```
-
+## Remove the Ceph state from Zookeeper/Exhibitor
 Use the [framework cleaner](https://docs.mesosphere.com/1.8/usage/managing-services/uninstall/#framework-cleaner) script to remove your Ceph instance from ZooKeeper and to destroy all data associated with it. The script requires several arguments, the values for which are derived from your service name:
 
 - `framework-role` is `ceph-role`
 - `framework-principal` is `ceph-principal`
 - `zk_path` is `ceph-on-mesos`
 
-## Further resources
+(Alternatively, you can manually access the Exhibitor/Zookeeper interface at `http://$DCOS_IP:8181` and delete the ceph/tasks node in Zookeeper (under `ceph_on_mesos`) )
+## Restart the Ceph service
+Go into Marathon and Restart the service. Wait until it's back up and running.
 
+## Remove dangling resources
+Open again the framework configuration page, and go to the dangling resources tab of the UI and whitelist for removal.
+Wait up to two minutes for those resources to be re-offered so they can be purged; restarting the framework again will help accelerate it.
+
+## Uninstall the Ceph package
+Finally, to uninstall, just go into the "Universe" tab, into "Installed" and uninstall the service. Alternatively, from the CLI:
+
+```bash
+$ dcos package uninstall ceph
+```
+
+# Further resources
 1. [Official Ceph project homepage](https://www.ceph.com)
 2. [Ceph on Mesos framework homepage](https://github.com/vivint-smarthome/ceph-on-mesos)
