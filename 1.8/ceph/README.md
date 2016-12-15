@@ -401,7 +401,7 @@ Then create each one of the configuration files as follows:
 NOTE: make sure to swap out HOST_NETWORK below with the value [configured in the Ceph package](#install-ceph) as HOST_NETWORK:
 
 ```bash
-export HOST_NETWORK=172.31.0.0/20       #Use the value for the network where your DC/OS nodes live.
+export HOST_NETWORK=172.31.16.0/20       #Use the value for the network where your DC/OS nodes live.
 rpm --rebuilddb && yum install -y bind-utils
 export MONITORS=$(for i in $(dig srv _mon._tcp.ceph.mesos|awk '/^_mon._tcp.ceph.mesos/'|awk '{print $8":"$7}'); do echo -n $i',';done)
 cat <<-EOF > /etc/ceph/ceph.conf
