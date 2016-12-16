@@ -99,6 +99,13 @@ The above `options.json` file configures Nexus 3 as follows:
  - `enabled`: Signals that external persistent volumes should be used.
 - `networking`: Use this if you want your Nexus 3 service to be available externally.
  - `virtual-host`: Specify the CNAME (or FQDN) of your edge loadbalancer of the DC/OS cluster to be used to expose the service on.
+ 
+### Submitting the configuration through the cli
+
+To install the package with the CLI, run the following:
+```
+$ dcos package install --options=options.json nexus
+```
 
 ## Usage
 
