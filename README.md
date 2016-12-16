@@ -28,7 +28,7 @@ Currently, the following examples are available:
 - [linkerd](1.8/linkerd/)
 - [Nexus 3](1.8/nexus/)
 - Monitoring with [cAdvisor, InfluxDB and Grafana](1.8/cadvisor-influxdb-grafana)
-- Monitoring with [cAdvisor, InfluxDB and Grafana](1.8/cadvisor-influxdb-grafana) 
+- Monitoring with [cAdvisor, InfluxDB and Grafana](1.8/cadvisor-influxdb-grafana)
 - Monitoring with [Microsoft Operations Management Suite](1.8/msoms)
 - [Neo4j](1.8/neo4j)
 - [NGINX](1.8/nginx/)
