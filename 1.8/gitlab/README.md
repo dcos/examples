@@ -1,27 +1,28 @@
-# How to use  Gitlab on DC/OS
+# How to use  GitLab on DC/OS
 
 [Gitlab](https://gitlab.com) an open source developer tool that allows you to host git repositories, review code, track issues, host Docker images and perform continuous integration.
 
-Using GitLab on DC/OS now allows you to co-locate all of the tools you need for developers on one easy to manage cluster. Just as with any Universe package, you can robustly install several side by side instances of GitLab to provide segregated instances for each of your development teams. Alternatively, you can just as easily install GitLab in a highly available configuration that many teams use concurrently.
+Using GitLab on DC/OS allows you to co-locate all of the tools you need for developers on one easy to manage cluster. Just as with any Universe package, you can robustly install several side by side instances of GitLab to provide segregated instances for each of your development teams. Alternatively, you can just as easily install GitLab in a highly available configuration that many teams use concurrently.
 
 ![Continuous Delivery with GitLab](img/gitlab-cd.png)
 
 This quickstart installation uses the single node version of GitLab that includes an installation of Postgres and Redis in the same container.
 
-The instructions below use a pinned hostname constraint to success the application is always restarted on the same host by Marathon. This allows it to get back to its data but means that you could lose data if that agent goes down. We recommend checking out the production installation instructions on alternative options and considerations.
+The instructions below use a pinned hostname constraint to ensure the application is always restarted on the same host by Marathon. This allows it to get back to its data but means that you could lose data if that agent goes down. We recommend checking out the production installation instructions on alternative options and considerations.
 
-- Estimated time for completion: up to 10 minutes
+- Estimated time for completion: up to 90 minutes
 - Target audience:
  - Operators
  - Application admins
  - Quality/Release engineers
  - CI/CD admins
-- Scope: You'll learn how to install Gitlab and how to use it to build and deploy a Docker image on Marathon.
+ - Devops Engineers
+- Scope: You'll learn how to install GitLab and how to use it to build and deploy a Docker image on Marathon.
 
 **Table of Contents**:
 
 - [Prerequisites](#prerequisites)
-- [Setting up Gitlab](#setting-up-gitlab)
+- [Setting up GitLab](#setting-up-gitlab)
 - [Setting up the Repository](#setting-up-the-repository)
 - [Set up the Pipeline](#set-up-the-pipeline)
 - [Resources](#resources)
@@ -45,7 +46,7 @@ You will need to do this for the Jenkins agent too using the [Advanced Configura
 - Visit the Universe page in DC/OS, and click on the "Install Package" button underneath GitLab.
 - Click on "Advanced Installation" and navigate to the "routing" tab. Specify the virtual host you prepared earlier, e.g. `gitlab-test.mesosphere.com`:
 
-![Gitlab Routing Properties](img/routing.png)
+![GitLab Routing Properties](img/routing.png)
 
 - Finally, let's enter the hostname we want GitLab to run on. Navigate to the "single-node" tab and put the node hostname you picked earlier into the pinned hostname field:
 
@@ -60,7 +61,7 @@ You will need to do this for the Jenkins agent too using the [Advanced Configura
 
 ## Setting up the Repository
 
-1. Let's start by creating a new project in GitLab. Our application is going to use a simple customised Nginx container serving an HTML page. First, create a new project called gitlab-demo. For simplicity, we chose "Public" visibility.
+1. Let's start by creating a new project in GitLab. Our application is going to use a simple customised Nginx container serving an HTML page. First, create a new project called gitLab-demo. For simplicity, we chose "Public" visibility.
 
 ![New GitLab Project](img/new-project.png)
 
@@ -85,7 +86,8 @@ nano Dockerfile
 4. Paste in the following contents, which will extend the official Nginx container and add our `index.html` file to it:
 
 ```
-FROM nginx COPY index.html /usr/share/nginx/html/index.html
+FROM nginx
+COPY index.html /usr/share/nginx/html/index.html
 ```
 
 5. Next, we'll create a simple Marathon application definition. Putting this into version control is good practice and makes it easy to implement and track changes to your application definition as the underlying application:
@@ -95,8 +97,34 @@ nano marathon.json
 ```
 
 6. This will tell Marathon how to run our application. Paste the following into it, replacing the address to the Docker registry with your own:
-```
-{ "id": "/nginx", "cpus": 1, "mem": 128, "instances": 1, "container": { "docker": { "image": "gitlab-test.mesosphere.com:50000/root/gitlab-demo:latest", "portMappings": [ { "containerPort": 80, "protocol": "tcp", "name": "http" } ], "network": "BRIDGE" } }, "labels": { "DCOS_SERVICE_PORT_INDEX": "0", "DCOS_SERVICE_SCHEME": "http", "DCOS_SERVICE_NAME": "gitlab" }, "uris": [ "file:///etc/docker.tar.gz" ] }
+```json
+{
+  "id": "/nginx",
+  "cpus": 1,
+  "mem": 128,
+  "instances": 1,
+  "container": {
+    "docker": {
+      "image": "gitlab-test.mesosphere.com:50000/root/gitlab-demo:latest",
+      "portMappings": [
+        {
+          "containerPort": 80,
+          "protocol": "tcp",
+          "name": "http"
+        }
+      ],
+      "network": "BRIDGE"
+    }
+  },
+  "labels": {
+    "DCOS_SERVICE_PORT_INDEX": "0",
+    "DCOS_SERVICE_SCHEME": "http",
+    "DCOS_SERVICE_NAME": "gitlab"
+  },
+  "uris": [
+    "file:///etc/docker.tar.gz"
+  ]
+}
 ```
 
 7. Finally, let's create a simple Jenkinsfile. This is a new way to programmatically define your builds that was released as part of [the Pipeline feature](https://jenkins.io/doc/pipeline/) of Jenkins 2.0. This will pull from the GitLab instance you've just set up, build the Docker image, push it to the GitLab registry, and then trigger a deployment using [the Marathon plugin](https://github.com/jenkinsci/marathon-plugin) for Jenkins:
@@ -108,41 +136,48 @@ nano Jenkinsfile
 8. Paste the following Groovy script into it. Note that this won't work on an Enterprise DC/OS cluster without saving a token credential and setting the `credentialsId` within the Marathon deploy step:
 
 ```
-def gitCommit() { sh "git rev-parse HEAD > GIT_COMMIT" def gitCommit = readFile('GIT_COMMIT').trim() sh "rm -f GIT_COMMIT" return gitCommit }
+    def gitCommit() {
+        sh "git rev-parse HEAD > GIT_COMMIT"
+        def gitCommit = readFile('GIT_COMMIT').trim()
+        sh "rm -f GIT_COMMIT"
+        return gitCommit
+    }
 
-node { // Checkout source code from Git stage 'Checkout' checkout scm
+    node {
+        // Checkout source code from Git
+        stage 'Checkout'
+        checkout scm
 
-  // Build Docker image
-  stage 'Build'
-  sh "docker build -t gitlab-test.mesosphere.com:50000/root/gitlab-demo:${gitCommit()} ."
+        // Build Docker image
+        stage 'Build'
+        sh "docker build -t gitlab-test.mesosphere.com:50000/root/gitlab-demo:${gitCommit()} ."
 
-  // Log in and push image to GitLab
-  stage 'Publish'
-  withCredentials(
-      [[
-          $class: 'UsernamePasswordMultiBinding',
-          credentialsId: 'gitlab',
-          passwordVariable: 'GITLAB_PASSWORD',
-          usernameVariable: 'GITLAB_USERNAME'
-      ]]
-  ) {
-      sh "docker login -u ${env.GITLAB_USERNAME} -p ${env.GITLAB_PASSWORD} -e demo@mesosphere.com gitlab-test.mesosphere.com:50000"
-      sh "docker push gitlab-test.mesosphere.com:50000/root/gitlab-demo:${gitCommit()}"
-  }
+        // Log in and push image to GitLab
+        stage 'Publish'
+        withCredentials(
+            [[
+                $class: 'UsernamePasswordMultiBinding',
+                credentialsId: 'gitlab',
+                passwordVariable: 'GITLAB_PASSWORD',
+                usernameVariable: 'GITLAB_USERNAME'
+            ]]
+        ) {
+            sh "docker login -u ${env.GITLAB_USERNAME} -p ${env.GITLAB_PASSWORD} -e demo@mesosphere.com gitlab-test.mesosphere.com:50000"
+            sh "docker push gitlab-test.mesosphere.com:50000/root/gitlab-demo:${gitCommit()}"
+        }
 
 
-  // Deploy
-  stage 'Deploy'
+        // Deploy
+        stage 'Deploy'
 
-  marathon(
-      url: 'http://marathon.mesos:8080',
-      forceUpdate: false,
-      filename: 'marathon.json',
-      appid: 'nginx',
-      docker: "gitlab-test.mesosphere.com:50000/root/gitlab-demo:${gitCommit()}".toString()
-  )
-
-}
+        marathon(
+            url: 'http://marathon.mesos:8080',
+            forceUpdate: false,
+            filename: 'marathon.json',
+            appid: 'nginx',
+            docker: "gitlab-test.mesosphere.com:50000/root/gitlab-demo:${gitCommit()}".toString()
+        )
+    }
 ```
 
 9. Now that we've got our four files, add, commit and push them to the repository:
@@ -158,7 +193,7 @@ git push
 
 Now that we've got the repository set up, we need to set up a job in Jenkins that runs on any change to our repository.
 
-1. Navigate to Jenkins. First we'll add the GitLab username and password. For now, we'll re-use the root user, but you can create new users as you see fit. Make sure to call these credentials `gitlab` as referenced in the Jenkinsfile:
+1. Navigate to Jenkins. First we'll add the GitLab username and password to the Jenkins Credentials store. For now, we'll re-use the root user, but you can create new users as you see fit. Make sure to call these credentials `gitlab` as referenced in the Jenkinsfile:
 
 ![Add GitLab credentials](img/credentials.png)
 
@@ -170,7 +205,7 @@ Now that we've got the repository set up, we need to set up a job in Jenkins tha
 
 ![Poll SCM](img/poll-scm.png)
 
-- Next, change the Pipeline definition to use "Pipeline script from SCM" and configure the demo repository:
+- Next, change the Pipeline definition to use "Pipeline script from SCM". Configure the demo repository and select the credentials you saved earlier from the Credentials dropdown:
 
 ![Pipeline Configuration](img/pipeline.png)
 
