@@ -61,7 +61,7 @@ You will need to do this for the Jenkins agent too using the [Advanced Configura
 
 ## Setting up the Repository
 
-1. Let's start by creating a new project in GitLab. Our application is going to use a simple customised Nginx container serving an HTML page. First, create a new project called gitLab-demo. For simplicity, we chose "Public" visibility.
+1. Let's start by creating a new project in GitLab. Our application is going to use a simple customised Nginx container serving an HTML page. First, create a new project called gitlab-demo. For simplicity, we chose "Public" visibility.
 
 ![New GitLab Project](img/new-project.png)
 
