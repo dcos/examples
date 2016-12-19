@@ -552,18 +552,13 @@ You can repeat this sequence to create additional volumes that are hosted in you
 Access the Ceph framework configuration page at `http://your_public_node:5000` and set instances to 0.
 
 ## Remove the Ceph state from Zookeeper/Exhibitor
-Use the [framework cleaner](https://docs.mesosphere.com/1.8/usage/managing-services/uninstall/#framework-cleaner) script to remove your Ceph instance from ZooKeeper and to destroy all data associated with it. The script requires several arguments, the values for which are derived from your service name:
+Access the Exhibitor/Zookeeper interface at `http://$DCOS_IP:8181` and delete the ceph/tasks node in Zookeeper (under `ceph_on_mesos`, `tasks`. Just the `tasks` node and all children, not the full `ceph_on_mesos` node!)
 
-- `framework-role` is `ceph-role`
-- `framework-principal` is `ceph-principal`
-- `zk_path` is `ceph-on-mesos`
-
-(Alternatively, you can manually access the Exhibitor/Zookeeper interface at `http://$DCOS_IP:8181` and delete the ceph/tasks node in Zookeeper (under `ceph_on_mesos`) )
 ## Restart the Ceph service
 Go into Marathon and Restart the service. Wait until it's back up and running.
 
 ## Remove dangling resources
-Open again the framework configuration page, and go to the dangling resources tab of the UI and whitelist for removal.
+Open again the framework configuration page, and go to the dangling resources tab of the UI and whitelist for removal (click on each dangling resource, expand the entry and click on "Destroy").
 Wait up to two minutes for those resources to be re-offered so they can be purged; restarting the framework again will help accelerate it.
 
 ## Uninstall the Ceph package
