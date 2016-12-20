@@ -12,7 +12,8 @@
   - [Ephemeral Configuration and Storage](#ephemeral-configuration-and-storage)
   - [Persistent Local Storage](#persistent-local-storage)
   - [Persistent External Storage](#persistent-external-storage)
-- [Using Nexus as a Docker Proxy]
+- [Using Nexus as a Docker Proxy](#using-nexus-as-a-docker-registry)
+- [Resources](#resources)
 
 ## Prerequisites
 
@@ -63,7 +64,7 @@ Another way to ensure configuration and data persistence is to use external stor
 
 *The Docker Daemon requires a trusted signed certificate for HTTPS communication. Information on setting this up in available in the [Using Self-Signed Certificates with Nexus Repository Manager and Docker Daemon](https://support.sonatype.com/hc/en-us/articles/217542177-Using-Self-Signed-Certificates-with-Nexus-Repository-Manager-and-Docker-Daemon) article.*
 
-Nexus Repository Manager 3 can be used as a Docker registry or to proxy other Docker registries. This section will briefly go through how to deploy a Docker image to DC/OS while using Nexus as a Docker proxy. It will assume a working knowledge of the Nexus product although more details about Nexus can be found in the [Nexus documentation](http://books.sonatype.com/nexus-book/index.html).
+Nexus Repository Manager 3 can be used as a Docker registry or to proxy other Docker registries. This section will briefly go through how to deploy a Docker image to DC/OS while using Nexus as a Docker proxy. It will assume a working knowledge of the Nexus product although more details about Nexus can be found in the [Nexus Documentation](http://books.sonatype.com/nexus-book/index.html).
 
 ### Expose Port for Docker Registry Connector
 
@@ -84,3 +85,8 @@ Configure a Docker Registry in Nexus using the Repository Connector port configu
 The Docker Registry should now be available on the port discovered in the second section. A new service can be deployed in the DC/OS web UI using the new Docker Registry.
 
 ![Deploy Docker Service](img/deploy-docker-service.png)
+
+## Resources
+
+- [Nexus Documentation](http://books.sonatype.com/nexus-book/index.html)
+- [Nexus Stack Overflow](http://stackoverflow.com/tags/nexus/info)
