@@ -1,116 +1,86 @@
-# How to use Nexus 3 repository manager on DC/OS
+# How to use Nexus Repository Manager 3 on DC/OS
 
-[Nexus 3](http://www.sonatype.org/nexus/) is a repository manager that supports a broad variety of package managers, namely Bower, Docker, Maven 2, npm, NuGet, PyPI, and Raw site repositories. DC/OS allows you to quickly configure, install and manage a Nexus 3 instance.
+[Nexus Repository Manager 3](https://www.sonatype.com/nexus-repository-oss) is a repository manager that supports a broad variety of package managers, namely Bower, Docker, Maven 2, npm, NuGet, PyPI, and Raw site repositories. DC/OS allows you to quickly configure, install and manage a Nexus 3 instance.
 
 - Estimated time for completion: 10 minutes
 - Target audience: Anyone interested in running a repository manager.
 - Scope: Learn how to install Nexus 3 on DC/OS
 
+**Table of Contents**:
+- [Prerequisites](#prerequisites)
+- [Install Nexus 3](#install-nexus-3)
+  - [Ephemeral Configuration and Storage](#ephemeral-configuration-and-storage)
+  - [Persistent Local Storage](#persistent-local-storage)
+  - [Persistent External Storage](#persistent-external-storage)
+- [Using Nexus as a Docker Proxy]
+
 ## Prerequisites
 
-- A running DC/OS 1.8 cluster with at least 1 node having at least 0.5 CPUs and 2 GB of RAM available.
-- [DC/OS CLI](https://dcos.io/docs/1.8/usage/cli/install/) installed.
+- A running DC/OS 1.8 cluster with at least 1 node having at least 1 CPUs and 2 GB of RAM available.
+- *Optional* [DC/OS CLI](https://dcos.io/docs/1.8/usage/cli/install/) installed.
 
 ## Install Nexus 3
 
-Assuming you have a DC/OS cluster up and running, we will discuss the installation of Nexus 3 in two variants for persistence. One will be with host volumes, and the other with external persisten volumes. The reason behind that is that the data of the repository / the artifacts need to persisted, so that the Nexus 3 application can be restarted without a data loss. 
+### Ephemeral Configuration and Storage
 
-If you opt to use host volumes, make sure that there is a backup process in place, which will backup the data in the *data folder*, or that you use a shared filesystem mount (such as NFS) for it.
+Getting Nexus installed without persistent configuration and storage is a single click operation. This allows one to gain familiarity with the product without any setup or overhead. This setup is not suggested as all data and configuration are tied to the running agent and will be destroyed when that instance is terminated. The next sections will discuss how to setup persistent local or external storage.
 
-### Host volumes
+To install via the DC/OS Universe, navigate the the Universe section and find nexus. Click Install to bring up the install modal and then click Install Pacakge.
 
-Let's get started by creating a file called `options.json` with following contents:
+![Install Package](img/install-package.png)
 
-```json
-{
-  "service": {
-    "name": "nexus",
-    "cpus": 1,
-    "mem": 2048,
-    "role": "*",
-    "local-volumes": {
-      "host-volume": "/opt/nexus",
-      "pinned-hostname": "192.168.200.101"
-    },
-    "external-volumes": {
-      "enabled": false
-    }
-  },
-  "networking": {
-    "virtual-host": "nexus.dcos.mydomain.mytld"
-  }
-}
+To install via the CLI, run the following command.
+
+```
+dcos package install nexus
 ```
 
-The above `options.json` file configures Nexus 3 as follows:
+Once installed Nexus Repository Manager will scale to a single instance on a DC/OS agent. Once available it will show up under services with a Running task for the Nexus instance. The service should be available at the address indicated in the Endpoints under the task's configuration.
 
-- `name`: This parameter configures the name of the service itself.
-- `cpus`: This parameter configures the number of CPU share to allocate to Nexus 3.
-- `mem`: This parameter configures the amount of RAM to allocate to Nexus 3.
-- `role`: The role which should be used to launch the service. Default is `*`.
-- `local-volumes`: This parameter configures whether service should use local host volumes. If so, the following properties need to be defined as well:
- - `host-volume`: This is the folder/path which will be mounted in the container, and used to persist the Nexus 3 data on. You need to make sure that the folder exists on the host you used for host pinning, and that it has the appropriate permissions/ownership. You can find a short guide below.
- - `pinned-hostname`: The hostname (or IP address) which should be used to run Nexus 3 on. This is important, because the `host-volume` folder needs to exist on that host (see above). Replace the value with an actual agent IP address.
-- `networking`: Use this if you want your Nexus 3 service to be available externally.
- - `virtual-host`: Specify the CNAME (or FQDN) of your edge loadbalancer of the DC/OS cluster to be used to expose the service on.
+### Persistent Local Storage
 
-**Creating the host volume**
+Local storage provides a way to persist the Nexus configuration and data. Given limitations to the automated deployment of the Nexus container, the ownership of the local folder must be manually set on the node running Nexus. The folder must be owned by UID 200, the user which runs the Nexus server within the Docker image. Setting ownership can be done by remotely logging into the node by ssh.
 
-To create the host volume, you have to ssh into the host where you want to run the Nexus 3 service on (via host pinning). Then, you should create a folder for the Nexus 3 data. Once you did this, you need to change the ownership of the respective folder to `200:200`. 
-
-See the example below:
-
-```bash
-$ ssh user@hostname
-
-hostname $ mkdir -p /opt/nexus
-
-hostname $ chown -R 200:200 /opt/nexus
+```
+ssh user@hostname
+mkdir -p /opt/sonatype/nexus-data
+chown -R 200:200 /opt/sonatype/nexus-data
 ```
 
-### External persistent volumes
+After adjusting the folder ownership, persistent local storage can be configured in the Advanced Installation options under Storage. Enable persist in the storage section and adjust the host-volume to the folder created above.
 
-```json
-{
-  "service": {
-    "name": "nexus",
-    "cpus": 1,
-    "mem": 2048,
-    "role": "*",
-    "local-volumes": {},
-    "external-volumes": {
-      "enabled": true
-    }
-  },
-  "networking": {
-    "virtual-host": "nexus.dcos.mydomain.mytld"
-  }
-}
-```
+![Persist Local Volume](img/persist-local-volume.png)
 
-The above `options.json` file configures Nexus 3 as follows:
+Since the local storage is tied to the node Nexus is running on, it makes sense to set a pinned hostname to ensure that Nexus always runs on this node. Pinned hostname is available in the Advanced Installation network section and should be set to the node that was configured above.
 
-- `name`: This parameter configures the name of the service itself.
-- `cpus`: This parameter configures the number of CPU share to allocate to Nexus 3.
-- `mem`: This parameter configures the amount of RAM to allocate to Nexus 3.
-- `role`: The role which should be used to launch the service. Default is `*`.
-- `local-volumes`: Can be left blank if using external persistent volumes.
-- `external-volumes`: This parameter configures whether service should use external persistent volumes. If so, the following property need to be defined as well:
- - `enabled`: Signals that external persistent volumes should be used.
-- `networking`: Use this if you want your Nexus 3 service to be available externally.
- - `virtual-host`: Specify the CNAME (or FQDN) of your edge loadbalancer of the DC/OS cluster to be used to expose the service on.
- 
-### Submitting the configuration through the cli
+If the pinned hostname is not set, Nexus can run on an node where the storage was not configured and fail. If all agents have the same folder configured for Nexus, this folder should be a shared mounted file system to ensure that there is a definitive source for all Nexus data.
 
-To install the package with the CLI, run the following:
-```
-$ dcos package install --options=options.json nexus
-```
+### Persistent External Storage
 
-## Usage
+Another way to ensure configuration and data persistence is to use external storage. Nexus is compatible with the rexray volumne driver for Docker volumes. In order to use external volumes, enable persist in the storage section, enable external volumes and set the volume name in the external volumes section.
 
-If you defined `networking.virtual-host` you should be able to access Nexus 3 on the URL you specified there. Otherwise, you can access it from inside the DC/OS via `http://nexus.marathon.mesos:<hostPort>`, where the `hostPort` can be found under the Nexus task's details under the Services tab of the DC/OS UI. 
+## Using Nexus as a Docker Registry
 
-The initial username/password combination to log in is `admin` and `admin123`.
+*The Docker Daemon requires a trusted signed certificate for HTTPS communication. Information on setting this up in available in the [Using Self-Signed Certificates with Nexus Repository Manager and Docker Daemon](https://support.sonatype.com/hc/en-us/articles/217542177-Using-Self-Signed-Certificates-with-Nexus-Repository-Manager-and-Docker-Daemon) article.*
 
-For further documentation on how to use Nexus 3, please refer to the [docs](http://books.sonatype.com/nexus-book/index.html).
+Nexus Repository Manager 3 can be used as a Docker registry or to proxy other Docker registries. This section will briefly go through how to deploy a Docker image to DC/OS while using Nexus as a Docker proxy. It will assume a working knowledge of the Nexus product although more details about Nexus can be found in the [Nexus documentation](http://books.sonatype.com/nexus-book/index.html).
+
+### Expose Port for Docker Registry Connector
+
+As a first step, Edit the service to expose a new port of the Connector. Choose an available port on the DC/OS agent.
+
+![Expose Docker Port](img/expose-docker-port.png)
+
+When Nexus comes back up there should be two ports assigned. One which hosts Nexus Repository Manager and one which is available for the Docker Connector.
+
+![Exposed Nexus Ports](img/exposed-nexus-ports.png)
+
+### Configure Docker Registry
+
+Configure a Docker Registry in Nexus using the Repository Connector port configured in the first step of this section. This is the port which will be mapped to the port discovered in the second section.
+
+![Nexus Docker Configuration](img/nexus-docker-configuration.png)
+
+The Docker Registry should now be available on the port discovered in the second section. A new service can be deployed in the DC/OS web UI using the new Docker Registry.
+
+![Deploy Docker Service](img/deploy-docker-service.png)
