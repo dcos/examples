@@ -45,7 +45,9 @@ Log into DC/OS, go to Universe, and select the `sqlserver` package from Universe
 
 - `service / *sa_password*`: The system administrator (userid = 'sa') password used to connect to SQL Server once the container is running. DEFAULT VALUE: 'YourStrong!Passw0rd'.
 
-- `storage / *persistence*`: create local persistent volumes for internal storage files to survive across restarts or failures.\n\nstorage / persistence / *external*: create external persistent volumes. This allows to use an external storage system such as Amazon EBS, OpenStack Cinder, EMC Isilon, EMC ScaleIO, EMC XtremIO, EMC VMAX and Google Compute Engine persistent storage. 
+- `storage / *persistence*`: create local persistent volumes for internal storage files to survive across restarts or failures.
+
+- `storage / persistence / *external*`: create external persistent volumes. This allows to use an external storage system such as Amazon EBS, OpenStack Cinder, EMC Isilon, EMC ScaleIO, EMC XtremIO, EMC VMAX and Google Compute Engine persistent storage. 
 
 *NOTE*: To use external volumes with DC/OS, you MUST enable them during CLI or Advanced installation.
 
