@@ -576,7 +576,7 @@ ls
 
 You can repeat this sequence to create additional volumes that are hosted in your Ceph cluster.
 
-## Configure Ceph Dashboard
+## Ceph Dashboard
 
 In order to get real time visibilty on the health and usage of your Ceph cluster you can use the `ceph-dash` Universe package.
 
