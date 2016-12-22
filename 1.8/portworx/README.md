@@ -66,6 +66,8 @@ Once the package is configured according to your installation and needs, click o
 
 ![Install Portworx: ](img/DCOS_1-2.png)
 
+![Run: Services View](img/DCOS_2-2.png)
+
 ## Install Portworx from the DC/OS CLI
 
 Log into a terminal where the DC/OS CLI is installed and has connectivity with the cluster. The mandatory parameters referenced above can be passed as options to the DC/OS CLI by creating a `px-options.json` file with the following content (Modify the values as per your own installation/desire) :
@@ -97,8 +99,6 @@ dcos package install --yes --options ./px-options.json portworx
 ### Validate from GUI
 
 After installation, the package will be running under the `Services` tab:
-
-![Run: Services View](img/DCOS_2-2.png)
 
 
 ### Validate from CLI
