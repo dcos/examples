@@ -19,7 +19,6 @@ Portworx technology is available as PX-Developer and PX-Enterprise.
 - [Prerequisites](#prerequisites)
 - [Portworx Node configuration](#px-node-configuration)
 - [Install Portworx](#install-px)
-  - [Validate installation](#validate-installation)
 - [Use Portworx](#use-px)
 - [Uninstall](#uninstall)
 
@@ -94,12 +93,9 @@ Create and save the `px-options.json` file, then launch the Portworx DC/OS packa
 dcos package install --yes --options ./px-options.json portworx
 ```
 
-## Validate installation
-
 ### Validate from GUI
 
 After installation, the package will be running under the `Services` tab:
-
 
 ### Validate from CLI
 
@@ -111,21 +107,8 @@ dcos package list|grep portworx
 
 ## Use Portworx
 
-### Creating Volumes
+For more detailed description on using Portworx through DCOS and Mesos, please visit  [Portworx on Mesos framework homepage](http://docs.portworx.com/run-with-mesosphere.html)
 
-### Using Volumes
-
-### Removing Volumes
-
-# Uninstall Portworx
-
-## Uninstall the Portworx package
-Finally, to uninstall, just go into the "Universe" tab, into "Installed" and uninstall the service. Alternatively, from the CLI:
-
-```bash
-$ dcos package uninstall portworx
-```
 
 # Further resources
 1. [Portworx doc site ](http://docs.portworx.com)
-2. [Portworx on Mesos framework homepage](http://docs.portworx.com/run-with-mesosphere.html)
