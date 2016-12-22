@@ -580,7 +580,7 @@ You can repeat this sequence to create additional volumes that are hosted in you
 
 In order to get real time visibilty on the health and usage of your Ceph cluster you can use the `ceph-dash` Universe package.
 
-The Ceph Dashboard package requires a valide Ceph configuration (ceph.conf) and Keyring (ceph.client.admin.keyring) to connect to the ceph cluster. Please refer to the section [Configure Ceph clients](configure-ceph-clients) for instructions on how to generate these files.
+The Ceph Dashboard package requires a valide Ceph configuration (ceph.conf) and Keyring (ceph.client.admin.keyring) to connect to the ceph cluster. Please refer to the section [Configure Ceph clients](#configure-ceph-clients) for instructions on how to generate these files.
 
 In order to install the Ceph dashboard, go to Universe and select the `ceph-dash` package. Select `Advanced Installation` and scroll down to find two mandatory parameters: ceph_conf_URI and ceph_client_admin_keyring_URI. These are the locations where your `ceph.conf` and `ceph.client.admin.keyring` files live. For example, if you chose to host these files in the `genconf/serve' location of your bootstrap node, the values would be:
 
