@@ -17,10 +17,9 @@ Portworx technology is available as PX-Developer and PX-Enterprise.
 **Table of Contents**:
 
 - [Prerequisites](#prerequisites)
-- [Portworx Node configuration](#px-node-configuration)
-- [Install Portworx](#install-px)
-- [Use Portworx](#use-px)
-- [Uninstall](#uninstall)
+- [Portworx Node configuration](#portworx-agent-node-configuration)
+- [Install Portworx](#install-portworx)
+- [Use Portworx](#use-portworx)
 
 Please review the main [Portworx on Mesos](http://docs.portworx.com/run-with-mesosphere.html) documentation.
 
@@ -105,7 +104,7 @@ After installation, you can check the correct functioning with:
 dcos package list|grep portworx
 ```
 
-## Use Portworx
+# Use Portworx
 
 For more detailed description on using Portworx through DCOS and Mesos, please visit  [Portworx on Mesos framework homepage](http://docs.portworx.com/run-with-mesosphere.html)
 
