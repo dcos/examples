@@ -12,6 +12,7 @@
   - [Ephemeral Configuration and Storage](#ephemeral-configuration-and-storage)
   - [Persistent Local Storage](#persistent-local-storage)
   - [Persistent External Storage](#persistent-external-storage)
+  - [Command Line Configuration](#command-line-configuration)
 - [Using Nexus as a Docker Proxy](#using-nexus-as-a-docker-registry)
 - [Resources](#resources)
 
@@ -33,7 +34,7 @@ To install via the DC/OS Universe, navigate the the Universe section and find ne
 To install via the CLI, run the following command.
 
 ```
-dcos package install nexus
+$ dcos package install nexus
 ```
 
 Once installed Nexus Repository Manager will scale to a single instance on a DC/OS agent. Once available it will show up under services with a Running task for the Nexus instance. The service should be available at the address indicated in the Endpoints under the task's configuration.
@@ -43,9 +44,9 @@ Once installed Nexus Repository Manager will scale to a single instance on a DC/
 Local storage provides a way to persist the Nexus configuration and data. Given limitations to the automated deployment of the Nexus container, the ownership of the local folder must be manually set on the node running Nexus. The folder must be owned by UID 200, the user which runs the Nexus server within the Docker image. Setting ownership can be done by remotely logging into the node by ssh.
 
 ```
-ssh user@hostname
-mkdir -p /opt/sonatype/nexus-data
-chown -R 200:200 /opt/sonatype/nexus-data
+$ ssh user@hostname
+$ mkdir -p /opt/sonatype/nexus-data
+$ chown -R 200:200 /opt/sonatype/nexus-data
 ```
 
 After adjusting the folder ownership, persistent local storage can be configured in the Advanced Installation options under Storage. Enable persist in the storage section and adjust the host-volume to the folder created above.
@@ -56,9 +57,69 @@ Since the local storage is tied to the node Nexus is running on, it makes sense 
 
 If the pinned hostname is not set, Nexus can run on an node where the storage was not configured and fail. If all agents have the same folder configured for Nexus, this folder should be a shared mounted file system to ensure that there is a definitive source for all Nexus data.
 
+These options can also be configured using the package install feature of the DC/OS CLI. All fields in the JSON are optional and correspond with the options described in the UI sections above.
+
+```
+$ cat options.json
+{
+  "networking": {
+    "pinned-hostname": "192.168.65.111"
+  },
+  "storage": {
+    "persist": true,
+    "local-volume": {
+      "host-volume": "/opt/sonatype/nexus-data"
+    }
+  }
+}
+$ dcos package install nexus --options=options.json
+```
+
 ### Persistent External Storage
 
-Another way to ensure configuration and data persistence is to use external storage. Nexus is compatible with the rexray volumne driver for Docker volumes. In order to use external volumes, enable persist in the storage section, enable external volumes and set the volume name in the external volumes section.
+Another way to ensure configuration and data persistence is to use external storage. Nexus is compatible with the rexray volumne driver for Docker volumes. In order to use external volumes, enable persist in the storage section, enable external volumes and set the volume name in the external volumes section. Alternatively, configure using the CLI.
+
+```
+$ cat options.json
+{
+  "storage": {
+    "persist": true,
+    "external-volume": {
+      "enable": true,
+      "volume-name": "nexus-data"
+    }
+  }
+}
+$ dcos package install nexus --options=options.json
+```
+
+## Command Line Configuration
+
+All the options available in the Advanced Installation section can be set when installing the package with the CLI. Below is the complete list of fields available. All fields are optional, although some override others (e.g. if storage.external-volume.enable is true, the local-volume options are ignored).
+
+```
+{
+  "service": {
+    "name": "nexus",
+    "cpus": 2,
+    "mem": 2048
+  },
+  "networking": {
+    "host-port": 0,
+    "pinned-hostname": "192.168.65.111"
+  },
+  "storage": {
+    "persist": true,
+    "local-volume": {
+      "host-volume": "/opt/sonatype/nexus-data"
+    },
+    "external-volume": {
+      "enable": true,
+      "volume-name": "nexus-data"
+    }
+  }
+}
+```
 
 ## Using Nexus as a Docker Registry
 
