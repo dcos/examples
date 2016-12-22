@@ -422,7 +422,7 @@ Then create each one of the configuration files as follows:
 
 #### ceph.conf
 
-NOTE: If you're using [Network Security]((#network-security), make sure to swap out HOST_NETWORK below with the value configured as HOST_NETWORK when installing the DC/OS Ceph package:
+NOTE: If you're using [Network Security]((#network-security), make sure to use the same value for the HOST_NETWORK parameter below that you used for your host and/or public networks when installing the DC/OS Ceph package:
 
 ```bash
 export HOST_NETWORK=0.0.0.0/0 
