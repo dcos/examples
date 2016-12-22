@@ -57,7 +57,7 @@ The installation/configuration process has 4 stages:
 
 ## Instructions:
 
-Each node that will become a Ceph node running a Ceph OSD and a Ceph monitor MUST have at least one separate volume for exclusive use by Ceph. More than one volume per node can be configured and the instructions below will accomodate them automatically.
+Each node that will become a Ceph node running a Ceph OSD MUST have at least one separate volume for exclusive use by Ceph. More than one volume per node can be configured and the instructions below will accomodate them automatically.
 
 Save the name of the volumes to be used by Ceph as a list separated with space. For volumes provisioned in AWS EC2 they would have the format:
 
