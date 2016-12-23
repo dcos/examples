@@ -12,6 +12,7 @@ Ceph replicates data and makes it fault-tolerant,using commodity hardware and re
  - Configure/format the DC/OS agents that will run the Ceph OSDs.
  - Configure and launch the Ceph-on-mesos package.
  - Configure and launch the components of the Ceph Framework from the framework's UI.
+ - Configure and launch the Ceph Dashboard
  - Configure the node(s) to be used as Ceph clients/consumers.
 
 **Terminology**:
@@ -34,6 +35,7 @@ Ceph replicates data and makes it fault-tolerant,using commodity hardware and re
   - [Validate Ceph OSD configuration](#validate-ceph-osd-configuration)
 - [Configure Ceph clients](#configure-ceph-clients)
   - [Validate Ceph client configuration](#validate-ceph-client-configuration)
+- [Ceph Dashboard](#ceph-dashboard)
 - [Use Ceph](#use-ceph)
 - [Uninstall](#uninstall)
 
@@ -55,7 +57,7 @@ The installation/configuration process has 4 stages:
 
 ## Instructions:
 
-Each node that will become a Ceph node running a Ceph OSD and a Ceph monitor MUST have at least one separate volume for exclusive use by Ceph. More than one volume per node can be configured and the instructions below will accomodate them automatically.
+Each node that will become a Ceph node running a Ceph OSD MUST have at least one separate volume for exclusive use by Ceph. More than one volume per node can be configured and the instructions below will accomodate them automatically.
 
 Save the name of the volumes to be used by Ceph as a list separated with space. For volumes provisioned in AWS EC2 they would have the format:
 
@@ -159,7 +161,29 @@ After running these commands on at least three nodes of the DC/OS cluster, proce
 
 # Install Ceph
 
-## Find out your cluster's network
+By default, the DC/OS Ceph framework is installed without network security, so that nodes in the Ceph cluster and Ceph clients are allowed to be in any network. If you would like to enable network security, please check the [Ceph network security](#network-security) section.
+
+### Install Ceph from the DC/OS GUI without network security
+
+Log into DC/OS, go to Universe, and select the Ceph package from Universe. You can choose to simply "Install Package" with the default values, or to optionally select "Advanced Installation" and modify any of the available parameters depending on your installation needs.
+
+Once the Ceph package is installed, proceed to the [Validate installation](#validate-installation) section.
+
+### Install Ceph from the DC/OS CLI with network security
+
+Log into a terminal that has connectivity with the cluster and where the DC/OS CLI is installed, and use the following command:
+
+```bash
+dcos package install --yes ceph
+```
+
+Once the Ceph package is installed, proceed to the [Validate installation](#validate-installation) section.
+
+## Network Security
+
+If you would like to limit which network your Ceph nodes and clients are allowed to connect from, use the following steps (otherwise, just proceed to the [Validate installation](#validate-installation) section): 
+
+### Find out your cluster's network
 
 Ceph on DC/OS requires you to configure your cluster's network used for internal communication and to validate clients. This is the network where your DC/OS hosts live. You can find out the value of that network with the following code snippet:
 
@@ -197,9 +221,9 @@ Output should be similar to:
 172.31.16.0/20
 ```
 
-## Install Ceph from the DC/OS GUI
+### Install Ceph from the DC/OS GUI with network security
 
-Log into DC/OS, go to Universe, and select the Ceph package from Universe. Select `Advanced Installation`. Two parameters are ***MANDATORY***:
+Log into DC/OS, go to Universe, and select the Ceph package from Universe. Select `Advanced Installation`. Two parameters are required for network security:
 
 - ***cluster_network*** : Network where the Ceph nodes live, obtained through the code snippet above. This is usually the host network where the DC/OS nodes live. This network is assumed to be trusted. E.g. `172.31.0.0/20`
 
@@ -209,9 +233,9 @@ Once the package is configured according to your installation and needs, click o
 
 ![Install: Configure cluster and public networks](img/configure_cluster_and_public_networks.png)
 
-## Install Ceph rom the DC/OS CLI
+### Install Ceph from the DC/OS CLI with network security
 
-Log into a terminal where the DC/OS CLI is installed and has connectivity with the cluster. The two mandatory parameters referenced above can be passed as options to the DC/OS CLI by creating a `ceph-options.json` file with the following content (Modify the values as per your own installation/desire) :
+Log into a terminal that has connectivity with the cluster and where the DC/OS CLI is installed. The two mandatory parameters referenced above can be passed as options to the DC/OS CLI by creating a `ceph-options.json` file with the following content (Modify the values as per your own installation/desire) :
 
 ```bash
 {
@@ -281,7 +305,7 @@ To get started, go to the "Monitors" section and modify the number of Ceph Monit
 ```
 mon {
  count = 3         #number of private agents in the cluster
- cpus = 0.2		  #desired CPU per monitor
+ cpus = 0.2     #desired CPU per monitor
  mem = 256
 }
 ```
@@ -290,13 +314,13 @@ Modifying these values and clicking "Save Changes" will automatically launch the
 
 ### Validate Ceph Monitor configuration
 
-After clicking on "Save", go to the "Home" page and watch the monitor processes be created and progress until they all are in the `TASK_RUNNING` state. Please note this can take a few minutes.
+After clicking on "Save", go to the "Home" section of the Ceph configuration interface, and watch the monitor processes be created and progress until they all are in the `TASK_RUNNING` state. Please note this can take a few minutes.
 
 ![Configure: Monitors running](img/configure_monitors_running.png)
 
 ## Configure Ceph OSDs
 
-Back in the "Config" section of the Ceph configuration UI, go to the "osd" section and modify the count of OSDs in it to reflect the amount and size you desire. Modifying these values and clicking "Save" will automatically launch them in the cluster:
+Back in the "Config" section of the Ceph configuration UI, scroll down to find to the "osd" section and modify the count of Ceph OSDs in it to reflect the amount and size you desire. Modifying these values and clicking "Save" will automatically launch them in the cluster:
 
 ```
 osd {
@@ -304,7 +328,7 @@ osd {
     count = 3
     cpus = 0.5
     mem = 512
-	disk = 5000      # example of value in MB: reserve 5G out of the disk space available in each host
+  disk = 5000      # example of value in MB: reserve 5G out of the disk space available in each host
 
 ```
 
@@ -329,8 +353,6 @@ The Nodes tab also shows how Ceph is using storage resources upon selecting the 
 ## Configure Ceph clients 
 
 Once the Ceph cluster is up, we can configure clients to consume volumes provided by Ceph. In order to do that, we need to install and configure the Ceph client sofware on the nodes that will consume volumes from Ceph. These clients can be nodes that are members of the DC/OS cluster (for example, in order to provide volumes to services and containers running on DC/OS), or consumers that sit outside of the DC/OS cluster. 
-
-The parameter ***public_network*** [configured in the Ceph package](#install-ceph) controls the subnet/mask that authorized Ceph clients need to live in in order to be allowed to use Ceph services.
 
 ***NOTE***: these commands are an example for CentOS 7.2. Ceph clients are available for all major Linux distributions and other Operating Systems. These clients should be able to connect to Ceph running on DC/OS, but the configuration may be slightly different. Consult the documentation provided by your Operating System vendor for details.
 
@@ -372,7 +394,7 @@ export SECRETS='{<paste JSON blob here>}'
 
 ```
 
-Check that the FSID was correctly parsed:
+Check that the Secrets string was correctly parsed:
 
 ```bash
 echo "$SECRETS" |jq .fsid
@@ -384,9 +406,11 @@ Expected output:
 "d8e57f50-c26f-43d6-b678-95640beb27f4"
 ```
 
-With these values exported in the node to be used as client, you can now create the Ceph configuration files. These will include `ceph.conf`, `ceph.mon.keyring`, and `ceph.client.admin.keyring`.
+With these values exported in the node to be used as client, you can now create the Ceph configuration and credentials files. These will include `ceph.conf`, `ceph.mon.keyring`, and `ceph.client.admin.keyring`.
 
-### Ceph clients: create required configuration files
+### Ceph clients: create configuration and credentials
+
+Any client attempting to connect to Ceph will require configuration parameters defining how to connect to it, and credentials to authenticate against it. These are provided in the form of a `ceph.conf` and a `ceph.client.admin.keyring` file respectively. These files need to be generated in a node that is part of the DC/OS cluster, as they make use of the Mesos-DNS service to resolve the location of the Ceph monitors.
 
 First, create the Ceph configuration directory that will host the configuration files:
 
@@ -398,10 +422,10 @@ Then create each one of the configuration files as follows:
 
 #### ceph.conf
 
-NOTE: make sure to swap out HOST_NETWORK below with the value [configured in the Ceph package](#install-ceph) as HOST_NETWORK:
+NOTE: If you're using [Network Security]((#network-security), make sure to use the same value for the HOST_NETWORK parameter below that you used for your host and/or public networks when installing the DC/OS Ceph package:
 
 ```bash
-export HOST_NETWORK=172.31.16.0/20       #Use the value for the network where your DC/OS nodes live.
+export HOST_NETWORK=0.0.0.0/0 
 rpm --rebuilddb && yum install -y bind-utils
 export MONITORS=$(for i in $(dig srv _mon._tcp.ceph.mesos|awk '/^_mon._tcp.ceph.mesos/'|awk '{print $8":"$7}'); do echo -n $i',';done)
 cat <<-EOF > /etc/ceph/ceph.conf
@@ -446,6 +470,12 @@ cat <<-EOF > /etc/ceph/ceph.client.admin.keyring
   caps osd = "allow *"
 EOF
 ```
+
+#### Ceph clients: save configuration and credentials files for later use
+
+These configuration and credentials files (in particular, `ceph.conf` and `ceph.client.admin.keyring`) will be used for installation of other clients that need to connect to the Ceph cluster, such as the [Ceph Dashboard](#ceph-dashboard). The [Ceph Dashboard](#ceph-dashboard) package needs to download these files as URIs from an HTTP location, so you will need to copy the `ceph.conf` and `ceph.client.admin.keyring` files to a web server that is reachable from the cluster. You will later refer to their location (e.g. `http://my_web_server/ceph.conf` in the [Ceph Dashboard](#ceph-dashboard) configuration).
+
+NOTE: If your cluster has been set up using a bootstrap node, you can leverage the web server embedded in that bootstrap node for this purpose by copying these files to the `genconf/serve` location of your bootstrap node. You can later use URI locations in the format `http://bootstrap_node_ip_address:port/ceph.conf` for the [Ceph Dashboard](#ceph-dashboard) package.
 
 ### Ceph clients: Install Ceph client software
 
@@ -545,6 +575,24 @@ ls
 ```
 
 You can repeat this sequence to create additional volumes that are hosted in your Ceph cluster.
+
+## Ceph Dashboard
+
+In order to get real time visibilty on the health and usage of your Ceph cluster you can use the `ceph-dash` Universe package.
+
+The Ceph Dashboard package requires a valide Ceph configuration (ceph.conf) and Keyring (ceph.client.admin.keyring) to connect to the ceph cluster. Please refer to the section [Configure Ceph clients](#configure-ceph-clients) for instructions on how to generate these files.
+
+In order to install the Ceph dashboard, go to Universe and select the `ceph-dash` package. Select `Advanced Installation` and scroll down to find two mandatory parameters: ceph_conf_URI and ceph_client_admin_keyring_URI. These are the locations where your `ceph.conf` and `ceph.client.admin.keyring` files live. For example, if you chose to host these files in the `genconf/serve' location of your bootstrap node, the values would be:
+
+ceph_conf_URI = `http://bootstrap_node_ip_address/ceph.conf`
+
+ceph_client_admin_keyring_URI = `http://bootstrap_node_ip_address/ceph.client.admin.keyring`
+
+If you are using a different web location for these files, modify accordingly.
+
+Once these parameters are correctly configured, install the package and wait until it appears as "Running" on the DC/OS "Services" menu. With the Service in a running state, and provided that Marathon-LB is running on your cluster, you should be able to access the Ceph Dashboard at:
+
+`http://your_public_node_ip_address:15000`
 
 # Uninstall
 
