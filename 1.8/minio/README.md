@@ -14,7 +14,7 @@ The instructions below use a pinned hostname constraint to ensure the applicatio
  - Application admins
  - Developers 
  - Devops Engineers
-- Scope: Learn to install Minio on DCOS and learn to use it using minio command line tool `mc`.
+- Scope: Learn to install Minio on DC/OS and learn to use it using minio command line tool `mc`.
 
 **Table of Contents**:
 
@@ -28,21 +28,21 @@ The instructions below use a pinned hostname constraint to ensure the applicatio
 ## Prerequisites
 
 - DC/OS 1.8 or later
-- [Marathon-lb](https://dcos.io/docs/1.8/usage/service-discovery/marathon-lb/usage/) must be installed and running
-- IP address of the public agent(s) where Marathon-lb or an available hostname configured to point to the public agent(s) where Marathon-lb is running.
+- [Marathon-LB](https://dcos.io/docs/1.8/usage/service-discovery/marathon-lb/usage/) must be installed and running
+- IP address of the public agent(s) where Marathon-LB or an available hostname configured to point to the public agent(s) where Marathon-LB is running.
 
 ## Setting up Minio 
 
-1. Before starting, identify the IP address or hostname of a public agent where Marathon load balancer is running. 
+1. Before starting, identify the IP address or hostname of a public agent where Marathon-LB is running. 
 
 
 - Visit the Universe page in DC/OS, and click on the "Install Package" button underneath Minio.
 
-! [Install Minio](img/install.png)
+![Install Minio](img/install.png)
 
-- Click on "Advanced Installation" and navigate to the "networking" tab. Specify the IP address or hostname of the public agent where marathon load balancer is running. Make sure you remove the leading http:// and the trailing / from the IP. 
+- Click on "Advanced Installation" and navigate to the "networking" tab. Specify the IP address or hostname of the public agent where Marathon-LB is running. Make sure you remove the leading http:// and the trailing / from the IP. 
 
-! [Configure IP](img/ip.png)
+![Configure IP](img/ip.png)
 
 - We're ready to install! Click the green "Review and Install" button, verify your settings are correct and then click "Install". Navigate to the services UI to see Minio deploying.
  
