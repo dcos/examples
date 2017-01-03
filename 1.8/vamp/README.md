@@ -51,7 +51,7 @@ To specify the connection details to Elasticsearch create a file called `vamp-co
 {
   "service": {
     "elasticsearch-url": "http://elasticsearch.marathon.mesos:9200",
-    "logstash": "elasticsearch.marathon.mesos"
+    "logstash-host": "elasticsearch.marathon.mesos"
   }
 }
 ```
