@@ -44,7 +44,7 @@ Click `Open Service` in the right upper corner to open the ArangoDB web interfac
 
 Congratulations, you now have ArangoDB running on DC/OS!
 
-To play around a bit more select `Collection` and add a new collection `example`. More information see the [documentation](https://docs.arangodb.com/3.1/Manual/Administration/WebInterface/Collections.html).
+To play around a bit more select `Collection` and add a new collection `example`. For more information see the [documentation](https://docs.arangodb.com/3.1/Manual/Administration/WebInterface/Collections.html).
 
 Click on the newly created collection. It does not have any content, yet. Click on the green plus sign, set the key to `lovedcos` and enter a JSON object.
 
