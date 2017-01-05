@@ -44,6 +44,27 @@ Click `Open Service` in the right upper corner to open the ArangoDB web interfac
 
 Congratulations, you now have ArangoDB running on DC/OS!
 
+To play around a bit more select `Collection` and add a new collection `example`. For more information see the [documentation](https://docs.arangodb.com/3.1/Manual/Administration/WebInterface/Collections.html).
+
+Click on the newly created collection. It does not have any content, yet. Click on the green plus sign, set the key to `lovedcos` and enter a JSON object.
+
+    { "arangodb": "running on DC/OS" }
+
+Click on `Save` to store it.
+
+See the [documentation](https://docs.arangodb.com/3.1/Manual/Administration/WebInterface/Document.html) for more details.
+
+## Scaling
+
+In order to scale ArangoDB switch to the `Nodes` UI view. You will see a list of Coordinators and DB servers. They can be scaled independently.
+
+- Add more DB servers for more data.
+- Add more Coordinators for more computing power.
+
+See the [documentation](https://docs.arangodb.com/3.1/Manual/Scalability/Architecture.html) for an in-depth explanation.
+
+![Scaling](img/scaling.png)
+
 ## Use ArangoDB
 
 Now that ArangoDB is running you can fill it with some data and use it as a data store for your applications.
