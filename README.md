@@ -14,6 +14,7 @@ Currently, the following examples are available:
 
 - [ArangoDB](1.8/arangodb/)
 - [Bookkeeper](1.8/bookkeeper/)
+- [Calico](1.8/calico/)
 - Apache [Cassandra](1.8/cassandra/)
 - [Ceph](1.8/ceph)
 - [Chronos](1.8/chronos/)
