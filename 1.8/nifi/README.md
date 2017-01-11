@@ -86,7 +86,7 @@ After completing all required fields, your flow should look like this:
 
 Now we have to connect them and run:
 
-![flow](img/flow-end.png)
+![flow](img/flow-end.gif)
 
 
 
