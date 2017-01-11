@@ -33,7 +33,7 @@ Currently, it is not possible to scale the Replica Set to more instances than de
 
 There are two ways to install the `mongodb-replicaset` package from the Universe:
 
-### CLI install
+### CLI installation
 
 To install the `mongodb-replicaset` package with default settings, use the following:
 
