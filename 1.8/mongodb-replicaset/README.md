@@ -23,7 +23,6 @@
 
 - A running DC/OS 1.8 cluster with at least 3 private agents, each having at least 0.5 CPU shares and 2 GB of RAM available.
 - [DC/OS CLI](https://dcos.io/docs/1.8/usage/cli/install/) installed.
-- A running GitLab instance, preferably installed from the Universe.
 
 ## Limitations
 
