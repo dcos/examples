@@ -210,7 +210,7 @@ To uninstall the service `mongodb-replicaset` (please adapt/replace accordingly 
 $ dcos package uninstall --app-id=mongodb-replicaset mongodb-replicaset
 ```
 
-Use the [framework cleaner](https://docs.mesosphere.com/1.8/usage/managing-services/uninstall/#framework-cleaner) to remove your ´mongodb-replicaset´ service from ZooKeeper and to destroy all data associated with it. The script requires several arguments, the values for which are derived from your service name:
+Use the [framework cleaner](https://docs.mesosphere.com/1.8/usage/managing-services/uninstall/#framework-cleaner) to remove your `mongodb-replicaset` service from ZooKeeper and to destroy all data associated with it. The script requires several arguments, the values for which are derived from your service name:
 
 - `framework-role` is `mongodb-replicaset-role`
 - `framework-principal` is `mongodb-replicaset-principal`
