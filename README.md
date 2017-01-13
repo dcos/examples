@@ -42,3 +42,4 @@ Currently, the following examples are available:
 - [VAMP](1.8/vamp/)
 - [Wordpress](1.8/wordpress/)
 - Apache [Zeppelin](1.8/zeppelin/)
+- Apache [Nifi](1.8/nifi/)
