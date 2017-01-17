@@ -28,6 +28,7 @@ Currently, the following examples are available:
 - [koding](1.8/koding/)
 - [linkerd](1.8/linkerd/)
 - [Minio](1.8/minio/)
+- [MongoDB Replica Set](1.8/mongodb-replicaset/)
 - Monitoring with [cAdvisor, InfluxDB and Grafana](1.8/cadvisor-influxdb-grafana)
 - Monitoring with [Microsoft Operations Management Suite](1.8/msoms)
 - [Neo4j](1.8/neo4j)
