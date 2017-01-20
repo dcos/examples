@@ -123,7 +123,13 @@ You can install the linkerd-viz package on your DC/OS cluster with this command:
 $ dcos package install linkerd-viz
 ```
 
-To check that linkerd-viz is working, navigate to `http://<public agent ip>:3000/`. You should see the linkerd-viz dashboard:
+Open the linkerd-viz dashboard with:
+
+```bash
+open $(dcos config show core.dcos_url)/service/linkerd-viz
+```
+
+You should see the linkerd-viz dashboard:
 
 ![linkerd-viz](img/linkerd-viz.png)
 
