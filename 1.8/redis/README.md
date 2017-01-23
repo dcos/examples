@@ -7,7 +7,7 @@
 - Scope: Learn how to use Redis on DC/OS
 
 Note, that there are two different DC/OS services for redis:
-- redis: A single redis container, easy to install and test but not suited for production worksloads.
+- redis: A single redis container, easy to install and test but not suited for production workloads.
 - mr-redis: A framework allowing you to mange multiple Redis datastores standalone or in a clustered setup.
 
 **Table of Contents**:
