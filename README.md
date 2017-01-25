@@ -36,6 +36,7 @@ Currently, the following examples are available:
 - [NGINX](1.8/nginx/)
 - Apache [Nifi](1.8/nifi)
 - [Redis](1.8/redis/)
+- [Riak](1.8/riak/)
 - [Scale](1.8/scale)
 - Apache [Spark](1.8/spark/)
 - Microsoft [SQL Server](1.8/sqlserver/)
