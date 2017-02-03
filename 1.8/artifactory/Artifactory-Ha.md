@@ -62,7 +62,7 @@
         ### Licenses: Provide all Artifactory Licenses as a single string comma separated without white spaces in string.
         
     4. Install Artifactory-Secondary for HA cluster by clicking ENABLED for high-availability and secondary under high-availability tab as showed in image.  
-        ![Artifactory HA Option](images/ArtifactoryHA_Secondary_Install.png)
+        ![Artifactory HA Option](images/ArtifactoryHa_Secondary_Install.png)
         
     5. Review and Install. Make sure artifactory-secondary is running and Healthy.
         ![Artifactory HA Option](images/ArtifactoryHA_Health.png)
