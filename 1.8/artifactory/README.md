@@ -4,4 +4,4 @@
 
 
 ##Artifactory Enterprise Installation Guide for DC/OS
-[Install Artifactory Enterprise by following this guide](Artifactory-HA.md)
+[Install Artifactory Enterprise by following this guide](Artifactory-Ha.md)
