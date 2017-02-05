@@ -77,11 +77,10 @@ Log into a terminal where the DC/OS CLI is installed and has connectivity with t
   },
   "portworx": {
     "cpus": 1,
-    "mem": 1024
-    "properties": {
-    "clusterid": "mycluster",
-    "storage": "/dev/sdb",
+    "mem": 1024,
     "kvdb": "etcd://10.1.2.3:4001",
+    "clusterid": "mycluster",
+    "storage": "/dev/sdb"
   }
 }
 ```
