@@ -11,6 +11,8 @@
 - A running DC/OS 1.8 cluster with at least 1 node having at least 1 CPUs and 1 GB of RAM available.
 - [DC/OS CLI](https://dcos.io/docs/1.8/usage/cli/install/) installed.
 
+**Warning**: The current package will not work on RHEL 7.2 with Docker 1.11 due to a none DC/OS related issue.
+
 ## Install NGINX
 
 Assuming you have a DC/OS cluster up and running, we install NGINX to serve up a static Web site, available via the GitHub repo [mesosphere/hello-nginx](https://github.com/mesosphere/hello-nginx).
