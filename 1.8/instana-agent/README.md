@@ -1,18 +1,15 @@
 # Instana agent deployment on DC/OS
 
-Instana is the next generation Application Performance Management solution that automatically monitors dynamic modern applications, including scheduled environments. Instana comprehensively manages your application’s quality of service with zero to absolute minimal configuration effort.
+[Instana](https://www.instana.com "Instana") is the next generation Application Performance Management solution that automatically monitors dynamic modern applications, including scheduled environments. Instana comprehensively manages your application’s quality of service with zero to absolute minimal configuration effort.
 
 The Instana agent package can be installed to DC/OS setups using the official package from the DC/OS universe.
 
 * **Estimated time for completion**: 2 minutes
-* **Target audience**: On-premise- or SaaS-clients of [Instana, inc.](https://www.instana.com "Instana, inc.")
-
 * **Scope**: Learn how to install the Instana agent on a DC/OS Cluster.
 
 ## Prerequisites
 
 * A running DC/OS 1.8 cluster
-* (On-Premise customers only): A running Instana backend machine
 * Your Instana agent key
 
 ## Deploying the Instana agent
@@ -23,11 +20,11 @@ In order to install the Instana agent, go to the Universe listing in the DC/OS w
 
 ![Provide your Instana agent key in the advanced tab](img/params1.png "Provide your Instana agent key in the advanced tab")
 
-If you're a SaaS customer, that is reporting to the US environment, the rest of the values can be left with the default values. EU - SaaS customers should **switch to the "saas-eu-west-1.Instana.io" endpoint**. If you're an on-premises customer, please **enter your backend machine's host address** and **set the port to 1444**. 
+If you're a SaaS customer, that is reporting to the US environment, the rest of the values can be left with the default values. EU - SaaS customers should **switch to the "saas-eu-west-1.Instana.io" endpoint**. If you're an on-prem customer, please **enter your backend's host address** and **set the port** (default: 1444). 
 
 ![Switching to another reporting endpoint](img/params2.png "Switching to another reporting endpoint")
 
-Also, you can assign host tags here.
+You can **set host tags** in the tag_list (comma separated).
 
 ## Scaling the Instana agent
 
