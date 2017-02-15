@@ -5,7 +5,8 @@ Instana is the next generation Application Performance Management solution that 
 The Instana agent package can be installed to DC/OS setups using the official package from the DC/OS universe.
 
 * **Estimated time for completion**: 2 minutes
-* **Target audience**: On-Premise- or 
+* **Target audience**: On-premise- or SaaS-clients of [Instana, inc.](https://www.instana.com "Instana, inc.")
+
 * **Scope**: Learn how to install the Instana agent on a DC/OS Cluster.
 
 ## Prerequisites
