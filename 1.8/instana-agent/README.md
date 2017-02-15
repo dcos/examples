@@ -31,6 +31,6 @@ Also, you can assign host tags here.
 
 ## Scaling the Instana agent
 
-This is being taken care of by the deployment constraints. If you have, say, three hosts, and set the scaling to three, DC/OS will deploy exactly one isntana agent on each host. If you want different host tags for each and every machine, the isntana agent needs to be deployed separately.
+This is being taken care of by the deployment constraints. If you have, say, three hosts, and set the scaling to three, DC/OS will deploy exactly one Instana agent on each host. If you want different host tags for each and every machine, the Instana agent needs to be deployed separately.
 
 ![The Instana agent supports scaling](img/tasklisting.png "The Instana agent supports scaling")
