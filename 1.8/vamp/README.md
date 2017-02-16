@@ -2,7 +2,7 @@
 
 [Vamp](http://www.vamp.io) is a microservices management platform for doing advanced canary releases and A/B testing.
 
-- Estimated time for completion: 10 minutes
+- Estimated time for completion: 5 minutes
 - Target audience: Anyone hosting web applications in microservices
 - Scope: Install the DC/OS Vamp service
 
@@ -50,8 +50,7 @@ To specify the connection details to Elasticsearch create a file called `vamp-co
 ```json
 {
   "service": {
-    "elasticsearch-url": "http://elasticsearch.marathon.mesos:9200",
-    "logstash-host": "elasticsearch.marathon.mesos"
+    "elasticsearch-url": "http://elasticsearch.marathon.mesos:9200"
   }
 }
 ```
@@ -60,11 +59,11 @@ Then, from the command line run the following:
 
 ```bash
 $ dcos package install --options=vamp-config.json vamp
-In order to run Vamp you need to specify connection parameters to Elasticsearch and Logstash.
+In order to run Vamp you need to specify connection parameters to Elasticsearch.
 See installation instruction at http://vamp.io/documentation/installation/dcos/
 
 Continue installing? [yes/no] yes
-Installing Marathon app for package [vamp] version [0.9.1-0.0.2]
+Installing Marathon app for package [vamp] version [0.9.3-0.0.1]
 Vamp has been successfully installed!
 
     Documentation: http://www.vamp.io
@@ -80,7 +79,7 @@ In addition, run this command to view installed services:
 ```bash
 $ dcos package list
 NAME  VERSION      APP         COMMAND  DESCRIPTION                                             
-vamp  0.9.1-0.0.2  /vamp/vamp  ---      Canary test/release and autoscaling platform for DC/OS  
+vamp  0.9.3-0.0.1  /vamp/vamp  ---      Canary test/release and autoscaling platform for DC/OS  
 
 ```
 
