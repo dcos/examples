@@ -10,7 +10,7 @@ The Instana agent package can be installed to DC/OS setups using the official pa
 ## Prerequisites
 
 * A running DC/OS 1.8 cluster
-* Your Instana agent key
+* Your Instana agent key (obtainable via the UMP menu in the Instana WebUI)
 
 ## Deploying the Instana agent
 
