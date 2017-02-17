@@ -20,6 +20,7 @@ Currently, the following examples are available:
 - [Chronos](1.8/chronos/)
 - [Docker registry](1.8/registry/)
 - [Elasticsearch](1.8/elasticsearch/)
+- Apache [Flink](1.8/flink/)
 - [GeoServer](1.8/geoserver/)
 - [Gitlab](1.8/gitlab/)
 - [GitLab Runner](1.8/gitlab-runner/)

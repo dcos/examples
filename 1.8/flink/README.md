@@ -58,7 +58,7 @@ After the job has finished we should be able to see some details about the WordC
 We can alternetively use the native Flink CLI from a docker container.
 Therefore we need to know the Jobmanager rpc adress and port which can be retrieved from the Flink UI:
 
-![Job Manager](img/jobmanger-rpc.png)
+![Job Manager](img/jobmanager-rpc.png)
 
 ```bash
 $ dcos node ssh --master-proxy --leader
@@ -72,9 +72,9 @@ root@2a9c01d3594e:/flink-1.2.0# ./bin/flink run -m <jobmangerhost>:<jobmangerjob
 Coming soon.
 
 
-## Uninstall Elasticsearch
+## Uninstall Flink
 
-To uninstall Elasticsearch:
+To uninstall Flink:
 
 ```bash
 $ dcos package uninstall flink
