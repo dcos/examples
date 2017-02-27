@@ -4,7 +4,7 @@ This repository contains examples of how to install and use DC/OS services.
 
 If you want to contribute your own example, please [fork](https://help.github.com/articles/fork-a-repo/) this repo, add the example and send in a [pull request](https://help.github.com/articles/about-pull-requests/).
 
-Note that there is a list of [planned examples](https://dcosjira.atlassian.net/issues/?filter=11500) available, so feel free to pick one of those or, if you don't see your favourite there, add it.
+Note that there is a list of [planned examples](https://jira.mesosphere.com/issues/?filter=26241) available, so feel free to pick one of those or, if you don't see your favourite there, add it.
 
 Got any questions? Please reach out Michael Hausenblas on the [DC/OS Community Slack](http://chat.dcos.io) (@mh9.mesosphere) or via mail ([michael@dcos.io](mailto:michael@dcos.io)).
 
@@ -20,6 +20,7 @@ Currently, the following examples are available:
 - [Chronos](1.8/chronos/)
 - [Docker registry](1.8/registry/)
 - [Elasticsearch](1.8/elasticsearch/)
+- Apache [Flink](1.8/flink/)
 - [GeoServer](1.8/geoserver/)
 - [Gitlab](1.8/gitlab/)
 - [GitLab Runner](1.8/gitlab-runner/)
