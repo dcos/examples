@@ -6,7 +6,7 @@ If you want to contribute your own example, please [fork](https://help.github.co
 
 Note that there is a list of [planned examples](https://jira.mesosphere.com/issues/?filter=26241) available, so feel free to pick one of those or, if you don't see your favourite there, add it.
 
-Got any questions? Please reach out Michael Hausenblas on the [DC/OS Community Slack](http://chat.dcos.io) (@mh9.mesosphere) or via mail ([michael@dcos.io](mailto:michael@dcos.io)).
+Got any questions? Please reach out Ravi Yadav on the [DC/OS Community Slack](http://chat.dcos.io) (@ravi.mesosphere) or via mail ([ryadav@dcos.io](mailto:ryadav@dcos.io)).
 
 ## DC/OS 1.8
 
