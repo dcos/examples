@@ -24,6 +24,7 @@ Currently, the following examples are available:
 - [GeoServer](1.8/geoserver/)
 - [Gitlab](1.8/gitlab/)
 - [GitLab Runner](1.8/gitlab-runner/)
+- [Instana](1.8/instana-agent/)
 - [Jenkins](1.8/jenkins/)
 - Apache [Kafka](1.8/kafka/)
 - [koding](1.8/koding/)
