@@ -37,6 +37,7 @@ Currently, the following examples are available:
 - [Nexus 3](1.8/nexus/)
 - [NGINX](1.8/nginx/)
 - Apache [Nifi](1.8/nifi)
+- [Portworx](1.8/portworx)
 - [Redis](1.8/redis/)
 - [Riak](1.8/riak/)
 - [Scale](1.8/scale)

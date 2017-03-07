@@ -42,29 +42,32 @@ Please review the main [Portworx on Mesos](http://docs.portworx.com/run-with-mes
 
 Portworx requires an instance of **etcd** or **consul** for cluster meta-data, prior to launching.  Either launch manually or through a Universe package, taking note of the **service address:port**.
 
+Optionally, CoreOS provides an implicit **etcd** instance.
+
 # Install Portworx
 
 ## Install Portworx from the DC/OS GUI
 
-Log into DC/OS, go to Universe, and select the Portworx package from Universe. Select `Advanced Installation`. These parameters are ***MANDATORY***:
+Log into DC/OS, go to Universe, and select the Portworx package from Universe. Select `Advanced Installation`.  Advanced Installation is ***MANDATORY***
 
-- ***clusterid*** : Name for this cluster. Can be arbitrary string.
+- ***cmdargs*** : The `cmdargs` parameter is ***MANDATORY*** and includes all the [relevent command line options](http://docs.portworx.com/run-with-docker.html#run-px).
 
-- ***kvdb*** : URL for the instance of the key/value store.  Examples include: etcd://etcd.mycompany.com:4001 or consul:http://consul.mycompany.com:8500
-
-- ***storage*** : Name of the storage device to contribute.  Example:  /dev/sdb
-
-- ***mgmtif*** : Name of the network interface to use for Portworx management traffic.  Example:  enp0s3
-
-- ***dataif*** : Name of the network interface to use for Portworx data traffic.  Example:  enp0s3
-
-- ***headers_dir*** : Name of directory for system header files.  For CoreOS, this should be "/lib/modules".  For all other OS's, use the default "/usr/src".
+- ***headers_dir*** : Name of directory for system header files.  For CoreOS, this should be "/lib/modules" (default).  For all other OS's, use "/usr/src".
 
 Once the package is configured according to your installation and needs, click on "Review and Install", and finally on "Install".
+Confirm that the Portworx service has started properly
 
-![Install Portworx: ](img/DCOS_1-2.png)
+![Select Portworx in Universe: ](img/Univ1.png)
 
-![Run: Services View](img/DCOS_2-2.png)
+![Select "Advanced Installation": ](img/Univ2.png)
+
+![Configure Portworx: ](img/Univ3.png)
+
+![Review Configuration: ](img/Univ4.png)
+
+![Verify Portworx is running: ](img/Univ5.png)
+
+![Verify Portworx details: ](img/Univ6.png)
 
 ## Install Portworx from the DC/OS CLI
 
@@ -76,11 +79,13 @@ Log into a terminal where the DC/OS CLI is installed and has connectivity with t
     "name": "portworx"
   },
   "portworx": {
+    "framework-name": "portworx",
     "cpus": 1,
-    "mem": 1024,
-    "kvdb": "etcd://10.1.2.3:4001",
-    "clusterid": "mycluster",
-    "storage": "/dev/sdb"
+    "mem": 2048,
+    "instances": 3,
+    "cmdargs": "-k etcd://localhost:2379 -c px1234 -s /dev/sdb -m bond0 -d bond0",
+    "headers_dir": "/lib/modules",
+    "api_port": 9001
   }
 }
 ```
@@ -101,6 +106,7 @@ After installation, you can check the correct functioning with:
 
 ```bash
 dcos package list|grep portworx
+portworx  1.1.6-3.0  /portworx  ---      Portworx PX provides scheduler integrated data services for containers, such as data persistence, multi-node replication, cloud-agnostic snapshots and data encryption. Portworx itself is deployed as a container and is suitable for both cloud and on-prem deployments.  Portworx enables containerized applications to be persistent, portable and protected.  For DCOS examples of Portworx, please see https://github.com/dcos/examples/tree/master/1.8/portworx and http://docs.portworx.com/run-with-mesosphere.html
 ```
 
 # Use Portworx
