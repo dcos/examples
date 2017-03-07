@@ -1,4 +1,4 @@
-![DC/OS Logo](https://acomblogimages.blob.core.windows.net/media/Default/Windows-Live-Writer/dcoslogo.png) ![Ceph Logo](http://docs.ceph.com/docs/master/_static/logo.png)
+![Ceph Logo](http://docs.ceph.com/docs/master/_static/logo.png)
 
 Ceph is a free-software storage platform that implements object storage on a single distributed computer cluster, and provides interfaces for object-, block- and file-level storage. Ceph aims primarily for completely distributed operation without a single point of failure, scalable to the exabyte level, and freely available.
 
