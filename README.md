@@ -28,6 +28,7 @@ Currently, the following examples are available:
 - [Jenkins](1.8/jenkins/)
 - Apache [Kafka](1.8/kafka/)
 - [koding](1.8/koding/)
+- [kong](1.8/kong/)
 - [linkerd](1.8/linkerd/)
 - [Minio](1.8/minio/)
 - [MongoDB Replica Set](1.8/mongodb-replicaset/)
