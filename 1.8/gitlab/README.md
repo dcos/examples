@@ -1,4 +1,4 @@
-# How to use  GitLab on DC/OS
+# How to use GitLab on DC/OS
 
 [Gitlab](https://gitlab.com) an open source developer tool that allows you to host git repositories, review code, track issues, host Docker images and perform continuous integration.
 

@@ -22,7 +22,7 @@ Currently, the following examples are available:
 - [Elasticsearch](1.8/elasticsearch/)
 - Apache [Flink](1.8/flink/)
 - [GeoServer](1.8/geoserver/)
-- [Gitlab](1.8/gitlab/)
+- [GitLab](1.8/gitlab/)
 - [GitLab Runner](1.8/gitlab-runner/)
 - [Instana](1.8/instana-agent/)
 - [Jenkins](1.8/jenkins/)
