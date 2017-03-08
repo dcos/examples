@@ -8,13 +8,13 @@
 
 ## Prerequisites
 
-- A running DC/OS 1.8 cluster with at least 1 node having at least 1.3 CPUs and 1 GB of RAM available.
+- A running DC/OS 1.8 cluster with 1.3 CPUs and 1 GB of RAM available.
 - Marathon-LB installed
 - Postgresql installed
 
 ## Install Postgresql
 
-First install a postgresql database in your DC/OS cluster using the existing Universe package. Configure the package by creating a file called `options.json` with following contents:
+First install a postgresql database in your DC/OS cluster using the existing Universe package. Configure the package by creating a file called `options.json` with following:
 
 ```json
 {
@@ -95,8 +95,11 @@ marathon-lb  10.0.6.130  root    R    marathon-lb.104e0ebe-03be-11e7-b790-627a33
 postgresql   10.0.0.71   root    R    postgresql.0f2867a0-03cb-11e7-b790-627a33830456
 ```
 
-Now that Kong is installed, curl the marathon-lb endpoint to validate that it is up and running.  `curl http://<public-agent-ip>:10002`. You should see output similar to this:
+Kong in the DC/OS UI
+
 ![Kong on DC/OS](img/kong-dcos.png)
+
+Now that Kong is installed, curl the marathon-lb endpoint to validate that it is up and running `curl http://<public-agent-ip>:10002` You should see output similar to this:
 
 ![Kong API endpoint](img/kong-api.png)
 
