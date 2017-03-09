@@ -1,4 +1,4 @@
-How to use Artifactory on DC/OS
+# How to use Artifactory on DC/OS
 
 Currently you are only able to use licensed versions of Artifactory on DC/OS:
 
