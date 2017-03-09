@@ -1,8 +1,13 @@
-## How to use Artifactory on DC/OS
+## How to use Artifactory on DC/OS as a Docker Registry
 
-## Steps to use artifactory as docker registry
 
-####Insecure
+## Prerequisites
+
+- A running installation of [Artifactory Pro](artifactory-pro.md) or [Artifactory Enterprise](artifactory-enterprise.md) on DC/OS
+- [Artifactory-lb](artifactory-lb.md) installed.
+- Ports 5000 to 5010 open on the public agent where Artifactory-lb is running.
+
+### Configuring Artifactory as an insecure registry (optional)
 In case you'd like to run an insecure registry without using any TLS certificates, you can configure the nodes in your DC/OS cluster to work without certificates or security.
 
 This basically tells the Docker engine in each node to entirely disregard security for your registry. While this is relatively easy to configure the daemon in this way, it is very insecure. It does expose your registry to trivial MITM. Only use this solution for isolated testing or in a tightly controlled, air-gapped environment.

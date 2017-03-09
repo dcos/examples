@@ -3,7 +3,7 @@
 ## Pre-requisites
 
 - DC/OS 1.8 or later with at least one public agent
-- A running installation of Artifactory Pro or Artifactory Enterprise on DC/OS
+- A running installation of [Artifactory Pro](artifactory-pro.md) or [Artifactory Enterprise](artifactory-enterprise.md) on DC/OS
 
 ## Setting up Artifactory-lb:
 
@@ -32,25 +32,11 @@
 
 ##### NOTE:  If name of your artifactory service is not "artifactory" then change it under artifactory tab.
 ##### Use pre populated API KEY in case you have changed artifactory password.
-##### It needs port 5000-5010 open to use artifactory as docker registry.
 
-##Awesome!! now you can access artifactory UI by going to public ip of node where Artifactory-lb is running.
+## Accessing Artifactory
 
-Here is how Artifactory UI looks like!!!
+To access Artifactory, navigate to the DC/OS public agent where Artifactory-lb is running:
+
 ![Artifactory UI](img/Artifactory_UI.png)
 
-
-### Accessing Artifactory
-
-6. Access Artifactory on Public IP of DC/OS public slave.
-
-Here is how Artifactory UI looks like!
-![Artifactory UI](img/Artifactory_UI.png)
-
-
-### 
-
-
-
-
-
+For instructions on how to use Artifactory as a Docker Registry, see [this guide](using-artifactory.md).
