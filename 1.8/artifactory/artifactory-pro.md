@@ -53,4 +53,4 @@ dcos package install --options=artifactory-pro-option.json artifactory
 
 ### Install Artifactory-lb
 
-Once Artifactory is up and running, [follow this guide to set up Artifactory-lb](install-artifactory-lb.md).
+Once Artifactory is up and running, [follow this guide to set up Artifactory-lb](artifactory-lb.md).

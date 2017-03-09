@@ -68,7 +68,7 @@ dcos package install --options=artifactory-primary-options.json artifactory
 
 ### Install Artifactory-lb
 
-Once Artifactory is up and running, [follow this guide to set up Artifactory-lb](install-artifactory-lb.md).
+Once Artifactory is up and running, [follow this guide to set up Artifactory-lb](artifactory-lb.md).
 
 ### Scaling Artifactory Enterprise
 
