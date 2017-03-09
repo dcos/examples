@@ -21,7 +21,7 @@
     All the nodes should share the same file storage, for now the only way is to use NFS. This requirement will be removed in the future.<br />
     Note: Provide permission to write and create subdirectories to /var/data/artha.
 
-2. Create a new file on your workstation called `artifactory-enterprise-options.json`, containing the following content (replace the license parameter with your own license string):
+2. Create a new file called `artifactory-enterprise-options.json`, with the following content (replace the license parameter with your own license string):
 
 ```
 {
