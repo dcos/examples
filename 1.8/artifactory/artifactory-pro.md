@@ -1,18 +1,16 @@
-##Artifactory-Pro Installation Guide for DC/OS
+## How to set up Artifactory Pro on DC/OS
 
-## To Set Up Artifactory HA in DC/OS following are prerequisites:
-1. **Database (MySQL)**
-2. **Artifactory Pro License**
+## Prerequisites
 
-## It requires min 1 Public Slave to install Artifactory Pro or Enterprise
+- DC/OS 1.8 or later with at least one public agent
+- [DC/OS CLI installed](https://dcos.io/docs/1.8/usage/cli/install/) and configured to use your cluster
+- Database (MySQL, Oracle, MS SQL Server or Postgres)
+- Artifactory Enterprise license
 
-*[Here is guide to install MySQL in DC/OS](install-mysql.md)
+## Setting up Artifactory Pro
 
-*[Go here to Get your Trial License](https://www.jfrog.com/artifactory/free-trial-mesosphere/)
+1. Create a new file on your workstation called `artifactory-pro-options.json`, containing the following content (replace the license parameter with your own license string):
 
-*Steps to Install Artifactory Pro using DC/OS CLI.
-
-1. create `artifactory-pro-options.json` file with following content:
 ```
 {
   "service": {
@@ -45,12 +43,14 @@
 }
 ```
 
-####NOTE: Make sure you provide your Artifactory-Pro/Trial license in json file.
+2. Run the following DC/OS CLI command to install Artifactory Pro:
 
-2. Run command to install artifactory pro ```dcos package install --options=artifactory-pro-option.json artifactory```
+```
+dcos package install --options=artifactory-pro-option.json artifactory
+```
 
-3. Make sure Artifactory is running and its healthy by looking at Marathon UI.
+3. Check that Artifactory is up and running successfully by checking the "Services" tab of DC/OS.
 
-##NOW you are just one step away in accessing Artifactory
+### Install Artifactory-lb
 
-4. [Install Artifactory-lb by following this guide to access artifactory](install-artifactory-lb.md)
+Once Artifactory is up and running, [follow this guide to set up Artifactory-lb](install-artifactory-lb.md).

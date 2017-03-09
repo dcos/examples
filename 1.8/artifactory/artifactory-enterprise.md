@@ -1,123 +1,75 @@
-##Artifactory HA Installation Guide for DC/OS
+## How to set up Artifactory Enterprise on DC/OS
 
-##### Architecture of Artifactory HA
+[Artifactory Enterprise](https://www.jfrog.com/artifactory/versions/#High-Availability) is a highly available installation of Artifactory. It does this by using a load balancer that balances requests across multiple Artifactory instances.
 
-![HA Artifactory Architecture](images/HA_Diagram.png)
+![Artifactory Enterprise Architecture](img/HA_Diagram.png)
 
-## To Set Up Artifactory HA in DCOS following are prerequisites:
-1. **NFS Storage**
-2. **Database (MySQL, Oracle,  MS SQL and PostgreSQL)**
-3. **Artifactory Pro Enterprise Value Pack**
+## Prerequisites
 
-## It requires min 1 Public Slave to install Artifactory Pro or Enterprise
+- DC/OS 1.8 or later with at least one public agent
+- [DC/OS CLI installed](https://dcos.io/docs/1.8/usage/cli/install/) and configured to use your cluster
+- Database (MySQL, Oracle, MS SQL Server or Postgres)
+- Artifactory Enterprise license
+- NFS directory mounted to each node
 
-## Steps to Set Up Artifactory HA:
+## Setting up Artifactory Enterprise
 
 1. Mount NFS Storage to Each Private Node of DC/OS Cluster.<br />
     For example: You have artifactoryha.mount.com:/artifactory as your mount point.
-    Mount it to /var/data/artha dir of your each private node of DC/OS.<br />
-    ```sudo mount artifactoryha.mount.com:/artifactory /var/artifactory/```<br />
+    Mount it to /var/data/artha dir of your each private node of DC/OS.
+      ```sudo mount artifactoryha.mount.com:/artifactory /var/artifactory/```
     All the nodes should share the same file storage, for now the only way is to use NFS. This requirement will be removed in the future.<br />
     Note: Provide permission to write and create subdirectories to /var/data/artha.
-    
-2. Install MySQL in DC/OS.<br />
-    [Here is guide to install MySQL in DC/OS](install-mysql.md)
-    The database is used by all the nodes to store metadata attached to artifacts.<br />
 
-3. Install artifactory-primary using DC/OS CLI.<br />
-    1. create `artifactory-primary-options.json` with following content:
-        ``` 
-        {
-          "service": {
-            "name": "artifactory",
-            "cpus": 2,
-            "mem": 2048,
-            "licenses": "$ARTIFACTORY_ENTERPRISE_LICENSES",
-            "host-volume": "/var/artifactory",
-            "database": {
-              "connection-string": "jdbc:mysql://mysql.marathon.mesos:3306/artdb?characterEncoding=UTF-8&elideSetAutoCommits=true",
-              "user": "jfrogdcos",
-              "password": "jfrogdcos"
-            }
-          },
-          "pro": {
-            "local-volumes": {},
-            "external-volumes": {
-              "enabled": false
-            }
-          },
-          "high-availability": {
-            "enabled": true,
-            "secondary": {
-              "enabled": false,
-              "unique-nodes": true,
-              "nodes": 1,
-              "name": "artifactory"
-            }
-          }
-        }
-        ```
-        
-       ###NOTE: Make sure database name, is correct in connection-string as well as username & password for database.
-       ### Licenses: Provide all Artifactory Licenses as a single string comma separated without white spaces in string.
-       
-    2. Install Artifactory-Primary using following command:
-        `dcos package install --options=artifactory-primary-options.json artifactory`
-    
-    3. Make sure artifactory-primary is running and Healthy.
-    
-4. Install Artifactory-secondary:DC/OS CLI.<br />
-   
-   1. create `artifactory-secondary-options.json` with following content:
-      ``` 
-          {
-            "service": {
-              "name": "artifactory-secondary",
-              "cpus": 2,
-              "mem": 2048,
-              "licenses": "$ARTIFACTORY_ENTERPRISE_LICENSES",
-              "host-volume": "/var/artifactory",
-              "database": {
-                "connection-string": "jdbc:mysql://mysql.marathon.mesos:3306/artdb?characterEncoding=UTF-8&elideSetAutoCommits=true",
-                "user": "jfrogdcos",
-                "password": "jfrogdcos"
-              }
-            },
-            "pro": {
-              "local-volumes": {},
-              "external-volumes": {
-                "enabled": false
-              }
-            },
-            "high-availability": {
-              "enabled": true,
-              "secondary": {
-                "enabled": true,
-                "unique-nodes": true,
-                "nodes": 1,
-                "name": "artifactory"
-              }
-            }
-          }
-      ```
-       
-   2. Install Artifactory-Primary using following command:
-           `dcos package install --options=artifactory-secondary-options.json artifactory`
-       
-   3. Make sure artifactory-secondary is running and Healthy.
-   
+2. Create a new file on your workstation called `artifactory-enterprise-options.json`, containing the following content (replace the license parameter with your own license string):
+
+```
+{
+  "service": {
+    "name": "artifactory",
+    "cpus": 2,
+    "mem": 2048,
+    "licenses": "$ARTIFACTORY_ENTERPRISE_LICENSES",
+    "host-volume": "/var/artifactory",
+    "database": {
+      "connection-string": "jdbc:mysql://mysql.marathon.mesos:3306/artdb?characterEncoding=UTF-8&elideSetAutoCommits=true",
+      "user": "jfrogdcos",
+      "password": "jfrogdcos"
+    }
+  },
+  "pro": {
+    "local-volumes": {},
+    "external-volumes": {
+      "enabled": false
+    }
+  },
+  "high-availability": {
+    "enabled": true,
+    "secondary": {
+      "enabled": false,
+      "unique-nodes": true,
+      "nodes": 1,
+      "name": "artifactory"
+    }
+  }
+}
+```
+
+ ###NOTE: Make sure database name, is correct in connection-string as well as username & password for database.
+ ### Licenses: Provide all Artifactory Licenses as a single string comma separated without white spaces in string.
+
    ### NOTE: API Key of Artifactory generated by Artifactory-Primary to fetch license from Artifactory-Primary (Optional)
 
-#NOW you are just one step away in accessing Artifactory
+3. Run the following DC/OS CLI command to install Artifactory Enterprise:
 
-5. [Install Artifactory-lb by following this guide](install-artifactory-lb.md)
+```
+dcos package install --options=artifactory-primary-options.json artifactory
+```
 
-6. Access Artifactory on Public IP of DC/OS public slave. 
+### Install Artifactory-lb
 
-### Now try to access your DC/OS Public Slave load balancer you should be able to access Artifactory.
+Once Artifactory is up and running, [follow this guide to set up Artifactory-lb](install-artifactory-lb.md).
 
-Here is how Artifactory UI looks like!!!
-![Artifactory UI](images/Artifactory_UI.png)
+### Scaling Artifactory Enterprise
 
-##To use JFrog Artifactory please visit wiki.jfrog.com
-
+TODO: instructions on how to add nodes
