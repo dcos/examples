@@ -1,7 +1,7 @@
-##Artifactory-Pro Installation Guide for DC/OS
-[Install Artifactory-Pro by following this guide](Artifactory-Pro.md)
+How to use Artifactory on DC/OS
 
+Currently you are only able to use licensed versions of Artifactory on DC/OS:
 
++ For Artifactory Pro, follow [this guide](artifactory-pro.md).
++ For Artifactory Enterprise, follow [this guide](artifactory-enterprise.md).
 
-##Artifactory Enterprise Installation Guide for DC/OS
-[Install Artifactory Enterprise by following this guide](Artifactory-Ha.md)
