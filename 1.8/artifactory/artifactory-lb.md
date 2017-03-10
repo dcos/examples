@@ -1,6 +1,6 @@
 ## How to set up Artifactory-lb on DC/OS
 
-## Pre-requisites
+## Prerequisites
 
 - DC/OS 1.8 or later with at least one public agent
 - [DC/OS CLI installed](https://dcos.io/docs/1.8/usage/cli/install/) and configured to use your cluster
@@ -38,7 +38,7 @@ If you customised the name of Artifactory when installing it, please change `art
 dcos package install --options="artifactory-lb-options.json" artifactory-lb
 ```
 
-##### Use pre populated API KEY in case you have changed artifactory password.
+##### Use pre-populated API KEY in case you have changed artifactory password.
 
 ## Accessing Artifactory
 

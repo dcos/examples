@@ -8,7 +8,7 @@
 - [Artifactory-lb](artifactory-lb.md) installed with appropriate certificates (or configured as an insecure registry, see below)
 - Ports 5000 to 5010 open on the public agent where Artifactory-lb is running.
 
-### Configuring Artifactory as an insecure registry (optional)
+### (Optional) Configuring Artifactory as an insecure registry
 
 In case you'd like to run an insecure registry without using any TLS certificates, you can configure the nodes in your DC/OS cluster to work without certificates or security.
 

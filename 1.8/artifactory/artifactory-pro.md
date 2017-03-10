@@ -9,7 +9,7 @@
 
 ## Setting up Artifactory Pro
 
-1. Create a new file on your workstation called `artifactory-pro-options.json`, containing the following content (replace the license parameter with your own license string):
+1. Create a new file on your workstation, called `artifactory-pro-options.json`, with the following content (replace the license parameter with your own license string):
 
 ```
 {
