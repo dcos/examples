@@ -36,6 +36,15 @@ After this, you should see the Flink service running via the `Services` tab of t
 
 ![Flink DC/OS service](img/services.png)
 
+
+### Scala 2.11
+
+Note, that the default build of Apache Flink and this universe package are both using Scala 2.10.
+
+If you require Scala 2.11 please use the following install option from the UI (or via options.json when using the CLI):
+![Scala 2.11](img/scala2_11.png)
+
+
 ## Use Flink
 
 NOTE: In order to have better access to the input and output files, it makes sense to store those in HDFS.
