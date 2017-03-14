@@ -62,7 +62,7 @@ Once you install the Datadog package on the agent nodes, you can move on to [ins
 
 Datadog also collects specialized metrics from Mesos master nodes. When you install Datadog on your master nodes, Datadog will automatically begin collecting and aggregating metrics from ZooKeeper and Marathon, in addition to monitoring Mesos and Docker (as is the case on agent nodes).
 
-To installing Datadog on Linux, run the command below, providing your [Datadog API key][api-key] (see [the docs][dd-agent-docs] for an alternative command for Amazon Linux):
+To install Datadog on Linux, run the command below, providing your [Datadog API key][api-key] (see [the docs][dd-agent-docs] for an alternative command for Amazon Linux):
 
 ```bash
 docker run -d --name dd-agent \
