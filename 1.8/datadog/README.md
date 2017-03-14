@@ -141,7 +141,7 @@ Deploy the changes to the Datadog service. You can then verify that the configur
 CONTAINER ID        IMAGE                                                             COMMAND                  CREATED             STATUS              PORTS                                                                NAMES
 7bc168abea39        datadog/docker-dd-agent:11.0.5112                                 "/entrypoint.sh super"   10 minutes ago      Up 10 minutes       7777/tcp, 8126/tcp, 0.0.0.0:8125->8125/udp, 0.0.0.0:9001->9001/tcp   mesos-xxx
 22bb4ef7de7e        mysql:5.7.12                                                      "docker-entrypoint.sh"   22 minutes ago      Up 22 minutes       0.0.0.0:3306->3306/tcp                                               mesos-xxx
-[root@10 ~]# docker exec 7bc168abea39 service datadog-agent info
+[agent-01]# docker exec 7bc168abea39 service datadog-agent info
 
 ...  
     mysql
