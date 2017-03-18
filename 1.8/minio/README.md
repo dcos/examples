@@ -75,7 +75,7 @@ Minio Client (mc) is a CLI tool which provides a modern alternative to UNIX comm
 mc config host add <ALIAS> <YOUR-S3-ENDPOINT> <YOUR-ACCESS-KEY> <YOUR-SECRET-KEY> <API-SIGNATURE>
 ```
 
-*Example: Create a new bucket named "my-bucket" on http://52.53.213.170:9000*
+*Example: Create a new bucket named "my-bucket" on http://52.53.213.179:9000*
 
 ```sh
 mc config host add minio-dcos http://52.53.213.179:9000 2TT97MX8MWWZGCBWQULV mdXXJwo0bxO7XUfOuOMaUu255u0QKYsddEXjVBzd
