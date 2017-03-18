@@ -60,7 +60,7 @@ Neo4j has been successfully installed.
 Documentation can be found at https://neo4j.com/docs and https://neo4j.com/developer
 ```
 
-After installation, point your web browser to the public IP of the agent running the proxy on port 7474. If you login and enter `:sysinfo` you will see all your running cluster nodes.
+After installation, point your web browser to the public IP of the agent running the proxy on port 7474. If you login (default: neo4j/dcos) and enter `:sysinfo` you will see all your running cluster nodes.
 
 **Important:** Please check in the configuration sidebar `Do not use Bolt`. Only http via port 7474 is exported through this proxy, therefore the binary Bolt protocol is not working on the outside. Inside DC/OS Bolt works as expected. 
 
