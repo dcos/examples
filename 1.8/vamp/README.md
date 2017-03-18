@@ -24,6 +24,7 @@ You need Elasticsearch running in order to properly deploy Vamp. For testing pur
   "cpus": 0.2,
   "mem": 1024.0,
   "container": {
+    "type" : "DOCKER",
     "docker": {
       "image": "magneticio/elastic:2.2",
       "network": "HOST",
