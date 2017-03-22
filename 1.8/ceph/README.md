@@ -427,11 +427,13 @@ NOTE: If you're using [Network Security]((#network-security), make sure to use t
 ```bash
 export HOST_NETWORK=0.0.0.0/0 
 rpm --rebuilddb && yum install -y bind-utils
-export MONITORS=$(for i in $(dig srv _mon._tcp.ceph.mesos|awk '/^_mon._tcp.ceph.mesos/'|awk '{print $8":"$7}'); do echo -n $i',';done)
+#export MONITORS=$(for i in $(dig srv _mon._tcp.ceph.mesos|awk '/^_mon._tcp.ceph.mesos/'|awk '{print $8":"$7}'); do echo -n $i',';done)
+export PORT_MON=$(dig srv _mon._tcp.ceph.mesos|awk '/^_mon._tcp.ceph.mesos/'|head -n 1|awk '{print $7}') #assume all mons are in the same port, pick first
 cat <<-EOF > /etc/ceph/ceph.conf
 [global]
 fsid = $(echo "$SECRETS" | jq .fsid)
-mon host = "${MONITORS::-1}"
+#mon host = "${MONITORS::-1}"
+mon host = "mon.ceph.mesos:$PORT_MON"
 auth cluster required = cephx
 auth service required = cephx
 auth client required = cephx
