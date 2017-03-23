@@ -12,9 +12,9 @@
 - Artifactory Enterprise license
 - NFS directory mounted to each node
 
-## Setting up Artifactory Enterprise with NFS
+## Setting up Artifactory Enterprise
 
-### 1. Mount NFS Storage to Each Private Node of DC/OS Cluster
+### 1. Mount NFS Storage to Each Private Node of DC/OS Cluster (Optional)
 All nodes should share the same file storage. We recommend to use NFS.
 
 As an example, if `artifactoryha.mount.com:/artifactory` is the mount point, mount it to `/var/data/artha` on each private node of DC/OS with the following command:
