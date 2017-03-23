@@ -9,7 +9,13 @@
 
 ## Setting up Artifactory Pro
 
-1. Create a new file on your workstation, called `artifactory-pro-options.json`, with the following content (replace the license parameter with your own license string):
+1. Create a new file on your workstation, called `artifactory-pro-options.json`:
+
+Be sure to:
+
+- replace `service.license` with your own license string, separating multiple licenses with a comma (`,`) and no additional whitespace
+- replace `service.database.user` and `service.database.password` with the correct values
+- replace `DATABASE_NAME` within `service.database.connection-string` with the correct database name
 
 ```
 {
@@ -17,30 +23,31 @@
     "name": "artifactory",
     "cpus": 2,
     "mem": 2048,
+    "nodes": 1,
     "licenses": "$ARTIFACTORY_PRO_LICENSE",
     "host-volume": "/var/artifactory",
     "database": {
-      "connection-string": "jdbc:mysql://mysql.marathon.mesos:3306/artdb?characterEncoding=UTF-8&elideSetAutoCommits=true",
+      "type": "mysql",
+      "host": "mysql.marathon.mesos",
+      "port": 3306,
+      "url": "jdbc:mysql://mysql.marathon.mesos:3306/artdb?characterEncoding=UTF-8&elideSetAutoCommits=true",
       "user": "jfrogdcos",
       "password": "jfrogdcos"
     }
   },
   "pro": {
-    "local-volumes": {},
     "external-volumes": {
-      "enabled": false
+      "enabled": false,
+      "provider": "dvdi",
+      "driver": "rexray"
     }
   },
   "high-availability": {
     "enabled": false,
-    "secondary": {
-      "enabled": false,
-      "unique-nodes": true,
-      "nodes": 1,
-      "name": "artifactory"
-    }
+    "unique-nodes": true
   }
 }
+
 ```
 
 2. Run the following DC/OS CLI command to install Artifactory Pro:
