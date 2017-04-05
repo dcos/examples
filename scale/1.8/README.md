@@ -60,7 +60,7 @@ The provided Scale example is specific to AWS Simple Storage Service (S3) proces
 Deploy S3 Bucket, SNS Topic and SQS Queue. A CloudFormation template is provided to get these resources quickly instantiated. The only parameter that must be specified is the BucketName. The below example command to launch the template uses shell syntax to generate a bucket name that is unique to satisfy the global uniqueness constraint. If you prefer a specific name, replace the ParameterValue with your chosen name.
 
 ```bash
-$ aws cloudformation create-stack --stack-name scale-s3-demo --template-body https://raw.githubusercontent.com/dcos/examples/master/1.8/scale/scale-demo-cloudformation.json --parameters "ParameterKey=S3BucketName,ParameterValue=scale-bucket-`date +"%Y%m%d-%H%M%S"`"
+$ aws cloudformation create-stack --stack-name scale-s3-demo --template-body https://raw.githubusercontent.com/dcos/examples/master/scale/1.8/scale-demo-cloudformation.json --parameters "ParameterKey=S3BucketName,ParameterValue=scale-bucket-`date +"%Y%m%d-%H%M%S"`"
 ```
 
 Describe Stack Resources. Creation of the CloudFormation stack from above should be completed in only a couple minutes. The following command may be used to extract information needed to set the IAM policy so Scale can access the created resources. If the Stack status is not CREATE_COMPLETE wait a minute and run it again. The OutputValues associated with UploadsQueueUrl and BucketName from this command are what will be needed.
@@ -79,7 +79,7 @@ $ aws iam create-access-key --user-name scale-test-user
 Create IAM policy and apply to user. The provided policy template will handle the ARNs of resources created by the above template. The policy will only need to be updated to reflect the ARNs if the defaults have been updated.
 
 ```bash
-$ aws iam put-user-policy --user-name scale-test-user --policy-document https://raw.githubusercontent.com/dcos/examples/master/1.8/scale/scale-demo-policy.json --policy-name scale-demo-policy
+$ aws iam put-user-policy --user-name scale-test-user --policy-document https://raw.githubusercontent.com/dcos/examples/master/scale/1.8/scale-demo-policy.json --policy-name scale-demo-policy
 ```
 
 ## Process data in Scale
@@ -87,7 +87,7 @@ $ aws iam put-user-policy --user-name scale-test-user --policy-document https://
 Configure Scale for processing. The final step to process data in our S3 bucket is to configure Scale with a workspace, Strike, job type and recipe type. The provided script can be used to quickly bootstrap Scale with the configuration necessary to extract the first MiB of input files and save them in the output workspace.
 
 ```bash
-$ curl -L https://raw.githubusercontent.com/dcos/examples/master/1.8/scale/scale-init.sh  -o scale-init.sh
+$ curl -L https://raw.githubusercontent.com/dcos/examples/master/scale/1.8/scale-init.sh  -o scale-init.sh
 $ export DCOS_TOKEN="DCOS token that can found within ~/.dcos/dcos.toml once DCOS CLI is authenticated against DCOS cluster."
 $ export DCOS_ROOT_URL="The externally routable Admin URL. Also found in ~/.dcos/dcos.toml."
 $ export REGION_NAME="AWS Region where SQS and S3 bucket reside."
