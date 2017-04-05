@@ -13,6 +13,7 @@ Got any questions? Please reach out Ravi Yadav on the [DC/OS Community Slack](ht
 Currently, the following examples are available:
 
 - [ArangoDB](1.8/arangodb/)
+- [Artifactory](1.8/artifactory/)
 - [Bookkeeper](1.8/bookkeeper/)
 - [Calico](1.8/calico/)
 - Apache [Cassandra](1.8/cassandra/)
