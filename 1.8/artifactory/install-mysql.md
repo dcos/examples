@@ -1,8 +1,14 @@
-# MySQL Installation Guide for DC/OS
+# Setting up MySQL on DC/OS for Artifactory
 
-## Steps to Set Up MySQL using DC/OS CLI:
+## Prerequisites
 
-1. Create mysql-options.json with following values:
+- DC/OS 1.8 or later with at least one public agent
+- [DC/OS CLI installed](https://dcos.io/docs/1.8/usage/cli/install/) and configured to use your cluster
+
+## Setting up MySQL:
+
+1. Create a new file called `mysql-options.json` with following content:
+
 ```
 {
   "service": {
@@ -42,9 +48,12 @@
 }
 ```
 
-2. run command ```dcos package install --options=mysql-options.json mysql```
+2. Run this command to install MySQL:
+
+```
+dcos package install --options=mysql-options.json mysql
+```
 
 3. Make sure MySQL is running and is healthy by looking under the Services tab in the DC/OS UI.
 
-Bingo! Now you can install Artifactory Pro or Artifactory Enterprise.
-*[Here is guide to install Artifactory Pro in DC/OS](Artifactory-Pro.md)
+This should be sufficient to trial the Artifactory package but we do not currently recommend using this for a production deployment of Artifactory.
