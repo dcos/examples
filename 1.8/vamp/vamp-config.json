@@ -1,6 +1,0 @@
-{
-  "service": {
-    "elasticsearch-url": "http://elasticsearch.marathon.mesos:9200",
-    "logstash-host": "elasticsearch.marathon.mesos"
-  }
-}
