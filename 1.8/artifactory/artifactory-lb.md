@@ -13,16 +13,7 @@
 ```
 {
   "service": {
-    "name": "artifactory-lb",
-    "cpus": 1,
-    "instances": 1,
-    "mem": 1024,
-    "bridge": false,
-    "ssl": {
-      "enabled": false,
-      "ssl_key_path": "http://www.example.com/example.key",
-      "ssl_cert_path": "http://www.example.com/example.crt"
-    }
+    "name": "artifactory-lb"
   },
   "artifactory": {
     "name": "artifactory"
@@ -37,8 +28,6 @@ If you customised the name of Artifactory when installing it, please change `art
 ```
 dcos package install --options="artifactory-lb-options.json" artifactory-lb
 ```
-
-##### Use pre-populated API KEY in case you have changed artifactory password.
 
 ## Accessing Artifactory
 
