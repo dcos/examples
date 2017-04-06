@@ -1,4 +1,4 @@
-## How to set up Artifactory Enterprise on DC/OS
+# Setting up Artifactory Enterprise on DC/OS
 
 [Artifactory Enterprise](https://www.jfrog.com/artifactory/versions/#High-Availability) is a highly available installation of Artifactory. It does this by using a load balancer to balance requests across multiple Artifactory instances.
 

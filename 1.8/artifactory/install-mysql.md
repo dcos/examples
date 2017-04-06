@@ -1,4 +1,4 @@
-##MySQL Installation Guide for DC/OS
+# MySQL Installation Guide for DC/OS
 
 ## Steps to Set Up MySQL using DC/OS CLI:
 

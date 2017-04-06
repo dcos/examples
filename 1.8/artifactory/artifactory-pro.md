@@ -1,4 +1,4 @@
-## How to set up Artifactory Pro on DC/OS
+# Setting up Artifactory Pro on DC/OS
 
 ## Prerequisites
 

@@ -1,4 +1,4 @@
-## How to set up Artifactory-lb on DC/OS
+# Setting up Artifactory-lb on DC/OS
 
 ## Prerequisites
 
