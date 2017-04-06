@@ -15,7 +15,7 @@
     "name": "mysql"
   },
   "mysql": {
-    "cpus": 0.3,
+    "cpus": 0.5,
     "mem": 512
   },
   "database": {
