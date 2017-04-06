@@ -9,7 +9,7 @@
 
 ## Setting up Artifactory Pro
 
-1. Create a new file on your workstation, called `artifactory-pro-options.json`:
+1. Create a new file called `artifactory-pro-options.json` with the following content.
 
 Be sure to:
 
