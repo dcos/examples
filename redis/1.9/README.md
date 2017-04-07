@@ -23,8 +23,8 @@ Note, that there are two different DC/OS services for redis:
 
 ## Prerequisites
 
-- A running DC/OS 1.8 cluster with at least 2 nodes with 1 CPU and 128MB of RAM available.
-- [DC/OS CLI](https://dcos.io/docs/1.8/usage/cli/install/) installed.
+- A running DC/OS 1.9 cluster with at least 2 nodes with 1 CPU and 128MB of RAM available.
+- [DC/OS CLI](https://dcos.io/docs/1.9/usage/cli/install/) installed.
 
 ## Single container redis
 Note, that this service is targeted at testing redis and not for production workloads!
@@ -59,7 +59,7 @@ Once the cluster initializes download cli from https://github.com/mesos/mr-redis
 ```
 To validate that the mr-redis service is running and healthy you can go to the DC/OS UI:
 
-![Services](img/services1.8.png)
+![Services](img/services1.9.png)
 
 Note that the mr-redis framework scheduler is serving on `mrredis.mesos:5656`.
 
