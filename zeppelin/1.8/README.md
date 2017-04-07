@@ -67,7 +67,6 @@ $ dcos package uninstall zeppelin
 
 ## Further resources
 
-1. [DC/OS Zeppelin Official Documentation](https://docs.mesosphere.com/1.8/usage/service-guides/zeppelin/)
 1. [Zeppelin docs](http://zeppelin.apache.org/docs/0.5.6-incubating/)
 
 
