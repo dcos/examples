@@ -158,5 +158,5 @@ Use the [framework cleaner](https://docs.mesosphere.com/1.8/usage/managing-servi
 
 ## Further resources
 
-1. [DC/OS Kafka Official Documentation](http://docs.mesosphere.com/1.8/usage/service-guides/kafka)
+1. [DC/OS Kafka Documentation](https://github.com/mesosphere/dcos-kafka-service/blob/master/README.md)
 1. [Kafka API Reference](https://kafka.apache.org/documentation.html)
