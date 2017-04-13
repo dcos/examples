@@ -115,7 +115,7 @@ Or you can destroy the service from DC/OS Dashboard:
 
 ![](img/vampdestroyconfirm.png)
 
-Finally, to get rid of all traces of Vamp in ZooKeeper, follow the steps outlined in the [framework cleaner](https://docs.mesosphere.com/1.8/usage/managing-services/uninstall/#framework-cleaner).
+Finally, to get rid of all traces of Vamp in ZooKeeper, follow the steps outlined in the [framework cleaner](https://docs.mesosphere.com/1.9/usage/managing-services/uninstall/#framework-cleaner).
 
 ## Further reading
 
