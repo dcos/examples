@@ -70,7 +70,7 @@ or Azure Portal.
 
 ### OMS Portal 
 
-Log in to OMS port (<https://mms.microsoft.com>) and go to Solution
+Log in to OMS portal (<https://mms.microsoft.com>) and go to Solution
 Gallery.
 
 ![](img/image6.png)
