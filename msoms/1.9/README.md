@@ -24,7 +24,7 @@ have deployed simple web container applications on the cluster.
 ### Pre-requisite
 - [Microsoft Azure Subscription](https://azure.microsoft.com/en-us/free/) - You can try this for free.  
 - Microsoft OMS WorksSpace Setup - if you have not set this up see "Step 3" below
-- [DC/OS CLI](https://dcos.io/docs/1.8/usage/cli/install/) installed.
+- [DC/OS CLI](https://dcos.io/docs/1.9/usage/cli/install/) installed.
 
 ### Install OMS Agent for Linux 
 
