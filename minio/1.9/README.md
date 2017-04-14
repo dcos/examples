@@ -19,7 +19,6 @@ The instructions below use a pinned hostname constraint to ensure the applicatio
 **Table of Contents**:
 
 - [Prerequisites](#prerequisites)
-- [Setting up Minio](#setting-up-minio)
 - [Minio Installation using GUI](#minio-installation-using-gui)
 - [Access Minio Browser](#access-minio-browser)
 - [Install Minio Client](#install-minio-client)
@@ -31,13 +30,7 @@ The instructions below use a pinned hostname constraint to ensure the applicatio
 
 - DC/OS 1.9 or later
 - [Marathon-LB](https://dcos.io/docs/1.9/usage/service-discovery/marathon-lb/usage/) must be installed and running
-- IP address of the public agent(s) where Marathon-LB or an available hostname configured to point to the public agent(s) where Marathon-LB is running.
-
-## Setting up Minio
-
-You can install Minio Universe package using the DC/OS GUI or CLI.
-
-Before starting, identify the IP address or hostname of a public agent where Marathon-LB is running. 
+- Identify [IP of the public agent](https://dcos.io/docs/1.9/administration/locate-public-agent/) where Marathon-LB or an available hostname configured to point to the public agent(s) where Marathon-LB is running.
 
 ## Minio installation using GUI
 
@@ -59,7 +52,7 @@ Before starting, identify the IP address or hostname of a public agent where Mar
 
 ![Minio Browser](img/minio-browser.png)
 
-- We need the access key and secret key from the Minio container logs. Click on ```Services``` and select Minio service in DC/OS admin page. Then go to the ```logs``` tab and copy the accesskey and secretkey.
+- We need the access key and secret key from the Minio container logs. Click on ```Services``` Tab, select Minio service and select running instanct(```minio.852ac474-1de8-11e7-9209-ba9616e0f059```). Then go to the ```logs``` tab and copy the accesskey and secretkey.
 
 ![Minio Logs](img/minio-logs.png)
 
@@ -71,14 +64,6 @@ Before starting, identify the IP address or hostname of a public agent where Mar
 
 ![Minio browser](img/minio-home.png)
 
-### Minio installation using CLI
-
-To install Minio package via CLI, type
-
-```sh
-dcos package install minio
-```
-
 ## Install Minio Client
 
 Minio Client (mc) provides a modern alternative to UNIX commands like ls, cat, cp, mirror, diff etc. It supports filesystems and Amazon S3 compatible cloud storage service (AWS Signature v2 and v4).
@@ -87,10 +72,13 @@ Minio Client (mc) provides a modern alternative to UNIX commands like ls, cat, c
 
 ## Configure Minio Client
 
+- There are different ways to configure Minio Client for different S3 cloud storage providers.
+- Refer to [Guide](https://docs.minio.io/docs/minio-client-complete-guide) for further configuration.
+
 ### Example - Minio Cloud Storage
 
 ```sh
-mc config host add <ALIAS> <YOUR-S3-ENDPOINT> <YOUR-ACCESS-KEY> <YOUR-SECRET-KEY> <API-SIGNATURE>
+mc config host add <ALIAS> <YOUR-MINIO-BROWSER-ADDRESS> <YOUR-ACCESS-KEY> <YOUR-SECRET-KEY> <API-SIGNATURE>(optional)
 ```
 
 *Example: Create a new bucket named "mybucket" on http://54.255.206.228*
@@ -100,6 +88,7 @@ mc config host add minio-dcos http://54.255.206.228 ELVUN4CWOAIRWOT2AO9D 4e6CIFt
 mc mb minio-dcos/mybucket
 Bucket created successfully ‘minio-dcos/mybucket’.
 ```
+Now switch to Minio Browser, you can see mybacket in left-side panel where all the backets are listed.
 
 Last but not least I want you to see what Minio’s resource footprint looks like:
 
@@ -112,9 +101,9 @@ dcos package uninstall minio
 ```
 
 ## Explore Further
-
 - [Minio Erasure Code QuickStart Guide](https://docs.minio.io/docs/minio-erasure-code-quickstart-guide)
 - [Use `mc` with Minio Server](https://docs.minio.io/docs/minio-client-quickstart-guide)
+- [Minio Client SDK](https://docs.minio.io/categories/17)
 - [Use `aws-cli` with Minio Server](https://docs.minio.io/docs/aws-cli-with-minio)
 - [Use `s3cmd` with Minio Server](https://docs.minio.io/docs/s3cmd-with-minio)
 - [Use `minio-go` SDK with Minio Server](https://docs.minio.io/docs/golang-client-quickstart-guide)
