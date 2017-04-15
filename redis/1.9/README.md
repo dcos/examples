@@ -73,9 +73,11 @@ $ dcos node ssh --master-proxy --leader
 core@ip-10-0-6-55 ~ $ curl -s -L https://github.com/mesos/mr-redis/releases/download/v0.01-alpha/mrr_linux_amd64 -o mrr
 core@ip-10-0-6-55 ~ $ chmod +x mrr
 core@ip-10-0-6-55 ~ $ ./mrr init http://mrredis.mesos:5656
+Cli is not initalized err=open /tmp/.MrRedis: no such file or directory
+$mrr init <http://MrRedisEndPoint>
 ```
 
-Now that we have `mrr` installed, we want to create a Redis instance with the name `test`, a memory capacity of 500 MB and 3 Redis slaves,
+Ignore the CLI error as the config file is empty on the initial init command. Now that we have `mrr` installed, we want to create a Redis instance with the name `test`, a memory capacity of 500 MB and 3 Redis slaves,
 so we do the following:
 
 ```bash
