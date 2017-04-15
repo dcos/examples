@@ -59,7 +59,7 @@ Once the cluster initializes download cli from https://github.com/mesos/mr-redis
 ```
 To validate that the mr-redis service is running and healthy you can go to the DC/OS UI:
 
-![Services](img/services1.8.png)
+![Services](img/services.png)
 
 Note that the mr-redis framework scheduler is serving on `mrredis.mesos:5656`.
 

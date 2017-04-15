@@ -51,7 +51,7 @@ To install mr-redis from the DC/OS CLI, do the following:
 
 ```bash
 $ dcos package install mr-redis
-In order for redis framework to start successfully it requires atleast 1 CPU and 128MB of RAM including ports.
+This DC/OS Service is currently in preview. In order for redis framework to start successfully it requires atleast 1 CPU and 128MB of RAM including ports.
 Note that the service is alpha and there may be bugs, including possible data loss, incomplete features, incorrect documentation or other discrepancies.
 Continue installing? [yes/no] yes
 Installing Marathon app for package [mr-redis] version [0.0.1]
@@ -59,7 +59,7 @@ Once the cluster initializes download cli from https://github.com/mesos/mr-redis
 ```
 To validate that the mr-redis service is running and healthy you can go to the DC/OS UI:
 
-![Services](img/services1.9.png)
+![Services](img/services.png)
 
 Note that the mr-redis framework scheduler is serving on `mrredis.mesos:5656`.
 
