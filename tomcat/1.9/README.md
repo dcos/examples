@@ -25,7 +25,7 @@
 Download the provided Marathon app spec for Tomcat, `tomcat.json`, to your local machine where the DC/OS CLI is installed:
 
 ```
-$ curl -O https://raw.githubusercontent.com/dcos/examples/master/tomcat/1.8/tomcat.json
+$ curl -O https://raw.githubusercontent.com/dcos/examples/master/tomcat/1.9/tomcat.json
 ```
 
 Lets inspect the `tomcat.json` file:
