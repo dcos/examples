@@ -23,7 +23,7 @@
 To install Apache Flink, do:
 
 ```bash
-dcos package install flink
+$ dcos package install flink
 This DC/OS Service is currently in preview. There may be bugs, incomplete features, incorrect documentation, or other discrepancies. Flink requires by default 2 CPUs with 2GB of RAM on private nodes.
 Continue installing? [yes/no] yes
 Installing Marathon app for package [flink] version [1.2.0-1.0]
