@@ -95,7 +95,7 @@ Note the submission ID in the last line, above, in our example `driver-201704131
 
 ![Spark finished job](img/spark-finished-job.png)
 
-Alternatively, you can use the CLI to verify the job status:
+Alternatively, you can use the CLI to verify (as shown in the example below) the completion of the job.  This will change based on when you run the status command:
 
 ```bash
 $ dcos spark status driver-20170413182142-0001
@@ -147,7 +147,7 @@ To uninstall Spark:
 $ dcos package uninstall spark
 ```
 
-Use the [framework cleaner](https://docs.mesosphere.com/1.8/usage/managing-services/uninstall/#framework-cleaner) to remove your Spark instance from ZooKeeper and to destroy all data associated with it. The script requires several arguments, the values for which are derived from your service name:
+Use the [framework cleaner](https://docs.mesosphere.com/1.9/usage/managing-services/uninstall/#framework-cleaner) to remove your Spark instance from ZooKeeper and to destroy all data associated with it. The script requires several arguments, the values for which are derived from your service name:
 
 - `framework-role` is `spark-role`
 - `framework-principal` is `spark-principal`
@@ -155,7 +155,7 @@ Use the [framework cleaner](https://docs.mesosphere.com/1.8/usage/managing-servi
 
 ## Further resources
 
-- [DC/OS Spark Official Documentation](http://docs.mesosphere.com/1.8/usage/service-guides/spark)
+- [DC/OS Spark Official Documentation](http://docs.mesosphere.com/1.9/usage/service-guides/spark)
 - [Mesos-specific](https://spark.apache.org/docs/latest/running-on-mesos.html#configuration) configuration options for Spark
 - [Mesos run modes](https://spark.apache.org/docs/latest/running-on-mesos.html#mesos-run-modes) for Spark
 - A gentle introduction into [Spark on Mesos](http://www.slideshare.net/Typesafe_Inc/how-to-deploy-apache-spark-to-mesosdcos) by Lightbend
