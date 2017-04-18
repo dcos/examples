@@ -16,6 +16,7 @@
 The DC/OS CLI provides a convenient way to deploy applications on your DC/OS cluster:
 
 ```
+$ dcos package install neo4j
 This DC/OS Service is currently in preview. There may be bugs, incomplete features, incorrect documentation, or other discrepancies. The default configuration requires at least 3 nodes having 6 CPU, 24GB of memory and 24GB of persistent disk storage in total. Default credentials are neo4j/dcos. Please change them on first use.
 Continue installing? [yes/no] yes
 Installing Marathon app for package [neo4j] version [3.1.2-1.0.0]
@@ -26,6 +27,7 @@ Documentation can be found at https://neo4j.com/docs and https://neo4j.com/devel
 If you want to install read replica servers as well, please do:
 
 ```
+$ dcos package install neo4j-replica
 This DC/OS Service is currently in preview. There may be bugs, incomplete features, incorrect documentation, or other discrepancies. The default configuration requires at least 2 nodes having 4 CPU, 8GB of memory and 16GB of persistent disk storage in total.
 Continue installing? [yes/no] yes
 Installing Marathon app for package [neo4j-replica] version [3.1.2-1.0.0]
@@ -50,6 +52,7 @@ Congratulations, you now have Neo4j running on DC/OS!
 If you want to access your Neo4j cluster from outside your DC/OS cluster, you need to install the public proxy:
 
 ```
+$ dcos package install neo4j-proxy
 This DC/OS Service is currently in preview. There may be bugs, incomplete features, incorrect documentation, or other discrepancies. Default credentials are neo4j/dcos. Please change them on first use.
 Continue installing? [yes/no] yes
 Installing Marathon app for package [neo4j-proxy] version [1.0.0-0.0.1]
