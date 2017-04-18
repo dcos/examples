@@ -52,11 +52,11 @@ The instructions below use a pinned hostname constraint to ensure the applicatio
 
 ![Minio Browser](img/minio-browser.png)
 
-- We need the access key and secret key from the Minio container logs. Click on ```Services``` Tab, select Minio service and select running instanct(```minio.852ac474-1de8-11e7-9209-ba9616e0f059```). Then go to the ```logs``` tab and copy the accesskey and secretkey.
+- We need the access key and secret key from the Minio container logs. Click on ```Services``` tab, select Minio service and select the running service(which will look something like ```minio.852ac474-1de8-11e7-9209-ba9616e0f059```).
 
 ![Minio Logs](img/minio-logs.png)
 
-- Navigate to services UI and click on Minio and go to the logs section. Copy the _AccessKey_ and _SecretKey_ and use it to log into the browser console.
+- Then go to ```Logs``` tab, copy the _AccessKey_ and _SecretKey_ and use it to log in on Minio browser page.
 
 ![Minio Browser](img/minio-access.png)
 
