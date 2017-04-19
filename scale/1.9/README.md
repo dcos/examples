@@ -23,9 +23,9 @@
 
 ## Prerequisites
 
-- A running DC/OS 1.8 cluster with at least 3 nodes with each 4 CPUs and 4 GB of RAM available.
-- [Elasticsearch](https://github.com/dcos/examples/tree/master/1.8/elasticsearch) package running within the DCOS cluster.
-- [DC/OS CLI](https://dcos.io/docs/1.8/usage/cli/install/) installed.
+- A running DC/OS 1.9 cluster with at least 3 nodes with each 4 CPUs and 4 GB of RAM available.
+- [Elasticsearch](https://github.com/dcos/examples/tree/master/elasticsearch) package running within the DCOS cluster.
+- [DC/OS CLI](https://dcos.io/docs/1.9/usage/cli/install/) installed.
 - [AWS CLI](http://docs.aws.amazon.com/cli/latest/userguide/installing.html) installed and configured with a user capable of S3, SNS, SQS and IAM resource provisioning.
 
 ## Install Scale
@@ -42,7 +42,7 @@ By default, Elasticsearch package *must* be running within your DCOS cluster. If
 
 If you are running DCOS 1.8 Enterprise Edition or higher, you will need to set the DCOS_OAUTH_TOKEN in the DCOS section of the Advanced Settings. This value can be found within the dcos.toml file under in the dcos_acs_token value on a system with an authenticated DCOS CLI.
 Continue installing? [yes/no] yes
-Installing Marathon app for package [scale] version [4.0.0-0.0.1]
+Installing Marathon app for package [scale] version [4.4.1-1.0.0]
 The Scale DCOS Service has been successfully installed!
 
         Documentation: https://ngageoint.github.io/scale/
