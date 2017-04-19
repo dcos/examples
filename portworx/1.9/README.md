@@ -25,7 +25,7 @@ Please review the main [Portworx on Mesos](http://docs.portworx.com/run-with-mes
 
 # Prerequisites
 
-- A running DC/OS v1.8 cluster with at least 3 private agents. Portworx-on-Mesos REQUIRES at least 3 nodes for installation.
+- A running DC/OS v1.9 cluster with at least 3 private agents. Portworx-on-Mesos REQUIRES at least 3 nodes for installation.
 - All nodes in the cluster that will participate in a Portworx cluster MUST have a separate non-root volume to use.  
 - A node in the cluster with a working DC/OS CLI.
 - A key/value data store (both **etcd** and **consul** are supported). 
@@ -106,7 +106,7 @@ After installation, you can check the correct functioning with:
 
 ```bash
 dcos package list|grep portworx
-portworx  1.1.6-3.0  /portworx  ---      Portworx PX provides scheduler integrated data services for containers, such as data persistence, multi-node replication, cloud-agnostic snapshots and data encryption. Portworx itself is deployed as a container and is suitable for both cloud and on-prem deployments.  Portworx enables containerized applications to be persistent, portable and protected.  For DCOS examples of Portworx, please see https://github.com/dcos/examples/tree/master/1.8/portworx and http://docs.portworx.com/run-with-mesosphere.html
+portworx  1.1.6-3.0  /portworx  ---      Portworx PX provides scheduler integrated data services for containers, such as data persistence, multi-node replication, cloud-agnostic snapshots and data encryption. Portworx itself is deployed as a container and is suitable for both cloud and on-prem deployments.  Portworx enables containerized applications to be persistent, portable and protected.  For DCOS examples of Portworx, please see https://github.com/dcos/examples/tree/master/1.9/portworx and http://docs.portworx.com/run-with-mesosphere.html
 ```
 
 # Use Portworx
