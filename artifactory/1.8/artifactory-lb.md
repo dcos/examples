@@ -37,4 +37,6 @@ To access Artifactory, navigate to the DC/OS public agent where Artifactory-lb i
 
 If you're using the Amazon CloudFormation DC/OS templates, you will need to find the hostname or IP address of the specific public agent where Artifactory-lb is running (i.e. _not_ the public agent ELB).
 
+The default username and password is `admin` and `password` respectively.
+
 For instructions on how to use Artifactory as a Docker Registry, see [this guide](using-artifactory.md).
