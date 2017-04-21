@@ -26,7 +26,7 @@ If you customised the name of Artifactory when installing it, please change `art
 2. Run this command to install Artifactory-lb:
 
 ```
-dcos package install --options="artifactory-lb-options.json" artifactory-lb
+dcos package install --options=artifactory-lb-options.json artifactory-lb
 ```
 
 ## Accessing Artifactory
