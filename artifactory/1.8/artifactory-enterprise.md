@@ -46,7 +46,7 @@ Be sure to:
       "type": "mysql",
       "host": "mysql.marathon.mesos",
       "port": 3306,
-      "url": "jdbc:mysql://mysql.marathon.mesos:3306/DATABASE_NAME?characterEncoding=UTF-8&elideSetAutoCommits=true",
+      "url": "jdbc:mysql://mysql.marathon.mesos:3306/artdb?characterEncoding=UTF-8&elideSetAutoCommits=true",
       "user": "jfrogdcos",
       "password": "jfrogdcos"
     }
@@ -72,15 +72,54 @@ Once Artifactory is up and running, [follow this guide to set up Artifactory-lb]
 
 ## Scaling Artifactory Enterprise
 
-To make Artifactory Enterprise highly available, simply add licenses and scale the application up!
+To make Artifactory Enterprise highly available, you need to add licenses via the UI and install a "secondary":
 
 1. Add more licenses for secondary nodes in Artifactory UI:
 
 ![Add More Licenses](img/add_licenses.png)
 
-2. Run the following DC/OS CLI command to scale Artifactory Enterprise to 2 instances:
+
+2. Create a new file called `artifactory-enterprise-secondary-options.json` with the following content.
+
+Be sure to:
+
+- replace `service.licenses` with your own license string (only one node's license is required here, the rest can be configured in the Artifactory UI)
+- replace `service.database.user` and `service.database.password` with the correct credentials if you have customised these
+- replace `artdb` within `service.database.url` with the correct database name if you have used a different one
 
 ```
-dcos marathon app update artifactory instances=2
+{
+  "service": {
+    "name": "artifactory",
+    "licenses": "replaceme",
+    "host-volume": "/var/artifactory-secondary",
+    "database": {
+      "type": "mysql",
+      "host": "mysql.marathon.mesos",
+      "port": 3306,
+      "url": "jdbc:mysql://mysql.marathon.mesos:3306/artdb?characterEncoding=UTF-8&elideSetAutoCommits=true",
+      "user": "jfrogdcos",
+      "password": "jfrogdcos"
+    }
+  },
+  "enterprise": {
+    "enabled": true,
+    "secondary" : {
+      "enabled": true
+    }
+  }
+}
+```
+
+3. Run the following DC/OS CLI command to install a single secondary instance of Artifactory Enterprise:
+
+```
+dcos package install --options=artifactory-enterprise-secondary-options.json artifactory
+```
+
+4. Run the following DC/OS CLI command to scale the number of secondary Artifactory Enterprise instances to 2:
+
+```
+dcos marathon app update artifactory-secondary instances=2
 ```
 
