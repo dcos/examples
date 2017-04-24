@@ -25,10 +25,13 @@ Note: There are two different DC/OS services for Netsil:
 - [DC/OS CLI](https://dcos.io/docs/1.9/usage/cli/install/) installed.
 
 ## Installing Netsil
-You may install Netsil AOC via the DC/OS UI.
+You may search for and install Netsil via the DC/OS UI:
+![Installing-Netsil](img/installing-netsil.png)
+
 
 ## Install Netsil Collectors
-You may install Netsil Collectors via the DC/OS UI.
+You may install Netsil Collectors via the DC/OS UI. You should modify the number of instances to reflect the number of DC/OS nodes in your cluster.
+![Installing-Netsil-Collectors](img/installing-netsil-collectors.png)
 
 ## Using Netsil
 
