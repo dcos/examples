@@ -26,7 +26,7 @@ To install Elasticsearch, do:
 
 ```bash
 $ dcos package install elasticsearch
-The ElasticSearch DCOS Service implementation is alpha and there may be bugs, incomplete features, incorrect documentation or other discrepancies.
+This DC/OS Service is currently in preview. The ElasticSearch DCOS Service implementation is alpha and there may be bugs, incomplete features, incorrect documentation or other discrepancies.
 Continue installing? [yes/no] yes
 Installing Marathon app for package [elasticsearch] version [1.0.1-2]
 Elasticsearch is staging. Check Marathon and the ES management front-end for status.
@@ -38,7 +38,7 @@ After this, you should see the Elasticsearch service running via the `Services` 
 
 ## Use Elasticsearch
 
-In the following we will use the DC/OS [Admin Router](https://dcos.io/docs/1.9/development/dcos-integration/#-a-name-adminrouter-a-admin-router) to provide access to the Elasticsearch UI: use the URL `http://$DCOS_DASHBOARD/service/elasticsearch/` and replace `$DCOS_DASHBOARD` with the URL of your DC/OS UI:
+In the following we will use the DC/OS [Admin Router](https://dcos.io/docs/1.9/developing-services/#-a-name-adminrouter-a-admin-router-and-web-interface-integration) to provide access to the Elasticsearch UI: use the URL `http://$DCOS_DASHBOARD/service/elasticsearch/` and replace `$DCOS_DASHBOARD` with the URL of your DC/OS UI:
 
 ![Elasticsearch UI](img/es-ui.png)
 
@@ -94,6 +94,6 @@ $ dcos package uninstall elasticsearch
 ## Further resources
 
 1. [DC/OS Elasticsearch Official Documentation](http://mesos-elasticsearch.readthedocs.io/en/latest/)
-1. [Elasticsearch 2.3 docs](https://www.elastic.co/guide/en/elasticsearch/reference/2.3/index.html)
+1. [Elasticsearch 2.4 docs](https://www.elastic.co/guide/en/elasticsearch/reference/2.4/index.html)
 
 
