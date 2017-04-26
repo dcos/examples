@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-- DC/OS 1.8 or later with at least one public agent
+- DC/OS 1.9 or later with at least one public agent
 - [DC/OS CLI installed](https://dcos.io/docs/1.8/usage/cli/install/) and configured to use your cluster
 
 ## Setting up MySQL:
