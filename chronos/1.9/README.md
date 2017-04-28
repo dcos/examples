@@ -1,15 +1,15 @@
 # How to use Chronos on DC/OS
 
-Note: DC/OS now includes a built-in [job scheduler](https://dcos.io/docs/1.9/usage/jobs/), which is the preferable way to schedule batch jobs.
+Note: DC/OS now includes a built-in [job scheduler](https://dcos.io/docs/1.9/usage/jobs/), which is the preferred way to schedule batch jobs.
 
 [Chronos](http://mesos.github.io/chronos/) is still available on DC/OS, representing the original way to run batch jobs. It is a highly-available, distributed job scheduler, providing the a robust way to run batch jobs. Chronos schedules jobs across the DC/OS cluster and manages dependencies between jobs in an intelligent way.
 
 
 - Estimated time for completion: 15 minutes
 - Target audience:
- - Data engineers
- - Data scientists
- - DevOps engineers
+  - Data engineers
+  - Data scientists
+  - DevOps engineers
 - Scope: Setup and usage of a batch scheduler for DC/OS.
 
 **Table of Contents**:
