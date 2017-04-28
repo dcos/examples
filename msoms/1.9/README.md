@@ -18,7 +18,7 @@ Analytics](https://azure.microsoft.com/en-us/documentation/articles/log-analytic
 Setting up OMS from the DC/OS universe
 ======================================
 
-This article assumes that you have set up an DC/OS and
+This article assumes that you have set up a DC/OS cluster and
 have deployed simple web container applications on the cluster.
 
 ### Pre-requisite
