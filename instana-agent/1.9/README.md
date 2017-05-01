@@ -24,7 +24,7 @@ If you're a SaaS customer, that is reporting to the US environment, the rest of 
 
 ![Switching to another reporting endpoint](img/params2.png "Switching to another reporting endpoint")
 
-You can **set host tags** in the tag_list (comma separated).
+You can **set host tags** in the tag_list (comma separated). At this point you'll want to review you configuration of the agent and click "Review and install." 
 
 ## Scaling the Instana agent
 
