@@ -25,7 +25,11 @@ If you're a SaaS customer, that is reporting to the US environment, the rest of 
 ![Switching to another reporting endpoint](img/params2.png "Switching to another reporting endpoint")
 
 You can **set host tags** in the tag_list (comma separated). At this point you'll want to review you configuration of the agent and click "Review and install." 
+
+
 ![Review and install](img/install.png "Review and install")
+
+
 ## Scaling the Instana agent
 
 This is being taken care of by the deployment constraints. If you have, say, three hosts, and set the scaling to three, DC/OS will deploy exactly one Instana agent on each host. If you want different host tags for each and every machine, the Instana agent needs to be deployed separately.
