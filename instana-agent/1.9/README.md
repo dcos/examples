@@ -14,9 +14,9 @@ The Instana agent package can be installed to DC/OS setups using the official pa
 
 ## Deploying the Instana agent
 
-![Installing the Instana agent on DC/OS](img/init.png "Installing the Instana agent on DC/OS")
-
 In order to install the Instana agent, go to the Universe listing in the DC/OS web UI, and **click on "Install"** on the Instana agent list item. Since you need to provide custom information, **click "Advanced Installation"**. The only required action here is to **fill in your Instana agent key**.
+
+![Installing the Instana agent on DC/OS](img/init.png "Installing the Instana agent on DC/OS")
 
 ![Provide your Instana agent key in the advanced tab](img/params1.png "Provide your Instana agent key in the advanced tab")
 
