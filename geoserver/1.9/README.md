@@ -25,10 +25,10 @@ to the instances.
 
 ## Prerequisites
 
-- A running DC/OS 1.8 cluster with a total of 4.1 CPUs and 2 GB of RAM available within the cluster.
+- A running DC/OS 1.9 cluster with a total of 4.1 CPUs and 2 GB of RAM available within the cluster.
 - Marathon-LB Universe package installed.
 - DNS or access to local machine configuration for host resolution.
-- [DC/OS CLI](https://dcos.io/docs/1.8/usage/cli/install/) installed for ease of access to cluster nodes.
+- [DC/OS CLI](https://dcos.io/docs/1.9/usage/cli/install/) installed for ease of access to cluster nodes.
 
 
 ## Configure Shared Storage
