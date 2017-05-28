@@ -5,7 +5,7 @@
 - DC/OS 1.8 or later with at least one public agent
 - [DC/OS CLI installed](https://dcos.io/docs/1.8/usage/cli/install/) and configured to use your cluster
 - Database (MySQL, Oracle, MS SQL Server or Postgres)
-- Artifactory Enterprise license
+- Artifactory Pro license
 
 ## Setting up Artifactory Pro
 
