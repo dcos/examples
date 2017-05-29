@@ -2,17 +2,17 @@
 
 [Minio](https://minio.io) is an object storage server released under Apache License v2.0. It is compatible with Amazon S3 cloud storage service. It is best suited for storing unstructured data such as photos, videos, log files, backups and container / VM images. Size of an object can range from a few KBs to a maximum of 5TB.
 
-Minio server is light enough to be bundled with the application stack, similar to NodeJS, Redis and MySQL. 
+Minio server is light enough to be bundled with the application stack, similar to NodeJS, Redis and MySQL.
 
 This installation uses the single node version of Minio (Minio FS), checkout the [Minio docs](https://docs.minio.io) for more details.
 
-The instructions below use a pinned hostname constraint to ensure the application is always restarted on the same host by Marathon. This allows it to get back to its data but means that you could lose data if that agent goes down. 
+The instructions below use a pinned hostname constraint to ensure the application is always restarted on the same host by Marathon. This allows it to get back to its data but means that you could lose data if that agent goes down.
 
-- Estimated time for completion: less than 5 minutes. 
+- Estimated time for completion: less than 5 minutes.
 - Target audience:
     - Operators
     - Application admins
-    - Developers 
+    - Developers
     - Devops Engineers
 - Scope: Learn to install Minio on DC/OS and learn to use it using Minio command line tool `mc`.
 
@@ -36,31 +36,47 @@ The instructions below use a pinned hostname constraint to ensure the applicatio
 
 - Visit the DC/OS admin page, and click on Universe on the left menu bar. Then click on the Packages tab and search for Minio, click on the ```Install``` button on the right hand side.
 
-![Search & Install Minio](img/search-install.png)
+![Search & Install Minio](img/minio-package.png)
 
-- Then click on ```Advanced Installation```, enter configuration values like the storage and service type you’d like to use with your Minio instance. Finally specify the IP address or hostname of the public agent where Marathon-LB is running under ```networking >> public agent```. Make sure you remove the leading http:// and the trailing / from the IP.
+- Click on the `Install Package` button for the single-click default installation. You can reach your Minio server at `host:9000` where `host` is IP address or hostname of public-agent where Marathon-LB is installed.
 
-![Public Agent](img/public-agent.png)
+![Single-click Install](img/minio-package-install-oneclick.png)
 
-- We're ready to install! Click the green ```Review and Install``` button, verify your settings are correct and then click ```Install``` green button.
+- This installs Minio server instance with factory defaults
 
-![Public Agent](img/verify-install.png)
- 
-- This completes the install process. Once Minio has been deployed, navigate to the IP/hostname you used earlier for Public Agent. You should see the following login page.
+
+- To customize the storage and network configuration, click on `Advanced Installation`.
+
+- Service Name - Unique name for this Minio server instance.
+![Service Name](img/config-service.png)
+
+- CPU & Memory
+![Resources](img/config-resource.png)
+
+- Volume size
+![Storage](img/config-volume-size.png)
+
+- Credentials - Access Key and Secret Key for this Minio server.
+![Credentials](img/config-creds.png)
+
+- Networking - Choose the port on which Minio server is available and whether it is available externally.
+![Networking](img/config-network.png)
+
+- We're ready to install! Verify your settings are correct and then click ```Install``` green button.
+
+![Review & Install](img/config-review-1.png)
+
+- This completes the install process. Once Minio has been deployed, navigate to the IP/hostname of Public Agent where Marathon-LB is installed and the port you specified. You should see the following login page.
 
 ## Access Minio Browser
 
 ![Minio Browser](img/minio-browser.png)
 
-- We need the access key and secret key from the Minio container logs. Click on ```Services``` tab, select Minio service and select the running service(which will look something like ```minio.852ac474-1de8-11e7-9209-ba9616e0f059```).
-
-![Minio Logs](img/minio-logs.png)
-
-- Then go to ```Logs``` tab, copy the _AccessKey_ and _SecretKey_ and use it to log in on Minio browser page.
+- The default access key and secret key are `minio` and `minio123` respectively. This can be used to log in on Minio browser page.
 
 ![Minio Browser](img/minio-access.png)
 
-- Once you have successfully loggedin you should see the following screen. 
+- Once you have successfully loggedin you should see the following screen.
 
 ![Minio browser](img/minio-home.png)
 
