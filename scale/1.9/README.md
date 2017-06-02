@@ -86,6 +86,8 @@ $ aws iam put-user-policy --user-name scale-test-user --policy-document https://
 
 Configure Scale for processing. The final step to process data in our S3 bucket is to configure Scale with a workspace, Strike, job type and recipe type. The provided script can be used to quickly bootstrap Scale with the configuration necessary to extract the first MiB of input files and save them in the output workspace.
 
+*WARNING*: It is important to note that a proper processing pipeline will consist of both an input workspace and at least one output workspace. In the interest of simplicity, this example uses the same workspace by the Strike process and for the output from the sample job. The only reason we don't enter into an endless processing loop (via Strike detecting output of downstream jobs in shared workspace) is because our sample job outputs files with the same name as the input. Scale filters out duplicate ingests initiated by Strike which breaks the processing chain, preventing endless looping.
+
 ```bash
 $ curl -L https://raw.githubusercontent.com/dcos/examples/master/scale/example-scripts/scale-init.sh  -o scale-init.sh
 $ export DCOS_TOKEN="DCOS token that can found within ~/.dcos/dcos.toml once DCOS CLI is authenticated against DCOS cluster."
