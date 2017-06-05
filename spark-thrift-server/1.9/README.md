@@ -4,7 +4,7 @@
 
 With Spark Thrift Server, business users can work with their shiny Business Intelligence (BI) tools, e.g. Tableau or Microsoft Excel, and connect to Apache Spark using the ODBC interface. That brings the in-memory distributed capabilities of Spark SQL’s query engine (with all the Catalyst query optimizations you surely like very much) to environments that were initially "disconnected".
 
-Besides, SQL queries in Spark Thrift Server share the same SparkContext that helps further improve performance of SQL queries using the same data sources.
+Additionally, SQL queries in Spark Thrift Server share the same SparkContext which helps further improve performance of SQL queries using the same data sources.
 
 #Dynamic Allocation
 
