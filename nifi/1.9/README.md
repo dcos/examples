@@ -17,8 +17,9 @@ Running Apache Nifi on DC/OS allows you to manage your data flow very easily. Sa
 
 ## Prerequisites
 
-- A running DC/OS 1.9 cluster with at least 1 private node.
+- A running DC/OS 1.9 cluster with at least 1 private node and 1 public node.
 - [DC/OS CLI](https://dcos.io/docs/1.9/usage/cli/install/) installed.
+- Marathon-LB installed and running
 
 
 ## Install Nifi
@@ -41,21 +42,11 @@ After this, you should see the Nifi service running via the `Services` tab of th
 
 ## Use Nifi
 
-You typically want to access Nifi via a web browser outside of the DC/OS cluster. To access the Apache Nifi UI from outside of the DC/OS cluster you can use [Marathon-LB](https://dcos.io/docs/1.9/usage/service-discovery/marathon-lb/), which is recommended for production usage.
+You typically want to access Nifi via a web browser outside of the DC/OS cluster. To access the Apache Nifi UI from outside of the DC/OS cluster you can use [Marathon-LB](https://dcos.io/docs/1.9/usage/service-discovery/marathon-lb/).
 
-You can also use [Admin Router](https://dcos.io/docs/1.9/developing-services/dcos-integration/#-a-name-adminrouter-a-admin-router) to provide access to the Apache NIfi UI, which is fine for dev/test setups.
+Please make sure that Marathon-LB is installed and running correctly in your cluster before trying to access Nifi.
 
-In the following we will use the Endpoint URL (agent where Nifi was deployed). Below you can find instruction how to find it: 
-
- - Go to the **Services** tab
- - Select "nifi" in the list of running services
- - Once the Nifi service is `Healthy`,
- - Select the "nifi" task.
- - Click the Endpoint URL to open the Nifi status page in a new tab.
-
-
-![sample demonstrating how to locate the service page](img/endpoint.png)
-
+Once Nifi is installed and running, please navigate to http://$YOUR_PUBLIC_NODE_IP_ADDRESS:9090/haproxy?stats and find out which port can be used for accessing Nifi .
 
 ## Example of Usage
 
@@ -74,7 +65,7 @@ In the properties tab we need to fill at least those bolded fields. The most int
 - **Topic Names** - list of the topics to consume, separated by comma.
 - **Group Id** - that value is used to identify consumers that are within the same consumer group.
 
-First processor is ready. Now, when we have the data we can try to send it to another destination like Elasticsearch. 
+First processor is ready. Now, when we have the data we can try to send it to another destination like Elasticsearch.
 Please choose a new processor called **PutElasticsearchHttp**.
 
 
