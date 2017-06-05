@@ -8,7 +8,7 @@ Besides, SQL queries in Spark Thrift Server share the same SparkContext that hel
 
 #Dynamic Allocation
 
-The Spark Thrift Service is setup uses dynamic executor allocation by default. This requires to have an instance of the Spark Shuffle Service running. 
+The Spark Thrift Service is setup uses dynamic executor allocation by default. This requires to have an instance of the Spark Shuffle Service running. You can see an example of how to install Spark Shuffle at https://github.com/dcos/examples/tree/master/spark-shuffle/1.8
 
 - Estimated time for completion: 15 minutes
 - Target audience: Anyone interested in using standard BI tools to process information with Spark using an ODBC interface
