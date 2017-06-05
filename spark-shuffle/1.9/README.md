@@ -13,7 +13,7 @@ The Spark Shuffle agent package can be installed to DC/OS setups using the offic
 
 ## Deploying the Spark Shuffle agent
 
-In order to install the Spark Shuffle agent, go to the Universe listing in the DC/OS web UI, and **click on "Install"** on the Instana agent list item.
+In order to install the Spark Shuffle agent, go to the Universe listing in the DC/OS web UI, and **click on "Install"** on the Spark Shuffle service list item.
 
 ![Installing the Spark Shuffle service on DC/OS](img/init.png "Installing the Spark Shuffle service on DC/OS")
 
