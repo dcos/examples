@@ -48,7 +48,7 @@ If "external access" is selected (as it is by default), the service will also be
 
 ## Usage
 
-You can use the Spark Thrift Server from workloads running inside the cluster of outside of it (if "external access" was left selected). This example shows how to use the Beeline JDBC client to check the service correct functioning.
+You can use the Spark Thrift Server from workloads running inside the cluster from outside of it (if "external access" was left selected). This example shows how to use the Beeline JDBC client to check the service correct functioning.
 
 If your cluster is running Marathon-LB, you can access the service from a computer with IP connectivity to the public node on port 9000. In order to use the Beeline JDBC client to test the Spark Thrift Server in any node where the Docker runtime is installed, you can use the following command:
 
