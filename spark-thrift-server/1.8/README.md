@@ -6,7 +6,7 @@ With Spark Thrift Server, business users can work with their shiny Business Inte
 
 Besides, SQL queries in Spark Thrift Server share the same SparkContext that helps further improve performance of SQL queries using the same data sources.
 
-#Dynamic Allocation
+## Dynamic Allocation
 
 The Spark Thrift Service is setup uses dynamic executor allocation by default. This requires to have an instance of the Spark Shuffle Service running.
 
