@@ -3,7 +3,8 @@
 [Spark Thrift Server](https://jaceklaskowski.gitbooks.io/mastering-apache-spark/content/spark-sql-thrift-server.html) Thrift JDBC/ODBC Server (aka Spark Thrift Server or STS) is Spark SQL’s port of Apache Hive’s HiveServer2 that allows JDBC/ODBC clients to execute SQL queries over JDBC and ODBC protocols on Apache Spark.
 
 With Spark Thrift Server, business users can work with their shiny Business Intelligence (BI) tools, e.g. Tableau or Microsoft Excel, and connect to Apache Spark using the ODBC interface. That brings the in-memory distributed capabilities of Spark SQL’s query engine (with all the Catalyst query optimizations you surely like very much) to environments that were initially "disconnected".
-Beside, SQL queries in Spark Thrift Server share the same SparkContext that helps further improve performance of SQL queries using the same data sources.
+
+Besides, SQL queries in Spark Thrift Server share the same SparkContext that helps further improve performance of SQL queries using the same data sources.
 
 #Dynamic Allocation
 
@@ -47,7 +48,7 @@ If "external access" is selected (as it is by default), the service will also be
 
 ## Usage
 
-You can use the Spark Thrift Server from workloads running inside the cluster of outside of it (if "external access" was left selected). This example shows to to use the Beeline JDBC client to check the service correct functioning.
+You can use the Spark Thrift Server from workloads running inside the cluster or outside of it (if "external access" was left selected). This example shows how to use the Beeline JDBC client to check the service correct functioning.
 
 If your cluster is running Marathon-LB, you can access the service from a computer with IP connectivity to the public node on port 9000. In order to use the Beeline JDBC client to test the Spark Thrift Server in any node where the Docker runtime is installed, you can use the following command:
 
