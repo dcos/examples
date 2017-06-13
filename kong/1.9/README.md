@@ -34,10 +34,8 @@ Kong can easily be provisioned to DC/OS cluster using the following steps:
 2. **Deploy Marathon-LB**
 
     We will use [Marathon-LB](https://dcos.io/docs/1.9/networking/marathon-lb/)
-    for load balancing external traffic to cluster and
-    [VIPs](https://dcos.io/docs/1.9/networking/load-balancing-vips/virtual-ip-addresses/)
-    for load balancing internal traffic. Using the package `marathon-lb` deploy
-    the Marathon-LB:
+    for load balancing external traffic to cluster. Using the package
+    `marathon-lb` deploy the Marathon-LB:
 
     ```bash
     $ dcos package install marathon-lb
@@ -60,7 +58,7 @@ Kong can easily be provisioned to DC/OS cluster using the following steps:
     ```json
     {
       "service": {
-        "name": "postgres"
+        "name": "postgresql"
       },
       "postgresql": {
         "cpus": 0.3,
@@ -122,7 +120,7 @@ Kong can easily be provisioned to DC/OS cluster using the following steps:
       },
       "configurations": {
         "postgres": {
-          "host": "postgresql.marathon.l4lb.thisdcos.directory:5432",
+          "host": "postgresql.marathon.l4lb.thisdcos.directory",
           "port": 5432,
           "database": "kong",
           "user": "kong",
@@ -138,20 +136,14 @@ Kong can easily be provisioned to DC/OS cluster using the following steps:
       "networking": {
         "proxy": {
           "external-access": true,
-          "vip-port": 8000,
           "virtual-host": "mesos-tes-PublicSl-1TJB5U5K35XXT-591175086.us-east-1.elb.amazonaws.com",
           "https-redirect": false,
           "service-port": 10201
         },
         "admin": {
           "external-access": true,
-          "vip-port": 8001,
+          "https-redirect": false,
           "service-port": 10202
-        },
-        "admin-ssl": {
-          "external-access": false,
-          "vip-port": 8444,
-          "service-port": 10203
         }
       }
     }
@@ -169,18 +161,15 @@ Kong can easily be provisioned to DC/OS cluster using the following steps:
     - `cassandra.port`: Port on which Cassandra listening for query.
     - `cassandra.keyspace`: Keyspace to use in Cassandra. Will be created if doesn't exist.
     - `networking.proxy.external-access`: If `true`, allows external access to Kong's proxy port
-    - `networking.proxy.vip-port`: Port number to be used for reaching Kong's proxy port internally.
     - `networking.proxy.virtual-host`: The virtual host address to integrate Kong proxy port with Marathon-lb.
     - `networking.proxy.https-redirect`: If `true`, Marathon-lb redirects HTTP traffic to HTTPS. This requires 'virtual-host' to be set.
     - `networking.proxy.service-port`: Port number to be used for reaching Kong's proxy port from outside of cluster
     - `networking.admin.external-access`: If `true`, allows external access to Kong's admin port
-    - `networking.admin.vip-port`: Port number to be used for reaching Kong's admin port internally.
+    - `networking.admin.virtual-host`: The virtual host address to integrate Kong admin port with Marathon-lb.
+    - `networking.admin.https-redirect`: If `true`, Marathon-lb redirects HTTP traffic to HTTPS. This requires 'virtual-host' to be set.
     - `networking.admin.service-port`: Port number to be used for reaching Kong's admin ssl port from outside of cluster
-    - `networking.admin-ssl.external-access`: If `true`, allows external access to Kong's admin ssl port
-    - `networking.admin-ssl.vip-port`: Port number to be used for reaching Kong's admin ssl port internally.
-    - `networking.admin-ssl.service-port`: Port number to be used for reaching Kong's admin ssl port from outside of cluster
 
-    Note: Tweak the above configuration based on you datastore choise. 
+    Note: Tweak the above configuration based on you datastore choice. 
 
     Run the following command to add the app:
     
