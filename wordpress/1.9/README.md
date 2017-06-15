@@ -18,7 +18,7 @@
 
 ## Prerequisites
 
-- A running DC/OS 1.9 cluster with at least 1 [public agent](https://dcos.io/docs/1.9/overview/concepts/#public) node with 2 CPUs and 1 GB of RAM available.
+- A running DC/OS 1.9 cluster with at least 1 [public agent](https://dcos.io/docs/1.9/overview/concepts/#public-agent-node) node with 2 CPUs and 1 GB of RAM available.
 - [DC/OS CLI](https://dcos.io/docs/1.9/usage/cli/install/) installed.
 
 ## Install Marathon-LB
