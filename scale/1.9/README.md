@@ -23,10 +23,10 @@
 
 ## Prerequisites
 
-- A running DC/OS 1.9 cluster with at least 3 nodes each with 4 CPUs and 4 GB of RAM available.
+- A running DC/OS 1.9 cluster with a minimum of 3 nodes, each with at least 4 CPU and 6 GB of RAM available.
 - [Elasticsearch](https://github.com/dcos/examples/tree/master/elasticsearch) package running within the DCOS cluster.
 - [DC/OS CLI](https://dcos.io/docs/1.9/usage/cli/install/) installed.
-- [AWS CLI](http://docs.aws.amazon.com/cli/latest/userguide/installing.html) installed and configured with a user capable of S3, SNS, SQS and IAM resource provisioning.
+- [AWS CLI](http://docs.aws.amazon.com/cli/latest/userguide/installing.html) installed and _configured with an IAM user granted AdministratorAccess role_.
 
 ## Install Scale
 
@@ -49,59 +49,58 @@ Now, we validate if Scale is running and healthy, in the cluster itself. For thi
 
 ## Configure AWS Resources
 
-The provided Scale example is specific to AWS Simple Storage Service (S3) processing and for brevity uses the AWS CLI to configure needed AWS resources. This does not require Scale to be running within AWS, merely that you provide Scale the credentials to access. NOTE: In a production AWS environment, IAM roles applied to instances would be preferred over use of Access Keys associated with IAM users.
+The provided Scale example is specific to AWS Simple Storage Service (S3) processing and for brevity uses the AWS CLI to configure needed AWS resources. This does not require Scale to be running within AWS, merely that you provide Scale the credentials to access. NOTE: In a production AWS environment, IAM roles applied to instances would be preferred over use of Access Keys associated with IAM users. _Note:_ The following commands must be run by AWS IAM User with the AdministratorAccess role.
 
-Deploy S3 Bucket, SNS Topic and SQS Queue. A CloudFormation template is provided to get these resources quickly instantiated. The only parameter that must be specified is the BucketName. The below example command to launch the template uses shell syntax to generate a bucket name that is unique to satisfy the global uniqueness constraint. If you prefer a specific name, replace the ParameterValue with your chosen name.
+**Deploy S3 Bucket, SNS Topic and SQS Queue.** A CloudFormation template is provided to get these resources quickly instantiated. The only parameter that must be specified is the BucketName. The below example command to launch the template uses shell syntax to generate a bucket name that is unique to satisfy the global uniqueness constraint. If you prefer a specific name, replace the ParameterValue with your chosen name.
 
 ```bash
-$ aws cloudformation create-stack --stack-name scale-s3-demo --template-body https://raw.githubusercontent.com/dcos/examples/master/scale/example-scripts/scale-demo-cloudformation.json --parameters "ParameterKey=S3BucketName,ParameterValue=scale-bucket-`date +"%Y%m%d-%H%M%S"`"
+aws cloudformation create-stack --stack-name scale-s3-demo --template-body https://raw.githubusercontent.com/dcos/examples/master/scale/example-scripts/scale-demo-cloudformation.json --parameters "ParameterKey=S3BucketName,ParameterValue=scale-bucket-`date +"%Y%m%d-%H%M%S"`"
 ```
 
-Describe Stack Resources. Creation of the CloudFormation stack from above should be completed in only a couple minutes. The following command may be used to extract information needed to set the IAM policy so Scale can access the created resources. If the Stack status is not CREATE_COMPLETE wait a minute and run it again. The OutputValues associated with UploadsQueueUrl and BucketName from this command are what will be needed.
+**Describe Stack Resources.** Creation of the CloudFormation stack from above should be completed in only a couple minutes. The following command may be used to extract information needed to set the IAM policy so Scale can access the created resources. If the StackStatus is not CREATE_COMPLETE wait a minute and run it again. The OutputValues associated with UploadsQueueUrl and BucketName from this command are what will be needed.
 
 ```bash
-$ aws cloudformation describe-stacks --stack-name scale-s3-demo
+aws cloudformation describe-stacks --stack-name scale-s3-demo
 ```
 
-Create IAM User and Access Key. The Access Key and Secret Key should be noted as they will be needed by Scale to authenticate against AWS for access to our provisioned resources. Feel free to change the user name value as needed.
+**Create IAM User and Access Key.** The Access Key and Secret Key should be noted as they will be needed by Scale to authenticate against AWS for access to our provisioned resources. Feel free to change the user name value as needed.
 
 ```bash
-$ aws iam create-user --user-name scale-test-user
-$ aws iam create-access-key --user-name scale-test-user
+aws iam create-user --user-name scale-test-user
+aws iam create-access-key --user-name scale-test-user
 ```
 
-Create IAM policy and apply to user. The provided policy template will handle the ARNs of resources created by the above template. The policy will only need to be updated to reflect the ARNs if the defaults have been updated.
+**Create IAM policy and apply to user.** The provided policy template will handle the ARNs of resources created by the above template. The policy will only need to be updated to reflect the ARNs if the defaults have been updated.
 
 ```bash
-$ aws iam put-user-policy --user-name scale-test-user --policy-document https://raw.githubusercontent.com/dcos/examples/master/scale/example-scripts/scale-demo-policy.json --policy-name scale-demo-policy
+aws iam put-user-policy --user-name scale-test-user --policy-document https://raw.githubusercontent.com/dcos/examples/master/scale/example-scripts/scale-demo-policy.json --policy-name scale-demo-policy
 ```
 
 ## Process data in Scale
 
-Configure Scale for processing. The final step to process data in our S3 bucket is to configure Scale with a workspace, Strike, job type and recipe type. The provided script can be used to quickly bootstrap Scale with the configuration necessary to extract the first MiB of input files and save them in the output workspace.
+**Configure Scale for processing.** The final step to process data in our S3 bucket is to configure Scale with a workspace, Strike, job type and recipe type. The provided script can be used to quickly bootstrap Scale with the configuration necessary to extract the first MiB of input files and save them in the output workspace.
 
 _WARNING_: It is important to note that a proper processing pipeline will consist of both an input workspace and at least one output workspace. In the interest of simplicity, this example uses the same workspace by the Strike process and for the output from the sample job. The only reason we don't enter into an endless processing loop (via Strike detecting output of downstream jobs in shared workspace) is because our sample job outputs files with the same name as the input. Scale filters out duplicate ingests initiated by Strike which breaks the processing chain, preventing endless looping.
 
 ```bash
-$ curl -L https://raw.githubusercontent.com/dcos/examples/master/scale/example-scripts/scale-init.sh  -o scale-init.sh
-$ export DCOS_TOKEN="DCOS token that can found within ~/.dcos/dcos.toml once DCOS CLI is authenticated against DCOS cluster."
-$ export DCOS_ROOT_URL="The externally routable Admin URL. Also found in ~/.dcos/dcos.toml."
-$ export REGION_NAME="AWS Region where SQS and S3 bucket reside."
-$ export BUCKET_NAME="AWS S3 bucket name only. Full ARN should NOT be used."
-$ export QUEUE_NAME="AWS SQS queue name only. Full ARN should NOT be used."
-$ export ACCESS_KEY="Access Key for IAM user that will access S3 and SQS resources."
-$ export SECRET_KEY="Secret Key for IAM user that will access S3 and SQS resources."
-$ sh scale-init.sh
+curl -L https://raw.githubusercontent.com/dcos/examples/master/scale/example-scripts/scale-init.sh  -o scale-init.sh
+export DCOS_TOKEN="DCOS token that can found within ~/.dcos/dcos.toml once DCOS CLI is authenticated against DCOS cluster."
+export DCOS_ROOT_URL="The externally routable Admin URL. Also found in ~/.dcos/dcos.toml."
+export REGION_NAME="AWS Region where SQS and S3 bucket reside."
+export BUCKET_NAME="AWS S3 bucket name only. Full ARN should NOT be used."
+export QUEUE_NAME="AWS SQS queue name only. Full ARN should NOT be used."
+export ACCESS_KEY="Access Key for IAM user that will access S3 and SQS resources."
+export SECRET_KEY="Secret Key for IAM user that will access S3 and SQS resources."sh scale-init.sh
 ```
 
-Test Scale ingest. Now that our configuration is complete we can verify that Scale is ready to process. We will drop a new file into our bucket using the AWS CLI. This file can be anything, but a text file over 1 MiB is best to demonstrate the jobs ability to extract only the first MiB. The following will do nicely:
+**Test Scale ingest.** Now that our configuration is complete we can verify that Scale is ready to process. We will drop a new file into our bucket using the AWS CLI. This file can be anything, but a text file over 1 MiB is best to demonstrate the jobs ability to extract only the first MiB. The following will do nicely:
 
 ```bash
-$ base64 /dev/urandom | head -c 2000000 > sample-data-2mb.txt
-$ aws s3 cp --acl public-read sample-data-2mb.txt s3://${BUCKET_NAME}/
+base64 /dev/urandom | head -c 2000000 > sample-data-2mb.txt
+aws s3 cp --acl public-read sample-data-2mb.txt s3://${BUCKET_NAME}/
 ```
 
-View processing results. In the Scale UI, navigate to Jobs. A Read Bytes job should have completed. Click on the job in the table and see the outputs in the detail view. You should be able to see that the file size is 1MiB. Feel free to download and inspect. Congratulations, you've processed your first file within Scale! For more advanced examples refer to the [Scale GitHub](https://github.com/ngageoint/scale) and [Docker Hub](https://hub.docker.com/r/geoint/scale) repositories, as well as the [documentation](http://ngageoint.github.io/scale/).
+**View processing results.** In the Scale UI, navigate to Jobs. A Read Bytes job should have completed. Click on the job in the table and see the outputs in the detail view. You should be able to see that the file size is 1MiB. Feel free to download and inspect. Congratulations, you've processed your first file within Scale! For more advanced examples refer to the [Scale GitHub](https://github.com/ngageoint/scale) and [Docker Hub](https://hub.docker.com/r/geoint/scale) repositories, as well as the [documentation](http://ngageoint.github.io/scale/).
 
 
 ## Uninstall Scale
@@ -109,7 +108,7 @@ View processing results. In the Scale UI, navigate to Jobs. A Read Bytes job sho
 To uninstall Scale:
 
 ```bash
-$ dcos package uninstall scale
+dcos package uninstall scale
 ```
 
 This will only remove the Scale scheduler as there are the db, logstash, rabbitmq and webserver components that are bootstrapped by the scheduler container. To fully remove all traces of Scale the following commands should be run:
