@@ -272,7 +272,7 @@ latest: digest: sha256:dedbce721065b2bcfae35d2b0690857bb6c3b4b7dd48bfe7fc7b53693
 ### Check the contents of the local registry
 
 ```bash
-# curl --insecure https://registry.marathon.l4lb.thisdcos.directory:5000/v2/_catalog
+# curl --insecure http://registry.marathon.l4lb.thisdcos.directory:5000/v2/_catalog
 {"repositories":["nginx"]}
 ```
 
