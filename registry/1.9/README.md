@@ -23,7 +23,7 @@ In case you'd like to configure your nodes to use the Docker Registry without TL
 
 ## Prerequisites
 
-- A running DC/OS 1.8 cluster with at least a bootstrap node, a master and an agent.
+- A running DC/OS 1.9 cluster with at least a bootstrap node, a master and an agent.
 - SSH access to the nodes
 
 ### Creating a valid TLS certificate
