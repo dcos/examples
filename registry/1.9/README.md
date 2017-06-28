@@ -4,7 +4,7 @@ The Docker [registry](https://docs.docker.com/registry/) is a stateless, highly 
 
 Note that this package will install with the default parameters, but in order to provide secure communication, Docker registry requires a valid TLS certificate and key to work properly and secure connections between the engines and registry hosting the cache. Follow this document to learn how to configure a download location for the certificate and key in the Advanced Installation “security” section.
 
-In case you'd like to configure your nodes to use the Docker Registry without TLS security and skip all configuration related to TLS security and certificates, please check out the section [Using an insecure Docker registry](#insecure) for details on how to configure the Docker engine in the nodes in your DC/OS cluster to work with an insecure registry.
+**In case you'd like to configure your nodes to use the Docker Registry without TLS security and skip all configuration related to TLS security and certificates, please check out the section [Using an insecure Docker registry](#insecure) for details on how to configure the Docker engine in the nodes in your DC/OS cluster to work with an insecure registry.**
 
 - Estimated time for completion: up to 30 minutes
 - Target audience:
