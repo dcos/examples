@@ -6,7 +6,7 @@ object WordCount {
   def main(args:Array[String]) : Unit = {
 
     val conf = new SparkConf(true).
-      setAppName("Spark WordCount").setMaster("local").set("spark.cassandra.connection.host", "127.0.0.1")
+      setAppName("Spark WordCount").setMaster("mesos://10.0.1.37:5050").set("spark.cassandra.connection.host", "10.0.249.29")
 
     val sc = new SparkContext(conf)
 
