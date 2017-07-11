@@ -24,6 +24,9 @@ From Packages in Universe menu, find `elastic-job-cloud` and click install butto
 
 ![Install from Universe](img/install.png)
 
+Note:
+The configuration like mesos.master is just a variable, you should replace it with a real Zookeeper server ip address and port , such as 192.168.1.1:2181.
+
 And wait for success message:
 
 ![Install success](img/install-success.png)
@@ -31,6 +34,7 @@ And wait for success message:
 Alternatively, you can install from the command line, entering this command:
 
 ```bash
+$ dcos package install elastic-job-cloud
 This DC/OS Service is currently in preview. There may be bugs, incomplete features, incorrect documentation, or other discrepancies.
 Continue installing? [yes/no] yes
 Installing Marathon app for package [elastic-job-cloud] version [2.1.4]
@@ -50,7 +54,7 @@ Next, validate that elastic-job-cloud is successfully installed. Go to the `Serv
 In addition, run this command to view installed services:
 
 ```bash
-$./dcos package list
+$dcos package list
 NAME               VERSION  APP                COMMAND   DESCRIPTION                        
 elastic-job-cloud  2.1.4    /elastic-job-cloud  ---      Elastic-Job-Cloud is a distributed scheduled job cloud solution designed with HA and fault-tolerance in mind. It focuses on horizontal scaling, and provides transient and daemon jobs, event and schedule based job triggers, job dependencies, and job history.  
 ```
@@ -101,7 +105,7 @@ You can also see the tasks log in DC/OS UI:
 To uninstall Elastic Job Cloud enter the following command:
 
 ```bash
-$ ./dcos package uninstall elastic-job-cloud
+$ dcos package uninstall elastic-job-cloud
 Uninstalled package [elastic-job-cloud] version [2.1.4]
 The Elastic-Job-Cloud DC/OS Service has been uninstalled and will no longer run.
 ```
