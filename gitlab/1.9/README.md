@@ -39,7 +39,7 @@ You will need to do this for the Jenkins agent too using the [Advanced Configura
 
 ## Setting up GitLab
 
-1. Before starting, identify the hostname of a private agent that you'd like to install GitLab to. Typically this will be one that has an EBS volume or similar mounted, that you are regularly snapshotting or have set up some other sort of backup solution on. You can pick one of these by visiting the "Nodes" page on your cluster and choosing a private node. We'll use `10.0.0.134` for this example.
+1. Before starting, identify the hostname of a private agent that you'd like to install GitLab to. Typically this will be one that has an EBS volume or similar mounted, that you are regularly snapshotting or have set up some other sort of backup solution on. You can pick one of these by visiting the "Nodes" page on your cluster and choosing a private node. We'll use `10.0.0.133` for this example.
 
 ![DC/OS Nodes](img/nodes.png)
 
