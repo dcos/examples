@@ -26,10 +26,10 @@ To install Apache Flink, do:
 $ dcos package install flink
 This DC/OS Service is currently in preview. There may be bugs, incomplete features, incorrect documentation, or other discrepancies. Flink requires by default 2 CPUs with 2GB of RAM on private nodes.
 Continue installing? [yes/no] yes
-Installing Marathon app for package [flink] version [1.2.0-1.0]
+Installing Marathon app for package [flink] version [1.3.1-1.0]
 DC/OS Flink is being installed!
 
-	Documentation: https://ci.apache.org/projects/flink/flink-docs-release-1.2/
+	Documentation: https://ci.apache.org/projects/flink/flink-docs-release-1.3/
 ```
 
 After this, you should see the Flink service running via the `Services` tab of the DC/OS UI:
@@ -74,9 +74,9 @@ Therefore we need to know the Jobmanager rpc adress and port which can be retrie
 ```bash
 $ dcos node ssh --master-proxy --leader
 
-core@ip-10-0-6-55 ~ $ docker run -it mesosphere/dcos-flink:1.2.0-1.2 /bin/bash
+core@ip-10-0-6-55 ~ $ docker run -it mesosphere/dcos-flink:1.3.1-1.0 /bin/bash
 
-root@2a9c01d3594e:/flink-1.2.0# ./bin/flink run -m <jobmangerhost>:<jobmangerjobmanager.rpc.port> ./examples/batch/WordCount.jar --input file:///etc/resolv.conf --output file:///etc/wordcount_out
+root@2a9c01d3594e:/flink-1.3.1# ./bin/flink run -m <jobmangerhost>:<jobmangerjobmanager.rpc.port> ./examples/batch/WordCount.jar --input file:///etc/resolv.conf --output file:///etc/wordcount_out
 ```
 
 ### DC/OS Flink CLI
