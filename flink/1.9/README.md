@@ -50,7 +50,7 @@ If you require Scala 2.11 please use the following install option from the UI (o
 NOTE: In order to have better access to the input and output files, it makes sense to store those in HDFS.
 
 ### Flink UI
-In the following we will use the DC/OS [Admin Router](https://dcos.io/docs/1.9/development/dcos-integration/#-a-name-adminrouter-a-admin-router) to provide access to the Flink UI: use the URL `http://$DCOS_DASHBOARD/service/flink/` and replace `$DCOS_DASHBOARD` with the URL of your DC/OS UI. Alternatively, you can also klick `Open Service` in the DC/OS UI. The Flink dashboard UI looks like below.
+In the following we will use the DC/OS [Admin Router](https://dcos.io/docs/1.9/development/dcos-integration/#-a-name-adminrouter-a-admin-router) to provide access to the Flink UI: use the URL `http://$DCOS_DASHBOARD/service/flink/` and replace `$DCOS_DASHBOARD` with the URL of your DC/OS UI. Alternatively, you can also click `Open Service` in the DC/OS UI. The Flink dashboard UI looks like below.
 
 ![Flink Dashboard](img/dashboard.png)
 
@@ -66,7 +66,7 @@ After the job has finished we should be able to see some details about the WordC
 
 ### Flink CLI from container
 
-We can alternetively use the native Flink CLI from a docker container.
+We can alternatively use the native Flink CLI from a docker container.
 Therefore we need to know the Jobmanager rpc adress and port which can be retrieved from the Flink UI:
 
 ![Job Manager](img/jobmanager-rpc.png)
@@ -76,7 +76,7 @@ $ dcos node ssh --master-proxy --leader
 
 core@ip-10-0-6-55 ~ $ docker run -it mesosphere/dcos-flink:1.3.1-1.0 /bin/bash
 
-root@2a9c01d3594e:/flink-1.3.1# ./bin/flink run -m <jobmangerhost>:<jobmangerjobmanager.rpc.port> ./examples/batch/WordCount.jar --input file:///etc/resolv.conf --output file:///etc/wordcount_out
+root@178cdd4e4f70:/flink-1.3-SNAPSHOT# cd /flink-1.3.1/ && ./bin/flink run -m <jobmangerhost>:<jobmangerjobmanager.rpc.port> ./examples/batch/WordCount.jar --input file:///etc/resolv.conf --output file:///etc/wordcount_out
 ```
 
 ### DC/OS Flink CLI
@@ -90,6 +90,3 @@ To uninstall Flink:
 ```bash
 $ dcos package uninstall flink
 ```
-
-
-
