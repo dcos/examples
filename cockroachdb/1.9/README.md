@@ -108,7 +108,7 @@ original [design document](https://github.com/cockroachdb/cockroach#design).
         }
 	```
 
-  1. Open up a SQL shell to read and write data in your cluster by accessing the vip endpoint. Note that if you're running DC/OS version 1.10 or greater, you could just run `dcos cockroachdb sql` instead.
+  1. Open up a SQL shell to read and write data in your cluster by accessing the vip endpoint.
 
         ```
         $ dcos node ssh --master-proxy --leader
@@ -321,9 +321,7 @@ To use a DC/OS CockroachDB cluster, all you need to do is connect to the HA-enab
 VIP hostname from the above [Discovering Endpoints](#discovering-endpoints)
 section using any PostgreSQL client driver.
 
-For example, to connect using CockroachDB's built-in SQL client, you can use the
-CLI command `dcos cockroachdb sql` if you're running DC/OS 1.10 or higher. If
-you're running an older version, you can open up a shell by running:
+For example, to connect using CockroachDB's built-in SQL client, you can open up a shell by running:
 
 ```
 dcos node ssh --master-proxy --leader
