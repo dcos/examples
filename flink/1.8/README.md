@@ -17,6 +17,9 @@
 
 - A running DC/OS 1.8 cluster with 1 agents with each 2 CPU and 2 GB of RAM available.
 - [DC/OS CLI](https://dcos.io/docs/1.8/usage/cli/install/) installed.
+- HDFS installed, as by default High Availability (HA) is enabled. See more in the specific section later on in this readme as you need also to create an hdfs path for flink recovery metadata. To start without HA, disable it by un-checking the `ENABLED` option:
+
+![HA enabled](img/ha_enabled.png)
 
 ## Install Flink
 
@@ -76,6 +79,33 @@ core@ip-10-0-6-55 ~ $ docker run -it mesosphere/dcos-flink:1.2.0-1.2 /bin/bash
 
 root@2a9c01d3594e:/flink-1.2.0# ./bin/flink run -m <jobmangerhost>:<jobmangerjobmanager.rpc.port> ./examples/batch/WordCount.jar --input file:///etc/resolv.conf --output file:///etc/wordcount_out
 ```
+### Running with HA
+
+There are several settings affecting HA mode which you could check at relevant configuration section. Default values are specified in order to launch the service automatically.
+Before launching Flink service you need to create a directory on HDFS which must
+have the same root path as the one specified in STORAGE-DIR property and as leaf folder the service name (default: hdfs://hdfs/flink/recovery/flink), the default service name is flink.
+
+Login to a container as described previously:
+
+Download the hadoop config files needed to access hdfs in dc/os:
+root@ddfbaadb2094:/flink-1.3.1# wget http://api.hdfs.marathon.l4lb.thisdcos.directory/v1/endpoints/hdfs-site.xml
+
+root@ddfbaadb2094:/flink-1.3.1# wget http://api.hdfs.marathon.l4lb.thisdcos.directory/v1/endpoints/core-site.xml
+
+Add to the conf/flink-conf.yaml file th efollowing options:
+
+high-availability: zookeeper
+high-availability.zookeeper.quorum: master.mesos:2181
+high-availability.zookeeper.storageDir: hdfs://hdfs/flink/recovery/flink
+high-availability.zookeeper.path.root: /dcos-service-flink/flink
+fs.hdfs.hadoopconf: /flink-1.3.1
+
+Note: the above high availability options are also set in the flink service in the
+ui and they must be a match. The baove values are the default ones.
+
+Run a job:
+
+root@ddfbaadb2094:/flink-1.3.1# ./bin/flink run -z /default-flink ./examples/batch/WordCount.jar --input file:///etc/resolv.conf --output file:///etc/wordcount_out
 
 ### DC/OS Flink CLI
 Coming soon.
@@ -88,6 +118,3 @@ To uninstall Flink:
 ```bash
 $ dcos package uninstall flink
 ```
-
-
-
