@@ -49,12 +49,17 @@ If you require Scala 2.11 please use the following install option from the UI (o
 
 NOTE: In order to have better access to the input and output files, it makes sense to store those in HDFS.
 
-### Flink UI
+### Upload Jar file via Flink UI
 In the following we will use the DC/OS [Admin Router](https://dcos.io/docs/1.9/development/dcos-integration/#-a-name-adminrouter-a-admin-router) to provide access to the Flink UI: use the URL `http://$DCOS_DASHBOARD/service/flink/` and replace `$DCOS_DASHBOARD` with the URL of your DC/OS UI. Alternatively, you can also click `Open Service` in the DC/OS UI. The Flink dashboard UI looks like below.
 
 ![Flink Dashboard](img/dashboard.png)
 
 Let us start our first job by going to `Submit new Job` in the Flink UI. We first need to add the respective jar file. For this example we will use the WordCount example jar file which can be found in `flink/build-target/examples/batch/WordCount.jar`.
+
+
+### Run Jobs
+
+#### Run Jobs via Flink UI
 
 Next, we can define our job as shown below:
 
@@ -64,24 +69,56 @@ After the job has finished we should be able to see some details about the WordC
 
 ![Finished Flink Job](img/finished.png)
 
-### Flink CLI from container
+#### Run Jobs DC/OS Flink CLI
 
-We can alternatively use the native Flink CLI from a docker container.
-Therefore we need to know the Jobmanager rpc adress and port which can be retrieved from the Flink UI:
+1. Submit the jar file via the UI as shown above.
 
-![Job Manager](img/jobmanager-rpc.png)
+2. Find the jar id of the jar file that you wish to run using `dcos flink jars`
 
-```bash
-$ dcos node ssh --master-proxy --leader
-
-core@ip-10-0-6-55 ~ $ docker run -it mesosphere/dcos-flink:1.3.1-1.0 /bin/bash
-
-root@178cdd4e4f70:/flink-1.3-SNAPSHOT# cd /flink-1.3.1/ && ./bin/flink run -m <jobmangerhost>:<jobmangerjobmanager.rpc.port> ./examples/batch/WordCount.jar --input file:///etc/resolv.conf --output file:///etc/wordcount_out
+```
+Mesospheres-MacBook-Pro:universe robinoh$ dcos flink jars
+{
+  "address": "http://ip-10-0-0-11.us-west-2.compute.internal:4179",
+  "files": [
+    {
+      "id": "59d5b54a-b3d3-483c-814f-63411115e017_WordCount.jar",
+      "name": "WordCount.jar",
+      "uploaded": 1501884181000,
+      "entry": [
+        {
+          "name": "org.apache.flink.examples.java.wordcount.WordCount",
+          "description": "No description provided"
+        }
+      ]
+    }
+  ]
+}
 ```
 
-### DC/OS Flink CLI
-Coming soon.
+3. Call `dcos flink run <jar id>`
 
+```
+Mesospheres-MacBook-Pro:universe robinoh$ dcos flink run 59d5b54a-b3d3-483c-814f-63411115e017_WordCount.jar
+{
+  "jobid": "7fa8e5f8f264785e85ef29dd9cba50ff"
+}
+```
+If successful, the terminal will return a job id.
+
+4. To verify that the job has finished, call `dcos flink list`
+
+```
+Mesospheres-MacBook-Pro:universe robinoh$ dcos flink list
+{
+  "jobs-running": [],
+  "jobs-finished": [
+    "7fa8e5f8f264785e85ef29dd9cba50ff"
+  ],
+  "jobs-cancelled": [],
+  "jobs-failed": []
+}
+```
+Notice that our job has successfully finished.
 
 ## Uninstall Flink
 
