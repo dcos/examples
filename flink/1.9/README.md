@@ -69,7 +69,7 @@ After the job has finished we should be able to see some details about the WordC
 
 ![Finished Flink Job](img/finished.png)
 
-#### Run Jobs DC/OS Flink CLI
+#### Run Jobs via DC/OS Flink CLI
 
 1. Submit the jar file via the UI as shown above.
 
