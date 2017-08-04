@@ -10,20 +10,25 @@ To install Tadpole DB Hub, navigate to Universe from the DC/OS UI and select Tad
 
 * In the `networking` tab, the `virtual-host` can be used for external access.
 * In the `storage` tab, Persistent storage can be enabled with checkbox. If enabled, `volume-size` and `pinned-hostname` is required.
+ * This storage used for metadata of Tadpole DB Hub.
+
 ![Tadpole Storage Setup](img/tadpole-install-storage.png)
 
-After the instance is deployed, Tadpole DB Hub Web UI is working on the endpoint. The setup step is followed through the Web UI.
+After the instance is deployed, Tadpole DB Hub Web UI is working on the endpoint. The setup is followed through the Web UI.
 
 * Term and Conditions:
 ![Tadpole Setup term and conditions](img/tadpole-setup-term-and-conditions.png)
+ * Check `Aggree` and Click `Next`
 * Select Individual or Group:
 ![Tadpole Setup Individual or Group](img/tadpole-setup-individual-or-group.png)
+ * Individual: This type is used for only one user.
+ * Group: This type is used for some groups of users.
 
-After the setup, main ui is shown on the endpoint:
+After the setup, main UI is shown on the endpoint:
 ![Tadpole Main UI](img/tadpole-ui-main.png)
 
 # How to using Tadpole DB Hub
-For using Tadpole DB Hub, a database instance is needed. Tadpole DB Hub supports various databases like MySQL, Postgresql, etc. In this example, MySQL in the Universe will be installed for testing.
+To use Tadpole DB Hub, a database instance is needed. Tadpole DB Hub supports various databases like MySQL, Postgresql, etc. In this example, MySQL in the Universe will be installed for testing.
 
 ## Install MySQL for test.
 Install MySQL from the Universe using `Advanced Installation`.
@@ -38,7 +43,7 @@ Install MySQL from the Universe using `Advanced Installation`.
 ![MySQL Host IP](img/mysql-host-ip.png)
 
 ## Connect to New MySQL using Tadpole DB Hub
-For using DB with Tadpole DB Hub, the first step is add database to Tadpole DB Hub.
+Use DB with Tadpole DB Hub, first step is adding database to the Tadpole DB Hub.
 
 * Click `Add database` icon of left top, below menu line. The add DB UI is opened like:
 ![Tadpole Add DB](img/tadpole-ui-add-database.png)
@@ -53,15 +58,15 @@ Test DB is successfully added to Tadpole DB Hub. Now we can test a query to adde
 ## Execute query on Tadpole DB Hub
 To compose queries, the `Query Editor` is used for. Click `Open Query Editor` icon on the icon menu.
 
-* `Query Editor` is look like this:
+* `Query Editor` is looks like this:
 ![Tadpole SQL Editor](img/tadpole-ui-sql-editor.png)
 * Compose sample `CREATE Table` query like below:
 ![Tadpole SQL Editor](img/tadpole-ui-sql-editor-test-query.png)
-* Click `Execute` icon to execute query or input shortcut key. After query is executed, the result is on the UI:
+* Click `Execute` icon to execute query or input shortcut key. After query is executed, the result is shown on the UI:
 ![Tadpole SQL Editor](img/tadpole-ui-test-query-result.png)
- * Table `Persons` is added to database and `Obejct Explorer` of the mid-left shows `Persons` table has no comment and is `InnoDB` type table.
+ * Table `Persons` is added to database and `Obejct Explorer` at the mid-left of UI shows `Persons` table has no comment and is `InnoDB` type table.
 
-That's it! Add your own databases and users for more exciting usage of Tadpole DB Hub!
+That's it! For futher usage, add your own databases and users for more exciting world of Tadpole DB Hub!
 
 # Notes
 * If you do not configure persistent storage, data for Tadpole DB Hub is not safe, DB list, Tadpole user account, and other data will be lost when container is failed.
