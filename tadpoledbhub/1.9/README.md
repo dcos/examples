@@ -70,7 +70,7 @@ That's it! For futher usage, add your own databases and users for more exciting 
 
 # Notes
 * If you do not configure persistent storage, data for Tadpole DB Hub is not safe, DB list, Tadpole user account, and other data will be lost when container is failed.
-* Tadpole DB Hub package is based on open source(LGPL) version of the software. If you interest on enterprise version, please contact to hangum@tadpolehub.com.
+* Tadpole DB Hub package is based on open source(LGPL) version of the software. If you are interested in the enterprise version, please contact hangum@tadpolehub.com.
 
 # Resources
 * Tadpole DB Hub on GitHub: https://github.com/hangum/TadpoleForDBTools
