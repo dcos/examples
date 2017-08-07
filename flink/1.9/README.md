@@ -76,7 +76,7 @@ After the job has finished we should be able to see some details about the WordC
 2. Find the jar id of the jar file that you wish to run using `dcos flink jars`
 
 ```
-Mesospheres-MacBook-Pro:universe robinoh$ dcos flink jars
+$ dcos flink jars
 {
   "address": "http://ip-10-0-0-11.us-west-2.compute.internal:4179",
   "files": [
@@ -98,7 +98,7 @@ Mesospheres-MacBook-Pro:universe robinoh$ dcos flink jars
 3. Call `dcos flink run <jar id>`
 
 ```
-Mesospheres-MacBook-Pro:universe robinoh$ dcos flink run 59d5b54a-b3d3-483c-814f-63411115e017_WordCount.jar
+$ dcos flink run 59d5b54a-b3d3-483c-814f-63411115e017_WordCount.jar
 {
   "jobid": "7fa8e5f8f264785e85ef29dd9cba50ff"
 }
@@ -108,7 +108,7 @@ If successful, the terminal will return a job id.
 4. To verify that the job has finished, call `dcos flink list`
 
 ```
-Mesospheres-MacBook-Pro:universe robinoh$ dcos flink list
+$ dcos flink list
 {
   "jobs-running": [],
   "jobs-finished": [
