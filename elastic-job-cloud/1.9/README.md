@@ -61,7 +61,13 @@ elastic-job-cloud  2.1.4    /elastic-job-cloud  ---      Elastic-Job-Cloud is a 
 
 ## Use Elastic Job Cloud
 
-Open the Elastic Job Cloud UI from the DC/OS UI via the `Open Service` button and flowing these steps for creating app and job.
+Open the Elastic Job Cloud UI with:
+
+```bash
+open $(dcos config show core.dcos_url)/service/elastic-job-cloud
+```
+
+You should see an admin page which can flowing these steps to create app and job:
 
 ![Create new app](img/new-app.png)
 
