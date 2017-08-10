@@ -71,7 +71,12 @@ After the job has finished we should be able to see some details about the WordC
 
 #### Run Jobs via DC/OS Flink CLI
 
-1. Submit the jar file via the UI as shown above.
+1. Submit the jar file via the CLI using `dcos flink upload`
+
+```
+$ dcos flink upload examples/WordCount.jar
+{"status": "success", "filename": "59d5b54a-b3d3-483c-814f-63411115e017_WordCount.jar"}
+```
 
 2. Find the jar id of the jar file that you wish to run using `dcos flink jars`
 
