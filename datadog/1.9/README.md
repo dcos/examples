@@ -13,7 +13,7 @@ DC/OS makes it very easy to deploy Datadog across all Mesos agent nodes in the c
 
 ## Prerequisites
 
-* A running DC/OS 1.8 cluster
+* A running DC/OS 1.9 cluster
 * A Datadog account (free trial account available [here][signup])
 
 ## Install Datadog
