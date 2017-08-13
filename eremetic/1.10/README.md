@@ -16,7 +16,7 @@ to launch tasks into a cluster wouldn't need to manage Mesos resource offers dir
 
 ## Install Eremetic
 
-Eremetic is very simple to install and can be installed via either the Universe UI or by using the DC/OS CLI. The
+Eremetic is very simple to install and can be installed via either the DC/OS Catalog UI or by using the CLI. The
 following command will launch the install via the DC/OS CLI:
 
 ```bash
@@ -60,7 +60,7 @@ the task once launched.
 
 ## Uninstall Eremetic
 
-Eremetic can be uninstalled either via the DC/OS Universe UI or from the CLI. The following command will uninstall
+Eremetic can be uninstalled from the CLI. The following command will uninstall
 Eremetic via the DC/OS CLI:
 
 ```bash
