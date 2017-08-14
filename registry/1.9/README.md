@@ -8,8 +8,8 @@ Note that this package will install with the default parameters, but in order to
 
 - Estimated time for completion: up to 30 minutes
 - Target audience:
- - Operators
- - Application admins
+  - Operators
+  - Application admins
 - Scope: You'll learn how to install the Docker registry and how to use it to push and pull docker images, and to act as a proxy for another registry.
 
 **Table of Contents**:
