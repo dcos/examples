@@ -23,7 +23,7 @@
 ## Prerequisites
 
 - A running DC/OS 1.10 cluster with at least 3 nodes with each 2 CPUs and 2 GB of RAM available.
-- [DC/OS CLI](https://dcos.io/docs/1.10/usage/cli/install/) installed.
+- [DC/OS CLI](https://dcos.io/docs/1.10/cli/install/) installed.
 
 ## Install Spark
 
@@ -157,7 +157,7 @@ To uninstall Spark:
 $ dcos package uninstall spark
 ```
 
-Use the [framework cleaner](https://docs.mesosphere.com/1.10/usage/managing-services/uninstall/#framework-cleaner) to remove your Spark instance from ZooKeeper and to destroy all data associated with it. The script requires several arguments, the values for which are derived from your service name:
+Use the [framework cleaner](https://dcos.io/docs/1.10/deploying-services/uninstall/#about-cleaning-up-zookeeper) to remove your Spark instance from ZooKeeper and to destroy all data associated with it. The script requires several arguments, the values for which are derived from your service name:
 
 - `framework-role` is `spark-role`
 - `framework-principal` is `spark-principal`
