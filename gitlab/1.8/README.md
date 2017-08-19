@@ -12,11 +12,11 @@ The instructions below use a pinned hostname constraint to ensure the applicatio
 
 - Estimated time for completion: up to 90 minutes
 - Target audience:
- - Operators
- - Application admins
- - Quality/Release engineers
- - CI/CD admins
- - Devops Engineers
+  - Operators
+  - Application admins
+  - Quality/Release engineers
+  - CI/CD admins
+  - Devops Engineers
 - Scope: You'll learn how to install GitLab and how to use it to build and deploy a Docker image on Marathon.
 
 **Table of Contents**:
