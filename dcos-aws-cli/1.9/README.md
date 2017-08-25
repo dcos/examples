@@ -21,12 +21,22 @@ $ dcos package install dcos-aws-cli
 
 ## Usage
 
-The DC/OS AWS CLI currently supports only one command:
+The DC/OS AWS CLI currently supports only two commands:
 - Listing of external IP addresses
-Retrieving the externally resolvable IP addresses of public Agents can be difficult, as DC/OS internally used the interal IP addresses. This command will list the external IP addresses for all public agents.
+Retrieving the externally resolvable IP addresses of public Agents can be difficult, as DC/OS internally uses the internal IP addresses. This command will list the external IP addresses for all public agents.
 
 ```bash
 $ dcos dcos-aws-cli publicIPs
+35.158.189.26
+```
+
+- List all applications and their ports running on public agents
+Checking all apps running on public agents and their ports can be a tedious task. This command lists all apps which have reserved port resources on a public Agent. Note that this does not--yet--include applications which are exposed via marathon-lb or applications which use unreserved ports.
+
+```bash
+$ dcos dcos-aws-cli exposedApps
+AppName: nexus, PublicIP: 35.158.189.26, Ports: [9649-9649]
+AppName: nginx, PublicIP: 35.158.189.26, Ports: [80]
 ```
 
 
