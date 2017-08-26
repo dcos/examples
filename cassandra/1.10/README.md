@@ -33,7 +33,7 @@
 
 ## Install Cassandra
 
-Assuming you have a DC/OS cluster up and running, the first step is to [install Cassandra](https://docs.mesosphere.com/manage-service/cassandra/).
+Assuming you have a DC/OS cluster up and running, the first step is to [install Cassandra](https://docs.mesosphere.com/service-docs/cassandra/).
 
 ### Typical installation
 
@@ -357,6 +357,9 @@ Please follow the instructions at https://docs.mesosphere.com/current/usage/serv
 Use the [framework cleaner](https://docs.mesosphere.com/1.10/deploying-services/uninstall/#framework-cleaner) script to remove your Cassandra instance from ZooKeeper and to destroy all data associated with it. The script requires several arguments, the values for which are derived from your service name:
 
 ```bash
+# connect to the leader if you are not already
+dcos node ssh --master-proxy --leader
+
 docker run mesosphere/janitor /janitor.py -r cassandra-role -p cassandra-principal -z dcos-service-cassandra
 ```
 - `framework-role` is `cassandra-role`
