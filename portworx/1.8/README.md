@@ -13,105 +13,156 @@ Portworx technology is available as PX-Developer and PX-Enterprise.
 - Target audience: Anyone who wants to deploy a persistent elastic data services solution on DC/OS. 
 - This package requires an intermediate/advanced DC/OS skill set.
 
-
-**Table of Contents**:
-
-- [Prerequisites](#prerequisites)
-- [Portworx Node configuration](#portworx-agent-node-configuration)
-- [Install Portworx](#install-portworx)
-- [Use Portworx](#use-portworx)
-
-Please review the main [Portworx on Mesos](http://docs.portworx.com/run-with-mesosphere.html) documentation.
+Please review the main [Portworx on DCOS](https://docs.portworx.com/scheduler/mesosphere-dcos/) documentation.
 
 # Prerequisites
 
-- A running DC/OS v1.8 cluster with at least 3 private agents. Portworx-on-Mesos REQUIRES at least 3 nodes for installation.
+- A running DC/OS v1.8 cluster with at least 3 private agents. Portworx-on-DCOS REQUIRES at least 3 nodes for installation.
 - All nodes in the cluster that will participate in a Portworx cluster MUST have a separate non-root volume to use.  
 - A node in the cluster with a working DC/OS CLI.
-- A key/value data store (both **etcd** and **consul** are supported). 
 
 # Portworx Agent-Node configuration
 
-- Portworx can run on Mesos agent nodes that are either on-prem or in the cloud.
+- Portworx can run on DCOS agent nodes that are either on-prem or in the cloud.
 - Portworx works best when installed on all nodes in a DC/OS cluster.  If Portworx is to be installed on a subset of the cluster, then:
  * the agent-nodes must include attributes indicating the participate in the Portworx cluster.
  * services that depend on Portworx volumes must specify "constraints" to ensure they are launched on nodes that can access Portworx volumes.
-Please review the main [Portworx on Mesos](http://docs.portworx.com/run-with-mesosphere.html) documnentation.
-
-### Launch a key/value data store
-
-Portworx requires an instance of **etcd** or **consul** for cluster meta-data, prior to launching.  Either launch manually or through a Universe package, taking note of the **service address:port**.
-
-Optionally, CoreOS provides an implicit **etcd** instance.
 
 # Install Portworx
+## Default Install
+If you want to use the defaults, you can now run the dcos command to install the service
+```
+$ dcos package install --yes portworx
+```
+You can also click on the  “Install” button on the WebUI next to the service and then click “Install Package”.
 
-## Install Portworx from the DC/OS GUI
+This will install all the prerequisites and start the Portworx service on 3 private agents.
+The default login/password for lighthouse would be portworx@yourcompany.com/admin
 
-Log into DC/OS, go to Universe, and select the Portworx package from Universe. Select `Advanced Installation`.  Advanced Installation is ***MANDATORY***
+## Advanced Install
+If you want to modify the defaults, click on the “Install” button next to the package on the DCOS UI and then click on
+“Advanced Installation”
 
-- ***cmdargs*** : The `cmdargs` parameter is ***MANDATORY*** and includes all the [relevent command line options](http://docs.portworx.com/run-with-docker.html#run-px).
+Through the advanced install options you can change the configuration of the Portworx deployment. Here you can choose to
+disable etcd (if you have an external etcd service) as well as disable the Lighthouse service in case you do not want to
+use the WebUI.
 
-- ***headers_dir*** : Name of directory for system header files.  For CoreOS, this should be "/lib/modules" (default).  For all other OS's, use "/usr/src".
+## Portworx Options
+Specify your kvdb (consul or etcd) server if you don't want to use the etcd cluster with this service. If the etcd cluster
+is enabled this config value will be ignored.
+If you have been given access to the Enterprise version of PX you can replace px-dev:latest with px-enterprise:latest.
+With PX Enterprise you can increase the number of nodes in the PX Cluster to a value greater than 3.
 
-Once the package is configured according to your installation and needs, click on "Review and Install", and finally on "Install".
-Confirm that the Portworx service has started properly
+![Portworx Install options](img/dcos-px-install-options.png)
 
-![Select Portworx in Universe: ](img/Univ1.png)
+## Etcd Options
+By default a 3 node etcd cluster will be created with 5GB of local persistent storage. The size of the persistent disks can
+be changed during install. This can not be updated once the service has been started so please make sure you have enough
+storage resources available in your DCOS cluster before starting the install.
 
-![Select "Advanced Installation": ](img/Univ2.png)
+![Portworx ETCD Install options](img/dcos-px-etcd-options.png)
 
-![Configure Portworx: ](img/Univ3.png)
+## Lighthouse options
+By default the Lighthouse service will be installed. If this is disabled the influxdb service will also be disabled.
 
-![Review Configuration: ](img/Univ4.png)
+You can enter the admin email to be used for creating the Lighthouse account. This can be used to login to Lighthouse
+after install is complete. The default password is `admin` which can be changed after login.
 
-![Verify Portworx is running: ](img/Univ5.png)
+![Portworx Lighthouse Install options](img/dcos-px-lighthouse-options.png)
 
-![Verify Portworx details: ](img/Univ6.png)
+Once you have configured the service, click on “Review and Install” and then “Install” to start the installation of the
+service.
 
-## Install Portworx from the DC/OS CLI
+# Install Status
 
-Log into a terminal where the DC/OS CLI is installed and has connectivity with the cluster. The mandatory parameters referenced above can be passed as options to the DC/OS CLI by creating a `px-options.json` file with the following content (Modify the values as per your own installation/desire) :
+Once you have started the install you can go to the Services page to monitor the status of the installation.
 
-```bash
+If you click on the Portworx service you should be able to look at the status of the services being created. 
+
+In a default install there will be one service for the framework scheduler, 4 services for etcd (
+3 etcd nodes and one etcd proxy), one service for influxdb and one service for lighthouse.
+
+![Portworx Install finished](img/dcos-px-install-finished.png)
+
+The install for Portworx on the agent nodes will also run as a service but they will "Finish" once the installation is done.
+
+You can check the nodes where Portworx is installed and the status of the Portworx service by clicking on the Components
+link on the DCOS UI.
+
+![Portworx in DCOS Compenents](img/dcos-px-components.png)
+
+# Accessing Lighthouse
+
+Since Lighthouse is deployed on a private agent it might not be accessible from outside your network depending on your
+network configuration. To access Lighthouse from an external network you can deploy the
+[Repoxy](https://gist.github.com/nlsun/877411115f7e3b885b5e9daa8821722f) service to redirect traffic from one of the public 
+agents.
+
+To do so, run the following marathon application
+
+```
 {
-  "service": {
-    "name": "portworx"
+  "id": "/repoxy",
+  "cpus": 0.1,
+  "acceptedResourceRoles": [
+      "slave_public"
+  ],
+  "instances": 1,
+  "mem": 128,
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "mesosphere/repoxy:2.0.0"
+    },
+    "volumes": [
+      {
+        "containerPath": "/opt/mesosphere",
+        "hostPath": "/opt/mesosphere",
+        "mode": "RO"
+      }
+    ]
   },
-  "portworx": {
-    "framework-name": "portworx",
-    "cpus": 1,
-    "mem": 2048,
-    "instances": 3,
-    "cmdargs": "-k etcd://localhost:2379 -c px1234 -s /dev/sdb -m bond0 -d bond0",
-    "headers_dir": "/lib/modules",
-    "api_port": 9001
+  "cmd": "/proxyfiles/bin/start portworx $PORT0",
+  "portDefinitions": [
+    {
+      "port": 9998,
+      "protocol": "tcp"
+    },
+    {
+      "port": 9999,
+      "protocol": "tcp"
+    }
+  ],
+  "requirePorts": true,
+  "env": {
+    "PROXY_ENDPOINT_0": "Lighthouse,http,lighthouse-0-start,mesos,8085,/,/"
   }
 }
 ```
 
-Create and save the `px-options.json` file, then launch the Portworx DC/OS package with:
+You can then access the Lighthouse WebUI on http://\<public_agent_IP\>:9998.
+If your public agent is behind a firewall you will also need to open up two ports, 9998 and 9999.
 
-```bash
-dcos package install --yes --options ./px-options.json portworx
-```
+## Login Page
+The default username/password is portworx@yourcompany.com/admin
 
-### Validate from GUI
+![Lighthouse Login Page](img/dcos-px-lighthouse-login.png)
 
-After installation, the package will be running under the `Services` tab:
+## Dashboard
+![Lighthouse Dashboard](img/dcos-px-lighthouse-dashboard.png)
 
-### Validate from CLI
+# Scaling Up Portworx Nodes
 
-After installation, you can check the correct functioning with:
+If you add more agents to your DCOS cluster and you want to install Portworx on those new nodes, you can increase the 
+NODE_COUNT to start install on the new nodes. This will relaunch the service scheduler and install Portworx on the nodes 
+which didn't have it previously.
 
-```bash
-dcos package list|grep portworx
-portworx  1.1.6-3.0  /portworx  ---      Portworx PX provides scheduler integrated data services for containers, such as data persistence, multi-node replication, cloud-agnostic snapshots and data encryption. Portworx itself is deployed as a container and is suitable for both cloud and on-prem deployments.  Portworx enables containerized applications to be persistent, portable and protected.  For DCOS examples of Portworx, please see https://github.com/dcos/examples/tree/master/1.8/portworx and http://docs.portworx.com/run-with-mesosphere.html
-```
+![Scale up PX Nodes](img/dcos-px-scale-up.png)
+
 
 # Use Portworx
 
-For more detailed description on using Portworx through DCOS and Mesos, please visit  [Portworx on Mesos framework homepage](http://docs.portworx.com/run-with-mesosphere.html)
+For more detailed description on using Portworx through DCOS please visit  [Portworx on DCOS framework homepage](https://docs.portworx.com/scheduler/mesosphere-dcos)
 
 
 # Further resources
