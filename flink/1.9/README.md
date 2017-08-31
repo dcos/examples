@@ -91,5 +91,14 @@ To uninstall Flink:
 $ dcos package uninstall flink
 ```
 
+## Troubleshooting
+
+### AWS Specific Config
+
+There is a situation which can occur where the JobMaster is not able to resolve its hostname.  This causes the TaskManager container that launches to never communicate with the JobManager and the cluster never enters the ready state.  This can be resolved by enabling "DNS Hostname" support in the VPC for the agents.
+
+```
+aws ec2 modify-vpc-attribute --vpc-id vpc-a01106c2 --enable-dns-hostnames "{\"Value\":true}"
+```
 
 
