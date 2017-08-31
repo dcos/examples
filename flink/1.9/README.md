@@ -136,7 +136,16 @@ $ dcos package uninstall flink
 
 ### AWS Specific Config
 
-There is a situation which can occur where the JobMaster is not able to resolve its hostname.  This causes the TaskManager container that launches to never communicate with the JobManager and the cluster never enters the ready state.  This can be resolved by enabling "DNS Hostname" support in the VPC for the agents.
+There is a situation which can occur where the JobMaster is not able to resolve its hostname.  This causes the TaskManager container that launches to never communicate with the JobManager and the cluster never enters the ready state. 
+In the logs will contain something similar to 
+
+```
+2017-07-29 17:10:05,553 ERROR org.apache.flink.mesos.runtime.clusterframework.MesosApplicationMasterRunner  - Mesos JobManager initialization failed
+java.net.UnknownHostException: agentname: agentname: Name or service not known
+    at java.net.InetAddress.getLocalHost(InetAddress.java:1505)
+```
+
+This can be resolved by [enabling "DNS Hostname" support in the VPC](https://www.ericmichaelstone.com/?p=7430) for the agents.
 
 ```
 aws ec2 modify-vpc-attribute --vpc-id vpc-a01106c2 --enable-dns-hostnames "{\"Value\":true}"
