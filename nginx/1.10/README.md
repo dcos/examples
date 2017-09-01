@@ -31,7 +31,7 @@ Assuming you have a DC/OS cluster up and running, we install NGINX to serve up a
 - One popup should appear with `Success` message
 ![Catalog NGINX](img/nginx-success.png)
 - Click on `Services` from left menu bar
-- there should be link button beside `nginx` service name, click on it or go to http://<MASTER-NODE-URL/ADDRESS>/service/nginx/
+- There should be link button beside `nginx` service name, click on it or go to http://<MASTER-NODE-URL/ADDRESS>/service/nginx/
 
 ## Deploy NGINX using CLI
 
