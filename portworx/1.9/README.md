@@ -1,4 +1,4 @@
-![DC/OS Logo](https://acomblogimages.blob.core.windows.net/media/Default/Windows-Live-Writer/dcoslogo.png) ![Portworx Logo](https://github.com/portworx/px-dev/blob/master/images/pwx-256.png)
+![DC/OS Logo](/img/DCOS.png) ![Portworx Logo](/img/pwx-256.png)
 
 Portworx provides scale-out storage for containers. Portworx storage is delivered as a container that is installed on your servers. Portworx technology:
 
@@ -10,7 +10,7 @@ Portworx provides scale-out storage for containers. Portworx storage is delivere
 Portworx technology is available as PX-Developer and PX-Enterprise.
 
 - Estimated time for completion: 45 minutes
-- Target audience: Anyone who wants to deploy a persistent elastic data services solution on DC/OS. 
+- Target audience: Anyone who wants to deploy a persistent elastic data services solution on DC/OS.
 - This package requires an intermediate/advanced DC/OS skill set.
 
 Please review the main [Portworx on DCOS](https://docs.portworx.com/scheduler/mesosphere-dcos/) documentation.
@@ -77,7 +77,7 @@ service.
 
 Once you have started the install you can go to the Services page to monitor the status of the installation.
 
-If you click on the Portworx service you should be able to look at the status of the services being created. 
+If you click on the Portworx service you should be able to look at the status of the services being created.
 
 In a default install there will be one service for the framework scheduler, 4 services for etcd (
 3 etcd nodes and one etcd proxy), one service for influxdb and one service for lighthouse.
@@ -95,7 +95,7 @@ link on the DCOS UI.
 
 Since Lighthouse is deployed on a private agent it might not be accessible from outside your network depending on your
 network configuration. To access Lighthouse from an external network you can deploy the
-[Repoxy](https://gist.github.com/nlsun/877411115f7e3b885b5e9daa8821722f) service to redirect traffic from one of the public 
+[Repoxy](https://gist.github.com/nlsun/877411115f7e3b885b5e9daa8821722f) service to redirect traffic from one of the public
 agents.
 
 To do so, run the following marathon application
@@ -153,8 +153,8 @@ The default username/password is portworx@yourcompany.com/admin
 
 # Scaling Up Portworx Nodes
 
-If you add more agents to your DCOS cluster and you want to install Portworx on those new nodes, you can increase the 
-NODE_COUNT to start install on the new nodes. This will relaunch the service scheduler and install Portworx on the nodes 
+If you add more agents to your DCOS cluster and you want to install Portworx on those new nodes, you can increase the
+NODE_COUNT to start install on the new nodes. This will relaunch the service scheduler and install Portworx on the nodes
 which didn't have it previously.
 
 ![Scale up PX Nodes](img/dcos-px-scale-up.png)
