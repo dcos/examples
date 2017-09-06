@@ -1,4 +1,4 @@
-![DC/OS Logo](/img/DCOS.png) ![Portworx Logo](/img/pwx-256.png)
+![DC/OS Logo](img/DCOS.png) ![Portworx Logo](img/pwx-256.png)
 
 Portworx provides scale-out storage for containers. Portworx storage is delivered as a container that is installed on your servers. Portworx technology:
 
