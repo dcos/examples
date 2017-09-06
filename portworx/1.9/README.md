@@ -95,8 +95,7 @@ link on the DCOS UI.
 
 Since Lighthouse is deployed on a private agent it might not be accessible from outside your network depending on your
 network configuration. To access Lighthouse from an external network you can deploy the
-[Repoxy](https://gist.github.com/nlsun/877411115f7e3b885b5e9daa8821722f) service to redirect traffic from one of the public
-agents.
+[Repoxy](https://gist.github.com/nlsun/877411115f7e3b885b5e9daa8821722f) service to redirect traffic from one of the public agents.
 
 To do so, run the following marathon application
 
@@ -153,9 +152,7 @@ The default username/password is portworx@yourcompany.com/admin
 
 # Scaling Up Portworx Nodes
 
-If you add more agents to your DCOS cluster and you want to install Portworx on those new nodes, you can increase the
-NODE_COUNT to start install on the new nodes. This will relaunch the service scheduler and install Portworx on the nodes
-which didn't have it previously.
+If you add more agents to your DCOS cluster and you want to install Portworx on those new nodes, you can increase the NODE_COUNT to start install on the new nodes. This will relaunch the service scheduler and install Portworx on the nodes which didn't have it previously.
 
 ![Scale up PX Nodes](img/dcos-px-scale-up.png)
 
