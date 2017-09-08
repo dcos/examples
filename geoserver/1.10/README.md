@@ -26,7 +26,7 @@ to the instances.
 ## Prerequisites
 
 - A running DC/OS 1.10 cluster with a total of 4.1 CPUs and 2 GB of RAM available within the cluster.
-- Marathon-LB Universe package installed.
+- Marathon-LB Catalog package installed.
 - DNS or access to local machine configuration for host resolution.
 - [DC/OS CLI](https://dcos.io/docs/1.10/cli/install/) installed for ease of access to cluster nodes.
 - [jq](https://stedolan.github.io/jq/) installed for ease of parsing JSON responses.
@@ -82,7 +82,7 @@ configuration storage, this space will be minimal (<10MiBs).
 
 ## Install GeoServer
 
-To install GeoServer, navigate to Universe from the DC/OS UI and select GeoServer. Advanced Installation should be used
+To install GeoServer, navigate to Catalog from the DC/OS UI and select GeoServer. Configure should be used
 and your chosen address should be entered in to the `geoserver.virtual-host` configuration field. For this tutorial, we
 will continue to reference the default in example URLs - be sure to substitute the appropriate value for your
 environment.
