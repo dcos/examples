@@ -138,12 +138,9 @@ container_status {
 
 Now let's use `dcos spark log` to verify the execution on the CLI. While this is probably not that useful for very short-running batch jobs, it's beneficial for long-running jobs as well as Spark Streaming jobs:
 
-[FIXME: dcos spark log doesn't print anything]
 ```bash
 $ dcos spark log driver-20170818154044-0001
-Registered docker executor on 192.168.65.111
-Starting task driver-20170818154044-0001
-Pi is roughly 3.142276
+Pi is roughly 3.139816
 ```
 
 So it turns out to be useful to use the `dcos spark log` command: we get the result of the computation, that is, an approximation for π, without having to dig into the logs.
