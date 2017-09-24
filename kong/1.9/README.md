@@ -156,7 +156,7 @@ and [Marathon-LB](https://dcos.io/docs/1.9/networking/marathon-lb/).
           "password": "kong"
         },
         "cassandra": {
-          "contact-points": "node-0.cassandra.mesos, node-1.cassandra.mesos, node-2.cassandra.mesos",
+          "contact-points": "node.cassandra.l4lb.thisdcos.directory",
           "port": 9042,
           "keyspace": "kong"
         }
