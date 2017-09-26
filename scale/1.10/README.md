@@ -23,9 +23,9 @@
 
 ## Prerequisites
 
-- A running DC/OS 1.9 cluster with a minimum of 3 nodes, each with at least 4 CPU and 6 GB of RAM available.
+- A running DC/OS 1.10 cluster with a minimum of 3 nodes, each with at least 4 CPU and 6 GB of RAM available.
 - [Elasticsearch](https://github.com/dcos/examples/tree/master/elasticsearch) package running within the DCOS cluster.
-- [DC/OS CLI](https://dcos.io/docs/1.9/usage/cli/install/) installed.
+- [DC/OS CLI](https://dcos.io/docs/1.10/cli/install/) installed.
 - [AWS CLI](http://docs.aws.amazon.com/cli/latest/userguide/installing.html) installed and _configured with an IAM user granted AdministratorAccess role_.
 
 ## Install Scale
@@ -38,7 +38,7 @@ This DC/OS Service is currently in preview. We recommend a minimum of three node
 
 Tutorial documentation for Scale can be found here: https://github.com/dcos/examples/tree/master/scale
 Continue installing? [yes/no] yes
-Installing Marathon app for package [scale] version [5.0.0-0.1.0]
+Installing Marathon app for package [scale] version [5.1.1-0.1.0]
 The Scale DCOS Service has been successfully installed!
 New User Tutorial: https://github.com/dcos/examples/tree/master/scale
 ```
