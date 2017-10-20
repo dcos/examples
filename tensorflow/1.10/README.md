@@ -36,9 +36,9 @@ error-prone steps like task deployment, ClusterSpec configuration, task monitori
 # Installing and Customizing
 
 Assuming you want to train your own models, you will need to create your own configuration to pass in when you
-run `dcos package install tensorflow --options=...`. The possible configurations are documented in the [example section](#examples). For more information about building the 
-options.json file, see the 
-[DC/OS documentation](https://dcos.io/docs/1.10/deploying-services/config-universe-service/) for service 
+run `dcos package install tensorflow --options=...`. The possible configurations are documented in the [example section](#examples). For more information about building the
+options.json file, see the
+[DC/OS documentation](https://dcos.io/docs/1.10/deploying-services/config-universe-service/) for service
 configuration access.
 
 
@@ -99,7 +99,7 @@ gs://<bucket-name>/path/to/folder
 
 By default, your TensorFlow jobs will run inside Docker containers based on the official TensorFlow
 images (with small additions to support HDFS). If your TensorFlow job has any special requirements,
-you can specify a custom image here (pulled from DockerHub). 
+you can specify a custom image here (pulled from DockerHub).
 
 <a name="task-settings"></a>
 ## GPU Worker / Worker / Parameter Server Settings
@@ -135,9 +135,9 @@ You can customize the ports exposed by the service via the service configuration
 If you wish to install multiple instances of the service and have them co-locate on the same machines,
 you must ensure that **no** ports are common between those instances.
 Customizing ports is only needed if you require multiple instances sharing a single machine.
-This customization is optional otherwise. 
+This customization is optional otherwise.
 If your pod is on the overlay network (see below) then the port resources will be ignored allowing a pod
-to share a machine with another one using the same ports. 
+to share a machine with another one using the same ports.
 
 You can specify that a pod should join the `dcos` overlay network,
 a [Virtual Network](https://docs.mesosphere.com/latest/networking/virtual-networks/#virtual-network-service-dns)
@@ -145,7 +145,7 @@ that supports having one IP address per pod.
 When a pod joins an overlay network it gets its own IP address and has access to its own array of ports.
 Therefore when a pod specifies that it is joining dcos we ignore the ports resource requirements,
 because the pod will not consume the ports on the host machine.
-The DNS for pods on the overlay network is <task_name>.<framework_name>.autoip.dcos.thisdcos.directory. 
+The DNS for pods on the overlay network is <task_name>.<framework_name>.autoip.dcos.thisdcos.directory.
 
 **Note** that this DNS will also work for pods on the host network.
 **Because the ports resources are not used when a pod is on the overlay network,
@@ -190,23 +190,7 @@ It also comes with instructions on how to deploy your own examples.
 <a name="uninstalling"></a>
 # Uninstalling
 
-Follow these steps to uninstall the service. Note that although each installation of this framework is considered a "job"
-semantically, it will not uninstall itself. When your script has finished execution, you will need to uninstall the framework
-to kill the scheduler and un-reserve its resources.
-
-1. Uninstall the service. From the DC/OS CLI, enter `dcos package uninstall`.
-1. Clean up remaining reserved resources with the framework cleaner script, `janitor.py`.
-[More information about the framework cleaner script](https://docs.mesosphere.com/1.10/deploying-services/uninstall/#framework-cleaner).
-
-To uninstall an instance named `tensorflow` (the default), run:
-``` shell
-$ MY_SERVICE_NAME=tensorflow
-$ dcos package uninstall --app-id=$MY_SERVICE_NAME tensorflow
-$ dcos node ssh --master-proxy --leader "docker run mesosphere/janitor /janitor.py \
-      -r $MY_SERVICE_NAME-role \
-      -p $MY_SERVICE_NAME-principal \
-      -z dcos-service-$MY_SERVICE_NAME"
-```
+See the uninstallation documentation [here](../uninstall.md)
 
 <a name="connecting-clients"></a>
 # Connecting Clients
@@ -338,7 +322,7 @@ For example, let's say `worker-3`'s host system has died and `worker-3` needs to
 <a name="disaster-recovery"></a>
 # Disaster Recovery
 
-If you use a shared filesystem like GCS, it will be available to your main function as `log_dir`. If you write all of your 
+If you use a shared filesystem like GCS, it will be available to your main function as `log_dir`. If you write all of your
 checkpoint files to `log_dir`, Disaster Recovery will be a breeze! Your tasks will automatically be restarted when they fail,
 they will all have access to the latest checkpoint file, and they will easily resume training from the latest checkpoint.
 
