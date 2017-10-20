@@ -47,7 +47,7 @@ configuration access.
  You can [install TensorFlow from the DC/OS cataloge. If you install TensorFlow from the web interface, you must install the TensorFlow DC/OS CLI subcommands separately. For installing just the DC/OS Tensorflow CLI, enter:
 
  ```bash
- dcos package install TensorFlow --cli
+ dcos package install tensorflow --cli
  ```
 
  Choose `ADVANCED INSTALLATION` to perform a custom installation.
@@ -190,7 +190,7 @@ It also comes with instructions on how to deploy your own examples.
 <a name="uninstalling"></a>
 # Uninstalling
 
-See the uninstallation documentation [here](../uninstall.md)
+See the uninstallation documentation [here](../uninstall/README.md)
 
 <a name="connecting-clients"></a>
 # Connecting Clients
