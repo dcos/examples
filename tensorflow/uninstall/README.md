@@ -24,7 +24,7 @@ If you are running TensorFlow DC/OS 1.9 or older, follow these steps:
 
 1. Stop the service. From the DC/OS CLI, enter `dcos package uninstall --app-id=<instancename> tensorflow`.
    For example, `dcos package uninstall --app-id=mnist tensorflow`.
-1. Clean up remaining reserved resources with the framework cleaner script, `janitor.py`. See [DC/OS documentation](https://docs.mesosphere.com/deploying-services/uninstall/#framework-cleaner) for more information about the framework cleaner script.
+1. Clean up remaining reserved resources with the framework cleaner script, `janitor.py`. See the [DC/OS documentation](https://docs.mesosphere.com/deploying-services/uninstall/#framework-cleaner) for more information about the framework cleaner script.
 
 For example, to uninstall a TensorFlow instance named `mnist`, run:
 
