@@ -8,8 +8,8 @@ In case you'd like to configure your nodes to use the Docker Registry without TL
 
 - Estimated time for completion: up to 30 minutes
 - Target audience:
- - Operators
- - Application admins
+  - Operators
+  - Application admins
 - Scope: You'll learn how to install the Docker registry and how to use it to push and pull docker images, and to act as a proxy for another registry.
 
 **Table of Contents**:
@@ -272,7 +272,7 @@ latest: digest: sha256:dedbce721065b2bcfae35d2b0690857bb6c3b4b7dd48bfe7fc7b53693
 ### Check the contents of the local registry
 
 ```bash
-# curl --insecure https://registry.marathon.l4lb.thisdcos.directory:5000/v2/_catalog
+# curl --insecure http://registry.marathon.l4lb.thisdcos.directory:5000/v2/_catalog
 {"repositories":["nginx"]}
 ```
 

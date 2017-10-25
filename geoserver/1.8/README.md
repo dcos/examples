@@ -20,6 +20,7 @@ to the instances.
 - [Configure Shared Storage](#configure-shared-storage)
 - [Install GeoServer](#install-geoserver)
 - [Use GeoServer](#use-geoserver)
+- [Extensions](#extensions)
 - [Uninstall GeoServer](#uninstall-geoserver)
 
 ## Prerequisites
@@ -104,6 +105,12 @@ Once the GeoServer services in DC/OS have gone green, you can access the GeoServ
 http://geoserver.marathon.mesos/geoserver/web/. The default user name is `admin` and password is `geoserver`. Refer to
 the [GeoServer documentation](http://docs.geoserver.org/stable/en/user/) for further details on usage.
 
+## Extensions
+
+Do you have extensions or customizations that need to be made to the GeoServer web.xml? This package
+provides support for injection of a tarball of extension jars, as well as a web.xml override. These
+settings are exposed during the package install as `extension-tarball-uri` and `web-xml-uri`.
+
 ## Uninstall GeoServer
 
 To uninstall GeoServer:
@@ -123,4 +130,4 @@ dcos marathon app remove geoserver-app
 
 1. [GeoServer Home](http://geoserver.org/)
 1. [GeoServer Official Documentation](http://docs.geoserver.org/stable/en/user/)
-1. [DC/OS GeoServer Source](http://github.com/appliedis/dcos-geoserver)
+1. [DC/OS GeoServer Documentation](http://github.com/appliedis/dcos-geoserver)
