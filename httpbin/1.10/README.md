@@ -55,6 +55,8 @@ From detailed view (clicking on the instance ID) `Endpoint` link leads to httpbi
 
 ![httpbin UI](img/httpbin-ui.png)
 
+Please be aware that the links, as they are abolute, will not work in this UI.
+
 To get started with httpbin you can do some HTTP requests with HTTPie or curl.
 
 First we will need to authenticate dcos-cli with your cluster, so that we can
