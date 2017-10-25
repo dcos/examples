@@ -17,7 +17,7 @@ error-prone steps like task deployment, ClusterSpec configuration, task monitori
 
 ## Prerequisites
 
-- A running DC/OS 1.10 cluster with at least 3 nodes having 6CPU, 12GB of memory in total. This exact amount depends on your configuration for the gpuworker, worker, and ps tasks.
+- A running DC/OS 1.10 cluster with at least 3 nodes having 6CPU, 12GB of memory in total. This exact amount depends on your configuration for the gpuworker, worker, and parameter_server tasks.
 - [DC/OS CLI](https://dcos.io/docs/1.10/usage/cli/install/) installed.
 - If you want to benefit from GPU acceleration, please check how to [install DC/OS on GPU instances](https://dcos.io/docs/1.10/deploying-services/gpu/#installing-dc-os-with-gpus-enabled)
 - Check the [tools repository](https://github.com/dcos-labs/dcos-tensorflow-tools), also including the examples.
@@ -63,7 +63,7 @@ Each instance of TensorFlow in a given DC/OS cluster must be configured with a d
 <a name="job-url"></a>
 ### Job URL
 
-This URL should point to a Python file or a ZIP containing a Python file. Each gpuworker, worker, and ps task will download
+This URL should point to a Python file or a ZIP containing a Python file. Each gpuworker, worker, and parameter_server tasks will download
 and extract the contents of this URL at runtime.
 
 <a name="job-path"></a>
