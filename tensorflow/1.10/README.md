@@ -1,4 +1,4 @@
-# How to use Tensorflow on DC/OS
+# How to use TensorFlow on DC/OS
 
 NOTE: This is a beta-package which is under development and not officially supported!
 It is currently under development and the workflow will change in future releases.
@@ -10,33 +10,33 @@ error-prone steps like task deployment, ClusterSpec configuration, task monitori
 
 
 - Estimated time for completion: 10 minutes
-- Target audience: Anyone who wants to deploy a distributed Tensorflow on DC/OS. Beginner level.
-- Scope: Covers the basics in order to get you started with Tensorflow on DC/OS.
+- Target audience: Anyone who wants to deploy a distributed TensorFlow on DC/OS. Beginner level.
+- Scope: Covers the basics in order to get you started with TensorFlow on DC/OS.
 
 ![design](img/design.png)
 
 ## Prerequisites
 
-- A running DC/OS 1.10 cluster with at least 3 nodes having 6CPU, 12GB of memory in total. This exact amount depends on your configuration for the gpuworker, worker, and ps tasks.
+- A running DC/OS 1.10 cluster with at least 3 nodes having 6CPU, 12GB of memory in total. This exact amount depends on your configuration for the gpuworker, worker, and parameter_server tasks.
 - [DC/OS CLI](https://dcos.io/docs/1.10/usage/cli/install/) installed.
 - If you want to benefit from GPU acceleration, please check how to [install DC/OS on GPU instances](https://dcos.io/docs/1.10/deploying-services/gpu/#installing-dc-os-with-gpus-enabled)
 - Check the [tools repository](https://github.com/dcos-labs/dcos-tensorflow-tools), also including the examples.
 
-## Install Tensor
+## Install TensorFlow
 
-1. install TensorFlow cluster with the following command from the DC/OS CLI from within `dcos-tensorflow-tools`:
+1. Install TensorFlow cluster with the following command from the DC/OS CLI from within `dcos-tensorflow-tools`:
 
 	```
-	dcos package install tensorflow --options=examples/mnist.json
+	dcos package install beta-tensorflow --options=examples/mnist.json
 	```
 
 1. The service will now deploy with an [example configuration](https://github.com/dcos-labs/dcos-tensorflow-tools/blob/master/examples/mnist.json). You can monitor its deployment from the Services tab of the DC/OS web interface.
 
-<a name="installing-and-customizing"></a>x
+<a name="installing-and-customizing"></a>
 # Installing and Customizing
 
 Assuming you want to train your own models, you will need to create your own configuration to pass in when you
-run `dcos package install tensorflow --options=...`. The possible configurations are documented in the [example section](#examples). For more information about building the
+run `dcos package install beta-tensorflow --options=...`. The possible configurations are documented in the [example section](#examples). For more information about building the
 options.json file, see the
 [DC/OS documentation](https://dcos.io/docs/1.10/deploying-services/config-universe-service/) for service
 configuration access.
@@ -44,10 +44,10 @@ configuration access.
 
 ## Installation from the DC/OS Web Interface
 
- You can [install TensorFlow from the DC/OS cataloge. If you install TensorFlow from the web interface, you must install the TensorFlow DC/OS CLI subcommands separately. For installing just the DC/OS Tensorflow CLI, enter:
+ You can [install TensorFlow from the DC/OS cataloge. If you install TensorFlow from the web interface, you must install the TensorFlow DC/OS CLI subcommands separately. For installing just the DC/OS TensorFlow CLI, enter:
 
  ```bash
- dcos package install tensorflow --cli
+ dcos package install beta-tensorflow --cli
  ```
 
  Choose `ADVANCED INSTALLATION` to perform a custom installation.
@@ -58,12 +58,12 @@ configuration access.
 <a name="service-name"></a>
 ### Service Name
 
-Each instance of TensorFlow in a given DC/OS cluster must be configured with a different service name. You can configure the service name in the **service** section of the advanced installation section of the DC/OS web interface. The default service name (used in many examples here) is _`tensorflow`_.
+Each instance of TensorFlow in a given DC/OS cluster must be configured with a different service name. You can configure the service name in the **service** section of the advanced installation section of the DC/OS web interface. The default service name (used in many examples here) is _`beta-tensorflow`_.
 
 <a name="job-url"></a>
 ### Job URL
 
-This URL should point to a Python file or a ZIP containing a Python file. Each gpuworker, worker, and ps task will download
+This URL should point to a Python file or a ZIP containing a Python file. Each gpuworker, worker, and parameter_server tasks will download
 and extract the contents of this URL at runtime.
 
 <a name="job-path"></a>
@@ -88,7 +88,7 @@ here will be available to your main function as a Python dictionary with the `co
 <a name="shared-filesystem"></a>
 ### Shared Filesystem
 
-The framework works best when you use GCS as a shared filesystem. To use GCS, you will need a bucket and a Service Account with read/write access to that bucket - see "Using Google Cloud Storage" for details. This field should point to that GCS bucket with the following format:
+The framework works best when you use GCS as a shared filesystem. To use GCS, you will need a bucket and a Service Account with read/write access to that bucket - see [Using Google Cloud Storage(https://github.com/dcos-labs/dcos-tensorflow-tools#using-google-cloud-storage-optional) for details. This field should point to that GCS bucket with the following format:
 
 ```
 gs://<bucket-name>/path/to/folder
@@ -140,7 +140,7 @@ If your pod is on the overlay network (see below) then the port resources will b
 to share a machine with another one using the same ports.
 
 You can specify that a pod should join the `dcos` overlay network,
-a [Virtual Network](https://docs.mesosphere.com/latest/networking/virtual-networks/#virtual-network-service-dns)
+a [Virtual Network](https://dcos.io/docs/1.10/networking/virtual-networks/#virtual-network-service-dns)
 that supports having one IP address per pod.
 When a pod joins an overlay network it gets its own IP address and has access to its own array of ports.
 Therefore when a pod specifies that it is joining dcos we ignore the ports resource requirements,
@@ -160,7 +160,7 @@ The service supports two volume types:
 - `ROOT` volumes are effectively an isolated directory on the root volume, sharing IO/spindles with the rest of the host system.
 - `MOUNT` volumes are a dedicated device or partition on a separate volume, with dedicated IO/spindles.
 
-Using `MOUNT` volumes requires [additional configuration on each DC/OS agent system](https://docs.mesosphere.com/1.9/storage/mount-disk-resources/),
+Using `MOUNT` volumes requires [additional configuration on each DC/OS agent system](https://docs.mesosphere.com/1.10/storage/mount-disk-resources/),
 so the service currently uses `ROOT` volumes by default. To ensure reliable and consistent performance in a production environment,
 you should configure `MOUNT` volumes on the machines that will run the service in your cluster and then configure the following as `MOUNT` volumes:
 
@@ -203,11 +203,11 @@ Because they can be deployed anywhere on the cluster, clients need a way to find
 
 Once the service is running, you may view information about its endpoints via either of the following methods:
 - CLI:
-  - List endpoint types: `dcos tensorflow endpoints`
-  - View endpoints for an endpoint type: `dcos tensorflow endpoints <endpoint>`
+  - List endpoint types: `dcos beta-tensorflow endpoints`
+  - View endpoints for an endpoint type: `dcos beta-tensorflow endpoints <endpoint>`
 - Web:
-  - List endpoint types: `<dcos-url>/service/tensorflow/v1/endpoints`
-  - View endpoints for an endpoint type: `<dcos-url>/service/tensorflow/v1/endpoints/<endpoint>`
+  - List endpoint types: `<dcos-url>/service/beta-tensorflow/v1/endpoints`
+  - View endpoints for an endpoint type: `<dcos-url>/service/beta-tensorflow/v1/endpoints/<endpoint>`
 
 Returned endpoints will include the following:
 - `.autoip.dcos.thisdcos.directory` hostnames for each instance that will follow them if they're moved within the DC/OS cluster.
@@ -299,7 +299,7 @@ Let's say we have the following deployment of our nodes
 This operation will restart a node while keeping it at its current location and with its current persistent volume data.
 This may be thought of as similar to restarting a system process, but it also deletes any data that is not on a persistent volume.
 
-1. Run `dcos tensorflow pods restart worker-<NUM>`, e.g. `worker-2`.
+1. Run `dcos beta-tensorflow pods restart worker-<NUM>`, e.g. `worker-2`.
 
 <a name="replacing-a-node"></a>
 ## Replacing a Node
@@ -310,13 +310,13 @@ Perform this operation if a given system is about to be offlined or has already 
 **Note:** Nodes are not moved automatically. You must perform the following steps manually to move nodes to new systems.
 You can build your own automation to perform node replacement automatically according to your own preferences.
 
-1. Run `dcos tensorflow pods replace worker-<NUM>` to halt the current instance (if still running) and launch a new instance elsewhere.
+1. Run `dcos beta-tensorflow pods replace worker-<NUM>` to halt the current instance (if still running) and launch a new instance elsewhere.
 
 For example, let's say `worker-3`'s host system has died and `worker-3` needs to be moved.
 
 1. Start `worker-3` at a new location in the cluster.
 	``` shell
-	$ dcos tensorflow pods replace worker-3
+	$ dcos beta-tensorflow pods replace worker-3
 	```
 
 <a name="disaster-recovery"></a>
@@ -338,7 +338,7 @@ In all cases, logs are generally piped to files named `stdout` and/or `stderr`.
 
 To view logs for a given node, perform the following steps:
 1. Visit <dcos-url> to access the DC/OS web interface.
-1. Navigate to `Services` and click on the service to be examined (default _`tensorflow`_).
+1. Navigate to `Services` and click on the service to be examined (default _`beta-tensorflow`_).
 1. In the list of tasks for the service, click on the task to be examined (scheduler is named after the service, nodes are each `worker-#-node`).
 1. In the task details, click on the `Logs` tab to go into the log viewer. By default, you will see `stdout`, but `stderr` is also useful.
 Use the pull-down in the upper right to select the file to be examined.
@@ -357,7 +357,7 @@ Note that very old tasks will have their Sandbox automatically deleted to limit 
 
 ### Support and bug reports
 
-The DC/OS Tensorflow package is currently community supported. If you get
+The DC/OS TensorFlow package is currently community supported. If you get
 stuck, need help or have questions, just ask via one of the following channels:
 
 - [Slack](http://chat.dcos.com)
