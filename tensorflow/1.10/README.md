@@ -88,7 +88,7 @@ here will be available to your main function as a Python dictionary with the `co
 <a name="shared-filesystem"></a>
 ### Shared Filesystem
 
-The framework works best when you use GCS as a shared filesystem. To use GCS, you will need a bucket and a Service Account with read/write access to that bucket - see "Using Google Cloud Storage" for details. This field should point to that GCS bucket with the following format:
+The framework works best when you use GCS as a shared filesystem. To use GCS, you will need a bucket and a Service Account with read/write access to that bucket - see [Using Google Cloud Storage(https://github.com/dcos-labs/dcos-tensorflow-tools#using-google-cloud-storage-optional) for details. This field should point to that GCS bucket with the following format:
 
 ```
 gs://<bucket-name>/path/to/folder
