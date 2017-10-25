@@ -22,9 +22,9 @@ error-prone steps like task deployment, ClusterSpec configuration, task monitori
 - If you want to benefit from GPU acceleration, please check how to [install DC/OS on GPU instances](https://dcos.io/docs/1.10/deploying-services/gpu/#installing-dc-os-with-gpus-enabled)
 - Check the [tools repository](https://github.com/dcos-labs/dcos-tensorflow-tools), also including the examples.
 
-## Install Tensor
+## Install TensorFlow
 
-1. install TensorFlow cluster with the following command from the DC/OS CLI from within `dcos-tensorflow-tools`:
+1. Install TensorFlow cluster with the following command from the DC/OS CLI from within `dcos-tensorflow-tools`:
 
 	```
 	dcos package install beta-tensorflow --options=examples/mnist.json
@@ -32,7 +32,7 @@ error-prone steps like task deployment, ClusterSpec configuration, task monitori
 
 1. The service will now deploy with an [example configuration](https://github.com/dcos-labs/dcos-tensorflow-tools/blob/master/examples/mnist.json). You can monitor its deployment from the Services tab of the DC/OS web interface.
 
-<a name="installing-and-customizing"></a>x
+<a name="installing-and-customizing"></a>
 # Installing and Customizing
 
 Assuming you want to train your own models, you will need to create your own configuration to pass in when you
