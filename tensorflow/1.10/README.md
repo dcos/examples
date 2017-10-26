@@ -190,7 +190,7 @@ It also comes with instructions on how to deploy your own examples.
 <a name="uninstalling"></a>
 # Uninstalling
 
-See the uninstallation documentation [here](../uninstall/README.md)
+See the uninstallation documentation [here](https://mesosphere.github.io/dcos-tensorflow/uninstall)
 
 <a name="connecting-clients"></a>
 # Connecting Clients
