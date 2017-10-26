@@ -1,6 +1,6 @@
 # How to use TensorFlow on DC/OS
 
-NOTE: This is a beta-package which is under development and not officially supported!
+NOTE: This is a beta package which is under development and not officially supported!
 It is currently under development and the workflow will change in future releases.
 
 
@@ -26,8 +26,8 @@ error-prone steps like task deployment, ClusterSpec configuration, task monitori
 
 1. Install TensorFlow cluster with the following command from the DC/OS CLI from within `dcos-tensorflow-tools`:
 
-	```
-	dcos package install beta-tensorflow --options=examples/mnist.json
+	```bash
+	$ dcos package install beta-tensorflow --options=examples/mnist.json
 	```
 
 1. The service will now deploy with an [example configuration](https://github.com/dcos-labs/dcos-tensorflow-tools/blob/master/examples/mnist.json). You can monitor its deployment from the Services tab of the DC/OS web interface.
@@ -47,7 +47,7 @@ configuration access.
  You can [install TensorFlow from the DC/OS cataloge. If you install TensorFlow from the web interface, you must install the TensorFlow DC/OS CLI subcommands separately. For installing just the DC/OS TensorFlow CLI, enter:
 
  ```bash
- dcos package install beta-tensorflow --cli
+ $ dcos package install beta-tensorflow --cli
  ```
 
  Choose `ADVANCED INSTALLATION` to perform a custom installation.
@@ -58,7 +58,7 @@ configuration access.
 <a name="service-name"></a>
 ### Service Name
 
-Each instance of TensorFlow in a given DC/OS cluster must be configured with a different service name. You can configure the service name in the **service** section of the advanced installation section of the DC/OS web interface. The default service name (used in many examples here) is _`beta-tensorflow`_.
+Each instance of TensorFlow in a given DC/OS cluster must be configured with a different service name. You can configure the service name in the **service** section of the advanced installation section of the DC/OS web interface. The default service name (used in many examples here) is _`tensorflow`_.
 
 <a name="job-url"></a>
 ### Job URL
@@ -203,11 +203,11 @@ Because they can be deployed anywhere on the cluster, clients need a way to find
 
 Once the service is running, you may view information about its endpoints via either of the following methods:
 - CLI:
-  - List endpoint types: `dcos beta-tensorflow endpoints`
+  - List endpoint types: `dcos beta-tensorflow --name=/tensorflow endpoints`
   - View endpoints for an endpoint type: `dcos beta-tensorflow endpoints <endpoint>`
 - Web:
-  - List endpoint types: `<dcos-url>/service/beta-tensorflow/v1/endpoints`
-  - View endpoints for an endpoint type: `<dcos-url>/service/beta-tensorflow/v1/endpoints/<endpoint>`
+  - List endpoint types: `<dcos-url>/service/tensorflow/v1/endpoints`
+  - View endpoints for an endpoint type: `<dcos-url>/service/tensorflow/v1/endpoints/<endpoint>`
 
 Returned endpoints will include the following:
 - `.autoip.dcos.thisdcos.directory` hostnames for each instance that will follow them if they're moved within the DC/OS cluster.
@@ -299,7 +299,7 @@ Let's say we have the following deployment of our nodes
 This operation will restart a node while keeping it at its current location and with its current persistent volume data.
 This may be thought of as similar to restarting a system process, but it also deletes any data that is not on a persistent volume.
 
-1. Run `dcos beta-tensorflow pods restart worker-<NUM>`, e.g. `worker-2`.
+1. Run `dcos beta-tensorflow --name=/tensorflow pods restart worker-<NUM>`, e.g. `worker-2`.
 
 <a name="replacing-a-node"></a>
 ## Replacing a Node
@@ -310,13 +310,13 @@ Perform this operation if a given system is about to be offlined or has already 
 **Note:** Nodes are not moved automatically. You must perform the following steps manually to move nodes to new systems.
 You can build your own automation to perform node replacement automatically according to your own preferences.
 
-1. Run `dcos beta-tensorflow pods replace worker-<NUM>` to halt the current instance (if still running) and launch a new instance elsewhere.
+1. Run `dcos beta-tensorflow --name=/tensorflow pods replace worker-<NUM>` to halt the current instance (if still running) and launch a new instance elsewhere.
 
 For example, let's say `worker-3`'s host system has died and `worker-3` needs to be moved.
 
 1. Start `worker-3` at a new location in the cluster.
-	``` shell
-	$ dcos beta-tensorflow pods replace worker-3
+	```shell
+	$ dcos beta-tensorflow --name=/tensorflow pods replace worker-3
 	```
 
 <a name="disaster-recovery"></a>
@@ -338,7 +338,7 @@ In all cases, logs are generally piped to files named `stdout` and/or `stderr`.
 
 To view logs for a given node, perform the following steps:
 1. Visit <dcos-url> to access the DC/OS web interface.
-1. Navigate to `Services` and click on the service to be examined (default _`beta-tensorflow`_).
+1. Navigate to `Services` and click on the service to be examined (default _`tensorflow`_).
 1. In the list of tasks for the service, click on the task to be examined (scheduler is named after the service, nodes are each `worker-#-node`).
 1. In the task details, click on the `Logs` tab to go into the log viewer. By default, you will see `stdout`, but `stderr` is also useful.
 Use the pull-down in the upper right to select the file to be examined.
