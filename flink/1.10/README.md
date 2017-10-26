@@ -15,8 +15,8 @@
 
 ## Prerequisites
 
-- A running DC/OS 1.9 cluster with 1 agents with each 2 CPU and 2 GB of RAM available.
-- [DC/OS CLI](https://dcos.io/docs/1.9/usage/cli/install/) installed.
+- A running DC/OS 1.10 cluster with 1 agents with each 2 CPU and 2 GB of RAM available.
+- [DC/OS CLI](https://dcos.io/docs/1.10/usage/cli/install/) installed.
 
 ## Install Flink
 
@@ -53,7 +53,7 @@ If you require Scala 2.11 please use the following install option from the UI (o
 NOTE: In order to have better access to the input and output files, it makes sense to store those in HDFS.
 
 ### Upload Jar file via Flink UI
-In the following we will use the DC/OS [Admin Router](https://dcos.io/docs/1.9/development/dcos-integration/#-a-name-adminrouter-a-admin-router) to provide access to the Flink UI: use the URL `http://$DCOS_DASHBOARD/service/flink/` and replace `$DCOS_DASHBOARD` with the URL of your DC/OS UI. Alternatively, you can also click `Open Service` in the DC/OS UI. The Flink dashboard UI looks like below.
+In the following we will use the DC/OS [Admin Router](https://dcos.io/docs/1.10/development/dcos-integration/#-a-name-adminrouter-a-admin-router) to provide access to the Flink UI: use the URL `http://$DCOS_DASHBOARD/service/flink/` and replace `$DCOS_DASHBOARD` with the URL of your DC/OS UI. Alternatively, you can also click `Open Service` in the DC/OS UI. The Flink dashboard UI looks like below.
 
 ![Flink Dashboard](img/dashboard.png)
 
