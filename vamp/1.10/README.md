@@ -90,8 +90,7 @@ In addition, run this command to view installed services:
 
 ```bash
 $ dcos package list
-NAME  VERSION      APP         COMMAND  DESCRIPTION                                             
-NAME         VERSION      APP           COMMAND  DESCRIPTION
+NAME  VERSION      APP         COMMAND  DESCRIPTION
 vamp  0.9.4-0.0.1  /vamp/vamp  ---      Canary test/release and autoscaling platform for DC/OS
 ```
 
