@@ -26,7 +26,7 @@ Note: DC/OS now includes a built-in [job scheduler](https://dcos.io/docs/1.10/us
 
 ## Install Chronos
 
-From Packages in Universe menu, click on Chronos install button:
+From Catalog page, click on Chronos deploy button:
 
 ![Install from Universe](img/install.png)
 
