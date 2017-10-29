@@ -43,7 +43,7 @@ When running:
 ```shell
 $ dcos package describe beta-tensorflow
 ```
-The configurable options in the DC/OS TensorFlow package and their defaults are presetnted.
+The configurable options in the DC/OS TensorFlow package and their defaults are presented.
 
 ### Get to know the MNIST example
 
@@ -67,11 +67,10 @@ In order to better understand this, we can download and extract the `job_url` ar
 $ wget -q https://downloads.mesosphere.com/tensorflow-dcos/examples/tf_examples-master.zip
 $ unzip tf_examples-master.zip
 $ ls tf_examples-master/
-README.md  benchmarks demo.py    mnist.py
+README.md  benchmarks demo.py
 ```
 
-The different configuration options can then be interpreted as follows:
-* `job_url`: The URI of an archive containing the job definition
+The other configuration options can then be interpreted as follows:
 * `job_path`: The path (relative to the current directory) where the job definition can be found
 * `job_name`: The base filename of the Python file where the job is defined
 
@@ -81,7 +80,7 @@ The final setting, `job_context`, is used to pass parameters (e.g. learning rate
 
 #### Worker definition
 
-In the `examples/mnist.json` file, the `worker` section defines the computational resouces to be used to run the job as specified in the `service` section. In this case, we allocation 1 worker with 1 CPU, 1024 MB of memory and 1024 MB of disk space.
+In the `examples/mnist.json` file, the `worker` section defines the computational resources to be used to run the job as specified in the `service` section. In this case, we allocate 1 worker with 1 CPU, 1024 MB of memory and 1024 MB of disk space.
 
 ### Run the MNIST example
 
@@ -107,7 +106,7 @@ NAME           HOST        USER  STATE  ID                                      
 mnist          10.0.3.40   root    R    mnist.7efe24d5-bb28-11e7-88f6-2e6579fe0e78           519116bc-05ba-4039-8389-c007088cd573-S0
 worker-0-node  10.0.1.119  root    R    worker-0-node__7502e7c6-f6d1-4eff-b2e0-724acbfbe37a  519116bc-05ba-4039-8389-c007088cd573-S2
 ```
-and check the tail of the standard output of the `worker` task using:
+and check the tail of the standard output of the above `worker-0` task using (you need to adapt the ID to your specific task):
 ```shell
 $ dcos task log worker-0-node__7502e7c6-f6d1-4eff-b2e0-724acbfbe37a --all
 Accuracy at global step 61620 (local step 61620): 0.923399984837
