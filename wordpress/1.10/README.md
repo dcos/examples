@@ -92,7 +92,7 @@ Default login: `admin`/`password`. This username/password combination only appli
 
 ## Install WordPress
 
-To make WordPress accessible to the world, we need to use the fully qualified domain name of your DC/OS public agent. To install from the CLI, first create a `config.json` as below and replace the `virtual-host` property, i.e. `$PUBLIC_AGENT`, with your own (for example `http://ec2-52-51-80-141.eu-west-1.compute.amazonaws.com`):
+To make WordPress accessible to the world, we need to use the fully qualified domain name of your DC/OS public agent. To install from the CLI, first create a `config.json` as below and replace the `virtual-host` property, i.e. `$PUBLIC_AGENT`, with your [public agent IP](https://dcos.io/docs/1.10/administering-clusters/locate-public-agent/) (for example `http://ec2-52-51-80-141.eu-west-1.compute.amazonaws.com`):
 
 ```json
 {
