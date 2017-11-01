@@ -20,6 +20,7 @@ Please review the main [Portworx on DCOS](https://docs.portworx.com/scheduler/me
 - A running DC/OS v1.10 cluster with at least 3 private agents. Portworx-on-DCOS REQUIRES at least 3 nodes for installation.
 - All nodes in the cluster that will participate in a Portworx cluster MUST have a separate non-root volume to use.  
 - A node in the cluster with a working DC/OS CLI.
+- (Optional) Follow [these steps](https://docs.portworx.com/scheduler/mesosphere-dcos/install.html#optional-deploy-an-aws-portworx-ready-cluster) to create "Portworx-ready" cluster using an AWS CloudFormation template
 
 # Portworx Agent-Node configuration
 
