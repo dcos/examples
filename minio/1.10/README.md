@@ -46,7 +46,6 @@ The instructions below use a pinned hostname constraint to ensure the applicatio
 
 
 - To customize the storage and network configuration, click on `Services` and select the minio service, then select `CONFIGURE`.
-![Configure](img/minio-configure.png)
 
 - Service Name - Unique name for this Minio server instance.
 ![Resources](img/config-service.png)
