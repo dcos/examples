@@ -29,8 +29,8 @@ The instructions below use a pinned hostname constraint to ensure the applicatio
 ## Prerequisites
 
 - DC/OS 1.9 or later
-- [Marathon-LB](https://dcos.io/docs/1.9/usage/service-discovery/marathon-lb/usage/) must be installed and running
-- Identify [IP of the public agent](https://dcos.io/docs/1.9/administration/locate-public-agent/) where Marathon-LB or an available hostname configured to point to the public agent(s) where Marathon-LB is running.
+- [Marathon-LB](https://dcos.io/docs/1.10/usage/service-discovery/marathon-lb/usage/) must be installed and running
+- Identify [IP of the public agent](https://dcos.io/docs/1.10/administration/locate-public-agent/) where Marathon-LB or an available hostname configured to point to the public agent(s) where Marathon-LB is running.
 
 ## Minio installation using GUI
 
