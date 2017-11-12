@@ -1,0 +1,8 @@
+services:
+   clouddriver:
+      baseUrl: ${SERVICES_CLOUDDRIVER_BASEURL}
+   echo:
+      baseUrl: ${SERVICES_ECHO_BASEURL}
+
+dockerRegistry:
+  enabled: true
