@@ -2,7 +2,7 @@
 
 Edge-LB is the load balancer that comes with DC/OS Enterprise. See the DC/OS Enterprise documentation on how to install Edge-LB.
 
-Create a *config.yaml* file with the following Edge-LB configuration. This configuration works with the [rolling blue green](https://github.com/mesosphere/dcos-spinnaker/blob/master/docs/PIPELINES.md#creating-a-rolling-blue-green-pipeline) sample.
+Create a *config.yaml* file with the following Edge-LB configuration. This configuration works with the [rolling blue green](PIPELINES.md#creating-a-rolling-blue-green-pipeline) sample.
 
 ```
 ---
