@@ -21,7 +21,7 @@ A Spinnaker **server group** maps (1-1) to a DC/OS **service** (aka marathon app
 ## Users Guide
 
 * [Creating an Application](#creating-an-application)
-* [Creating a Server Group]#creating-a-server-group)
+* [Creating a Server Group](#creating-a-server-group)
 * [Creating a Server Group Version](#creating-a-new-server-group-version)
 
 
