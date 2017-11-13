@@ -1,0 +1,38 @@
+{
+  "id": "/tomcat",
+  "instances": 1,
+  "cpus": 1,
+  "mem": 512,
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "tomcat:8.5",
+      "network": "BRIDGE",
+      "portMappings": [
+        {
+          "protocol": "tcp",
+          "hostPort": 80,
+          "containerPort": 8080
+        }
+      ]
+    }
+  },
+  "requirePorts": true,
+  "acceptedResourceRoles": [
+    "slave_public"
+  ],
+  "env": {
+    "JAVA_OPTS": "-Xms256m -Xmx256m"
+  },
+  "healthChecks": [
+    {
+      "gracePeriodSeconds": 120,
+      "intervalSeconds": 30,
+      "maxConsecutiveFailures": 3,
+      "path": "/",
+      "portIndex": 0,
+      "protocol": "HTTP",
+      "timeoutSeconds": 5
+    }
+  ]
+}
