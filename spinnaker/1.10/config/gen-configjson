@@ -1,0 +1,57 @@
+#!/bin/bash
+
+
+if [ -f clouddriver-local.yml ] && [ -s clouddriver-local.yml ]; then
+  CLOUDDRIVER_CONFIG=$(echo "$(< clouddriver-local.yml)" | awk '{printf "%s&#10;", $0}' | sed -e "s:\: :\&#58; :g" | sed -e "s:\:\&#10;:\&#58;\&#10;:g")
+fi
+
+if [ -f front50-local.yml ] && [ -s front50-local.yml ]; then
+  FRONT50_CONFIG=$(echo "$(< front50-local.yml)" | awk '{printf "%s&#10;", $0}' | sed -e "s:\: :\&#58; :g" | sed -e "s:\:\&#10;:\&#58;\&#10;:g")
+fi
+
+if [ -f echo-local.yml ] && [ -s echo-local.yml ]; then
+  ECHO_CONFIG=$(echo "$(< echo-local.yml)" | awk '{printf "%s&#10;", $0}' | sed -e "s:\: :\&#58; :g" | sed -e "s:\:\&#10;:\&#58;\&#10;:g")
+fi
+
+if [ -f igor-local.yml ] && [ -s igor-local.yml ]; then
+  IGOR_CONFIG=$(echo "$(< igor-local.yml)" | awk '{printf "%s&#10;", $0}' | sed -e "s:\: :\&#58; :g" | sed -e "s:\:\&#10;:\&#58;\&#10;:g")
+fi
+
+if [ -f fiat-local.yml ] && [ -s fiat-local.yml ]; then
+  FIAT_CONFIG=$(echo "$(< fiat-local.yml)" | awk '{printf "%s&#10;", $0}' | sed -e "s:\: :\&#58; :g" | sed -e "s:\:\&#10;:\&#58;\&#10;:g")
+fi
+
+if [ -f orca-local.yml ] && [ -s orca-local.yml ]; then
+  ORCA_CONFIG=$(echo "$(< orca-local.yml)" | awk '{printf "%s&#10;", $0}' | sed -e "s:\: :\&#58; :g" | sed -e "s:\:\&#10;:\&#58;\&#10;:g")
+fi
+
+if [ -f gate-local.yml ] && [ -s gate-local.yml ]; then
+  GATE_CONFIG=$(echo "$(< gate-local.yml)" | awk '{printf "%s&#10;", $0}' | sed -e "s:\: :\&#58; :g" | sed -e "s:\:\&#10;:\&#58;\&#10;:g")
+fi
+
+
+cat > ./config.json <<EOF
+{
+ "front": {
+    "config": "$FRONT50_CONFIG"
+ },
+ "clouddriver": {
+    "config": "$CLOUDDRIVER_CONFIG"
+ },
+ "echo": {
+    "config": "$ECHO_CONFIG"
+ },
+ "igor": {
+    "config": "$IGOR_CONFIG"
+ },
+ "fiat": {
+    "config": "$FIAT_CONFIG"
+ },
+ "orca": {
+    "config": "$ORCA_CONFIG"
+ },
+ "gate": {
+    "config": "$GATE_CONFIG"
+ }
+}
+EOF
