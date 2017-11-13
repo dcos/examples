@@ -33,7 +33,7 @@ pools:
 The configuration is launched with the following command.
 
 ```
-dcos edgelb config lb/config.yaml
+dcos edgelb config config.yaml
 ```
 
 Edge-LB will roundrobin over the instances in the server groups of the *myapp-prod* cluster.
