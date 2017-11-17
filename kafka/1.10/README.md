@@ -140,7 +140,7 @@ $ vi kafka-client.json
  "cmd": "sleep 100000"
  }
 
- $ dcos marathon app add kafka-client.json
+$ dcos marathon app add kafka-client.json
 Created deployment 933a3fc0-0712-448d-8156-1f9cfa76a823
 ```
 
@@ -156,7 +156,7 @@ Replace the above `KAFKA_ADDRESS:PORT` with the Kafka client endpoint address fr
 
 ### Consume a message
 
-To subscribe to the topic `topic1` and consume messages (still within the Kafka client from above) execute the following:
+To subscribe to the topic `topic1` and consume messages using kafka-client, execute the following:
 
 ```bash
 $ dcos task exec kafka-client bash -c "/bin/kafka-console-consumer.sh --zookeeper master.mesos:2181/dcos-service-kafka --topic topic1 --from-beginning"
