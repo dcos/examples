@@ -121,30 +121,45 @@ master.mesos:2181/dcos-service-kafka
 
 The above shows an example of what a Kafka client endpoint will look like. Note the address and ports will be different from cluster to cluster, since these services are dynamically provisioned. Record the `"address"` values from your cluster for use in the next step.
 
+### Deploy kafka-client service to produce/consume messages
+
+Follow the steps below to create an application definition for `kafka-client` service, and deploy as a Marathon app.
+```bash
+$ vi kafka-client.json
+{
+ "id": "/kafka-client",
+ "instances": 1,
+ "container": {
+ "type": "MESOS",
+ "docker": {
+ "image": "wurstmeister/kafka:0.11.0.0"
+ }
+ },
+ "cpus": 0.5,
+ "mem": 256,
+ "cmd": "sleep 100000"
+ }
+
+ $ dcos marathon app add kafka-client.json
+Created deployment 933a3fc0-0712-448d-8156-1f9cfa76a823
+```
+
 ### Produce a message
 
 To publish a message to the topic `topic1` we created in the previous step, carry out the following steps.
 
-First, log into the leading Master and use the `mesosphere/kafka-client` to connect to the Kafka cluster:
-> Note: If you have a DCOS 1.10 cluster installed locally using **vagrant**, login using `--user=vagrant`, and password = **vagrant**
-
 ```bash
-$ dcos node ssh --master-proxy --leader --user=vagrant
-Running `ssh -A -t vagrant@192.168.65.90 ssh -A -t vagrant@192.168.65.90 `
-vagrant@192.168.65.90 password:
-Last login: Mon Oct 30 18:12:12 2017 from 192.168.65.1
-
-root@86c97113e4b3:/bin# echo "Hello, World." | ./kafka-console-producer.sh --broker-list KAFKA_ADDRESS:PORT --topic topic1
+$ dcos task exec kafka-client bash -c "echo 'Hello, World.' | /bin/kafka-console-producer.sh --broker-list KAFKA_ADDRESS:PORT --topic topic1"
 ```
 
-Replace the above `KAFKA_ADDRESS:PORT` with the Kafka client endpoint address from your cluster, in our case `kafka-console-producer.sh --broker-list 192.168.65.111:1025 --topic topic1`.
+Replace the above `KAFKA_ADDRESS:PORT` with the Kafka client endpoint address from your cluster, in our case `kafka-console-producer.sh --broker-list broker.kafka.l4lb.thisdcos.directory:9092 --topic topic1`.
 
 ### Consume a message
 
 To subscribe to the topic `topic1` and consume messages (still within the Kafka client from above) execute the following:
 
 ```bash
-root@86c97113e4b3:/bin# ./kafka-console-consumer.sh --zookeeper master.mesos:2181/dcos-service-kafka --topic topic1 --from-beginning
+$ dcos task exec kafka-client bash -c "/bin/kafka-console-consumer.sh --zookeeper master.mesos:2181/dcos-service-kafka --topic topic1 --from-beginning"
 Hello, World.
 ^CProcessed a total of 1 messages
 ```
@@ -158,12 +173,6 @@ To uninstall Kafka:
 ```bash
 $ dcos package uninstall --app-id=kafka kafka
 ```
-
-Use the [framework cleaner](https://docs.mesosphere.com/1.10/usage/managing-services/uninstall/#framework-cleaner) to remove your Kafka instance from ZooKeeper and to destroy all data associated with it. The script requires several arguments, the values for which are derived from your service name:
-
-- `framework-role` is `kafka-role`
-- `framework-principal` is `kafka-principal`
-- `zk_path` is `dcos-service-kafka`
 
 ## Further resources
 
