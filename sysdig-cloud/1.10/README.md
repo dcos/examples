@@ -10,26 +10,26 @@ DC/OS allows you to quickly deploy Sysdig Agents to an existing infrastructure.
 
 ## Prerequisites
 
-- A Sysdig Cloud account.
+- A Sysdig Cloud account for SaaS or on-premises.
+- A Sysdig Agent access key.
 
 ## Deploy Sysdig Cloud
 
-1. In a browser, navigate to [https://app.sysdigcloud.com](https://app.sysdigcloud.com).
-2. Log into Sysdig Monitor.
-3. In the top right-hand corner, open the User dropdown menu, and select `Settings`.
-4. Navigate to `Agent Installation` in the left-hand panel.
+1. Log into Sysdig Monitor.
+2. In the top right-hand corner, open the User dropdown menu, and select `Settings`.
+3. Navigate to `Agent Installation` in the left-hand panel.
 > If Agent Installation is not listed, disable the `Hide Agent Install` switch on the main `Settings` page.
-5. Click the `Copy` button next to the access key.
-6. Navigate to the DC/OS admin page.
-7. Open the `Universe` dropdown menu on the left hand panel of the DC/OS admin page, and select `Packages`.
-8. Use the search function to find and select `sysdig-cloud`.
-9. Click the `Install` button.
-10. Click the `Advanced Installation` link.
+4. Click the `Copy` button next to the access key.
+5. Navigate to the DC/OS admin page.
+6. Open the `Universe` dropdown menu on the left hand panel of the DC/OS admin page, and select `Packages`.
+7. Use the search function to find and select `sysdig-cloud`.
+8. Click the `Install` button.
+9. Click the `Advanced Installation` link.
 ![CATALOG SYSDIG](img/sysdig-cloud-dcos.png)
-11. Paste the access key in the `ACCESS_KEY` text box.
-12. Define the number of instances required.
-13. Once the package has been configured, click the `Review and Install` button to review the changes.
-14. If the configuration is correct, click the `Install` button to complete the installation.
+10. Paste the access key in the `ACCESS_KEY` text box, and define the number of required instances.
+> Additional configuration parameters are required for on-premises installations. Contact the Sysdig support team for more information.
+11. Once the package has been configured, click the `Review and Install` button to review the changes.
+12. If the configuration is correct, click the `Install` button to complete the installation.
 
 ## Next Steps
 
