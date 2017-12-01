@@ -2,9 +2,11 @@
 
 [Sysdig Monitor](https://sysdig.com/product/monitor/) is the first and only monitoring, alerting, and troubleshooting solution designed from the ground up to provide unprecedented visibility into containerized infrastructures.
 
-- Estimated time for completion: 
-- Target audience: 
-- Scope: 
+DC/OS allows you to quickly deploy Sysdig Agents to an existing infrastructure.
+
+- Estimated time for completion: 10 minutes
+- Target audience: Anyone interested in monitoring containers.
+- Scope: Deploy Sysdig Agents on DC/OS and monitor them with Sysdig Monitor.
 
 ## Prerequisites
 
