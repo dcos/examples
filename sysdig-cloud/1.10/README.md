@@ -32,4 +32,5 @@
 ## Next Steps
 
 1. Open the `Services` dropdown menu on the left-hand panel of the DC/OS admin page, and click `Services`. `sysdig-agent` will now be listed. Click `sysdig-agent` to review the list of running agents.
+![SERVICES SYSDIG](/img/sysdig-agent-services.png)
 2. Navigate to [https://app.sysdigcloud.com](https://app.sysdigcloud.com). The instances will now be listed on the `Explore` tab.
