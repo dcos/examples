@@ -23,6 +23,7 @@
 8. Use the search function to find and select `sysdig-cloud`.
 9. Click the `Install` button.
 10. Click the `Advanced Installation` link.
+![CATALOG SYSDIG](img/sysdig-cloud-dcos.png)
 11. Paste the access key in the `ACCESS_KEY` text box.
 12. Define the number of instances required.
 13. Once the package has been configured, click the `Review and Install` button to review the changes.
