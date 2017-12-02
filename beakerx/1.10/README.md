@@ -9,11 +9,30 @@
 
 ## Prerequisites
 
+Required: 
+
 - A running DC/OS 1.10 cluster with at least 1 node, at least having 1 CPU, 2G of memory and 6GB of persistent disk storage in total.
 - [DC/OS CLI](https://dcos.io/docs/1.10/cli/install/) installed.
-- (optional) [Marathon-LB](https://dcos.io/docs/1.10/networking/marathon-lb/) installed.
+
+Optional:
+
+- [Marathon-LB](https://dcos.io/docs/1.10/networking/marathon-lb/) ( Just needed for Advanced Installation with `external_access` enabled ) 
+
+## Quick Start
+
+To install BeakerX for the DC/OS, simply run `dcos package install beakerx` or install via the Universe page in the DC/OS UI.
+
+BeakerX should now be available at http://MASTERADDRESS/service/beakerx. 
+
+Use the default password `dcos` to authenticate. 
+
+You can run multiple installations of BeakerX by simply changing the `Service Name` during installation, the `dcos-beakerx` service provides full context to admin router of your individual installation.
+
+See [advanced installation](#advanced-installation) for more in-depth instructions and configuration options.
 
 ## Install BeakerX 
+
+The default installation brings BeakerX up and running as descripted in the [quick start](#quick-start) with an automatically created link from the DC/OS UI to the framework web UI. The advanced installation lets you customize your BeakerX installation even further. 
 
 ### Install via UI
 
