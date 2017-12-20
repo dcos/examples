@@ -23,309 +23,88 @@
 Scylla on DC/OS demands to be manually configured before deployment. So in order to get started, head over to the DC/OS catalog find the ScyllaDB package and press *Configure* to get started.
 
 ### Service
-In Service we define the basics of each container we will deploy on DC/OS:
+In Service we define the basics of each container we will deploy on DC/OS:  
 **Name** - application name that we will use as reference with the DC/OS CLI for example.  
 **Nodes** - number of nodes in your ScyllaDB cluster. This can be scaled up and down later, however the number of seed nodes can not be changed from the inital number.  
 **SMP** - the number of CPU cores each ScyllaDB instance will have. From DC/OS 1.10 the [CFS scheduler](https://github.com/mesosphere/marathon/blob/master/docs/docs/cfs.md) is implemented.
 **Memory** - the amount of memory per instance in Mb. Try to keep the guidelines in the [ScyllaDB documentation](http://docs.scylladb.com/getting-started/system-requirements/) when it comes to Mem/CPU ratio.
 
 ### General
-In General we set more Scylla specific settings for each instance:
-
+Notes on the general settings:  
+**Overprovisioned** - should generally be set to true, since we are launching Scylla in containers, unless you plan to give Scylla a whole node to itself without other processes running.  
+**Developer mode** - should be set to false since the aim of this package is to run in production. Use only if you want to try out different combinations of features before launching the real deal.  
+**Experimental** - same here. Should not be run in production.  
+**Number of seeds** - make sure this is set to a number lower than the total amount of nodes launch. Otherwise the deployment will fail. 
+**Each node is a new rack** - by enabling this, each instance will be assigned a new rack id. This is good from a snitch point of view. But obviously it depends on your local/cloud setup of nodes.
+**Data center name** - will be the name of the data center you are launching. For now, it is only possible to launch one data center at the time. 
 
 ### Disks
+It is recommended to run Scylla on host mounted, dedicated disks that are XFS formatted for optimal performance. Assuming you have some hosts dedicated for Scylla starting with ip 10.1.\* and a disk /dev/sdc you can create a script *run.sh*:
+```
+#!/bin/bash
+curl http://leader.mesos:1050/system/health/v1/nodes | jq '.nodes[].host_ip' | sed 's/\"//g' | sed '/172/d' > allnodes
+hosts=($(cat nodes | grep 10.1.))
+disk=/dev/sdc
+for i in "${hosts[@]}"
+do
+        scp disks.sh laketide@$i:~/
+        ssh laketide@$i -o StrictHostKeyChecking=no "sudo bash ~/disks.sh /dev/sdc"
+        echo $i >> configurednodes
+done
+``` 
+and a another script in the same directory *disks.sh*:
+```
+#!/bin/bash
+sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' << EOF | sudo fdisk $1
+        n
+        p
+        1
 
+
+        w
+        q
+EOF
+disk="${1}1"
+sudo mkfs.xfs -f $disk
+sudo mkdir -p /mnt/scylla
+sudo mount -t xfs $disk /mnt/scylla
+sudo mkdir -p /mnt/scylla/{data,commitlog,keys}
+sudo chmod -R 644 /mnt/scylla
+echo "Disk $disk formatted as xfs and mounted at /mnt/scylla"
+```
+This will give you a mounted XFS disk on each node starting with ip 10.1 in the cluster at /mnt/scylla.  
+
+##### Local persistent volumes
+If you insist on using the DC/OS local persistence you should check out the documentation before to know the pros and cons of this setting: https://dcos.io/docs/1.10/storage/persistent-volume/
 
 ### Network
+Setting the ports to other ones than the defaults will only change how you contact the application from outside. It will be equivalent to running `docker run -p YourNewPort:9042 -p YourOtherPort:9160`.  
 
+##### External access port
+Since the [DC/OS architecture](https://dcos.io/docs/1.10/overview/architecture/node-types/) consists of private and public nodesthe default behaviour is to deploy applications on the private nodes and use [Marathon-LB](https://dcos.io/docs/1.10/networking/marathon-lb/) as the exposer of a service. This is not ideal from a ScyllaDB perspective since it has its own load balancer internally to handle requests. However, it does provide some extra security by letting all instances reside on private nodes. For now, Scylla will by default utilize Marathon-LB but might in the future allow placing Scylla instances on public nodes.  
+**Remember** to open up your firewall for the external port if used. 
 
 ### Security
-
+The Scylla package allows you to configure Authentication, TLS between nodes and between node and client.  
+**Authentication** - if you set *PasswordAuthenticator*, Scylla will automatically set the authorizer as well to *CassandraAuthorizer. This means that you will also have to configure each new created keyspace and table for access rights. The default user `cassandra` will have all rights initially.  
+**Node and client TLS** - start by [generating keys and certificates](http://docs.scylladb.com/tls-ssl/) and make sure to name them *scylladb.crt*, *scylladb.key* and *ca-scylladb.pem*. Place them in a directory that is the same for all nodes (for example /mnt/scylla/keys) and make sure they are readable for Scylla.  
+If you already have the keys available at some place other than on the hosts of DC/OS, you can use Mesos to pull these into the container and extract them to $MESOS_SANDBOX inside the container. Here you have the opportunity to pull any zipped or tared file from either the host or from an arbitray URI and have it automatically unpacked and utilized by Scylla.
 
 
 ### Validate installation
-
-Validate that the installation added the enhanced DC/OS CLI for Cassandra:
-
-```bash
-$ dcos cassandra --help-long
-usage: cassandra [<flags>] <command> [<args> ...]
-
-Deploy and manage Cassandra clusters
-
-Flags:
-  -h, --help              Show context-sensitive help (also try --help-long and
-                          --help-man).
-      --version           Show application version.
-  -v, --verbose           Enable extra logging of requests/responses
-      --info              Show short description.
-      --force-insecure    Allow unverified TLS certificates when querying
-                          service
-      --custom-auth-token=DCOS_AUTH_TOKEN
-                          Custom auth token to use when querying service
-      --custom-dcos-url=DCOS_URI/DCOS_URL
-                          Custom cluster URL to use when querying service
-      --custom-cert-path=DCOS_CA_PATH/DCOS_CERT_PATH
-                          Custom TLS CA certificate file to use when querying
-                          service
-      --name="cassandra"  Name of the service instance to query
-
-Commands:
-  help [<command>...]
-    Show help.
-
-
-  plan list
-    Show all plans for this service
-
-
-  plan show [<plan>]
-    Display the deploy plan or the plan with the provided name
-
-
-  plan start <plan> [<params>]
-    Start the plan with the provided name, with optional envvars to supply to
-    task
-
-
-  plan stop <plan>
-    Stop the plan with the provided name
-
-
-  plan continue [<plan>]
-    Continue the deploy plan or the plan with the provided name
-
-
-  plan interrupt [<plan>]
-    Interrupt the deploy plan or the plan with the provided name
-
-
-  plan restart <plan> <phase> <step>
-    Restart the plan with the provided name
-
-
-  plan force <plan> <phase> <step>
-    Force complete the plan with the provided name
-
-
-  seeds
-    Retrieve seed node information
-
-
-  connection [<flags>]
-    Provides Cassandra connection information
-
-    --address  Provide addresses of the Cassandra nodes
-    --dns      Provide dns names of the Cassandra nodes
-
-  node describe [<task_name>]
-    Describes a single node
-
-
-  node list
-    Lists all nodes
-
-
-  node replace [<task_name>]
-    Replaces a single node job, moving it to a different agent
-
-
-  node restart [<task_name>]
-    Restarts a single node job, keeping it on the same agent
-
-
-  node status [<task_name>]
-    Gets the status of a single node
-
-
-  backup start [<flags>]
-    Perform cluster backup via snapshot mechanism
-
-    --backup_name=BACKUP_NAME      Name of the snapshot
-    --external_location=EXTERNAL_LOCATION
-                                   External location where the snapshot should
-                                   be stored
-    --s3_access_key=S3_ACCESS_KEY  S3 access key
-    --s3_secret_key=S3_SECRET_KEY  S3 secret key
-    --azure_account=AZURE_ACCOUNT  Azure storage account
-    --azure_key=AZURE_KEY          Azure secret key
-
-  backup stop
-    Stops a currently running backup
-
-
-  backup status
-    Displays the status of the backup
-
-
-  restore start [<flags>]
-    Restores cluster to a previous snapshot
-
-    --backup_name=BACKUP_NAME      Name of the snapshot to restore
-    --external_location=EXTERNAL_LOCATION
-                                   External location where the snapshot is
-                                   stored
-    --s3_access_key=S3_ACCESS_KEY  S3 access key
-    --s3_secret_key=S3_SECRET_KEY  S3 secret key
-    --azure_account=AZURE_ACCOUNT  Azure storage account
-    --azure_key=AZURE_KEY          Azure secret key
-
-  restore stop
-    Stops a currently running restore
-
-
-  restore status
-    Displays the status of the restore
-
-
-  cleanup start [<flags>]
-    Perform cluster cleanup of deleted or moved keys
-
-    --nodes="*"              A list of the nodes to cleanup or * for all.
-    --key_spaces=KEY_SPACES  The key spaces to cleanup or empty for all.
-    --column_families=COLUMN_FAMILIES
-                             The column families to cleanup.
-
-  cleanup stop
-    Stops a currently running cleanup
-
-
-  repair start [<flags>]
-    Perform primary range anti-entropy repair
-
-    --nodes="*"              A list of the nodes to repair or * for all.
-    --key_spaces=KEY_SPACES  The key spaces to repair or empty for all.
-    --column_families=COLUMN_FAMILIES
-                             The column families to repair.
-
-  repair stop
-    Stops a currently running repair
+Once you have set all your configs and started the deployment, head over to the launching of the cluster and look at STDOUT. It takes some time to launch Scylla for production since it is running a comprehensive IO setup. When STDOUT looks like:  
+![Deployment](img/deploy.png)
+the health check will soon become green and you are ready to rock!
+![Health](img/health.png)
+Now, head over to any node running Scylla and run:  
 ```
-
-In addition, you can go to the DC/OS UI to validate that the Cassandra service is running and healthy:
-
-![Services](img/services.png)
-
-## Perform CRUD operations
-
-Retrieve the connection information:
-
-```bash
-$ dcos cassandra connection
-{
-  "address": [
-    "10.0.3.228:9042",
-    "10.0.3.230:9042",
-    "10.0.3.227:9042"
-  ],
-  "dns": [
-    "node-0.cassandra.mesos:9042",
-    "node-1.cassandra.mesos:9042",
-    "node-2.cassandra.mesos:9042"
-  ],
-  "vip": "node.cassandra.l4lb.thisdcos.directory:9042"
-}
+docker exec -it $SCYLLA_DOCKER_ID nodetool status
 ```
-
-SSH into your DC/OS cluster to connect to your Cassandra cluster:
-
+and you should see your newly created cluster.  
+Now it's time to get busy using CQL and create some keyspaces, tables etc. If you used *PasswordAuthenticaton* in your cluster you can now run
 ```
-$ dcos node ssh --master-proxy --leader
-core@ip-10-0-6-55 ~ $
+docker exec -it $SCYLLA_DOCKER_ID cqlsh -u cassandra -p cassandra
 ```
-
-You are now inside your DC/OS cluster and can connect to the Cassandra cluster directly. Connect to the cluster using the `cqlsh` client:
-
-```bash
-core@ip-10-0-6-153 ~ $ docker run -ti cassandra:3.0.10 cqlsh --cqlversion="3.4.0" <HOST>
-```
-
-Replace `<HOST>` with an IP from the `address` field, which we retrieved by running `dcos cassandra connection`, above:
-
-```bash
-core@ip-10-0-6-153 ~ $ docker run -ti cassandra:3.0.10 cqlsh --cqlversion="3.4.0" 10.0.3.228
-cqlsh>
-```
-
-You are now connected to your Cassandra cluster. Let's create a sample keyspace called `demo`:
-
-```sql
-cqlsh> CREATE KEYSPACE demo WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : 3 };
-```
-
-Next, create a sample table called `map` in the `demo` keyspace:
-
-```sql
-cqlsh> CREATE TABLE demo.map (key varchar, value varchar, PRIMARY KEY(key));
-```
-
-Insert some data in your table:
-
-```sql
-cqlsh> INSERT INTO demo.map(key, value) VALUES('Cassandra', 'Rocks!');
-cqlsh> INSERT INTO demo.map(key, value) VALUES('StaticInfrastructure', 'BeGone!');
-cqlsh> INSERT INTO demo.map(key, value) VALUES('Buzz', 'DC/OS is the new black!');
-```
-
-Query the data back to make sure it's persisted correctly:
-
-```sql
-cqlsh> SELECT * FROM demo.map;
-
- key                  | value
-----------------------+-------------------------
-            Cassandra |                  Rocks!
- StaticInfrastructure |                 BeGone!
-                 Buzz | DC/OS is the new black!
-
-(3 rows)
-```
-
-Next, delete some data:
-
-```sql
-cqlsh> DELETE FROM demo.map where key = 'StaticInfrastructure';
-```
-
-Query again to ensure that the row was deleted successfully:
-
-```sql
-cqlsh> SELECT * FROM demo.map;
-
- key       | value
------------+-------------------------
- Cassandra |                  Rocks!
-      Buzz | DC/OS is the new black!
-
-(2 rows)
-```
-
-## Uninstall
-
-To uninstall Cassandra:
-
-```bash
-$ dcos package uninstall cassandra
-WARNING: This action cannot be undone. This will uninstall [cassandra] and delete all of its persistent data (logs, configurations, database artifacts, everything).
-Please type the name of the service to confirm: cassandra
-Uninstalled package [cassandra] version [1.0.25-3.0.10]
-DC/OS Apache Cassandra service has been uninstalled.
-Please follow the instructions at https://docs.mesosphere.com/current/usage/service-guides/cassandra/uninstall to remove any persistent state if required.
-```
-
-Use the [framework cleaner](https://docs.mesosphere.com/1.10/deploying-services/uninstall/#framework-cleaner) script to remove your Cassandra instance from ZooKeeper and to destroy all data associated with it. The script requires several arguments, the values for which are derived from your service name:
-
-```bash
-# connect to the leader if you are not already
-dcos node ssh --master-proxy --leader
-
-docker run mesosphere/janitor /janitor.py -r cassandra-role -p cassandra-principal -z dcos-service-cassandra
-```
-- `framework-role` is `cassandra-role`
-- `framework-principal` is `cassandra-principal`
-- `zk_path` is `dcos-service-cassandra`
-
-## Further resources
-
-1. [DC/OS Cassandra Official Documentation](https://docs.mesosphere.com/service-docs/cassandra/v1.0.25-3.0.10)
-1. [DataStax Cassandra Documentation](http://docs.datastax.com)
+Now you can start interacting with Scylla programatically using your language of choice. Here is example drivers for Python and Julia:  
+https://datastax.github.io/python-driver/  
+https://github.com/r3tex/CQLdriver.jl  
