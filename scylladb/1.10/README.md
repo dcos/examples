@@ -12,7 +12,6 @@
   - [Network](#network)
   - [Security](#security)
   - [Validate installation](#validate-installation)
-- [Uninstall](#uninstall)
 
 ## Prerequisites
 
@@ -34,8 +33,8 @@ Notes on the general settings:
 **Overprovisioned** - should generally be set to true, since we are launching Scylla in containers, unless you plan to give Scylla a whole node to itself without other processes running.  
 **Developer mode** - should be set to false since the aim of this package is to run in production. Use only if you want to try out different combinations of features before launching the real deal.  
 **Experimental** - same here. Should not be run in production.  
-**Number of seeds** - make sure this is set to a number lower than the total amount of nodes launch. Otherwise the deployment will fail. 
-**Each node is a new rack** - by enabling this, each instance will be assigned a new rack id. This is good from a snitch point of view. But obviously it depends on your local/cloud setup of nodes.
+**Number of seeds** - make sure this is set to a number lower than the total amount of nodes launch. Otherwise the deployment will fail.  
+**Each node is a new rack** - by enabling this, each instance will be assigned a new rack id. This is good from a snitch point of view. But obviously it depends on your local/cloud setup of nodes.  
 **Data center name** - will be the name of the data center you are launching. For now, it is only possible to launch one data center at the time. 
 
 ### Disks
@@ -86,22 +85,22 @@ Since the [DC/OS architecture](https://dcos.io/docs/1.10/overview/architecture/n
 
 ### Security
 The Scylla package allows you to configure Authentication, TLS between nodes and between node and client.  
-**Authentication** - if you set *PasswordAuthenticator*, Scylla will automatically set the authorizer as well to *CassandraAuthorizer. This means that you will also have to configure each new created keyspace and table for access rights. The default user `cassandra` will have all rights initially.  
+**Authentication** - if you set *PasswordAuthenticator*, Scylla will automatically set the authorizer as well to *CassandraAuthorizer*. This means that you will also have to configure each new created keyspace and table for access rights. The default user `cassandra` will have all rights initially.  
 **Node and client TLS** - start by [generating keys and certificates](http://docs.scylladb.com/tls-ssl/) and make sure to name them *scylladb.crt*, *scylladb.key* and *ca-scylladb.pem*. Place them in a directory that is the same for all nodes (for example /mnt/scylla/keys) and make sure they are readable for Scylla.  
 If you already have the keys available at some place other than on the hosts of DC/OS, you can use Mesos to pull these into the container and extract them to $MESOS_SANDBOX inside the container. Here you have the opportunity to pull any zipped or tared file from either the host or from an arbitray URI and have it automatically unpacked and utilized by Scylla.
 
-
 ### Validate installation
-Once you have set all your configs and started the deployment, head over to the launching of the cluster and look at STDOUT. It takes some time to launch Scylla for production since it is running a comprehensive IO setup. When STDOUT looks like:  
+Once you have set all your configs and started the deployment, head over to the launching of the cluster and look at STDOUT. It takes some time to launch Scylla for production since it is running a comprehensive IO setup.
 ![Deployment](img/deploy.png)
-the health check will soon become green and you are ready to rock!
+When STDOUT looks like:  
 ![Health](img/health.png)
+the health check will soon become green and you are ready to rock!  
 Now, head over to any node running Scylla and run:  
 ```
 docker exec -it $SCYLLA_DOCKER_ID nodetool status
 ```
 and you should see your newly created cluster.  
-Now it's time to get busy using CQL and create some keyspaces, tables etc. If you used *PasswordAuthenticaton* in your cluster you can now run
+Now it's time to get busy using CQL and create some keyspaces, tables etc. If you used *PasswordAuthenticator* in your cluster you can now run
 ```
 docker exec -it $SCYLLA_DOCKER_ID cqlsh -u cassandra -p cassandra
 ```
