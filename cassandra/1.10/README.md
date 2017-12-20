@@ -29,7 +29,7 @@
 ## Prerequisites
 
 - A running DC/OS 1.10 cluster with 3 nodes each with 1.5 CPU shares, 5376MB of memory and 11264MB of disk for running Cassandra nodes and 1 node with 0.5 CPU shares, 2048MB of memory for running the service scheduler.
-- [DC/OS CLI](https://dcos.io/docs/1.10/cli/install/) installed.
+- [DC/OS CLI](https://dcos.io/docs/1.10/cli/install/) installed and configured for the running cluster.
 
 ## Install Cassandra
 
@@ -247,12 +247,10 @@ In addition, you can go to the DC/OS UI to validate that the Cassandra service i
 
 ![Services](img/services.png)
 
-## Perform CRUD operations
-
-Retrieve the connection information:
+Furthermore, you can retrieve the connection info from the CLI:
 
 ```bash
-$ dcos cassandra connection
+$ dcos cassandra endpoints node
 {
   "address": [
     "10.0.3.228:9042",
@@ -268,23 +266,37 @@ $ dcos cassandra connection
 }
 ```
 
-SSH into your DC/OS cluster to connect to your Cassandra cluster:
+## Perform CRUD operations
+
+We will use cql interactively, so we will start a cassandra-client task:
 
 ```
-$ dcos node ssh --master-proxy --leader
-core@ip-10-0-6-55 ~ $
+$ vi cassandra-client.json
+{
+ "id": "/cassandra-client",
+ "instances": 1,
+ "container": {
+ "type": "MESOS",
+ "docker": {
+ "image": "cassandra:3.0.10"
+ }
+ },
+ "cpus": 0.5,
+ "mem": 256,
+ "cmd": "while true; do sleep 10000000; done"
+ }
+
+$ dcos marathon app add cassandra-client.json
+Created deployment 933a3fc0-0712-448d-8156-1f9cfa76a823
 ```
 
-You are now inside your DC/OS cluster and can connect to the Cassandra cluster directly. Connect to the cluster using the `cqlsh` client:
+Start a cqlsh session in the previously started container:
 
-```bash
-core@ip-10-0-6-153 ~ $ docker run -ti cassandra:3.0.10 cqlsh --cqlversion="3.4.0" <HOST>
 ```
-
-Replace `<HOST>` with an IP from the `address` field, which we retrieved by running `dcos cassandra connection`, above:
-
-```bash
-core@ip-10-0-6-153 ~ $ docker run -ti cassandra:3.0.10 cqlsh --cqlversion="3.4.0" 10.0.3.228
+$ dcos task exec -it cassandra-client cqlsh --cqlversion="3.4.0" node.cassandra.l4lb.thisdcos.directory
+Connected to cassandra at node.cassandra.l4lb.thisdcos.directory:9042.
+[cqlsh 5.0.1 | Cassandra 3.0.14 | CQL spec 3.4.0 | Native protocol v4]
+Use HELP for help.
 cqlsh>
 ```
 
