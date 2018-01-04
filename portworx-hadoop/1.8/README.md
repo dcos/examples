@@ -9,12 +9,12 @@ The following instruction will install Hadoop service on DC/OS cluster backed by
 Please review the main [Portworx on DCOS](https://docs.portworx.com/scheduler/mesosphere-dcos/) documentation.
 
 # Install Hadoop
- hadoop-portworx package should be available under Universe->Packages
+ portworx-hadoop package should be available under Universe->Packages
 ![Hadoop Package List](img/Hadoop-install-01.png)
 ## Default Install
 If you want to use the defaults, you can now run the dcos command to install the service
 ```
- $ dcos package install --yes hadoop-portworx
+ $ dcos package install --yes portworx-hadoop
 ```
 You can also click on the  “Install” button on the WebUI next to the service and then click “Install Package”.
 It will create 3 Journal Nodes, 2 Name Nodes, 2 Nodes for the Zookeeper Failover Controller, 3 Data Nodes and 3 Yarn Nodes.
@@ -40,9 +40,9 @@ On the Portworx cluster, you should see multiple volumes that were automatically
 
 Install Hadoop CLI using the following command on DC/OS client
 ```
-$ dcos package install hadoop-portworx --cli
-Installing CLI subcommand for package [hadoop-portworx] version [stub-universe]
-New command available: dcos hadoop-portworx
+$ dcos package install portworx-hadoop --cli
+Installing CLI subcommand for package [portworx-hadoop] version [stub-universe]
+New command available: dcos portworx-hadoop
 ```
 # Further resource
 

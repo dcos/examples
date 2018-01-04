@@ -9,12 +9,12 @@ The following instruction will install Elasticsearch service on DC/OS cluster ba
 Please review the main [Portworx on DCOS](https://docs.portworx.com/scheduler/mesosphere-dcos/) documentation.
 
 # Install Elasticsearch
- elastic-portworx package should be available under Universe->Packages
+ portworx-elastic package should be available under Universe->Packages
 ![Elastic Package List](img/Elastic-install-01.png)
 ## Default Install
 If you want to use the defaults, you can now run the dcos command to install the service
 ```
- $ dcos package install --yes elastic-portworx
+ $ dcos package install --yes portworx-elastic
 ```
 You can also click on the “Install” button on the WebUI next to the service and then click “Install Package”.
 
@@ -38,7 +38,7 @@ Checking the Portworx's cluster will list multiple volumes that were automatical
 ## Verifying Instalation
 Install Elasticsearch CLI using the following command on DC/OS client
 ```
-  $ dcos package install elastic-portworx --cli
+  $ dcos package install portworx-elastic --cli
 ```
 Find the Elasticsearch master-http endpoint from DCOS workstation
 ![Elastic Master Endpoint](img/elastic_endpoints.png)

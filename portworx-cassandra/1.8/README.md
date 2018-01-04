@@ -12,12 +12,12 @@ Please review the main [Portworx on DCOS](https://docs.portworx.com/scheduler/me
 # Install Cassandra
 ## Adding repository to DC/OS cluster
 
-cassandra-portworx package should be available under Universe->Packages
+portworx-cassandra package should be available under Universe->Packages
 ![Cassandra Package List](img/Cassandra-install-01.png)
 ## Default Install
 If you want to use the defaults, you can now run the dcos command to install the service
 ```
- $ dcos package install --yes cassandra-portworx
+ $ dcos package install --yes portworx-cassandra
 ```
 You can also click on the  “Install” button on the WebUI next to the service and then click “Install Package”.
 This will install all the prerequisites and start a 3 node Cassandra cluster.
@@ -42,9 +42,9 @@ There will be one volume for each Cassandra node
 
 Install Cassandra CLI using the following command on DC/OS client
 ```
- $ dcos package install cassandra-portworx --cli
-Installing CLI subcommand for package [cassandra-portworx] version [stub-universe]
-New command available: dcos cassandra-portworx
+ $ dcos package install portworx-cassandra --cli
+Installing CLI subcommand for package [portworx-cassandra] version [stub-universe]
+New command available: dcos portworx-cassandra
 ```
 # Further resource
 
