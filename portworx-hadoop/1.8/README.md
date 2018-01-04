@@ -1,10 +1,9 @@
-
-The following instruction will install Hadoop service on DC/OS cluster backed by PX volumes for persistent storage.
+The following instruction will install Hadoop service on DC/OS cluster backed by Portworx volumes for persistent storage.
 
 # Prerequisites
 
-- A DC/OS v1.8 cluster with Portworx installed on at least 3 private agents
-- Portworx works best when installed on all nodes in a DC/OS cluster.  If Portworx is to be installed on a subset of the cluster, then constraints must be used to specify the nodes where Portworx is installed
+- A DC/OS v1.8 cluster with Portworx installed on at least 3 private agents.
+- Portworx works best when installed on all nodes in a DC/OS cluster. If Portworx is to be installed on a subset of the cluster, then constraints must be used to specify the nodes where Portworx is installed.
 - A node in the cluster with a working DC/OS CLI.
 
 Please review the main [Portworx on DCOS](https://docs.portworx.com/scheduler/mesosphere-dcos/) documentation.
@@ -18,7 +17,7 @@ If you want to use the defaults, you can now run the dcos command to install the
  $ dcos package install --yes hadoop-portworx
 ```
 You can also click on the  “Install” button on the WebUI next to the service and then click “Install Package”.
-It will create 3 Journal Nodes, 2 Name Nodes, 2 Nodes for the Zookeeper Failover Controller, 3 Data Nodes and 3 Yarn Nodes. 
+It will create 3 Journal Nodes, 2 Name Nodes, 2 Nodes for the Zookeeper Failover Controller, 3 Data Nodes and 3 Yarn Nodes.
 The Data and Yarn nodes will be co-located on the same physical host.
 
 ## Advanced Install
@@ -48,4 +47,3 @@ New command available: dcos hadoop-portworx
 # Further resource
 
 For more detailed description on using Portworx through DCOS please visit  [Portworx on DCOS framework homepage](https://docs.portworx.com/scheduler/mesosphere-dcos)
-
