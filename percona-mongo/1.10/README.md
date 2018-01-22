@@ -615,6 +615,13 @@ If the returned UID is not `65534`, then the DC/OS Mongo Service can be installe
 ...		
 ```
 
+<a name="MongoDB Security"></a>
+## MongoDB Security
+
+For security, this framework requires [MongoDB Authentication](https://docs.mongodb.com/manual/core/authentication/) and [MongoDB Internal Authentication](https://docs.mongodb.com/manual/core/security-internal-authentication/) are enabled. **Your application and MongoDB database driver must support (and utilise) [MongoDB Authentication](https://docs.mongodb.com/manual/core/authentication/) to use this framework!**
+
+Passwords and Internal Authentication keyFile can be manually defined at service creation time, otherwise a default is used. We **strongly recommend** you change the default key and passwords to something unique!
+
 <a name="removing-a-node"></a>
 ## Removing a Node
 
