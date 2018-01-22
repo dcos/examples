@@ -1,24 +1,22 @@
-
-The following instruction will install Cassandra service on DC/OS cluster backed by PX volumes for persistent storage.
+The following instruction will install Cassandra service on DC/OS cluster backed by Portworx volumes for persistent storage.
 
 
 # Prerequisites
 
-- A DC/OS v1.9 cluster with Portworx installed on at least 3 private agents
-- Portworx works best when installed on all nodes in a DC/OS cluster.  If Portworx is to be installed on a subset of the cluster, then constraints must be used to specify the nodes where Portworx is installed
-Portworx volumes.
+- A DC/OS v1.9 cluster with Portworx installed on at least 3 private agents.
+- Portworx works best when installed on all nodes in a DC/OS cluster. If Portworx is to be installed on a subset of the cluster, then constraints must be used to specify the nodes where Portworx is installed.
 - A node in the cluster with a working DC/OS CLI.
 
 Please review the main [Portworx on DCOS](https://docs.portworx.com/scheduler/mesosphere-dcos/) documentation.
 
 # Install Cassandra
 
-cassandra-portworx package should be available under Universe->Packages
+portworx-cassandra package should be available under Universe->Packages
 ![Cassandra Package List](img/Cassandra-install-01.png)
 ## Default Install
 If you want to use the defaults, you can now run the dcos command to install the service
 ```
- $ dcos package install --yes cassandra-portworx
+ $ dcos package install --yes portworx-cassandra
  ```
 You can also click on the  “Install” button on the WebUI next to the service and then click “Install Package”.
 This will install all the prerequisites and start a 3 node Cassandra cluster.
@@ -43,11 +41,10 @@ There will be one volume for each Cassandra node
 
 Install Cassandra CLI using the following command on DC/OS client
 ```
- $ dcos package install cassandra-portworx --cli
-Installing CLI subcommand for package [cassandra-portworx] version [stub-universe]
-New command available: dcos cassandra-portworx
+ $ dcos package install portworx-cassandra --cli
+Installing CLI subcommand for package [portworx-cassandra] version [stub-universe]
+New command available: dcos portworx-cassandra
 ```
 # Further resource
 
 For more detailed description on using Portworx through DCOS please visit  [Portworx on DCOS framework homepage](https://docs.portworx.com/scheduler/mesosphere-dcos)
-

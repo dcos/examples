@@ -1,21 +1,20 @@
-
-The following instruction will install Kafka service on DC/OS cluster backed by PX volumes for persistent storage.
+The following instruction will install Kafka service on DC/OS cluster backed by Portworx volumes for persistent storage.
 
 # Prerequisites
 
 - A DC/OS v1.9 cluster with Portworx installed on at least 3 private agents
-- Portworx works best when installed on all nodes in a DC/OS cluster.  If Portworx is to be installed on a subset of the cluster, then constraints must be used to specify the nodes where Portworx is installed
+- Portworx works best when installed on all nodes in a DC/OS cluster. If Portworx is to be installed on a subset of the cluster, then constraints must be used to specify the nodes where Portworx is installed.
 - A node in the cluster with a working DC/OS CLI.
 
 Please review the main [Portworx on DCOS](https://docs.portworx.com/scheduler/mesosphere-dcos/) documentation.
 # Install Kafka
 
-kafka-portworx package should be available under Universe->Packages
+portworx-kafka package should be available under Universe->Packages
 ![Kafka Package List](img/Kafka-install-01.png)
 ## Default Install
 If you want to use the defaults, you can now run the dcos command to install the service
 ```
- $ dcos package install --yes kafka-portworx
+ $ dcos package install --yes portworx-kafka
 ```
 You can also click on the  “Install” button on the WebUI next to the service and then click “Install Package”.
 This will install all the prerequisites and start the Kafka service on 3 private agents.
@@ -41,11 +40,11 @@ There will be one volume for each Broker.
 # Verifying Instalation
 Install Kafka CLI using the following command on DC/OS client
 ```
-  $ dcos package install kafka-portworx --cli
+  $ dcos package install portworx-kafka --cli
 ```
 Find out kafka endpoints
 ```
-dcos kafka-portworx --name kafka endpoints broker
+dcos portworx-kafka --name kafka endpoints broker
 {
       "address": [
               "10.0.2.235:1025",
@@ -61,7 +60,7 @@ dcos kafka-portworx --name kafka endpoints broker
 }
 ```
 ```
-$ dcos kafka-portworx --name kafka endpoints zookeeper
+$ dcos portworx-kafka --name kafka endpoints zookeeper
 master.mesos:2181/dcos-service-kafka
 ```
 # Further resources
