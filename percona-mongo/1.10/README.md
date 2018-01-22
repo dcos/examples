@@ -637,11 +637,7 @@ When a pod from your service uses the overlay network, it does not use the port 
 <a name="contacting-technical-support"></a>
 ## Contacting Technical Support
 
-### Mesosphere
-[Submit a request](https://support.mesosphere.com/hc/en-us/requests/new).
-
-### Percona
-[Submit a request](https://customers.percona.com/hc/en-us/requests/new).
+Please contact [mesosphere@percona.com](mailto:mesosphere@percona.com)
 
 <a name="changelog"></a>
 ## Changelog
