@@ -618,23 +618,23 @@ If the returned UID is not `65534`, then the DC/OS Mongo Service can be installe
 <a name="MongoDB Configuration: General"></a>
 ## MongoDB Configuration: General
 
-The framework supports [configuration file options](https://docs.mongodb.com/v3.4/reference/configuration-options/) available in MongoDB 3.4 only!
+The framework currently supports the [configuration file options](https://docs.mongodb.com/v3.4/reference/configuration-options/) available in MongoDB version 3.4 only!
 
-Configuration options marked "expermimental" or "deprecated" are not configurable via the DC/OS UI.
+For stability, configuration options marked *"experimental"* or *"deprecated"* are not configurable via the DC/OS UI.
 
 <a name="MongoDB Configuration: Security"></a>
 ## MongoDB Configuration: Security
 
 For security, this framework requires [MongoDB Authentication](https://docs.mongodb.com/manual/core/authentication/) and [MongoDB Internal Authentication](https://docs.mongodb.com/manual/core/security-internal-authentication/) is enabled. These configuration options cannot be changed as a result. **Your application and MongoDB database driver must support (and utilise) [MongoDB Authentication](https://docs.mongodb.com/manual/core/authentication/) to use this framework!**
 
-Passwords and Internal Authentication keyFile can be manually defined at service creation time, otherwise a default is used. We **strongly recommend** you change the default key and passwords to something unique!
+Passwords and Internal Authentication keyFile can be manually defined at service creation time, otherwise a default is used. We **strongly recommend** you change the default key and passwords to something unique and secure!
 
 <a name="MongoDB Configuration: Storage"></a>
 ## MongoDB Configuration: Storage
 
 Currently storage engine cache sizes cannot be defined when using WiredTiger, InMemory or RocksDB as a storage engine.
 
-These storage engines will use their default logic to determine a cache size value, which is typically 50% of the container's available memory.
+These storage engines will use their default logic to determine a cache size value, which is typically 50% of the container available memory.
 
 <a name="removing-a-node"></a>
 ## Removing a Node
