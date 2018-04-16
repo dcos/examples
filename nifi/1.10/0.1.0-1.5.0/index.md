@@ -42,4 +42,3 @@ DC/OS Nifi  provides the following features:
 - [Limitations](limitations/index.md)
 - [Supported Versions](supported-versions/index.md)
 - [Release Notes](release-notes/index.md)
-- [Upgrade](upgrade/index.md)
