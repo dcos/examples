@@ -209,17 +209,6 @@ A common task is to specify a list of whitelisted systems to deploy to. To achie
    ```    
 You must include spare capacity in this list, so that if one of the whitelisted systems goes down, there is still enough room to repair your service (via pod replace) without requiring that system.
 
-## Regions and Zones
-
-Placement constraints can be applied to zones by referring to the @zone key. For example, one could spread pods across a minimum of 3 different zones by specifying the constraint:
-
-   ```shell
-   [["@zone", "GROUP_BY", "3"]]
-   ```    
-    
-    
-When the region awareness feature is enabled (currently in beta), the @region key can also be referenced for defining placement constraints. Any placement constraints that do not reference the @region key are constrained to the local region.
-
 # Integration with DC/OS access controls
 
 In DC/OS 1.10 and above, you can integrate your SDK-based service with DC/OS ACLs to grant users and groups access to only certain services. You do this by installing your service into a folder, and then restricting access to some number of folders. Folders also allow you to namespace services. For instance, staging/nifi and production/nifi.
