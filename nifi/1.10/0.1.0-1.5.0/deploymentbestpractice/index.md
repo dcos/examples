@@ -21,4 +21,16 @@
 
 Following is the recommnded hardware for Nifi Production installation:
 
-[<img src="../service/HardwareRecommendation.png" alt="Hardware Recommendation" width="1000"/>](../service/HardwareRecommendation.png)
+[<img src="../service/HardwareRecommendation.png" alt="Hardware Recommendation" width="700"/>](../service/HardwareRecommendation.png)
+
+## Block Device / Storage
+
+### Disk Recommendations
+
+Apache Nifi performs best when using disks with fast read and write patterns.
+
+We generally recommend the following:
+
+    1. Always prefer locally-attached storage. Remote storage adds points of failure, add latency/overhead to block requests and are more complicated to troubleshoot.  
+    2. For better performance, use Solid-State Disks vs. Spinning disks or allocate more memory to cache more data, reducing the use of disks.
+
