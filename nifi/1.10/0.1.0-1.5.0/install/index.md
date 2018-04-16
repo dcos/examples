@@ -136,7 +136,7 @@ Note: Once the service is deployed on a virtual network, it cannot be updated to
 ## Minimal Installation
 
 For development purposes, you may wish to install Apache Nifi on a local DC/OS cluster. For this, you can use dcos-docker or dcos-vagrant.
-To start a minimal cluster with a single broker, create a JSON options file named sample-nifi-minimal.json:
+To start a minimal cluster with a single node, create a JSON options file named sample-nifi-minimal.json:
 
    ```shell
    {
