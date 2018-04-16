@@ -10,7 +10,7 @@ The default DC/OS NiFi Service installation provides reasonable defaults for try
 
 ## Prerequisites
    
-- If you are using Enterprise DC/OS, you may [need to provision a service account](https://docs.mesosphere.com/latest/security/service-auth/custom-service-auth/) before installing DC/OS NiFi Service. Only someone with `superuser` permission can create the service account.
+- If you are using Enterprise DC/OS, you may [need to provision a service account](https://docs.mesosphere.com/1.10/security/ent/service-auth/custom-service-auth/) before installing DC/OS NiFi Service. Only someone with `superuser` permission can create the service account.
   - `strict` [security mode](https://docs.mesosphere.com/1.10/security/ent/service-auth/custom-service-auth/) requires a service account.
   - In `permissive` security mode a service account is optional.
   - `disabled` security mode does not require a service account.
@@ -18,7 +18,7 @@ The default DC/OS NiFi Service installation provides reasonable defaults for try
 
 # Installing from the DC/OS CLI
 
-To start a basic test cluster of NiFi, run the following command on the DC/OS CLI. Enterprise DC/OS users must follow additional instructions. [More information about installing _SERVICENAME_ on Enterprise DC/OS](https://docs.mesosphere.com/latest/security/service-auth/custom-service-auth/).
+To start a basic test cluster of NiFi, run the following command on the DC/OS CLI. Enterprise DC/OS users must follow additional instructions. 
 
    ```shell
    dcos package install nifi 
