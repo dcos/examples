@@ -161,30 +161,24 @@ Sample JSON options file named sample-nifi-custom.json:
 
    ```shell
    {
-       "service": {
-           "type": "object",
-           "title": "DC/OS Apache NiFi Service Scheduler Configuration",
-           "description": "DC/OS Apache NiFi Service Scheduler Configuration",
+   "node": {
+       "count": 1,
+       "cpus": 1
        },
-       "node": {
-           "count": 10
+   "service": {
+       "name": "test/integration/nifi",
+       "security": {
+           "kerberos": {
+               "enabled": true
+           },
+           "tls_ssl": {
+               "enable": true
+           }
        },
-       "ldap": {
-           "type": "object",
-           "id": "https://nifi.apache.org/docs/nifi-docs/html/administration-guide.html#ldap_login_identity_provider",
-           "title": "LDAP Configuration",
-           "description": "LDAP Configuration",
-           "properties": {
-               "authentication_strategy": {
-               "enum": [
-                   "ANONYMOUS",
-                   "SIMPLE",
-                   "LDAPS",
-                   "START_TLS"
-                   ],
-           "title": "Authentication Strategy [ANONYMOUS, SIMPLE, LDAPS, START_TLS]",
-           "description": "How the connection to the LDAP server is authenticated",
-           "default": "START_TLS"
+       "service_account": "dcosnifi",
+       "service_account_secret": "dcosnifisecret",
+       "virtual_network_enabled": true
+       "cn_dn_node_identity": "testintegrationnifi"
        }
    }
    ```
