@@ -39,6 +39,6 @@ The “disk” configuration value is denominated in MB. We recommend you set th
 
 The inherent NiFi API's will not be available from DCOS CLI, however the same can be accessed through Nifi Web UI.
 
-## Data Backups
+## LDAP Integration
 
-The inbuild feature of NiFi doesnot support flowfile data backups. Only configuration file backups are supported. Hence if a data node goes down, the entire data of that node will be lost.
+LDAP integration is not supported in this release.
