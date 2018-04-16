@@ -138,3 +138,31 @@ nifi     False     3    3.3  6240.0  15768.0  97a0fd27-8f27-4e14-b2f2-fb61c36972
 dcos service shutdown 97a0fd27-8f27-4e14-b2f2-fb61c36972d7-0096
 ```
 
+### Un-install Operation in DC/OS 1.9
+
+If you are running DC/OS 1.9, follow these steps:
+
+    1. Stop the service. From the DC/OS CLI, enter
+        ```shell
+        dcos package uninstall --app-id=<service_name>  <package_name>
+        ```    
+       For example:
+       
+       ```shell
+       dcos package uninstall --app-id=/test/nifi nifi
+       ```         
+       
+     2. Clean up remaining reserved resources with the framework cleaner script, janitor.py. See [DC/OS documentation](https://docs.mesosphere.com/1.11/deploying-services/uninstall/#framework-cleaner) for more information about the framework cleaner script.
+       
+    ```shell
+       dcos package uninstall --app-id=/test/nifi nifi
+       dcos node ssh --master-proxy --leader "docker run mesosphere/janitor /janitor.py \
+       -r /test/nifi-role \
+       -p /test/nifi-principal \
+       -z dcos-service-/test/nifi"
+    ```       
+
+
+
+
+
