@@ -356,5 +356,43 @@ The following are available options:
 
     -v,--verbose Verbose messaging (optional)
 
-
 ````
+
+### Example
+
+**To check for dcos tasks**
+
+```shell
+>> dcos task
+
+NAME            HOST         USER   STATE  ID                                                    MESOS ID                                 
+nifi            10.0.0.196   root     R    nifi.9b11498f-415f-11e8-81a4-e25c6192ea05             1d166af3-8666-4f3e-8add-dcaad139c900-S3  
+nifi-0-metrics  10.0.0.199  nobody    R    nifi-0-metrics__958e2af9-c7d0-4cb9-b1fc-08c810b05254  1d166af3-8666-4f3e-8add-dcaad139c900-S1  
+nifi-0-node     10.0.0.199  nobody    R    nifi-0-node__68c0d8a0-4c36-4a86-a287-5dc67ce19fde     1d166af3-8666-4f3e-8add-dcaad139c900-S1  
+nifi-1-metrics  10.0.0.58   nobody    R    nifi-1-metrics__e58b8f2d-e19f-48f7-b154-6d11e65c54a9  1d166af3-8666-4f3e-8add-dcaad139c900-S5  
+nifi-1-node     10.0.0.58   nobody    R    nifi-1-node__1a3d71c6-3c23-4a96-bba3-859de2c0615d     1d166af3-8666-4f3e-8add-dcaad139c900-S5
+````
+**To enter into a dcos node**
+
+```shell
+dcos task exec -ti nifi-0-node__68c0d8a0-4c36-4a86-a287-5dc67ce19fde bash
+````
+
+**To set Java Path**
+
+```shell
+export JAVA_HOME=$(ls -d $MESOS_SANDBOX/jdk*/jre*/) && export JAVA_HOME=${JAVA_HOME%/} && export PATH=$(ls -d $JAVA_HOME/bin):$PATH
+````
+**Tip:** To check for Java Home, run the following command:
+```shell
+echo $JAVA_HOME
+````
+This would return the Java home Path:
+
+/var/lib/mesos/slave/slaves/1d166af3-8666-4f3e-8add-dcaad139c900-S1/frameworks/1d166af3-8666-4f3e-8add-dcaad139c900-0003/executors/nifi__78b829b7-3963-4083-b33b-4147fcab559f/runs/fb826e37-17e6-4349-b7c4-63060b51ff0a/containers/8bd354e5-a2a6-4185-9454-647b98b9b327/jdk1.8.0_162/jre
+
+**Example of Backup Command through Toolkit**
+```shell
+ sh $MESOS_SANDBOX/nifi-toolkit-${NIFI_VERSION}/bin/file-manager.sh -o backup -b nifi-backup -c $MESOS_SANDBOX/../../tasks/nifi-$POD_INSTANCE_INDEX-node*/nifi-{{NIFI_VERSION}} -v;
+````
+
