@@ -30,6 +30,7 @@ DC/OS Nifi  provides the following features:
 
 - [Overview](docs/index.md)
 - [Install and Customize](docs/install.md)
+- [Deployment Best Practices](docs/deploymentbestpractice/index.md)
 - [Security](docs/security.md)
 - [Uninstall](docs/uninstall.md)
 - [Quick Start](docs/quick-start.md)
