@@ -4,7 +4,7 @@ menu_order: 120
 enterprise: 'no'
 ---
 
-## Version 1.5.0-XXXX.XXXX
+## Version 0.1.10-1.5.0
 
 This is the first release of Apache Nifi to Universe. Based on the latest stable release version of Apache Nifi, version 1.5.0, this installation would be supported on DCOS cluster 1.09 and above. This has been built using current stable version of SDK (Version 0.40.2).
 
