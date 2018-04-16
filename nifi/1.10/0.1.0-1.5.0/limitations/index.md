@@ -29,7 +29,7 @@ When the service is deployed on a virtual network, the service may not be switch
 
 ## Task Environment Variables
 
-Each service task has some number of environment variables, which are used to configure the task. These environment variables are set by the service scheduler. While it is _possible_ to use these environment variables in adhoc scripts (e.g. via `dcos task exec`), the name of a given environment variable may change between versions of a service and should not be considered a public API of the service.
+Each service task has some number of environment variables, which are used to configure the task. These environment variables are set by the service scheduler. While it is possible to use these environment variables in adhoc scripts (e.g. via `dcos task exec`), the name of a given environment variable may change between versions of a service and should not be considered a public API of the service.
 
 ## Configurations
 
@@ -39,5 +39,6 @@ The “disk” configuration value is denominated in MB. We recommend you set th
 
 The inherent NiFi API's will not be available from DCOS CLI, however the same can be accessed through Nifi Web UI.
 
+## Data Backups
 
-
+The inbuild feature of NiFi doesnot support flowfile data backups. Only configuration file backups are supported. Hence if a data node goes down, the entire data of that node will be lost.
