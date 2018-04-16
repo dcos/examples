@@ -7,7 +7,7 @@ enterprise: 'no'
 
 # Prerequisite
 
-- DC/OS should be installed on your cluster. To know about installing DCOS visit (https://github.com/mesosphere/dcos-nifi/blob/ServiceGuide/docs/install.md).
+- DC/OS should be installed on your cluster. To know about installing DCOS visit (../install/index.md).
 
 # Steps
 
