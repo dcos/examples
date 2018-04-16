@@ -8,24 +8,6 @@ enterprise: 'no'
 
 The default DC/OS NiFi Service installation provides reasonable defaults for trying out the service, but that may not be sufficient for production use. You may require different configurations depending on the context of the deployment.
 
-
-## Configuration Best Practices for Production
-  
-    - Increase the number of TCP socket ports available
-    
-      This is particularly important if the flow will be setting up and tearing down a large number of sockets in small period of time.
-        
-           sudo sysctl -w net.ipv4.ip_local_port_range="10000 65000"
-       
-    - Tell Linux you never want NiFi to swap
-       Swapping is fantastic for some applications. It isn’t good for something like NiFi that always wants to be running. 
-       To tell Linux you’d like swapping off you can edit '/etc/sysctl.conf' to add the following line
-           
-           vm.swappiness = 0
-           
-        For the partitions handling the various NiFi repos turn off things like 'atime'. Doing so can cause a surprising bump in 
-        throughput. Edit the '/etc/fstab' file and for the partition(s) of interest add the 'noatime' option.
-
 ## Prerequisites
    
 - If you are using Enterprise DC/OS, you may [need to provision a service account](https://docs.mesosphere.com/latest/security/service-auth/custom-service-auth/) before installing DC/OS NiFi Service. Only someone with `superuser` permission can create the service account.
