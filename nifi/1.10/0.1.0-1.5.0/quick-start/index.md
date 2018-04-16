@@ -7,7 +7,7 @@ enterprise: 'no'
 
 # Prerequisite
 
-- DC/OS should be installed on your cluster. To know about installing DCOS visit (../install/index.md).
+- DC/OS should be installed on your cluster. Know about installing DCOS [here](../install/index.md).
 
 # Steps
 
