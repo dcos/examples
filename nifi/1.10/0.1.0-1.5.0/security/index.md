@@ -26,6 +26,9 @@ Note: Enabling transport encryption is required to use [SSL authentication](http
 
 ## Configure Transport Encryption
 
+**Tip:** A complete guide to Configuring DC/OS Access for Nifi can be found [here](serviceaccountdetail.md).
+
+
 ## Setup the Service Account
 
 Grant the service account the correct permissions.
