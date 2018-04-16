@@ -255,23 +255,3 @@ Likewise this file can be referenced to update a nifi service.
    ```shell
    dcos nifi update start --options=options.json
    ```
-
-## Regions and Zones
-
-Placement constraints can be applied to zones by referring to the @zone key. For example, one could spread pods across a minimum of 3 different zones by specifying the constraint:
-
-When the region awareness feature is enabled (currently in beta), the @region key can also be referenced for defining placement constraints. Any placement constraints that do not reference the @region key are constrained to the local region.
-**Example**
-
-   ```shell
-   [["@zone", "GROUP_BY", "3"]]
-   ```
-Suppose we have a Mesos cluster with three zones. For balanced placement across those three zones, we would have a configuration like this:
-
-   ```shell
-   {
-   "count": 6,
-   "placement": "[[\"@zone\", \"GROUP_BY\", \"3\"]]"
-   }
-   ```
-Instances will all be evenly divided between those three zones.
