@@ -18,7 +18,7 @@ For e.g. CN=nifi-0-node.demonifi, O="Mesosphere, Inc", L=San Francisco, ST=CA, C
 
 The service uses the [DC/OS CA](https://docs.mesosphere.com/latest/security/ent/tls-ssl/) to generate the SSL artifacts that it uses to secure the service. Any client that trusts the DC/OS CA will consider the service’s certificates valid.
 
-Note: Enabling transport encryption is required to use [SSL authentication](https://docs.mesosphere.com/services/kafka/2.1.0-1.0.0/security/#ssl-authentication) for [authentication](https://docs.mesosphere.com/services/kafka/2.1.0-1.0.0/security/#authentication), but is optional for Kerberos authentication.
+Note: Enabling transport encryption is required to use [SSL authentication](https://docs.mesosphere.com/1.10/security/ent/tls-ssl/) for authentication, but is optional for Kerberos authentication.
 
 ## Prerequisites
 - [A DC/OS Service Account with a secret stored in the DC/OS Secret Store.](https://docs.mesosphere.com/latest/security/ent/service-auth/custom-service-auth/)
