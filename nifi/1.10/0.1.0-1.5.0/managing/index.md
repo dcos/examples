@@ -26,7 +26,7 @@ Enterprise DC/OS 1.10 introduces a convenient command line option that allows fo
 #### Prerequisites
 
 + Enterprise DC/OS 1.10 or newer.
-+ Service with a version greater than 2.0.0-x.
++ Service with 1.5.0 version.
 + [The DC/OS CLI](https://docs.mesosphere.com/latest/cli/install/) installed and available.
 + The service's subcommand available and installed on your local machine.
   + You can install just the subcommand CLI by running `dcos package install --cli --yes nifi`.
@@ -97,7 +97,6 @@ Once you are ready to begin, initiate an update using the DC/OS CLI, passing in 
 ```shell
 dcos nifi update start --options=options.json
 ```
-	
 
 You will receive an acknowledgement message and the DC/OS package manager will restart the Scheduler in Marathon.
 
