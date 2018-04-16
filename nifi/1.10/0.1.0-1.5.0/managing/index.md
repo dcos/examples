@@ -182,48 +182,10 @@ This operation will move a node to a new agent and will discard the persistent v
 
 For example, let's say `nifi-2`'s host system has died and `nifi-2` needs to be moved.
 
-1. _"NOW THAT THE NODE HAS BEEN DECOMMISSIONED," (IF NEEDED BY YOUR SERVICE)_ start `nifi-2` at a new location in the cluster.
+1. NOW THAT THE NODE HAS BEEN DECOMMISSIONED, (IF NEEDED BY YOUR SERVICE) start `nifi-2` at a new location in the cluster.
     ```shell
     dcos nifi pod replace nifi-2
     ```
-
-<!-- THIS CONTENT DUPLICATES THE DC/OS OPERATION GUIDE -->
-
-<a name="upgrading"></a>
-## Upgrading Service Version
-
-The instructions below show how to safely update one version of _SERVICENAME_ to the next.
-
-##### Viewing available versions
-
-The `update package-versions` command allows you to view the versions of a service that you can upgrade or downgrade to. These are specified by the service maintainer and depend on the semantics of the service (i.e. whether or not upgrades are reversal).
-
-For example, run:
-
-```shell
-dcos nifi update package-versions
-```
-
-## Upgrading or downgrading a service
-
-1. Before updating the service itself, update its CLI subcommand to the new version:
-```shell
-dcos package uninstall --cli nifi
-dcos package install --cli nifi -package-version="1.1.6-5.0.7"
-```
-1. Once the CLI subcommand has been updated, call the update start command, passing in the version. For example, to update DC/OS _SERVICENAME_ Service to version `1.1.6-5.0.7`:
-```shell
-dcos nifi update start --package-version="1.1.6-5.0.7"
-```
-
-If you are missing mandatory configuration parameters, the `update` command will return an error. To supply missing values, you can also provide an `options.json` file (see [Updating configuration](#updating-configuration)):
-```shell
-dcos nifi update start --options=options.json --package-version="1.1.6-5.0.7"
-```
-
-See [Advanced update actions](#advanced-update-actions) for commands you can use to inspect and manipulate an update after it has started.
-
-<!-- END DUPLICATE BLOCK -->
 
 ## Advanced update actions
 
