@@ -71,33 +71,37 @@ Following are the steps for Edge-LB Pool configuration:
      Example as follows:
 
   ```shell
-  {
-   "apiVersion": "V2",
-   "name": "nifiproxy",
-   "count": 1,
-   "haproxy": {
-     "frontends": [
-       {
-         "bindPort": 8080,
-         "protocol": "HTTP",
-         "linkBackend": {
-           "defaultBackend": "nifiservice"
-                        }
-       }
-   ],
-     "backends": [{
-       "name": "nifiservice",
-       "protocol": "HTTP",
-       "services": [{
-         "endpoint": {
-           "type": "ADDRESS",
-           "address": "<vip adress obtained from Step 2>",
-           "port": 8080
-                     }
-                    }]
-                 }]
-   }
+{
+  "apiVersion": "V2",
+  "name": "nifiproxy",
+  "count": 1,
+  "haproxy": {
+    "frontends": [
+      {
+        "bindPort": 8080,
+        "protocol": "HTTP",
+        "linkBackend": {
+          "defaultBackend": "nifiservice"
+        }
+      }
+    ],
+    "backends": [
+      {
+        "name": "nifiservice",
+        "protocol": "HTTP",
+        "services": [
+          {
+            "endpoint": {
+              "type": "ADDRESS",
+              "address": "<vip adress obtained from Step 2>",
+              "port": 8080
+            }
+          }
+        ]
+      }
+    ]
   }
+}
   ```
   4. **Create edge-pool using the above json.**
   ```shell
