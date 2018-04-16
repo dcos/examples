@@ -63,12 +63,13 @@ Following are the steps for Edge-LB Pool configuration:
   ```shell
   dcos package install --cli edgelb --yes
   ```
-  2. **Get the VIP address using the following:**
+  2. **Get the DNS address using the following:**
   ```shell
   dcos nifi endpoints web --name=<service_name>
   ```  
   3. **Create the configration json file with required parameters to access nifi web.**
-     Example as follows:
+  
+  Example as follows (Without TLS and Kerberos):
 
   ```shell
 {
@@ -93,7 +94,7 @@ Following are the steps for Edge-LB Pool configuration:
           {
             "endpoint": {
               "type": "ADDRESS",
-              "address": "<vip adress obtained from Step 2>",
+              "address": "<dns adress obtained from Step 2>",
               "port": 8080
             }
           }
@@ -103,6 +104,61 @@ Following are the steps for Edge-LB Pool configuration:
   }
 }
   ```
+with TLS and Kerberos:
+
+  ```shell
+{
+   "apiVersion": "V2",
+   "name": "nifiproxy",
+   "count": 1,
+   "autoCertificate": true,
+   "haproxy": {
+      "frontends": [
+         {
+            "bindPort": 8443,
+            "protocol": "HTTPS",
+            "certificates": [
+               "$AUTOCERT"
+            ],
+            "linkBackend": {
+               "defaultBackend": "nifiservice"
+            }
+         }
+      ],
+      "backends": [
+         {
+            "name": "nifiservice",
+            "protocol": "HTTPS",
+            "rewriteHttp": {
+               "host": <dns adress obtained from Step 2>,
+               "path": {
+                  "fromPath": "/nifi",
+                  "toPath": "/nifi"
+               },
+               "request": {
+                  "forwardfor": true,
+                  "xForwardedPort": true,
+                  "xForwardedProtoHttpsIfTls": true,
+                  "setHostHeader": true,
+                  "rewritePath": true
+               }
+            },
+            "services": [
+               {
+                  "endpoint": {
+                     "type": "ADDRESS",
+                     "address": <dns adress obtained from Step 2>,
+                     "port": <port obtained from Step 2>
+                  }
+               }
+            ]
+         }
+      ]
+   }
+}
+
+  ```
+
   4. **Create edge-pool using the above json.**
   ```shell
   dcos edgelb create edgelb-pool-config.json
