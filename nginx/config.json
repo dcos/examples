@@ -1,0 +1,11 @@
+{
+  "nginx": {
+    "instances": 1,
+    "cpus": 1,
+    "mem": 1024,
+    "name": "nginx",
+    "contentDir": "hello-nginx-master",
+    "contentUrl": "https://github.com/mesosphere/hello-nginx/archive/master.zip",
+    "bridge": true
+  }
+}

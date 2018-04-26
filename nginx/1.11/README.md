@@ -75,8 +75,8 @@ To verify that our NGINX instance is up and running, we can use `dcos task` comm
 
 ```bash
 $ dcos task
-NAME   HOST      USER  STATE  ID                                          MESOS ID
-nginx2  10.0.2.65   root    R    nginx2.1b22348f-85c4-11e7-b20e-0269c4e5f33f  a29f1b0f-4548-4be1-be69-c4f809511393-S1
+NAME   HOST           USER  STATE  ID
+nginx  10.80.124.135  root    R    nginx.196e9ded-4924-11e8-8112-22c5fa7ab357
 ```
 
 Let's try to access the `hello-world` website our NGINX server is serving by opening the URL `http://<YOUR-DCOS-MASTER-HOSTNAME>/service/nginx`. You should see a webpage similar to this:
