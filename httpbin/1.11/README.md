@@ -22,17 +22,17 @@ an example of how to package and deploy applications on DC/OS.
 
 ## Prerequisites
 
-- A running DC/OS 1.10 cluster.
-- [DC/OS CLI](https://dcos.io/docs/1.10/usage/cli/install/) installed.
+- A running DC/OS 1.11 cluster.
+- [DC/OS CLI](https://docs.mesosphere.com/1.11/cli/) installed.
 
 ## Install httpbin
 
 If you want to access httpbin from outside of the DC/OS cluster you can use
-[Marathon-LB](https://dcos.io/docs/1.10/usage/service-discovery/marathon-lb/),
+[Marathon-LB](https://docs.mesosphere.com/services/marathon-lb/),
 which is recommended for production usage.
 
 In the following we will use the DC/OS [Admin
-Router](https://dcos.io/docs/1.10/developing-services/#scrollNav-2)
+Router](https://docs.mesosphere.com/1.11/developing-services/)
 to provide access to httpbin, which is fine for dev/test setups:
 
 ```bash
@@ -51,7 +51,9 @@ After this, you should see the httpbin service running via the `Services` tab of
 
 ## Use httpbin
 
-From detailed view (clicking on the instance ID) `Endpoint` link leads to httpbin:
+From detailed view (clicking on the external icon) link leads to httpbin:
+
+![httpbin UI](img/click.png)
 
 ![httpbin UI](img/httpbin-ui.png)
 
