@@ -22,24 +22,24 @@
 
 ## Prerequisites
 
-- A running DC/OS 1.10 cluster with at least 3 nodes with each 2 CPUs and 2 GB of RAM available.
-- [DC/OS CLI](https://dcos.io/docs/1.10/cli/install/) installed.
-* Java 8+ installed. Note that starting with Spark 2.2.0, support for java 7 has been removed, and job submission will fail with a version mismatch if you submit it with an older java.
+- A running DC/OS 1.11 cluster with at least 3 nodes with each 2 CPUs and 2 GB of RAM available.
+- [DC/OS CLI](https://dcos.io/docs/1.11/cli/install/) installed.
 
 ## Install Spark
 
 Assuming you have a DC/OS cluster up and running, the first step is to install Spark:
 
 ```bash
+$ dcos package install spark
 By Deploying, you agree to the Terms and Conditions https://mesosphere.com/catalog-terms-conditions/#certified-services
 Continue installing? [yes/no] yes
-Installing Marathon app for package [spark] version [1.1.1-2.2.0]
-Installing CLI subcommand for package [spark] version [1.1.1-2.2.0]
+Installing Marathon app for package [spark] version [2.3.1-2.2.1-2]
+Installing CLI subcommand for package [spark] version [2.3.1-2.2.1-2]
 New command available: dcos spark
 DC/OS Spark is being installed!
 
-	Documentation: https://docs.mesosphere.com/service-docs/spark/
-	Issues: https://docs.mesosphere.com/support/
+        Documentation: https://docs.mesosphere.com/service-docs/spark/
+        Issues: https://docs.mesosphere.com/support/
 ```
 
 If the spark service is already installed and you only wish to install the CLI subcommand on your client, simply do:
@@ -48,102 +48,101 @@ If the spark service is already installed and you only wish to install the CLI s
 $ dcos package install spark --cli
 By Deploying, you agree to the Terms and Conditions https://mesosphere.com/catalog-terms-conditions/#certified-services
 Continue installing? [yes/no] yes
-Installing CLI subcommand for package [spark] version [1.1.1-2.2.0]
+Installing CLI subcommand for package [spark] version [2.3.1-2.2.1-2]
 New command available: dcos spark
 ```
 
 Note that while the DC/OS CLI subcommand `spark` is immediately available, it takes a few moments for Spark to start running in the cluster.
 
-Let's first check the DC/OS CLI and its new subcommand `spark`:
+To see the new possible with the new `spark` subcommand, you can use the following command:
 
 ```bash
-$ dcos spark
-Usage:
-    dcos spark --help
-    dcos spark --info
-    dcos spark --version
-    dcos spark --config-schema
-    dcos spark run --help
-    dcos spark run --submit-args=<spark-args>
-                   [--dcos-space=<dcos_space>]
-                   [--docker-image=<docker-image>]
-                   [--verbose]
-    dcos spark status <submissionId> [--verbose]
-    dcos spark log <submissionId>
-                   [--follow]
-                   [--lines_count=<lines_count>]
-                   [--file=<file>]
-    dcos spark kill <submissionId> [--verbose]
-    dcos spark webui
+$dcos spark --help
 ```
 
-Now, we validate if Spark is running and healthy, in the cluster itself. For this, go to the DC/OS UI and you should see Spark there under the `Services` tab:
+Now, we can validate if Spark is running and healthy, in the cluster itself. For this, go to the DC/OS UI and you should see Spark there under the `Services` tab:
 
 ![Services](img/services.png)
 
-You can get to this page by using the `dcos spark webui` command:
+You can see the SparkUI page if you use the `dcos spark webui` command:
 
 ![Spark Drivers page](img/spark-drivers.png)
+
+This page contains all the datas about jobs which are launched in the Spark cluster. We will see later how to get jobs' logs from their.
 
 ## Launch a Spark job
 
 Now that you've set up Spark, it's time to launch your first Spark job. We will use one of the [existing examples](https://github.com/apache/spark/blob/master/examples/src/main/scala/org/apache/spark/examples/SparkPi.scala) that comes with Spark.
 
-Note that when you execute the `dcos spark run` command the first time, DC/OS downloads the necessary assets to your local machine and that can take (depending on your Internet connection) some 10 mins or more.
-
 
 ```bash
-$ dcos spark run --submit-args='--driver-cores 1 --driver-memory 1024M --class org.apache.spark.examples.SparkPi https://downloads.mesosphere.com/spark/assets/spark-examples_2.10-1.4.0-SNAPSHOT.jar 30'
-Spark distribution spark-2.2.0-bin-2.6 not found locally.
-It looks like this is your first time running Spark!
-Downloading https://downloads.mesosphere.com/spark/assets/spark-2.2.0-bin-2.6.tgz...
-Extracting spark distribution /home/ksztern/.dcos/spark/dist/spark-2.2.0-bin-2.6.tgz...
-Successfully fetched spark distribution https://downloads.mesosphere.com/spark/assets/spark-2.2.0-bin-2.6.tgz!
-Run job succeeded. Submission id: driver-20170818154044-0001
+cos spark run --submit-args='--driver-cores 1 --driver-memory 1024M --class org.apache.spark.examples.SparkPi https://downloads.mesosphere.com/spark/assets/spark-examples_2.10-1.4.0-SNAPSHOT.jar 30'
+2018/04/26 23:09:07 Using mesosphere/spark:2.3.1-2.2.1-2-hadoop-2.6 as the image for the driver
+2018/04/26 23:09:07 Pulling image mesosphere/spark:2.3.1-2.2.1-2-hadoop-2.6 for executors, by default. To bypass set spark.mesos.executor.docker.forcePullImage=false
+2018/04/26 23:09:07 Setting DCOS_SPACE to /spark
+Run job succeeded. Submission id: driver-20180426210908-0001
 ```
 
-Note the submission ID in the last line, above, in our example `driver-20170818154044-0001`: this allows to track the job via the CLI as we will see below. When you look at the Spark drivers page you should see the job as well:
+Note the submission ID in the last line, above, in our example `driver-20180426210908-0001`: this allows to track the job via the CLI as we will see below. When you look at the Spark drivers page you should see the job as well:
 
 ![Spark finished job](img/spark-finished-job.png)
 
 Alternatively, you can use the CLI to verify (as shown in the example below) the completion of the job.  This will change based on when you run the status command:
 
 ```bash
-$ dcos spark status driver-20170818154044-0001
-Submission ID: driver-20170818154044-0001
-Driver state: FINISHED
-Last status: task_id {
-  value: "driver-20170818154044-0001"
+$dcos spark status driver-20180426210908-0001
+{
+  "action": "SubmissionStatusResponse",
+  "driverState": "FINISHED",
+  "message": "task_id {\n  value: \"driver-20180426210908-0001\"\n}\nstate: TASK_FINISHED\nmessage: \"Container exited with status 0\"\nslave_id {\n  value: \"490c8a83-7aa4-4af2-a870-e2e8644eba2e-S3\"\n}\ntimestamp: 1.524777016359243E9\nexecutor_id {\n  value: \"driver-20180426210908-0001\"\n}\nsource: SOURCE_EXECUTOR\nuuid: \"\\303\\271\\nh\\t\\276IK\\204\\334\\336T\\\"Y\\214)\"\ncontainer_status {\n  network_infos {\n    ip_addresses {\n      ip_address: \"10.0.3.177\"\n    }\n  }\n  container_id {\n    value: \"7013ccb9-2f0d-4ce4-b9f8-764140647150\"\n  }\n}\n",
+  "serverSparkVersion": "2.2.1",
+  "submissionId": "driver-20180426210908-0001",
+  "success": true
+}
+
+Message:
+task_id {
+    value: "driver-20180426210908-0001"
 }
 state: TASK_FINISHED
 message: "Container exited with status 0"
 slave_id {
-  value: "0326f2f8-5951-4bbf-aaed-d3b6ef45f2c7-S1"
+    value: "490c8a83-7aa4-4af2-a870-e2e8644eba2e-S3"
 }
-timestamp: 1.503070875532489E9
+timestamp: 1.524777016359243E9
 executor_id {
-  value: "driver-20170818154044-0001"
+    value: "driver-20180426210908-0001"
 }
 source: SOURCE_EXECUTOR
-uuid: "\351\274\363\206E\341K\207\273O\004\264*\223\263\311"
+uuid: "\303\271\nh\t\276IK\204\334\336T\"Y\214)"
 container_status {
-  network_infos {
+    network_infos {
     ip_addresses {
-      ip_address: "10.83.20.102"
+      ip_address: "10.0.3.177"
     }
   }
-  4: "\n$0b7c97cb-c9a0-4da4-bc11-b12906542bd5"
+  container_id {
+    value: "7013ccb9-2f0d-4ce4-b9f8-764140647150"
+  }
 }
+
 ```
 
 Now let's use `dcos spark log` to verify the execution on the CLI. While this is probably not that useful for very short-running batch jobs, it's beneficial for long-running jobs as well as Spark Streaming jobs:
 
 ```bash
-$ dcos spark log driver-20170818154044-0001
-Pi is roughly 3.139816
+dcos spark log driver-20180426210908-0001
+Pi is roughly 3.14102
 ```
 
 So it turns out to be useful to use the `dcos spark log` command: we get the result of the computation, that is, an approximation for π, without having to dig into the logs.
+
+You can access to the cluster logs by using the SparkUI too. To do this, you just have to click in the `sandbox` button on the right of you job. It will permit to check the logs of your spark job from the MesosUI.
+
+![Spark sandbox](img/spark-sandbox.png)
+
+![Mesos UI](img/mesos-ui.png)
+
 
 ## Uninstall Spark
 
@@ -152,12 +151,6 @@ To uninstall Spark:
 ```bash
 $ dcos package uninstall spark
 ```
-
-Use the [framework cleaner](https://dcos.io/docs/1.10/deploying-services/uninstall/#about-cleaning-up-zookeeper) to remove your Spark instance from ZooKeeper and to destroy all data associated with it. The script requires several arguments, the values for which are derived from your service name:
-
-- `framework-role` is `spark-role`
-- `framework-principal` is `spark-principal`
-- `zk_path` is `dcos-service-spark`
 
 ## Further resources
 
