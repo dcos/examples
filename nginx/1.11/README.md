@@ -22,12 +22,12 @@ Assuming you have a DC/OS cluster up and running, we install NGINX to serve up a
 - Visit the DC/OS admin page, and click on `Catalog` on the left menu bar.
 - Search and select `nginx`
 ![Catalog NGINX](img/catalog-nginx.png)
-- Click on `CONFIGURE` button
-- Enter "`hello-nginx-master`" in `CONTENTDIR` and "`https://github.com/mesosphere/hello-nginx/archive/master.zip`" in `CONTENTURL`
+- Click on `Review & Run` button
+- Enter "`hello-nginx-master`" in `contentDir` and "`https://github.com/mesosphere/hello-nginx/archive/master.zip`" in `contentUrl`
 ![Catalog NGINX](img/nginx-config.png)
-- Click on `REVIEW AND DEPLOY`, verify values and click on `DOWNLOAD CONFIG.JSON` button from top right corner
+- Click on `Review & Run`, verify values and click on `Download Config` button from top right corner
 ![Catalog NGINX](img/nginx-review.png)
-- Click on `DEPLOY` and wait
+- Click on `Run` and wait
 - One popup should appear with `Success` message
 ![Catalog NGINX](img/nginx-success.png)
 - Click on `Services` from left menu bar
