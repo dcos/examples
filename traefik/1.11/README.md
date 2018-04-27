@@ -25,11 +25,11 @@ Traefik is a load balancer written in Go, that generally doesn't require many re
 
 By default Traefik is configured to run on public DC/OS agents (role: `slave_public`). In order to use Traefik as an internal load-balancer use role: `*` and update ports to higher range (e.g. `10080`,`10443` and `10081` for HTTP, HTTPS and web UI respectively).
 
-Before installing Traefik, there are few options you might want to modify. Hit "EDIT" button
+Before installing Traefik, there are few options you might want to modify. Hit "Review & Run" button
 
 ![Traefik install](img/traefik-service.png)
 
-and go to **marathon** section.
+and go to **Marathon** section.
 
 Traefik is configured to fetch configuration from DC/OS Marathon. System Marathon running all services in the "Services" tab can be reached via Mesos DNS at `http://marathon.mesos:8080` (default). If you're running another Marathon instance installed from the "Catalog", then use its DNS, e.g. `http://marathon-user.marathon.l4lb.thisdcos.directory:8080`.
 
@@ -38,6 +38,7 @@ Traefik is configured to fetch configuration from DC/OS Marathon. System Maratho
 * **DOMAIN** by default all tasks will be assigned hostname `{task id}.{domain}`. e.g. `elastic.marathon.localhost`
 * **EXPOSE** all services fetched from Marathon will be exposed via default hostname
 
+You can enable the EXPOSE flag, so all services fetched from Marathon will be exposed via default hostname.
 Review service configuration and hit "Run service", the service should start immediately. Now you can navigate to `{DC/OS master}/service/traefik` to see Traefik dashboard:
 
 ![Dashboard](img/dashboard.png)
