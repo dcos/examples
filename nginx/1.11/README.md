@@ -8,10 +8,10 @@
 
 ## Prerequisites
 
-- A running DC/OS 1.10 cluster with at least 1 node having at least 1 CPUs and 1 GB of RAM available.
-- [DC/OS CLI](https://dcos.io/docs/1.10/cli/install/) installed.
+- A running DC/OS 1.11 cluster with at least 1 node having at least 1 CPUs and 1 GB of RAM available.
+- [DC/OS CLI](https://dcos.io/docs/1.11/cli/install/) installed.
 
-There are three ways to deploy NGINX container.
+There are two ways to deploy NGINX container.
 1. [using Catalog](#deploy-nginx-using-catalog)
 2. [using CLI](#deploy-nginx-using-cli)
 
