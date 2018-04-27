@@ -116,6 +116,7 @@
 					]
 				}
 			},
+			"DeletionPolicy": "Retain",
 			"DependsOn": "BucketToUploadsTopicPolicy"
 		},
 		"BucketToUploadsTopicPolicy": {

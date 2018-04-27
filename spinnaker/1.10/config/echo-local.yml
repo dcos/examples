@@ -1,0 +1,18 @@
+mail:
+  enabled: true
+  from: <from-gmail-address>
+spring:
+  mail:
+    host: smtp.gmail.com
+    username: <from-gmail-address>
+    password: <app-password, see https://support.google.com/accounts/answer/185833?hl=en >
+    properties:
+      mail:
+        smtp:
+          auth: true
+          ssl:
+            enable: true
+          socketFactory:
+            port: 465
+            class: javax.net.ssl.SSLSocketFactory
+            fallback: false

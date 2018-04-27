@@ -1,0 +1,18 @@
+cassandra:
+  enabled: false
+
+spinnaker:
+  cassandra:
+    enabled: false
+    embedded: true
+  s3:
+    enabled: true
+    bucket: <s3-bucket-name>
+    rootFolder: <name-of-folder-in-the-s3-bucket>
+  gcs:
+    enabled: false
+    bucket: <gcs-bucket-name->
+    bucketLocation: <gcs-bucket-location, e.g. us, ... >
+    rootFolder: <name-of-folder-in-the-gcs-bucket>
+    project: <gcp-project-name>
+    jsonPath: /mnt/mesos/sandbox/data/keys/gcp_key.json

@@ -1,0 +1,24 @@
+dockerRegistry:
+  enabled: true
+  accounts:
+  - name: <my-docker-registry-account>
+    address: https://index.docker.io/
+    repositories:
+      - library/nginx
+    username: <docker-user>
+    password: <docker-password>
+
+dcos:
+  enabled: true
+  clusters:
+    - name: <my-dcos-cluster, e.g dcos-west>
+      dcosUrl: <dcos-url>
+      insecureSkipTlsVerify: true
+  accounts:
+    - name: <my-dcos-account>
+      dockerRegistries:
+        - accountName: <my-docker-registry-account>
+      clusters:
+        - name: <my-dcos-cluster>
+          uid: <dcos-user>
+          password: <dcos-password>

@@ -9,7 +9,7 @@ DC/OS makes it very easy to deploy Datadog across all Mesos agent nodes in the c
 * Scope:
     * [Configure and install](#install-datadog) Datadog on your agent and master nodes
     * [Monitor](#monitor-metrics-from-your-dcos-cluster) system metrics, Docker, and Mesos in Datadog
-    * Optional: [Use service discovery](#use-service-discovery-to-monitor-additional-services) to automatically monitor services running on DC/OS
+    * Optional: [Use autodiscovery](#use-autodiscovery-to-monitor-additional-services) to automatically monitor services running on DC/OS
 
 ## Prerequisites
 
@@ -86,17 +86,17 @@ You'll also see metrics from your cluster flowing into the [Mesos dashboard][mes
 
 You can then build custom dashboards using any of the metrics or events being reported to Datadog; set alerts on performance metrics or task failures; or use the host map to look for hotspots in your infrastructure. 
 
-## Use service discovery to monitor additional services
+## Use Autodiscovery to monitor additional services
 
 ### Automatically monitored services
 
-When you install the Datadog package on DC/OS, or use the command above to install Datadog on your master nodes, [service discovery][service-discovery] is enabled by default. This feature automatically detects which containerized services are running on which nodes, and configures the Datadog Agent on each node to connect to those services and report metrics back to Datadog.
+When you install the Datadog package on DC/OS, or use the command above to install Datadog on your master nodes, [Autodiscovery][autodiscovery] is enabled by default. This feature automatically detects which containerized services are running on which nodes, and configures the Datadog Agent on each node to connect to those services and report metrics back to Datadog.
 
-For certain services, such as Redis, Elasticsearch, and Apache server (httpd), the Datadog Agent can connect without any additional setup in most cases. (See the [service discovery docs][service-discovery] for the full list.) If you're running one of those services, you should start seeing metrics in Datadog within minutes (on [the Redis dashboard][redis-dash], for instance).
+For certain services, such as Redis, Elasticsearch, and Apache server (httpd), the Datadog Agent can connect without any additional setup in most cases. (See the [Autodiscovery docs][autodiscovery] for the full list.) If you're running one of those services, you should start seeing metrics in Datadog within minutes (on [the Redis dashboard][redis-dash], for instance).
 
 ### Monitoring services with custom configurations
 
-For other services, you can create monitoring configuration templates that Datadog will apply whenever it detects the service running on a node in your cluster. For production use, you will likely want to [use a key-value store][service-discovery] such as etcd or Consul to manage these templates for you. To demonstrate the basics of service discovery, though, here we'll walk through a simple example using configuration templates stored in a directory on the host that is mounted by the Datadog Agent container.
+For other services, you can create monitoring configuration templates that Datadog will apply whenever it detects the service running on a node in your cluster. For production use, you will likely want to [use a key-value store][autodiscovery] such as etcd or Consul to manage these templates for you. To demonstrate the basics of service discovery, though, here we'll walk through a simple example using configuration templates stored in a directory on the host that is mounted by the Datadog Agent container.
 
 #### Create a config template
 
@@ -185,6 +185,6 @@ Assuming that your configuration template is working and Datadog is able to conn
 [zk-dash]: https://app.datadoghq.com/screen/integration/zookeeper
 [mysql-docs]: http://docs.datadoghq.com/integrations/mysql/
 [redis-dash]: https://app.datadoghq.com/screen/integration/redis
-[service-discovery]: http://docs.datadoghq.com/guides/servicediscovery/
+[autodiscovery]: https://docs.datadoghq.com/guides/autodiscovery/
 [yamls]: https://github.com/DataDog/integrations-core
 [dd-app]: https://app.datadoghq.com
