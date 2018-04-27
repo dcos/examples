@@ -118,7 +118,7 @@ user    0m0,828s
 sys     0m0,068s
 ```
 
-Here httpbin delayed the respone by 3 seconds. This can be useful if working on
+Here httpbin delayed the response by 3 seconds. This can be useful if working on
 code that makes HTTP requests and you want to simulate an unresponsive server.
 
 ## Uninstall httpbin
