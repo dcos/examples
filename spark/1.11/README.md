@@ -57,7 +57,7 @@ Note that while the DC/OS CLI subcommand `spark` is immediately available, it ta
 To see the new possible with the new `spark` subcommand, you can use the following command:
 
 ```bash
-$dcos spark --help
+$ dcos spark --help
 ```
 
 Now, we can validate if Spark is running and healthy, in the cluster itself. For this, go to the DC/OS UI and you should see Spark there under the `Services` tab:
@@ -76,7 +76,7 @@ Now that you've set up Spark, it's time to launch your first Spark job. We will 
 
 
 ```bash
-cos spark run --submit-args='--driver-cores 1 --driver-memory 1024M --class org.apache.spark.examples.SparkPi https://downloads.mesosphere.com/spark/assets/spark-examples_2.10-1.4.0-SNAPSHOT.jar 30'
+$ dcos spark run --submit-args='--driver-cores 1 --driver-memory 1024M --class org.apache.spark.examples.SparkPi https://downloads.mesosphere.com/spark/assets/spark-examples_2.10-1.4.0-SNAPSHOT.jar 30'
 2018/04/26 23:09:07 Using mesosphere/spark:2.3.1-2.2.1-2-hadoop-2.6 as the image for the driver
 2018/04/26 23:09:07 Pulling image mesosphere/spark:2.3.1-2.2.1-2-hadoop-2.6 for executors, by default. To bypass set spark.mesos.executor.docker.forcePullImage=false
 2018/04/26 23:09:07 Setting DCOS_SPACE to /spark
@@ -90,7 +90,7 @@ Note the submission ID in the last line, above, in our example `driver-201804262
 Alternatively, you can use the CLI to verify (as shown in the example below) the completion of the job.  This will change based on when you run the status command:
 
 ```bash
-$dcos spark status driver-20180426210908-0001
+$ dcos spark status driver-20180426210908-0001
 {
   "action": "SubmissionStatusResponse",
   "driverState": "FINISHED",
@@ -131,7 +131,7 @@ container_status {
 Now let's use `dcos spark log` to verify the execution on the CLI. While this is probably not that useful for very short-running batch jobs, it's beneficial for long-running jobs as well as Spark Streaming jobs:
 
 ```bash
-dcos spark log driver-20180426210908-0001
+$ dcos spark log driver-20180426210908-0001
 Pi is roughly 3.14102
 ```
 
