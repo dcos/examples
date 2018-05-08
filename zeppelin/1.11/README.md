@@ -16,12 +16,12 @@
 ## Prerequisites
 
 - A running DC/OS 1.11 cluster with 2 agents (one private, one public) each with 2 CPUs and 2 GB of RAM available.
-- [DC/OS CLI](https://dcos.io/docs/1.9/usage/cli/install/) installed.
-- [Marathon-LB](https://dcos.io/docs/1.9/usage/service-discovery/marathon-lb/) installed.
+- [DC/OS CLI](https://docs.mesosphere.com/1.11/cli/install/) installed.
+- [Marathon-LB](https://docs.mesosphere.com/services/marathon-lb/) installed.
 
 ## Install Zeppelin
 
-You typically want to access Zeppelin via a web browser outside of the DC/OS cluster. To access the Zeppelin UI from outside of the DC/OS cluster you can use [Marathon-LB](https://dcos.io/docs/1.9/usage/service-discovery/marathon-lb/), which is recommended for production usage. The following steps will install zeppelin: 
+You typically want to access Zeppelin via a web browser outside of the DC/OS cluster. To access the Zeppelin UI from outside of the DC/OS cluster you can use Marathon-LB, which is recommended for production usage. The following steps will install zeppelin: 
 
 ```bash
 $ dcos package install zeppelin
