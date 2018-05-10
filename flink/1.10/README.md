@@ -35,6 +35,11 @@ DC/OS Flink is being installed!
 	Documentation: https://ci.apache.org/projects/flink/flink-docs-release-1.3/
 ```
 
+**NOTE**: If your ***DCOS SLAVE NODES*** have not internet access to download required image to TaskManager instances from registry-1.docker.io, it's needed the inclusion of environment variable on service configuration to download image from local universe registry services:
+```
+FLINK_EXTRA_ARGS="-Dmesos.resourcemanager.tasks.container.image.name=master.mesos:5000/openjdk:8-jre"
+```
+
 After this, you should see the Flink service running via the `Services` tab of the DC/OS UI:
 
 ![Flink DC/OS service](img/services.png)
