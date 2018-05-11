@@ -50,11 +50,11 @@ The instructions below use a pinned hostname constraint to ensure the applicatio
 
 ![Minio Service](img/minio-service.png)
 
-- Once Minio has been deployed, navigate to the IP/hostname of Public Agent where Marathon-LB is installed and the port you specified. To customize deployed minio server, continue reading or go to [Access Minio Browser](#access-minio-browser) section.
+- Once Minio has been deployed, navigate to the http://PUBLIC-AGENT-IP:9000 of Public Agent where Marathon-LB is installed. To customize deployed minio server, continue reading or go to [Access Minio Browser](#access-minio-browser) section.
 
 ### Customize Minio using GUI
 
-- To customize the storage and network configuration, select the minio service, then select `Edit`.
+- To customize minio service configuration after deployment, select the service from Services, then click on `Edit` button from top right corner.
 
   - Service - You can specify how much memory you want to dedicate to minio service, which image version to deploy, CPUs and container runtime([Docker Runtime](https://docs.mesosphere.com/1.11/deploying-services/containerizers/docker-containerizer/) and [UCR](https://docs.mesosphere.com/1.11/deploying-services/containerizers/ucr/)).
 
