@@ -32,12 +32,12 @@ The `GPU` version extends the `base` package with:
 
 Required: 
 
-- A running DC/OS 1.10 (or higher) cluster with at least 1 node (minimum 1 CPU, 4G of memory and 20GB of persistent disk storage in total)
-- [DC/OS CLI](https://dcos.io/docs/1.10/cli/install/) installed.
+- A running DC/OS 1.11 (or higher) cluster with at least 1 node (minimum 1 CPU, 4G of memory and 20GB of persistent disk storage in total)
+- [DC/OS CLI](https://dcos.io/docs/1.11/cli/install/) installed.
 
 Optional:
 
-- [Marathon-LB](https://dcos.io/docs/1.10/networking/marathon-lb/) ( Just needed for Advanced Installation with `external_access` enabled ) 
+- [Marathon-LB](https://dcos.io/docs/1.11/networking/marathon-lb/) ( Just needed for Advanced Installation with `external_access` enabled ) 
 
 ## Quick Start
 
@@ -309,7 +309,7 @@ You can create this `options.json` manually or via the UI installation.
 
 In order to access your `BeakerX` service from outside the cluster you need to have the `Marathon-LB` service installed. 
 
-By enabling `external_access` you would need to add also your public agent's public ip to the `EXTERNAL_PUBLIC_AGENT_IP` field at installation time as seen in the configuration example above.
+When enabling `external_access` you point via the `EXTERNAL_PUBLIC_AGENT_IP` field to your public agent DNS name. Please be sure to only use the DNS name without any leading `http://` or `https://`.
 
 #### Persistent Storage
 
@@ -325,7 +325,7 @@ $ dcos task
    universe     10.0.3.14  root    R    universe.cc89525a-d554-11e7-82be-4a630c070959     ebed2c7d-4f38-41b8-889c-3efb9d8fb5ea-S6  
 ```
 
-- Exec in your running container: `dcos task exec -it beakerx.083dbedb-d555-11e7-82be-4a630c070959 /bin/bash`
+- Exec in your running container with the correct task id, in our example: `dcos task exec -it beakerx.083dbedb-d555-11e7-82be-4a630c070959 /bin/bash`
 - In your container set the right permissions for `/home/beakerx/persistent_data` via:
 
 ```bash
