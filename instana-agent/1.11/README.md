@@ -36,7 +36,7 @@ This is being taken care of by the deployment constraints. If you have, say, thr
 ![The Instana agent supports scaling](img/DCOS-step4.png "The Instana agent supports scaling")
 
 
-![Scale the number of desired hosts](img/scaling.png "Scale the number of desired hosts")
+![Scale the number of desired hosts](img/Scaling.png "Scale the number of desired hosts")
 
 ## Additional resources
 
