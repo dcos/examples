@@ -9,35 +9,34 @@ The Instana agent package can be installed to DC/OS setups using the official pa
 
 ## Prerequisites
 
-* A running DC/OS 1.9 cluster
+* A running DC/OS 1.11 cluster
 * Your Instana agent key (obtainable via the UMP menu in the Instana WebUI)
 
 ## Deploying the Instana agent
 
-In order to install the Instana agent, go to the Universe listing in the DC/OS web UI, and **click on "Install"** on the Instana agent list item. Since you need to provide custom information, **click "Advanced Installation"**. The only required action here is to **fill in your Instana agent key**.
+In order to install the Instana agent, go to the Catalog tab in the DC/OS web UI, and **click on the "instana-agent"** icon in the list. Ensure 1.0.5 is selected from the drop-down menu then click Review & Run.
 
-![Installing the Instana agent on DC/OS](img/init.png "Installing the Instana agent on DC/OS")
+![Installing the Instana agent on DC/OS](img/DCOS-step1.png "Installing the Instana agent on DC/OS")
 
-![Provide your Instana agent key in the advanced tab](img/params1.png "Provide your Instana agent key in the advanced tab")
+![Provide your Instana agent key in the advanced tab](img/DCOS-step2.png "Provide your Instana agent key in the advanced tab")
 
-If you're a SaaS customer, that is reporting to the US environment, the rest of the values can be left with the default values. EU - SaaS customers should **switch to the "saas-eu-west-1.Instana.io" endpoint**. If you're an on-prem customer, please **enter your backend's host address** and **set the port** (default: 1444). 
-
-![Switching to another reporting endpoint](img/params2.png "Switching to another reporting endpoint")
-
-You can **set host tags** in the tag_list (comma separated). At this point you'll want to review you configuration of the agent and click "Review and install." 
+If you're a SaaS customer, that is reporting to the US environment, the rest of the values can be left with the default values. EU - SaaS customers should **switch to the "saas-eu-west-1.instana.io" endpoint**. If you're an on-prem customer, please **enter your backend's host address** and **set the port** (default: 1444). 
 
 
-![Review and install](img/install.png "Review and install")
+You can **set host tags** in the tag_list (comma separated). At this point you'll want to review the configuration of the agent and click "Run Service." 
+
+
+![Run Service](img/DCOS-step3.png "Run Service")
 
 
 ## Scaling the Instana agent
 
 This is being taken care of by the deployment constraints. If you have, say, three hosts, and set the scaling to three, DC/OS will deploy exactly one Instana agent on each host. If you want different host tags for each and every machine, the Instana agent needs to be deployed separately.
 
-![The Instana agent supports scaling](img/services1.png "The Instana agent supports scaling")
+![The Instana agent supports scaling](img/DCOS-step4.png "The Instana agent supports scaling")
 
 
-![Scale the number of desired hosts](img/scale.png "Scale the number of desired hosts")
+![Scale the number of desired hosts](img/scaling.png "Scale the number of desired hosts")
 
 ## Additional resources
 
