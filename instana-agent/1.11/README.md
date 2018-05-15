@@ -18,12 +18,18 @@ In order to install the Instana agent, go to the Catalog tab in the DC/OS web UI
 
 ![Installing the Instana agent on DC/OS](img/DCOS-step1.png "Installing the Instana agent on DC/OS")
 
-![Provide your Instana agent key in the advanced tab](img/DCOS-step2.png "Provide your Instana agent key in the advanced tab")
+## Edit configuration
+
+Provide your agent key in the form
+
+![Provide your Instana agent key](img/DCOS-step2.png "Provide your Instana agent key in the advanced tab")
 
 If you're a SaaS customer, that is reporting to the US environment, the rest of the values can be left with the default values. EU - SaaS customers should **switch to the "saas-eu-west-1.instana.io" endpoint**. If you're an on-prem customer, please **enter your backend's host address** and **set the port** (default: 1444). 
 
 
-You can **set host tags** in the tag_list (comma separated). At this point you'll want to review the configuration of the agent and click "Run Service." 
+If desired you can **set host tags** in the tag list (comma separated). 
+
+At this point you'll want to review the configuration of the agent and click "Run Service." 
 
 
 ![Run Service](img/DCOS-step3.png "Run Service")
