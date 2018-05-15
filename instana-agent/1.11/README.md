@@ -39,7 +39,11 @@ At this point you'll want to review the configuration of the agent and click "Ru
 
 This is being taken care of by the deployment constraints. If you have, say, three hosts, and set the scaling to three, DC/OS will deploy exactly one Instana agent on each host. If you want different host tags for each and every machine, the Instana agent needs to be deployed separately.
 
+Click edit and then scale
+
 ![The Instana agent supports scaling](img/DCOS-step4.png "The Instana agent supports scaling")
+
+Select the desired number of instances
 
 
 ![Scale the number of desired hosts](img/Scaling.png "Scale the number of desired hosts")
