@@ -27,9 +27,11 @@ Provide your agent key in the form
 If you're a SaaS customer, that is reporting to the US environment, the rest of the values can be left with the default values. EU - SaaS customers should **switch to the "saas-eu-west-1.instana.io" endpoint**. If you're an on-prem customer, please **enter your backend's host address** and **set the port** (default: 1444). 
 
 
-If desired you can **set host tags** in the tag list (comma separated). 
+If desired you can **set host tags** in the tag list (comma separated).
 
-At this point you'll want to review the configuration of the agent and click "Run Service." 
+If desired you can also **set an agent zone label**. 
+
+At this point you'll want to review the configuration of the agent and click "Run Service". 
 
 
 ![Run Service](img/DCOS-step3.png "Run Service")
