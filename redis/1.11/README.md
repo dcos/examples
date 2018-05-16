@@ -42,6 +42,7 @@ NOTE: This requires you to have the ssh-key required to connect to the machines 
     - `set mykey key1`
   - Check value: 
     - `get mykey`
+
 Now we can uninstall Redis: `dcos package uninstall redis`.
 
 ##  mr-redis
