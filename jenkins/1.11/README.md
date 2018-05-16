@@ -20,7 +20,17 @@
 
 ## Install Jenkins
 
-Jenkins stores information directly on disk, therefore we have two options for deployment. We can pin it to a single node, or use a network file system to share files between multiple nodes. In this guide, we will pin Jenkins to a single node. To do so, create the file `options.json` with the configuration below, modifying `pinned-hostname` to correspond to an agent IP in your DC/OS cluster (for example, via `dcos node`):
+Jenkins stores information directly on disk, therefore we have two options for deployment. We can pin it to a single node, or use a network file system to share files between multiple nodes. In this guide, we will pin Jenkins to a single node.
+
+To do this via the web UI, navigate to the Catalog page, and click on the Jenkins icon. Click on "Review & Run" in the top right corner, and in the storage tab, enter an IP of an agent in the cluster.
+
+![Enter an agent IP](img/enter-agent-ip.jpg)
+
+Click "Review & Run" again, and then "Run Service" on the new page that loads.
+
+![Review service](img/review-service.jpg)
+
+If you'd rather use the `dcos` CLI tool, create a file `options.json` with the configuration below, modifying `pinned-hostname` to correspond to an agent IP in your DC/OS cluster (for example, via `dcos node`):
 
 ```bash
 $ cat options.json
@@ -30,8 +40,6 @@ $ cat options.json
     }
 }
 ```
-
-Note that for a complete list of the configuration options available for the Jenkins package, see the [Jenkins package definition](https://github.com/mesosphere/universe/tree/version-3.x/repo/packages/J/jenkins) in the Mesosphere Universe.
 
 Once you've created `options.json`, you can then install Jenkins by running the following command:
 
@@ -47,6 +55,8 @@ Jenkins has been installed.
 ```
 
 Once ready, Jenkins will appear as a service in the DC/OS dashboard.
+
+Note that for a complete list of the configuration options available for the Jenkins package, see the [Jenkins package definition](https://github.com/mesosphere/universe/tree/version-3.x/repo/packages/J/jenkins) in the Universe Catalog.
 
 ## Use Jenkins
 
