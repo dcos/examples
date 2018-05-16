@@ -34,12 +34,15 @@ Then the easiest option to test Redis is by storing a key manually via the redis
 ``` bash 
 dcos node ssh --master-proxy --mesos-id=$(dcos task redis --json | jq -r '.[] | .slave_id')
 ```
-NOTE: This requires you to have the ssh-key required to conenct to the machines added to your local ssh agent (e.g., via ssh-add my_public_key).
+NOTE: This requires you to have the ssh-key required to connect to the machines added to your local ssh agent (e.g., via ssh-add my_public_key).
 - Because Redis is running in docker container, we can list all docker containers using docker ps and get the ContainerID.
 - Connect to a bash session to the running container: `sudo docker exec -it CONTAINER_ID /bin/bash`
 - Start the Redis CLI: redis-cli
-  - Set key i`set mykey key1`
-  - Check value is there `get mykey`
+  - Set key:
+    - `set mykey key1`
+  - Check value: 
+    - `get mykey`
+Now we can uninstall Redis: `dcos package uninstall redis`.
 
 ##  mr-redis
 The DC/OS service [mr-redis](https://github.com/mesos/mr-redis), maintained by [Huawei](http://www.huawei.com/en/)
