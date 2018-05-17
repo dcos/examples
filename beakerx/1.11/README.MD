@@ -18,7 +18,7 @@ The `base` version consists of the official [beakerx/beakerx](https://github.com
 - [Pandas](https://pandas.pydata.org/) 0.22.0
 - [PySpark](https://spark.apache.org/docs/latest/api/python/index.html) 2.3.0
 - [Scikit-Learn](http://scikit-learn.org/) 0.19.1
-- [Tensorflow & Tensorboard](https://www.tensorflow.org/) 1.7.0
+- [TensorFlow & TensorBoard](https://www.tensorflow.org/) 1.7.0
 - [XLRD](https://pypi.org/project/xlrd/) 1.1.0
 
 #### GPU version
@@ -26,7 +26,7 @@ The `GPU` version extends the `base` package with:
 
 - [CUDA](https://developer.nvidia.com/cuda-toolkit/whatsnew) [9.0.176](https://gitlab.com/nvidia/cuda/blob/ubuntu16.04/9.0/base/Dockerfile)
 - [CUDNN](https://developer.nvidia.com/cudnn) [7.1.3.16](https://gitlab.com/nvidia/cuda/blob/ubuntu16.04/9.0/runtime/cudnn7/Dockerfile )
-- [Tensorflow-GPU](https://www.tensorflow.org/programmers_guide/using_gpu) 1.7.0
+- [TensorFlow-GPU](https://www.tensorflow.org/programmers_guide/using_gpu) 1.7.0
 
 ## Prerequisites
 
@@ -37,7 +37,7 @@ Required:
 
 Optional:
 
-- [Marathon-LB](https://dcos.io/docs/1.11/networking/marathon-lb/) ( Just needed for Advanced Installation with `external_access` enabled ) 
+- [Marathon-LB](https://docs.mesosphere.com/services/marathon-lb/) ( Just needed for Advanced Installation with `external_access` enabled ) 
 
 ## Quick Start
 
@@ -99,7 +99,7 @@ beakerx on DCOS installed successfully!
 
 ### Install BeakerX with GPU support
 
-Before you can start, please make sure your cluster runs at least 1 GPU agent. See the instructions below that use Terraform to spin up a 1 master/1 GPU agent DC/OS 1.11.1 cluster.
+Before you can start, please make sure your cluster runs at least 1 GPU agent. See the instructions below that use Terraform to spin up a 1 master/1 GPU agent DC/OS cluster.
 
 #### Installing a GPU Cluster on AWS via Terraform
 
@@ -151,7 +151,7 @@ Apply complete! Resources: 31 added, 0 changed, 0 destroyed.
    ssh_user = core
 ```
 
-You can now connect to your newly installed `DC/OS 1.11.1` cluster by copying the Master ELB Public IP into your browser. In our example this is `fabianbaie-tf7fcf-pub-mas-elb-1180697995.us-west-2.elb.amazonaws.com`
+You can now connect to your newly installed DC/OS cluster by copying the Master ELB Public IP into your browser. In our example this is `fabianbaie-tf7fcf-pub-mas-elb-1180697995.us-west-2.elb.amazonaws.com`
 
 As a next step continue to deploy BeakerX with GPU Support.
 
@@ -159,7 +159,7 @@ As a next step continue to deploy BeakerX with GPU Support.
 
 ### Deploy via UI
 
-Watch the [video on how to deploy BeakerX on your cluster](https://cl.ly/0l000v2h3H2O).
+Watch the [video on how to deploy BeakerX on your cluster](https://cl.ly/1x1k3d1z383x).
 
 The DC/OS UI provides an intuitive way to deploy the `BeakerX` package on your DC/OS cluster with GPU support. 
 
@@ -179,11 +179,10 @@ The DC/OS CLI provides a convenient way to deploy `BeakerX` to your cluster. Cre
 ```json
 {
   "service": {
-    "name": "beakerx",
+    "name": "beakerx-gpu",
     "cpus": 1,
     "gpu_support": {
       "enable": true,
-      "mount_agent_libraries": false,
       "gpus": 1
     },
     "mem": 2048
@@ -195,7 +194,6 @@ The DC/OS CLI provides a convenient way to deploy `BeakerX` to your cluster. Cre
     }
   },
   "networking": {
-    "port_api": 8888,
     "external_access": {
       "enable": false,
       "external_public_agent_ip": "",
@@ -237,7 +235,7 @@ networking / external_public_agent_ip: dns for Marathon-LB, typically set to you
 Installing Marathon app for package [beakerx] version [0.15.2]
 Service installed.
 ```
-#### Test BeakerX with GPU Support and Tensorflow
+#### Test BeakerX with GPU Support and TensorFlow
 
 After `BeakerX` was succesfully deployed authenticate with the default password described in quick start (pw: `dcos`) and create a new notebook in Python 3.
 
@@ -259,18 +257,16 @@ The output should look like:
 ['/device:CPU:0', '/device:GPU:0']
 ```
 
-#### Access Tensorboard
+#### Access TensorBoard
 
-To access Tensorboard run start a Terminal in BeakerX and run the following command:
+To access TensorBoard run start a Terminal in BeakerX and run the following command:
 
 `tensorboard --logdir=<yourlogdir> --be_url=/service/beakerx/tensorboard`
 
-Now you can access Tensorboard within your `BeakerX` instance by simply by adding `/tensorboard/` to your browser url: `http://<clusterurl>/service/beakerx/tensorboard/`
+Now you can access TensorBoard within your `BeakerX` instance simply by adding `/tensorboard/` to your browser url: `http://<clusterurl>/service/beakerx/tensorboard/`
 
 *Note: If you installed your `BeakerX` service under a different name just adjust the name in the url.*
 
-
-You can easily access Tensorboard 
 
 ### Advanced Installation
 
