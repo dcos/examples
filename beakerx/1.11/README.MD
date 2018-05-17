@@ -342,7 +342,7 @@ Use the following commands to shut down and delete your bookkeeper service:
 
 ```bash
 $ dcos package uninstall beakerx
-Uninstalled package [beakerx] version [0.15.2]
+Uninstalled package [beakerx] version [0.16.1]
 Service uninstalled. Note that any persisting data will be automatically removed from the agent where the service was deployed.
 ```
 
