@@ -328,7 +328,7 @@ $ dcos task
 $ chown -R beakerx:beakerx /home/beakerx/persistent_data
 ```
 
-- Now when accessing your `beakerx` service and uploading files to your `persistent_data` folder, e.g. notebooks, they are persistent stored.
+- Now when accessing your `BeakerX` service and uploading files to your `persistent_data` folder, e.g. notebooks, they are persistent stored.
 
 ## Use BeakerX 
 
