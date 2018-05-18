@@ -14,7 +14,7 @@
 - [Prerequisites](#prerequisites)
 - [Install MySQL using GUI](#install-mysql-using-gui)
 - [Install MySQL using CLI](#install-mysql-using-cli)
-- [Customize MySQL](#customize-mysql)
+- [Update MySQL Service](#update-mysql-service)
 - [Install WordPress using GUI](#install-wordpress-using-gui)
 - [Install WordPress using CLI](#install-wordpress-using-cli)
 - [Access WordPress](#access-wordpress)
@@ -50,7 +50,7 @@
 ![MySQL Install](img/mysql-install.png)
 
 - Wait for service to be up and running, go to Services section and check the service status.
-- Now, go to [Customize MySQL](#customize-mysql) section.
+- Now, go to [Update MySQL Service](#update-mysql-service) section.
 
 ## Install MySQL using CLI
 
@@ -65,7 +65,7 @@ Create a file called `mysql-config.json` and set the following properties:
     "name": "wordpress",
     "username": "wp_admin",
     "password": "password",
-    "root_password": "wordpress"
+    "root_password": "root"
   },
   "networking": {
     "port": 3306,
@@ -104,11 +104,11 @@ Service installed.
 Default login: `admin`/`password`. This username/password combination only applies if you haven't changed the defaults.
 ```
 
-## Customize MySQL
+## Update MySQL Service
 
-- We need to customize our mysql service for further development. I will explain it later.
+- After our mysql service goes up and running, we need to update our mysql service for further development. I will explain it later.
 - Go to `mysql` service from services menu, click on `Edit` button.
-- Chnage `Container Runtime` from `Docker Engine` to `Universal Container Runtime(UCR)`.
+- Chanage `Container Runtime` from `Docker Engine` to `Universal Container Runtime(UCR)`.
 - Click on `Review & Run`.
 
 ![MySQL UCR](img/mysql-config-runtime.png)
@@ -156,7 +156,7 @@ Last but not least, to check if all required services (Marathon-LB, MySQL and Wo
 
 - Now, as we can see, everything is setup but there is no js, css support on our wordpress website because according to database, they are on different path. So we have to change our database url to load wordpress theme files like js, css, images.
 
-- In order to change values in database, we have to go into mysql service container and change the values. DC/OS currently only support UCR(Uninversal Container Runtime), if we want to go inside the deployed container. It is the reason first we customized our mysql service right after we deployed it. Currently, there is no way that we can set our deployment service runtime to UCR. So we have to set it after we deployed it. Read more about this [here](https://docs.mesosphere.com/1.11/deploying-services/containerizers/).
+- In order to change values in database, we have to go into mysql service container and change the values. DC/OS currently only support UCR(Universal Container Runtime), if we want to go inside the deployed container. It is the reason first we customized our mysql service right after we deployed it. Currently, there is no way that we can set our deployment service runtime to UCR. So we have to set it after we deployed it. Read more about this [here](https://docs.mesosphere.com/1.11/deploying-services/containerizers/).
 
 ```bash
 $ dcos task exec --interactive --tty mysql bash
