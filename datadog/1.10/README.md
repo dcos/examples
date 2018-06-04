@@ -4,7 +4,7 @@
 
 DC/OS makes it very easy to deploy Datadog across all Mesos agent nodes in the cluster, and also configures Datadog to automatically collect metrics from Docker, Mesos, and other services running on those nodes.
 
-* Estimated time for completion: 5–10 minutes
+* Estimated time for completion: 10-15 minutes
 * Target audience: Anyone interested in monitoring a containerized environment
 * Scope:
     * [Configure and install](#install-datadog) Datadog on your agent and master nodes
@@ -62,7 +62,13 @@ Once you install the Datadog package on the agent nodes, you can move on to [ins
 
 Datadog also collects specialized metrics from Mesos master nodes. When you install Datadog on your master nodes, Datadog will automatically begin collecting and aggregating metrics from ZooKeeper and Marathon, in addition to monitoring Mesos and Docker (as is the case on agent nodes).
 
-To install Datadog on Linux, run the command below, providing your [Datadog API key][api-key] (see [the docs][dd-agent-docs] for an alternative command for Amazon Linux):
+To install Datadog on Linux, log in to the leader node with:
+
+```
+dcos node ssh --master-proxy --leader
+```
+
+Then run the command below, providing your [Datadog API key][api-key] (see [the docs][dd-agent-docs] for an alternative command for Amazon Linux):
 
 ```bash
 docker run -d --name datadog-agent \
@@ -102,20 +108,26 @@ For other services, you can create monitoring configuration templates that Datad
 On your agent nodes, create a directory to house your custom configs and create a YAML file for the service you want to monitor (drawing on [the example YAML templates][yamls] that ship with the Datadog Agent). In this example we'll set up service discovery for MYSQL, which requires a password to access database metrics:
 
 ```bash
-mkdir -p /opt/datadog-agent-conf.d/mysql.d/
-touch /opt/datadog-agent-conf.d/mysql.d/auto_conf.yaml
+# get a node ID
+dcos node
+# connect to a node selected from the previous command's output
+dcos node ssh --master-proxy --mesos-id=225ca9ef-f1bc-43c1-bf31-b9330f89bb50-S0
+# create a config folder for the mysql integration
+sudo mkdir -p /opt/datadog-agent-conf.d/mysql.d/
+# create a config file for AutoDiscovery in this folder
+sudo touch /opt/datadog-agent-conf.d/mysql.d/auto_conf.yaml
 ```
 
-Open your newly created `auto_conf.yaml` file and paste in [the basic config][mysql-docs] template from the Datadog Agent, then add a `docker_images` section at the top to tell Datadog which Docker images this template applies to (for this example we'll assume that your MySQL database already has [a `datadog` user created][mysql-docs] with the necessary permissions):
+Open your newly created `auto_conf.yaml` file and paste in [the basic config][mysql-docs] template from the Datadog Agent, then add a `ad_identifiers` section at the top to tell Datadog which Docker images this template applies to (for this example we'll assume that your MySQL database already has [a `datadog` user created][mysql-docs] with the necessary permissions):
 
 ```yaml
-docker_images:
+ad_identifiers:
   - mysql
 
 init_config:
 
 instances:
-  - server: 172.17.0.1
+  - server: "%%host%%"
     user: datadog
     pass: password_for_datadog_user_in_db
 
@@ -140,7 +152,7 @@ Deploy the changes to the Datadog service. You can then verify that the configur
 CONTAINER ID        IMAGE                                                             COMMAND                  CREATED             STATUS              PORTS                                                                NAMES
 d37bf53a57d1        datadog/agent:latest   "/init"             3 hours ago         Up 3 hours (healthy)   8125/udp, 8126/tcp   datadog-agent
 22bb4ef7de7e        mysql:5.7.12                                                      "docker-entrypoint.sh"   22 minutes ago      Up 22 minutes       0.0.0.0:3306->3306/tcp                                               mesos-xxx
-[agent-01]# docker exec 7bc168abea39 agent status
+[agent-01]# docker exec d37bf53a57d1 agent status
 
 ...
     mysql
