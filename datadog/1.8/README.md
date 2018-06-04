@@ -116,7 +116,7 @@ docker_images:
 init_config:
 
 instances:
-  - server: 172.17.0.1
+  - server: "%%host%%"
     user: datadog
     pass: password_for_datadog_user_in_db
 
