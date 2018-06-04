@@ -9,7 +9,7 @@
 ## Prerequisites
 
 * A running DC/OS 1.10 cluster
-* A Dynatrace environment (try for free [here][freetrial])
+* A NexCloud environment (try for free [here][freetrial])
 * [InfluxDB](https://universe.dcos.io/#/package/influxdb/version/latest)  
 * [MySQL](https://universe.dcos.io/#/package/mysql/version/latest) / [MySQL-admin](https://universe.dcos.io/#/package/mysql-admin/version/latest)  
 If you completed to install MySQL admin, go to MySQL admin and execute next queries.
