@@ -110,7 +110,7 @@ Click the tile and select "Configure" to enter the required parameters for conne
 ## Additional resources
 
 The NexCloud DC/OS integration is supported by NexCloud.
-In case of issues please consult Dynatrace Support.
+In case of issues please consult NexCloud Support.
 
 [nexcloud]: http://www.nexcloud.co.kr/
 [freetrial]: https://github.com/nexclouding/NexCloud
