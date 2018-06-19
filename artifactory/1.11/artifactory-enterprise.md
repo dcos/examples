@@ -36,11 +36,12 @@ You must ensure this mount is writeable.
 
 Be sure to:
 
-- replace `service.licenses` with your own license string (Note: Licenses can be configured in the Artifactory UI)
+- replace `service.licenses` with your own license string. Note: Licenses can be configured in the Artifactory UI.
 - replace `service.database.user` and `service.database.password` with the
-  correct credentials if you have customised these
+  correct credentials if you have customised these values.
 - replace `artifactory` within `service.database.url` with the correct database name
-  if you have used a different one
+  if you have used a different one.
+- replace `enterprise.master_key` with your own master key value.
 
 ```
 {
@@ -58,7 +59,8 @@ Be sure to:
     }
   },
   "enterprise": {
-    "enabled": true
+    "enabled": true,
+    "master_key": "replaceme"
   }
 }
 ```
@@ -98,6 +100,7 @@ Be sure to:
   correct credentials if you have customised these
 - replace `artifactory` within `service.database.url` with the correct database name
   if you have used a different one
+- replace `enterprise.master_key` with key specified for primary artifactory instance.
 
 ```
 {
@@ -116,6 +119,7 @@ Be sure to:
   },
   "enterprise": {
     "enabled": true,
+    "master_key": "replaceme",
     "secondary" : {
       "enabled": true
     }
