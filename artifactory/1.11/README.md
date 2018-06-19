@@ -11,8 +11,14 @@ SQL Server or Postgres). To set up a testing instance of Postgres on DC/OS, see
 Once you have a database available, see the following guides to install the
 correct version of Artifactory:
 
-+ For Artifactory Pro, follow [this guide](artifactory-pro.md).
++ For Artifactory Pro, follow [this guide](artifactory-pro.md). 
+  
+  Artifactory Pro provides universal package management, integration with all leading CI servers, 
+  promotion of build artifacts, REST API support and more.
+   
 + For Artifactory Enterprise, follow [this guide](artifactory-enterprise.md).
+  
+  Artifactory Enterprise provides all pro features along with High availability, Disaster recovery and more.
 
 ## Resources
 
