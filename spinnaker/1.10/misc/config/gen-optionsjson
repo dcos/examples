@@ -1,0 +1,65 @@
+#!/bin/bash
+
+if [ $# -ne 1 ]; then
+   echo "Usage: gen_configjson <proxy-hostname>"
+   exit 0 
+fi
+PROXY_HOSTNAME=$1
+
+
+if [ -f clouddriver-local.yml ] && [ -s clouddriver-local.yml ]; then
+  CLOUDDRIVER_CONFIG=$(cat clouddriver-local.yml | base64)
+fi
+
+if [ -f front50-local.yml ] && [ -s front50-local.yml ]; then
+  FRONT50_CONFIG=$(cat front50-local.yml | base64)
+fi
+
+if [ -f echo-local.yml ] && [ -s echo-local.yml ]; then
+  ECHO_CONFIG=$(cat echo-local.yml | base64)
+fi
+
+if [ -f igor-local.yml ] && [ -s igor-local.yml ]; then
+  IGOR_CONFIG=$(cat igor-local.yml | base64)
+fi
+
+if [ -f fiat-local.yml ] && [ -s fiat-local.yml ]; then
+  FIAT_CONFIG=$(cat fiat-local.yml | base64)
+fi
+
+if [ -f orca-local.yml ] && [ -s orca-local.yml ]; then
+  ORCA_CONFIG=$(cat orca-local.yml | base64)
+fi
+
+if [ -f gate-local.yml ] && [ -s gate-local.yml ]; then
+  GATE_CONFIG=$(cat gate-local.yml | base64)
+fi
+
+
+cat > ./options.json <<EOF
+{
+ "service": {"proxy-hostname": "$PROXY_HOSTNAME"},
+ "front": {
+    "config": "$FRONT50_CONFIG"
+ },
+ "clouddriver": {
+    "config": "$CLOUDDRIVER_CONFIG"
+ },
+ "echo": {
+    "config": "$ECHO_CONFIG"
+ },
+ "igor": {
+    "config": "$IGOR_CONFIG"
+ },
+ "fiat": {
+    "config": "$FIAT_CONFIG"
+ },
+ "orca": {
+    "config": "$ORCA_CONFIG"
+ },
+ "gate": {
+    "config": "$GATE_CONFIG"
+ }
+}
+EOF
+
