@@ -1,0 +1,39 @@
+apiVersion: V2
+name: spinnaker
+count: 1
+haproxy:
+  frontends:
+  - bindPort: 9001
+    protocol: HTTP
+    linkBackend:
+      defaultBackend: deck
+  - bindPort: 8084
+    protocol: HTTP
+    linkBackend:
+      defaultBackend: gate
+  - bindPort: 9000
+    protocol: HTTP
+    linkBackend:
+      defaultBackend: minio
+  backends:
+  - name: deck
+    protocol: HTTP
+    services:
+    - endpoint:
+        type: ADDRESS
+        address: deck.spinnaker.l4lb.thisdcos.directory
+        port: 9001
+  - name: gate
+    protocol: HTTP
+    services:
+    - endpoint:
+        type: ADDRESS
+        address: gate.spinnaker.l4lb.thisdcos.directory
+        port: 8084
+  - name: minio
+    protocol: HTTP
+    services:
+    - endpoint:
+        type: ADDRESS
+        address: minio.marathon.l4lb.thisdcos.directory
+        port: 9000

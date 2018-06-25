@@ -1,12 +1,11 @@
 
-## Version 0.1.0-1.4.2
+## DC/OS Spinnaker service 0.2.0-1.4.2
 
-- DC/OS Spinnaker service currently only works with DC/OS Enterprise 
-- Initial release based on Spinnaker 1.4.2
-- Spinnaker has a lot of configurations options the following have been tested with this release.
-    - clouddriver: DC/OS provider for deploying to DC/OS Enterprise
-    - front50: S3 and GCS as backing store
-    - echo: email notification
-    - igor: dockerhub trigger
-    
-    
+- Spinnaker Framework now comes with the default configuration which uses:
+	- Minio as the default backend store. 
+	- DC/OS that spinnaker runs in as delivery target. 
+- Port definitions and VIPs are added. 
+- Ports get auto-assigned. 
+- All services except Redis, Echo and Igor can now be scaled 
+- All services now deploy in parallel.
+- Spinnaker config yml can now be edited from the DC/OS console.     

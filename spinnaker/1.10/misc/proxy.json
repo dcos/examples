@@ -1,0 +1,20 @@
+{
+  "id": "spinnaker-proxy",
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "realmbgl/spinproxy2",
+      "forcePullImage": true
+    }
+  },
+  "args": [],
+  "cpus": 0.1,
+  "mem": 256,
+  "env": {
+  },
+  "instances": 1,
+  "constraints": [],
+  "acceptedResourceRoles": [
+      "slave_public"
+  ]
+}
