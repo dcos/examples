@@ -9,7 +9,7 @@
 - DC/OS 1.11 or later with at least one public agent
 - [DC/OS CLI installed](https://docs.mesosphere.com/1.11/cli/install/) and
   configured to use your cluster
-- Database (MySQL, Oracle, MS SQL Server or Postgres)
+- Database ([Postgres](install-postgres.md), [MySQL](install-mysql.md), Oracle, or MS SQL Server)
 - Artifactory Enterprise license
 - NFS directory mounted to each node
 

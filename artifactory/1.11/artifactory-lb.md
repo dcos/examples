@@ -39,7 +39,7 @@ dcos package install --options=artifactory-lb-options.json artifactory-lb
 To access Artifactory, navigate to the DC/OS public agent where Artifactory-lb
 is running:
 
-![Artifactory UI](img/Artifactory_UI_Home.png)
+![Artifactory UI](img/Artifactory_UI.png)
 
 If you're using the Amazon CloudFormation DC/OS templates, you will need to
 [find the hostname or IP address of the specific public
