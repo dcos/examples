@@ -64,7 +64,7 @@ Go to the [Using Spinnaker](#using-spinnaker) section to learn how to access the
 
 Use the following command to download Spinnaker configuration templates to get started.
 ```
-curl -O https://.../spinnaker/assets/spin-config.zip && unzip spin-config.zip && cd config && chmod +x gen-configjson
+curl -O https://ecosystem-repo.s3.amazonaws.com/spinnaker/artifacts/0.2.0-1.4.2/config.tgz && tar -xzf config.tgz && cd config && chmod +x gen-optionsjson
 ```
 
 The created *config* folder has the following yml templates.
