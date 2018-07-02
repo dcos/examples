@@ -7,9 +7,9 @@ DC/OS makes it very easy to deploy Datadog across all Mesos agent nodes in the c
 * Estimated time for completion: 10-15 minutes
 * Target audience: Anyone interested in monitoring a containerized environment
 * Scope:
-    * [Configure and install](#install-datadog) Datadog on your agent and master nodes
-    * [Monitor](#monitor-metrics-from-your-dcos-cluster) system metrics, Docker, and Mesos in Datadog
-    * Optional: [Use autodiscovery](#use-autodiscovery-to-monitor-additional-services) to automatically monitor services running on DC/OS
+  * [Configure and install](#install-datadog) Datadog on your agent and master nodes
+  * [Monitor](#monitor-metrics-from-your-dcos-cluster) system metrics, Docker, and Mesos in Datadog
+  * Optional: [Use autodiscovery](#use-autodiscovery-to-monitor-additional-services) to automatically monitor services running on DC/OS
 
 ## Prerequisites
 
@@ -41,7 +41,7 @@ Once you install the Datadog package on the agent nodes, you can move on to [ins
 
 To install Datadog using the [CLI][cli], first create a file called options.json with the following fields:
 
-```
+```json
 {
   "datadog": {
     "api_key": $YOUR_API_KEY,
@@ -53,7 +53,7 @@ To install Datadog using the [CLI][cli], first create a file called options.json
 Then run the install command:
 
 ```bash
-$ dcos package install datadog --options=options.json
+dcos package install datadog --options=options.json
 ```
 
 Once you install the Datadog package on the agent nodes, you can move on to [installing Datadog](#installation-on-master-nodes) on the master nodes.
@@ -64,7 +64,7 @@ Datadog also collects specialized metrics from Mesos master nodes. When you inst
 
 To install Datadog on Linux, log in to the leader node with:
 
-```
+```bash
 dcos node ssh --master-proxy --leader
 ```
 
@@ -137,7 +137,7 @@ instances:
 
 In order to apply your newly created config template, you need to mount the config files on the DC/OS agent node into the Datadog container running on that host.
 
-You can do that easily in the DC/OS web UI by adding a new volume to the Datadog service. From the Services list, select Datadog, and then click the Edit button to modify the service parameters. Under "Volumes," add the following volume:
+To pass custom volumes to the Datadog service you will need to create the service from scratch as Universe packages don't allow changing mounted volumes. In this new service, under "Volumes" add the following volume on top of the default ones (as shown on the image below):
 
 * Container path: `/conf.d`
 * Host path: `/opt/datadog-agent-conf.d`
@@ -145,7 +145,7 @@ You can do that easily in the DC/OS web UI by adding a new volume to the Datadog
 
 ![Mounting a config volume in the Datadog Agent container](img/dcos-volume.png)
 
-Deploy the changes to the Datadog service. You can then verify that the configuration is correct by running the Datadog `status` command on your agent node. For MySQL the command and output should look something like the snippet below:
+Deploy the custom Datadog service. You can then verify that the configuration is correct by running the Datadog `status` command on your agent node. For MySQL the command and output should look something like the snippet below:
 
 ```bash
 [agent-01]# docker ps
