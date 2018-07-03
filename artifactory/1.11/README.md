@@ -24,3 +24,13 @@ correct version of Artifactory:
 
 For more documentation about JFrog Artifactory please visit
 [wiki.jfrog.com](https://wiki.jfrog.com).
+
+## Notes
+
+[Postgres](install-postgres.md) and [MySQL](install-mysql.md) database options provided in this documentation 
+should be sufficient to trial the Artifactory but we do not currently recommend using this database settings
+ for a production deployment of Artifactory.
+
+For instructions on how to use Artifactory as a Docker Registry, see [this
+guide](using-artifactory.md). If you are planning to setup Artifactory as insecure docker registry,
+We recommend to do this setup before running other services.

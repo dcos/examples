@@ -41,7 +41,9 @@ Be sure to:
   correct credentials if you have customised these values.
 - replace `artifactory` within `service.database.url` with the correct database name
   if you have used a different one.
-- replace `enterprise.master_key` with your own master key value.
+- replace `enterprise.master_key` with your own master key value. 
+The Master key is an AES 128 bit secret key that's used by Artifactory to securely synchronize files between cluster nodes. 
+You can generate one manually by running ‘openssl rand -hex 16’, which will output a 128 bit key size (hexadecimal encoded).
 
 ```
 {
