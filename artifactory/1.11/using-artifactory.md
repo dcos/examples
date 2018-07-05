@@ -36,6 +36,10 @@ sudo systemctl daemon-reload
 sudo systemctl restart docker.service
 ```
 IMPORTANT: Above setup needs to be done on all agent nodes of your cluster where Artifactory containers can run. 
+
+WARNING: Restarting docker service will shutdown your containers, which DC/OS will respawn. Containers that are not
+pinned to a node can come back in any node and that could cause problems. 
+
 We recommend to do this setup before running other services.
 
 ## Pushing a Docker image to Artifactory

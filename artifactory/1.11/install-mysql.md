@@ -58,5 +58,7 @@ dcos package install --options=mysql-options.json mysql
 3. Make sure MySQL is running and is healthy by looking under the Services tab
    in the DC/OS UI.
 
-This should be sufficient to trial the Artifactory package but we do not
-currently recommend using this for a production deployment of Artifactory.
+WARNING: mysql-options.json mentioned in this page is a sample setting sufficient to trial the Artifactory package.
+We do not currently recommend using this sample for a production deployment of Artifactory. 
+DB choice, CPU, memory and volume size needs to be picked and adjusted based on the expected load for 
+the production Artifactory.
