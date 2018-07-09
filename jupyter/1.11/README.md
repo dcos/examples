@@ -4,27 +4,27 @@
 
 The initial release of the JupyterLab Notebook Service for Mesosphere DC/OS contains:
 
-* [Apache Spark](https://spark.apache.org/docs/2.2.1) 2.2.1
+* [Apache Spark](https://spark.apache.org/docs/2.2.1) 2.2.1 - 
 Apache Spark™ is a unified analytics engine for large-scale data processing.
-* [BeakerX](http://beakerx.com) 1.0.0
+* [BeakerX](http://beakerx.com) 1.0.0 -
 BeakerX is a collection of kernels and extensions to the Jupyter interactive computing environment. It provides JVM support, Spark cluster support, polyglot programming, interactive plots, tables, forms, publishing, and more.
-* [Dask](https://dask.readthedocs.io) 0.18.1
+* [Dask](https://dask.readthedocs.io) 0.18.1 -
 Dask is a flexible parallel computing library for analytic computing.
-* [Distributed](https://distributed.readthedocs.io) 1.22.0
+* [Distributed](https://distributed.readthedocs.io) 1.22.0 -
 Dask.distributed is a lightweight library for distributed computing in Python. It extends both the concurrent.futures and dask APIs to moderate sized clusters.
-* [JupyterLab](https://jupyterlab.readthedocs.io) 0.32.1
+* [JupyterLab](https://jupyterlab.readthedocs.io) 0.32.1 -
 JupyterLab is the next-generation web-based user interface for [Project Jupyter](https://jupyter.org).
-* [PyTorch](https://pytorch.org) 0.4.0
+* [PyTorch](https://pytorch.org) 0.4.0 -
 Tensors and Dynamic neural networks in Python with strong GPU acceleration. PyTorch is a deep learning framework for fast, flexible experimentation.
-* [Ray](https://ray.readthedocs.io) 0.5.0
+* [Ray](https://ray.readthedocs.io) 0.5.0 -
 Ray is a flexible, high-performance distributed execution framework.
   * Ray Tune: Hyperparameter Optimization Framework
   * Ray RLlib: Scalable Reinforcement Learning
-* [TensorFlow](https://www.tensorflow.org) 1.8.0
+* [TensorFlow](https://www.tensorflow.org) 1.8.0 -
 TensorFlow™ is an open source software library for high performance numerical computation.
-* [TensorFlowOnSpark](https://github.com/yahoo/TensorFlowOnSpark) 1.3.0
+* [TensorFlowOnSpark](https://github.com/yahoo/TensorFlowOnSpark) 1.3.0 -
 TensorFlowOnSpark brings TensorFlow programs onto Apache Spark clusters.
-* [XGBoost](https://xgboost.ai) 0.72
+* [XGBoost](https://xgboost.ai) 0.72 -
 Scalable, Portable and Distributed Gradient Boosting (GBDT, GBRT or GBM) Library, for Python, R, Java, Scala, C++ and more.
  
 It also includes support for:
