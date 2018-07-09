@@ -141,7 +141,7 @@ Next, you can check out the built-in tutorial in form of a Notebook called [Zepp
 
 ![Zeppelin Tutorial](img/zeppelin-tutorial.png)
 
-To use the python interpreter with tensorflow create a new Notebook and paste the following snippet and run it:
+To use the python interpreter with TensorFlow create a new Notebook and paste the following snippet and run it:
 ```
 %pyspark
 import tensorflow as tf
