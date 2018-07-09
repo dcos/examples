@@ -624,7 +624,17 @@ When you reload your `Jupyter` page and click `Kernel` you can change now via `C
 - [Website BeakerX](http://beakerx.com)
 - [Github BeakerX](https://github.com/twosigma/beakerx)
 
-#### Base version package list
+
+### Release Notes and Versions
+
+The initial release version was [v1.11.3-0.32.1](https://github.com/dcos-labs/dcos-jupyter-service/tree/v1.11.3-0.32.1) and will be updated over time. A release history and the latest release can be found [here](https://github.com/dcos-labs/dcos-jupyter-service/releases). 
+
+| Version | Release Notes | Github |
+|----------|----------|-------|
+| `v1.11.3-0.32.1` | [here](https://github.com/dcos-labs/dcos-jupyter-service/releases/tag/v1.11.3-0.32.1) | [here](https://github.com/dcos-labs/dcos-jupyter-service/tree/v1.11.3-0.32.1)  |
+
+#### Package list `v1.11.3-0.32.1`
+
 The `base` version consists of additionally installed [packages](https://github.com/dcos-labs/dcos-jupyter-service/blob/master/beakerx-root-conda-base-env.yml) tailored for Data Scientists needs:
 
 ```bash
@@ -643,17 +653,17 @@ atari-py                  0.1.1                     <pip>
 atomicwrites              1.1.5                    py36_0    conda-forge
 attrs                     18.1.0                     py_1    conda-forge
 automat                   0.7.0                    py36_0    conda-forge
-awscli                    1.15.49                  py36_0    conda-forge
+awscli                    1.15.53                  py36_0    conda-forge
 backcall                  0.1.0                      py_0    conda-forge
-bazel                     0.14.0                        0    conda-forge
-beakerx                   0.20.1                   py36_1    conda-forge
+bazel                     0.15.0                        0    conda-forge
+beakerx                   1.0.0                    py36_1    conda-forge
 beautifulsoup4            4.6.0                    py36_0    conda-forge
 blas                      1.1                    openblas    conda-forge
 bleach                    1.5.0                    py36_0    conda-forge
 bokeh                     0.12.16                  py36_0    conda-forge
 boost-cpp                 1.66.0                        1    conda-forge
-boto3                     1.7.48                     py_0    conda-forge
-botocore                  1.10.48                    py_0    conda-forge
+boto3                     1.7.52                     py_0    conda-forge
+botocore                  1.10.52                    py_0    conda-forge
 bottleneck                1.2.1            py36h7eb728f_1    conda-forge
 bs4                       0.0.1                     <pip>
 bzip2                     1.0.6                         1    conda-forge
@@ -661,24 +671,23 @@ ca-certificates           2018.4.16                     0    conda-forge
 cairo                     1.14.10                       0    conda-forge
 certifi                   2018.4.16                py36_0    conda-forge
 cffi                      1.11.5                   py36_0    conda-forge
-chardet                   3.0.4                    py36_0    conda-forge
+chardet                   3.0.4                      py_1    conda-forge
 click                     6.7                        py_1    conda-forge
 cloudpickle               0.5.3                      py_0    conda-forge
-colorama                  0.3.9                    py36_0    conda-forge
-conda                     4.5.5                    py36_0    conda-forge
+colorama                  0.3.9                      py_1    conda-forge
+conda                     4.5.6                    py36_0    conda-forge
 conda-env                 2.6.0                         0    conda-forge
 configurable-http-proxy   3.1.0                   node8_1    conda-forge
 constantly                15.1.0                     py_0    conda-forge
 cryptography              2.2.1            py36hdffb7b8_1    conda-forge
 curl                      7.60.0                        0    conda-forge
-cycler                    0.10.0                   py36_0    conda-forge
-cython                    0.28.3           py36hfc679d8_0    conda-forge
+cycler                    0.10.0                     py_1    conda-forge
+cython                    0.28.4           py36hfc679d8_0    conda-forge
 cytoolz                   0.9.0.1                  py36_0    conda-forge
 dask                      0.18.1                     py_0    conda-forge
 dask-core                 0.18.1                     py_0    conda-forge
 dask-glm                  0.1.0                         0    conda-forge
-dask-ml                   0.6.0            py36h470a237_0    conda-forge
-dask-searchcv             0.2.0                      py_0    conda-forge
+dask-ml                   0.7.0            py36h470a237_0    conda-forge
 dask-tensorflow           0.0.2                      py_0    conda-forge
 dask-xgboost              0.1.5                      py_0    conda-forge
 dbus                      1.13.0               h3a4f0e9_0    conda-forge
@@ -708,15 +717,16 @@ h5py                      2.8.0            py36hb794570_1    conda-forge
 harfbuzz                  1.7.6                         0    conda-forge
 hdf5                      1.10.2                        0    conda-forge
 heapdict                  1.0.0                    py36_0    conda-forge
-horovod                   0.13.5                    <pip>
+horovod                   0.13.7                    <pip>
 html5lib                  0.9999999                py36_0    conda-forge
 hyperlink                 17.3.1                     py_0    conda-forge
 icu                       58.2                 hfc679d8_0    conda-forge
-idna                      2.7                      py36_0    conda-forge
+idna                      2.7                        py_1    conda-forge
 incremental               17.5.0                     py_0    conda-forge
+invoke                    1.0.0                    py36_0    conda-forge
 ipykernel                 4.8.2                    py36_0    conda-forge
 ipython                   6.4.0                    py36_0    conda-forge
-ipython_genutils          0.2.0                    py36_0    conda-forge
+ipython_genutils          0.2.0                      py_1    conda-forge
 ipywidgets                7.2.1                    py36_1    conda-forge
 jedi                      0.12.0                   py36_0    conda-forge
 jinja2                    2.10                     py36_0    conda-forge
@@ -733,6 +743,7 @@ jupyter_latex_envs        1.4.4                    py36_0    conda-forge
 jupyter_nbextensions_configurator 0.4.0                    py36_0    conda-forge
 jupyterhub                0.9.0                    py36_0    conda-forge
 jupyterlab                0.32.1                   py36_0    conda-forge
+jupyterlab-github         0.6.0                     <pip>
 jupyterlab_launcher       0.10.5                   py36_0    conda-forge
 keras                     2.1.6                    py36_0    conda-forge
 kiwisolver                1.0.1                    py36_1    conda-forge
@@ -745,7 +756,6 @@ libgcc                    7.2.0                h69d50b8_2    defaults
 libgcc-ng                 7.2.0                hdf63c60_3    defaults
 libgcrypt                 1.8.3                hfc679d8_0    conda-forge
 libgfortran               3.0.0                         1    defaults
-libgfortran-ng            7.2.0                hdf63c60_3    defaults
 libgpg-error              1.31                 hf484d3e_0    conda-forge
 libgpuarray               0.7.6                         0    conda-forge
 libgsasl                  1.8.0                         2    conda-forge
@@ -764,17 +774,18 @@ libxml2                   2.9.8                h422b904_1    conda-forge
 libxslt                   1.1.32               h88dbc4e_1    conda-forge
 locket                    0.2.0                    py36_1    conda-forge
 lxml                      4.2.2            py36hc9114bc_0    conda-forge
+lz4                       2.0.2                     <pip>
 mako                      1.0.7                    py36_0    conda-forge
 markdown                  2.6.11                     py_0    conda-forge
 markupsafe                1.0                      py36_0    conda-forge
 matplotlib                2.2.2                    py36_1    conda-forge
 maven                     3.5.0                         0    conda-forge
-mccabe                    0.6.1                    py36_0    conda-forge
+mccabe                    0.6.1                      py_1    conda-forge
 mistune                   0.8.3                    py36_1    conda-forge
 more-itertools            4.2.0                      py_0    conda-forge
 mpi                       1.0                       mpich    conda-forge
 mpi4py                    3.0.0              py36_mpich_2    conda-forge
-mpich                     3.2.1                h26a2512_3    conda-forge
+mpich                     3.2.1                h26a2512_4    conda-forge
 msgpack-python            0.5.6            py36h2d50403_2    conda-forge
 multipledispatch          0.5.0                    py36_0    conda-forge
 nbconvert                 5.3.1                      py_1    conda-forge
@@ -782,21 +793,21 @@ nbformat                  4.4.0                    py36_0    conda-forge
 ncurses                   5.9                          10    conda-forge
 nodejs                    8.11.1               hf484d3e_0    defaults
 notebook                  5.5.0                    py36_0    conda-forge
-numpy                     1.14.5          py36_blas_openblashd3ea46f_200  [blas_openblas]  conda-forge
-olefile                   0.45.1                   py36_0    conda-forge
+numpy                     1.14.5          py36_blas_openblashd3ea46f_201  [blas_openblas]  conda-forge
+olefile                   0.45.1                     py_1    conda-forge
 openblas                  0.2.20                        8    conda-forge
 opencv-python             3.4.1.15                  <pip>
 openssl                   1.0.2o                        0    conda-forge
 packaging                 17.1                       py_0    conda-forge
 pamela                    0.3.0                    py36_0    conda-forge
-pandas                    0.23.1                   py36_0    conda-forge
+pandas                    0.23.3                   py36_0    conda-forge
 pandas-datareader         0.6.0                    py36_0    conda-forge
 pandoc                    2.2.1                         0    conda-forge
 pandocfilters             1.4.2                    py36_0    conda-forge
 pango                     1.40.14                       0    conda-forge
 parquet-cpp               1.4.0                h83d4a3d_1    conda-forge
 parso                     0.3.0                      py_0    conda-forge
-partd                     0.3.8                    py36_0    conda-forge
+partd                     0.3.8                      py_1    conda-forge
 patsy                     0.5.0                    py36_0    conda-forge
 pcre                      8.39                          0    conda-forge
 pep8                      1.7.1                      py_0    conda-forge
@@ -814,7 +825,7 @@ psutil                    5.4.6                    py36_0    conda-forge
 ptyprocess                0.6.0                    py36_0    conda-forge
 py                        1.5.4                      py_0    conda-forge
 py4j                      0.10.7                   py36_0    conda-forge
-pyarrow                   0.9.0                    py36_1    conda-forge
+pyarrow                   0.9.0            py36hfc679d8_2    conda-forge
 pyasn1                    0.4.3                      py_0    conda-forge
 pyasn1-modules            0.2.1                      py_0    conda-forge
 pycodestyle               2.3.1                    py36_0    conda-forge
@@ -824,20 +835,20 @@ pycurl                    7.43.0.2         py36hb7f436b_0    defaults
 pyflakes                  1.6.0                    py36_0    conda-forge
 pyfolio                   0.8.0                      py_0    conda-forge
 pyglet                    1.3.2                     <pip>
-pygments                  2.2.0                    py36_0    conda-forge
+pygments                  2.2.0                      py_1    conda-forge
 pygpu                     0.7.6                    py36_0    conda-forge
 pyhamcrest                1.9.0                    py36_1    conda-forge
 pymc3                     3.4.1                    py36_0    conda-forge
 PyOpenGL                  3.1.0                     <pip>
 pyopenssl                 18.0.0                   py36_0    conda-forge
-pyparsing                 2.2.0                    py36_0    conda-forge
+pyparsing                 2.2.0                      py_1    conda-forge
 pysocks                   1.6.8                    py36_1    conda-forge
 pytest                    3.6.2                    py36_0    conda-forge
 python                    3.6.5                         1    conda-forge
 python-dateutil           2.7.3                      py_0    conda-forge
 python-editor             1.0.3                    py36_0    conda-forge
 python-oauth2             1.0.1                    py36_0    conda-forge
-python-snappy             0.5.2            py36h00d4201_1    conda-forge
+python-snappy             0.5.3            py36h00d4201_0    conda-forge
 pytz                      2018.5                     py_0    conda-forge
 pyyaml                    3.12                     py36_1    conda-forge
 pyzmq                     17.0.0                   py36_4    conda-forge
@@ -849,24 +860,24 @@ r-evaluate                0.10.1                 r3.4.1_0    conda-forge
 r-glue                    1.2.0                  r3.4.1_0    conda-forge
 r-htmltools               0.3.6                  r3.4.1_0    conda-forge
 r-irdisplay               0.4.4                  r3.4.1_0    conda-forge
-r-irkernel                0.8.11                 r3.4.1_0    conda-forge
+r-irkernel                0.8.12                   r341_0    conda-forge
 r-jsonlite                1.5                    r3.4.1_0    conda-forge
 r-magrittr                1.5                    r3.4.1_0    conda-forge
 r-pbdzmq                  0.3_2                  r3.4.1_0    conda-forge
 r-r6                      2.2.2                  r3.4.1_0    conda-forge
 r-rcpp                    0.12.15                r3.4.1_0    conda-forge
 r-repr                    0.15                     r341_0    conda-forge
-r-stringi                 1.1.7                  r3.4.1_1    conda-forge
-r-stringr                 1.3.0                  r3.4.1_0    conda-forge
+r-stringi                 1.2.3                    r341_0    conda-forge
+r-stringr                 1.3.1                    r341_0    conda-forge
 r-uuid                    0.1_2                  r3.4.1_0    conda-forge
-ray                       0.4.0                     <pip>
+ray                       0.5.0                     <pip>
 readline                  7.0                           0    conda-forge
 redis                     2.10.6                    <pip>
 requests                  2.19.1                   py36_0    conda-forge
 requests-file             1.4.3                    py36_0    defaults
 requests-ftp              0.3.1                    py36_0    conda-forge
 rsa                       3.4.2                    py36_0    conda-forge
-ruamel_yaml               0.15.40          py36h470a237_0    conda-forge
+ruamel_yaml               0.15.42          py36h470a237_0    conda-forge
 s3fs                      0.1.5                      py_0    conda-forge
 s3transfer                0.1.13                   py36_0    conda-forge
 scikit-learn              0.19.1          py36_blas_openblas_201  [blas_openblas]  conda-forge
@@ -875,7 +886,7 @@ seaborn                   0.8.1                    py36_0    conda-forge
 send2trash                1.5.0                      py_0    conda-forge
 service_identity          17.0.0                     py_0    conda-forge
 setuptools                39.2.0                   py36_0    conda-forge
-simplegeneric             0.8.1                    py36_0    conda-forge
+simplegeneric             0.8.1                      py_1    conda-forge
 sip                       4.18                     py36_1    conda-forge
 six                       1.11.0                   py36_1    conda-forge
 snappy                    1.1.7                hfc679d8_2    conda-forge
@@ -889,7 +900,7 @@ tensorboard               1.8.0                    py36_1    conda-forge
 tensorflow                1.8.0                    py36_1    conda-forge
 tensorflow-hub            0.1.0                     <pip>
 tensorflowonspark         1.3.0                     <pip>
-termcolor                 1.1.0                    py36_1    conda-forge
+termcolor                 1.1.0                      py_2    conda-forge
 terminado                 0.8.1                    py36_0    conda-forge
 testpath                  0.3.1                    py36_0    conda-forge
 theano                    1.0.2                    py36_0    conda-forge
@@ -902,26 +913,26 @@ traitlets                 4.3.2                    py36_0    conda-forge
 twisted                   18.4.0           py36h470a237_0    conda-forge
 typing                    3.6.4                    py36_0    conda-forge
 urllib3                   1.23                     py36_0    conda-forge
-wcwidth                   0.1.7                    py36_0    conda-forge
+wcwidth                   0.1.7                      py_1    conda-forge
 webencodings              0.5                      py36_0    conda-forge
 werkzeug                  0.14.1                     py_0    conda-forge
-wheel                     0.31.0                   py36_0    conda-forge
+wheel                     0.31.1                   py36_0    conda-forge
 widgetsnbextension        3.2.1                    py36_0    conda-forge
 wrapt                     1.10.11                  py36_0    conda-forge
 xgboost                   0.72                     py36_0    conda-forge
 xlrd                      1.1.0                      py_2    conda-forge
-xorg-libxau               1.0.8                         3    conda-forge
-xorg-libxdmcp             1.1.2                         3    conda-forge
+xorg-libxau               1.0.8                h470a237_5    conda-forge
+xorg-libxdmcp             1.1.2                h470a237_6    conda-forge
 xz                        5.2.3                         0    conda-forge
 yaml                      0.1.7                         0    conda-forge
 yapf                      0.22.0                     py_0    conda-forge
-zeromq                    4.2.5                         1    conda-forge
+zeromq                    4.2.5                hfc679d8_3    conda-forge
 zict                      0.1.3                      py_0    conda-forge
 zlib                      1.2.11               h470a237_3    conda-forge
 zope.interface            4.5.0            py36h470a237_0    conda-forge
 ```
 
-#### GPU version package list
+#### Package list `v1.11.3-0.32.1` GPU version
 The `GPU` version extends the `base` package with:
 
 ```bash
@@ -940,17 +951,17 @@ atari-py                  0.1.1                     <pip>
 atomicwrites              1.1.5                    py36_0    conda-forge
 attrs                     18.1.0                     py_1    conda-forge
 automat                   0.7.0                    py36_0    conda-forge
-awscli                    1.15.51                  py36_0    conda-forge
+awscli                    1.15.53                  py36_0    conda-forge
 backcall                  0.1.0                      py_0    conda-forge
-bazel                     0.14.0                        0    conda-forge
-beakerx                   0.20.1                   py36_1    conda-forge
+bazel                     0.15.0                        0    conda-forge
+beakerx                   1.0.0                    py36_1    conda-forge
 beautifulsoup4            4.6.0                    py36_0    conda-forge
 blas                      1.1                    openblas    conda-forge
 bleach                    1.5.0                    py36_0    conda-forge
 bokeh                     0.12.16                  py36_0    conda-forge
 boost-cpp                 1.66.0                        1    conda-forge
-boto3                     1.7.50                     py_0    conda-forge
-botocore                  1.10.50                    py_0    conda-forge
+boto3                     1.7.52                     py_0    conda-forge
+botocore                  1.10.52                    py_0    conda-forge
 bottleneck                1.2.1            py36h7eb728f_1    conda-forge
 bs4                       0.0.1                     <pip>
 bzip2                     1.0.6                         1    conda-forge
@@ -958,25 +969,24 @@ ca-certificates           2018.4.16                     0    conda-forge
 cairo                     1.14.12              he56eebe_1    conda-forge
 certifi                   2018.4.16                py36_0    conda-forge
 cffi                      1.11.5                   py36_0    conda-forge
-chardet                   3.0.4                    py36_0    conda-forge
+chardet                   3.0.4                      py_1    conda-forge
 click                     6.7                        py_1    conda-forge
 cloudpickle               0.5.3                      py_0    conda-forge
 colorama                  0.3.9                      py_1    conda-forge
-conda                     4.5.5                    py36_0    conda-forge
+conda                     4.5.6                    py36_0    conda-forge
 conda-env                 2.6.0                         0    conda-forge
 configurable-http-proxy   3.1.0                   node8_1    conda-forge
 constantly                15.1.0                     py_0    conda-forge
 cryptography              2.2.1            py36hdffb7b8_1    conda-forge
 cuda90                    1.0                  h6433d27_0    pytorch
 curl                      7.60.0                        0    conda-forge
-cycler                    0.10.0                   py36_0    conda-forge
-cython                    0.28.3           py36hfc679d8_0    conda-forge
+cycler                    0.10.0                     py_1    conda-forge
+cython                    0.28.4           py36hfc679d8_0    conda-forge
 cytoolz                   0.9.0.1                  py36_0    conda-forge
 dask                      0.18.1                     py_0    conda-forge
 dask-core                 0.18.1                     py_0    conda-forge
 dask-glm                  0.1.0                         0    conda-forge
-dask-ml                   0.6.0            py36h470a237_0    conda-forge
-dask-searchcv             0.2.0                      py_0    conda-forge
+dask-ml                   0.7.0            py36h470a237_0    conda-forge
 dask-tensorflow           0.0.2                      py_0    conda-forge
 dask-xgboost              0.1.5                      py_0    conda-forge
 dbus                      1.13.0               h3a4f0e9_0    conda-forge
@@ -1006,16 +1016,17 @@ h5py                      2.8.0            py36hb794570_1    conda-forge
 harfbuzz                  1.7.6                         0    conda-forge
 hdf5                      1.10.2                        0    conda-forge
 heapdict                  1.0.0                    py36_0    conda-forge
-horovod                   0.13.5                    <pip>
+horovod                   0.13.7                    <pip>
 html5lib                  0.9999999                py36_0    conda-forge
 hyperlink                 17.3.1                     py_0    conda-forge
 icu                       58.2                 hfc679d8_0    conda-forge
-idna                      2.7                      py36_0    conda-forge
+idna                      2.7                        py_1    conda-forge
 incremental               17.5.0                     py_0    conda-forge
 intel-openmp              2018.0.3                      0    defaults
+invoke                    1.0.0                    py36_0    conda-forge
 ipykernel                 4.8.2                    py36_0    conda-forge
 ipython                   6.4.0                    py36_0    conda-forge
-ipython_genutils          0.2.0                    py36_0    conda-forge
+ipython_genutils          0.2.0                      py_1    conda-forge
 ipywidgets                7.2.1                    py36_1    conda-forge
 jedi                      0.12.0                   py36_0    conda-forge
 jinja2                    2.10                     py36_0    conda-forge
@@ -1032,6 +1043,7 @@ jupyter_latex_envs        1.4.4                    py36_0    conda-forge
 jupyter_nbextensions_configurator 0.4.0                    py36_0    conda-forge
 jupyterhub                0.9.0                    py36_0    conda-forge
 jupyterlab                0.32.1                   py36_0    conda-forge
+jupyterlab-github         0.6.0                     <pip>
 jupyterlab_launcher       0.10.5                   py36_0    conda-forge
 keras                     2.1.6                    py36_0    conda-forge
 kiwisolver                1.0.1                    py36_1    conda-forge
@@ -1065,12 +1077,13 @@ libxslt                   1.1.32               h88dbc4e_1    conda-forge
 llvmlite                  0.23.0                   py36_1    conda-forge
 locket                    0.2.0                    py36_1    conda-forge
 lxml                      4.2.2            py36hc9114bc_0    conda-forge
+lz4                       2.0.2                     <pip>
 mako                      1.0.7                    py36_0    conda-forge
 markdown                  2.6.11                     py_0    conda-forge
 markupsafe                1.0                      py36_0    conda-forge
 matplotlib                2.2.2                    py36_1    conda-forge
 maven                     3.5.0                         0    conda-forge
-mccabe                    0.6.1                    py36_0    conda-forge
+mccabe                    0.6.1                      py_1    conda-forge
 mistune                   0.8.3                    py36_1    conda-forge
 mkl                       2018.0.3                      1    defaults
 mkl_fft                   1.0.2                    py36_0    conda-forge
@@ -1088,22 +1101,22 @@ ninja                     1.8.2                h2d50403_1    conda-forge
 nodejs                    8.10.0                        0    conda-forge
 notebook                  5.5.0                    py36_0    conda-forge
 numba                     0.38.1                   py36_0    conda-forge
-numpy                     1.14.5          py36_blas_openblashd3ea46f_200  [blas_openblas]  conda-forge
+numpy                     1.14.5          py36_blas_openblashd3ea46f_201  [blas_openblas]  conda-forge
 numpy-base                1.14.3           py36h0ea5e3f_1    defaults
-olefile                   0.45.1                   py36_0    conda-forge
+olefile                   0.45.1                     py_1    conda-forge
 openblas                  0.2.20                        8    conda-forge
 opencv-python             3.4.1.15                  <pip>
 openssl                   1.0.2o                        0    conda-forge
 packaging                 17.1                       py_0    conda-forge
 pamela                    0.3.0                    py36_0    conda-forge
-pandas                    0.23.2                   py36_0    conda-forge
+pandas                    0.23.3                   py36_0    conda-forge
 pandas-datareader         0.6.0                    py36_0    conda-forge
 pandoc                    2.2.1                         0    conda-forge
 pandocfilters             1.4.2                    py36_0    conda-forge
 pango                     1.40.14              hd50be51_1    conda-forge
 parquet-cpp               1.4.0                h83d4a3d_1    conda-forge
 parso                     0.3.0                      py_0    conda-forge
-partd                     0.3.8                    py36_0    conda-forge
+partd                     0.3.8                      py_1    conda-forge
 patsy                     0.5.0                    py36_0    conda-forge
 pcre                      8.39                          0    conda-forge
 pep8                      1.7.1                      py_0    conda-forge
@@ -1131,13 +1144,13 @@ pycurl                    7.43.0.2         py36hb7f436b_0    defaults
 pyflakes                  1.6.0                    py36_0    conda-forge
 pyfolio                   0.8.0                      py_0    conda-forge
 pyglet                    1.3.2                     <pip>
-pygments                  2.2.0                    py36_0    conda-forge
+pygments                  2.2.0                      py_1    conda-forge
 pygpu                     0.7.6                    py36_0    conda-forge
 pyhamcrest                1.9.0                    py36_1    conda-forge
 pymc3                     3.4.1                    py36_0    conda-forge
 PyOpenGL                  3.1.0                     <pip>
 pyopenssl                 18.0.0                   py36_0    conda-forge
-pyparsing                 2.2.0                    py36_0    conda-forge
+pyparsing                 2.2.0                      py_1    conda-forge
 pysocks                   1.6.8                    py36_1    conda-forge
 pytest                    3.6.2                    py36_0    conda-forge
 python                    3.6.5                         1    conda-forge
@@ -1157,7 +1170,7 @@ r-evaluate                0.10.1                 r3.4.1_0    conda-forge
 r-glue                    1.2.0                  r3.4.1_0    conda-forge
 r-htmltools               0.3.6                  r3.4.1_0    conda-forge
 r-irdisplay               0.4.4                  r3.4.1_0    conda-forge
-r-irkernel                0.8.11                 r3.4.1_0    conda-forge
+r-irkernel                0.8.12                   r341_0    conda-forge
 r-jsonlite                1.5                    r3.4.1_0    conda-forge
 r-magrittr                1.5                    r3.4.1_0    conda-forge
 r-pbdzmq                  0.3_2                  r3.4.1_0    conda-forge
@@ -1165,9 +1178,9 @@ r-r6                      2.2.2                  r3.4.1_0    conda-forge
 r-rcpp                    0.12.15                r3.4.1_0    conda-forge
 r-repr                    0.15                     r341_0    conda-forge
 r-stringi                 1.2.3                    r341_0    conda-forge
-r-stringr                 1.3.0                  r3.4.1_0    conda-forge
+r-stringr                 1.3.1                    r341_0    conda-forge
 r-uuid                    0.1_2                  r3.4.1_0    conda-forge
-ray                       0.4.0                     <pip>
+ray                       0.5.0                     <pip>
 readline                  7.0                           0    conda-forge
 redis                     2.10.6                    <pip>
 requests                  2.19.1                   py36_0    conda-forge
@@ -1183,7 +1196,7 @@ seaborn                   0.8.1                    py36_0    conda-forge
 send2trash                1.5.0                      py_0    conda-forge
 service_identity          17.0.0                     py_0    conda-forge
 setuptools                39.2.0                   py36_0    conda-forge
-simplegeneric             0.8.1                    py36_0    conda-forge
+simplegeneric             0.8.1                      py_1    conda-forge
 sip                       4.19.8                   py36_0    conda-forge
 six                       1.11.0                   py36_1    conda-forge
 snappy                    1.1.7                hfc679d8_2    conda-forge
@@ -1198,7 +1211,7 @@ tensorflow                1.8.0                    py36_1    conda-forge
 tensorflow-gpu            1.8.0                     <pip>
 tensorflow-hub            0.1.0                     <pip>
 tensorflowonspark         1.3.0                     <pip>
-termcolor                 1.1.0                    py36_1    conda-forge
+termcolor                 1.1.0                      py_2    conda-forge
 terminado                 0.8.1                    py36_0    conda-forge
 testpath                  0.3.1                    py36_0    conda-forge
 theano                    1.0.2                    py36_0    conda-forge
@@ -1212,20 +1225,20 @@ traitlets                 4.3.2                    py36_0    conda-forge
 twisted                   17.5.0                   py36_0    defaults
 typing                    3.6.4                    py36_0    conda-forge
 urllib3                   1.23                     py36_0    conda-forge
-wcwidth                   0.1.7                    py36_0    conda-forge
+wcwidth                   0.1.7                      py_1    conda-forge
 webencodings              0.5                      py36_0    conda-forge
 werkzeug                  0.14.1                     py_0    conda-forge
-wheel                     0.31.0                   py36_0    conda-forge
+wheel                     0.31.1                   py36_0    conda-forge
 widgetsnbextension        3.2.1                    py36_0    conda-forge
 wrapt                     1.10.11                  py36_0    conda-forge
-xgboost                   0.72                     py36_0    conda-forge
+xgboost                   0.72             py36hfc679d8_1    conda-forge
 xlrd                      1.1.0                      py_2    conda-forge
 xorg-kbproto              1.0.7                h470a237_2    conda-forge
-xorg-libice               1.0.9                         2    conda-forge
+xorg-libice               1.0.9                h470a237_3    conda-forge
 xorg-libsm                1.2.2                         2    conda-forge
 xorg-libx11               1.6.5                         0    conda-forge
-xorg-libxau               1.0.8                h470a237_4    conda-forge
-xorg-libxdmcp             1.1.2                h470a237_4    conda-forge
+xorg-libxau               1.0.8                h470a237_5    conda-forge
+xorg-libxdmcp             1.1.2                h470a237_6    conda-forge
 xorg-libxrender           0.9.10                        0    conda-forge
 xorg-renderproto          0.11.1               h470a237_2    conda-forge
 xorg-xproto               7.0.31               h470a237_7    conda-forge
