@@ -254,7 +254,7 @@ Check the logs for this app. The Alertmanager will send HTTP POST requests in th
 }
 ```
 
-## AlertManager with Slack
+### AlertManager with Slack
 
 Slack notifications are sent via Slack webhooks. Update the AlertManager config to :
 
@@ -277,3 +277,17 @@ receivers:
 ```
 
 ![Slack Alerts](img/slack_alert.png)
+
+
+## PushGateway
+
+The Prometheus Pushgateway exists to allow ephemeral and batch jobs to expose their metrics to Prometheus.
+
+Pushing some metrics:
+Push a single sample into the group identified by {job="some_job"}:
+
+```
+echo "some_metric 3.14" | curl --data-binary @- http://pushgateway.example.org:9091/metrics/job/some_job
+```
+
+![PushGateway](img/pushg.png)
