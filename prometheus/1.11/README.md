@@ -36,7 +36,7 @@ Create a file named prometheus-edgelb.json containing the following edge-lb conf
   "haproxy": {
     "frontends": [
       {
-        "bindPort": 9091,
+        "bindPort": 9092,
         "protocol": "HTTP",
         "linkBackend": {
           "defaultBackend": "prometheus"
@@ -50,10 +50,17 @@ Create a file named prometheus-edgelb.json containing the following edge-lb conf
         }
       },
       {
-        "bindPort": 3000,
+        "bindPort": 9094,
         "protocol": "HTTP",
         "linkBackend": {
           "defaultBackend": "grafana"
+        }
+      },
+      {
+        "bindPort": 9091,
+        "protocol": "HTTP",
+        "linkBackend": {
+          "defaultBackend": "pushgateway"
         }
       }
     ],
@@ -90,17 +97,29 @@ Create a file named prometheus-edgelb.json containing the following edge-lb conf
         "port": 3000
       }
     }]
+   },
+   {
+    "name": "pushgateway",
+    "protocol": "HTTP",
+    "services": [{
+      "endpoint": {
+        "type": "ADDRESS",
+        "address": "pushgateway.prometheus.l4lb.thisdcos.directory",
+        "port": 9091
+      }
+    }]
    }
    ]
   }
 }
+
 ```
 
 In your browser enter the following address.
 
 Promtheus UI:
 ```
-http://<public-agent-ip>:9091
+http://<public-agent-ip>:9092
 ```
 
 ![Prometheus Dashboard](img/prom_dashboard.png)
@@ -110,7 +129,7 @@ This is the console view within the `Graph` tab.
 You can also verify that Prometheus is serving metrics about itself by navigating to its metrics endpoint:
 
 ```
-http://<public-agent-ip>:9091/metrics
+http://<public-agent-ip>:9092/metrics
 ```
 
 ### Using the Expression browser
@@ -130,7 +149,7 @@ As another example, enter the following expression to graph the per-second rate 
 ## Using Grafana with Prometheus
 
 ```
-http://<public-agent-ip>:3000
+http://<public-agent-ip>:9094
 ```
 
 Credentials: admin / admin
