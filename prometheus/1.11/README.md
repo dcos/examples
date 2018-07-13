@@ -28,92 +28,8 @@ Once the framework is up and running:
 Install edge-lb.
 Create a file named prometheus-edgelb.json containing the following edge-lb configuration.
 
-```
-{
-  "apiVersion": "V2",
-  "name": "prometheus",
-  "count": 1,
-  "haproxy": {
-    "frontends": [
-      {
-        "bindPort": 9092,
-        "protocol": "HTTP",
-        "linkBackend": {
-          "defaultBackend": "prometheus"
-        }
-      },
-      {
-        "bindPort": 9093,
-        "protocol": "HTTP",
-        "linkBackend": {
-          "defaultBackend": "alertmanager"
-        }
-      },
-      {
-        "bindPort": 9094,
-        "protocol": "HTTP",
-        "linkBackend": {
-          "defaultBackend": "grafana"
-        }
-      },
-      {
-        "bindPort": 9091,
-        "protocol": "HTTP",
-        "linkBackend": {
-          "defaultBackend": "pushgateway"
-        }
-      }
-    ],
-    "backends": [
-     {
-      "name": "prometheus",
-      "protocol": "HTTP",
-      "services": [{
-        "endpoint": {
-          "type": "ADDRESS",
-          "address": "prometheus.prometheus.l4lb.thisdcos.directory",
-          "port": 9090
-        }
-      }]
-    },
-    {
-     "name": "alertmanager",
-     "protocol": "HTTP",
-     "services": [{
-       "endpoint": {
-         "type": "ADDRESS",
-         "address": "alertmanager.prometheus.l4lb.thisdcos.directory",
-         "port": 9093
-       }
-     }]
-   },
-   {
-    "name": "grafana",
-    "protocol": "HTTP",
-    "services": [{
-      "endpoint": {
-        "type": "ADDRESS",
-        "address": "grafana.grafana.l4lb.thisdcos.directory",
-        "port": 3000
-      }
-    }]
-   },
-   {
-    "name": "pushgateway",
-    "protocol": "HTTP",
-    "services": [{
-      "endpoint": {
-        "type": "ADDRESS",
-        "address": "pushgateway.prometheus.l4lb.thisdcos.directory",
-        "port": 9091
-      }
-    }]
-   }
-   ]
-  }
-}
+[prometheus-edgelb.json](misc/config/prometheus-edgelb.json)
 
-```
 
 In your browser enter the following address.
 
@@ -182,65 +98,17 @@ http://<public-agent-ip>:9093
 ![AlertManager Dashboard](img/am_dashboard.png)
 
 ### AlertManager with Webhook
-The default configuration for AlertManager (these configs can be changed) in the framework is configured with a webhook receiver:
+The default configuration for [AlertManager](misc/config/alertmanager.yml) (these configs can be changed) in the framework is configured with a webhook receiver:
 
-```
-route:
- group_by: [cluster]
- receiver: webh
- group_interval: 1m
-
-receivers:
-- name: webh
-  webhook_configs:
-  - url: http://webhook.marathon.l4lb.thisdcos.directory:1234
-```
 
 Default rule defined in the framework:
 
-```
-groups:
-- name: cpurule
-  rules:
-  - alert: highcpu
-    expr: cpu_total > 2
-    annotations:
-      DESCRIPTION: 'it happened yeah'
-      SUMMARY: 'it happened'
-```
-
+[rules.yml](misc/config/rules.yml)
 
 Next, run the following config as a marathon app:
 
-```
-{
-    "container": {
-        "docker": {
-            "image": "python:latest"
-        },
-        "type": "MESOS"
-    },
-    "mem": 1024,
-    "portDefinitions": [
-        {
-            "labels": {
-                "VIP_0": "webhook:1234"
-            },
-            "protocol": "tcp",
-            "name": "web",
-            "port": 1234
-        }
-    ],
-    "cmd": "env | sort\n\ncat > function.py << EOF\n\nimport sys\nimport cgi\nimport json\nimport pipes\nfrom BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer\n\n\nclass MyHandler(BaseHTTPRequestHandler):\n   def do_POST(self):\n       self.send_response(200)\n       self.end_headers()\n       #data = json.loads(self.rfile.read(int(self.headers['Content-Length'])))\n       data = self.rfile.read(int(self.headers['Content-Length']))\n       self.log_message('%s', data)\n\n\nhttpd = HTTPServer(('0.0.0.0', $PORT_WEB), MyHandler)\nhttpd.serve_forever()\nEOF\n\npython2 function.py\n",
-    "networks": [
-        {
-            "mode": "host"
-        }
-    ],
-    "cpus": 0.1,
-    "id": "webhook"
-}
-```
+[webhook.json](misc/config/webhook.json)
+
 
 Check the logs for this app. The Alertmanager will send HTTP POST requests in the following JSON format:
 

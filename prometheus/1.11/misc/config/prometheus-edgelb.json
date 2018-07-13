@@ -1,0 +1,83 @@
+{
+  "apiVersion": "V2",
+  "name": "prometheus",
+  "count": 1,
+  "haproxy": {
+    "frontends": [
+      {
+        "bindPort": 9092,
+        "protocol": "HTTP",
+        "linkBackend": {
+          "defaultBackend": "prometheus"
+        }
+      },
+      {
+        "bindPort": 9093,
+        "protocol": "HTTP",
+        "linkBackend": {
+          "defaultBackend": "alertmanager"
+        }
+      },
+      {
+        "bindPort": 9094,
+        "protocol": "HTTP",
+        "linkBackend": {
+          "defaultBackend": "grafana"
+        }
+      },
+      {
+        "bindPort": 9091,
+        "protocol": "HTTP",
+        "linkBackend": {
+          "defaultBackend": "pushgateway"
+        }
+      }
+    ],
+    "backends": [
+     {
+      "name": "prometheus",
+      "protocol": "HTTP",
+      "services": [{
+        "endpoint": {
+          "type": "ADDRESS",
+          "address": "prometheus.prometheus.l4lb.thisdcos.directory",
+          "port": 9090
+        }
+      }]
+    },
+    {
+     "name": "alertmanager",
+     "protocol": "HTTP",
+     "services": [{
+       "endpoint": {
+         "type": "ADDRESS",
+         "address": "alertmanager.prometheus.l4lb.thisdcos.directory",
+         "port": 9093
+       }
+     }]
+   },
+   {
+    "name": "grafana",
+    "protocol": "HTTP",
+    "services": [{
+      "endpoint": {
+        "type": "ADDRESS",
+        "address": "grafana.grafana.l4lb.thisdcos.directory",
+        "port": 3000
+      }
+    }]
+   },
+   {
+    "name": "pushgateway",
+    "protocol": "HTTP",
+    "services": [{
+      "endpoint": {
+        "type": "ADDRESS",
+        "address": "pushgateway.prometheus.l4lb.thisdcos.directory",
+        "port": 9091
+      }
+    }]
+   }
+   ]
+  }
+}

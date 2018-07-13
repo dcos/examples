@@ -1,0 +1,9 @@
+route:
+ group_by: [cluster]
+ receiver: webh
+ group_interval: 1m
+
+receivers:
+- name: webh
+  webhook_configs:
+  - url: http://webhook.marathon.l4lb.thisdcos.directory:1234
