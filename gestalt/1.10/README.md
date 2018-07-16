@@ -1,7 +1,6 @@
 # How to use the Gestalt Framework on DC/OS
 
-The Gestalt Framework is a set of microservices that create a platform for companies to build future-proofed cloud native applications.  The platform is comprised of three major components which include the meta service (a policy-enabled resource manager), the infrastructure layer (plug-able container and lambda engine), and the integration layer (a set of off the self microservices supporting enterprise integration).
-
+The Gestalt Framework is a set of microservices that create a platform for companies to build future-proofed cloud-native applications.  The platform is comprised of three major components, which include the meta service (a policy-enabled resource manager), the infrastructure layer (plugable container and lambda engine), and the integration layer (a set of off-the-shelf microservices supporting enterprise integration).
 
 - Estimated time for completion: 10 minutes
 - Target audience: Anyone interested in running a HTTP (proxy) server
@@ -53,4 +52,3 @@ The Gestalt Framework is a set of microservices that create a platform for compa
 ## Using Gestalt
 
 See the [Getting Started Guide](http://docs.galacticfog.com/overview/introduction/) for tips and documentation on using the Gestalt Platform.
-
