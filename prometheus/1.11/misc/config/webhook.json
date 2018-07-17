@@ -1,0 +1,27 @@
+{
+    "container": {
+        "docker": {
+            "image": "python:latest"
+        },
+        "type": "MESOS"
+    },
+    "mem": 1024,
+    "portDefinitions": [
+        {
+            "labels": {
+                "VIP_0": "webhook:1234"
+            },
+            "protocol": "tcp",
+            "name": "web",
+            "port": 1234
+        }
+    ],
+    "cmd": "env | sort\n\ncat > function.py << EOF\n\nimport sys\nimport cgi\nimport json\nimport pipes\nfrom BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer\n\n\nclass MyHandler(BaseHTTPRequestHandler):\n   def do_POST(self):\n       self.send_response(200)\n       self.end_headers()\n       #data = json.loads(self.rfile.read(int(self.headers['Content-Length'])))\n       data = self.rfile.read(int(self.headers['Content-Length']))\n       self.log_message('%s', data)\n\n\nhttpd = HTTPServer(('0.0.0.0', $PORT_WEB), MyHandler)\nhttpd.serve_forever()\nEOF\n\npython2 function.py\n",
+    "networks": [
+        {
+            "mode": "host"
+        }
+    ],
+    "cpus": 0.1,
+    "id": "webhook"
+}

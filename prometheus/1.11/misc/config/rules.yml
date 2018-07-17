@@ -1,0 +1,8 @@
+groups:
+- name: cpurule
+  rules:
+  - alert: highcpu
+    expr: cpu_total > 2
+    annotations:
+      DESCRIPTION: 'it happened yeah'
+      SUMMARY: 'it happened'
