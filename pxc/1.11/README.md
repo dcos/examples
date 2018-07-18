@@ -6,13 +6,25 @@
 
 ## Install
 
+Before starting with installation of PXC, we need to install the kafka-zookeeper service on the same DC/OS cluster. Please refer kafka-zookeeper service docs as installation guide.
+
+For a basic kafka-zookeeper install from command line we need to use the following command:
+
+```bash
+dcos package install kafka-zookeeper
+```
+
+and via DC/OS UI, kafka-zookeeper can be installed as shown below:
+
+img/kafka-zookeeper-ui-install.png
+
 PXC can be installed via either the DC/OS Catalog UI or by using the CLI. The following command will launch the install via the DC/OS CLI:
 
 ```bash
 dcos package install pxc
 ```
 
-![Couchbase Install](img/couch_install.png)
+![Couchbase Install](img/pxc_install.png)
 
 In either case a default cluster will come up with three data nodes.
 
