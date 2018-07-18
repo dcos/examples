@@ -1,4 +1,4 @@
-# How to use Couchbase with DC/OS
+# How to use PXC with DC/OS
 
 ## Prerequisites
 
@@ -6,17 +6,17 @@
 
 ## Install
 
-Couchbase can be installed via either the DC/OS Catalog UI or by using the CLI. The following command will launch the install via the DC/OS CLI:
+PXC can be installed via either the DC/OS Catalog UI or by using the CLI. The following command will launch the install via the DC/OS CLI:
 
 ```bash
-dcos package install couchbase
+dcos package install pxc
 ```
 
 ![Couchbase Install](img/couch_install.png)
 
-In either case a default cluster will only come up with two data nodes. You need to change the configuration to also bring up index, query and full text search nodes.
+In either case a default cluster will come up with three data nodes.
 
-For a couchbase cluster with 2 data node, 1 index node, 1 query node, and 1 full text search node you need a dc/os cluster with 5 private agents.
+It is recommended to have nodes in odd number count for PXC to avoid condition of split brain.
 
 
 ## Accessing the Console
