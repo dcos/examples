@@ -24,34 +24,109 @@ PXC can be installed via either the DC/OS Catalog UI or by using the CLI. The fo
 dcos package install pxc
 ```
 
-![Couchbase Install](img/pxc_install.png)
+![PXC Install](img/pxc_install.png)
 
-In either case a default cluster will come up with three data nodes.
+In either case a default cluster will come up with three PXC nodes and one ProxySQL node on the public DC/OS cluster node. 
 
 It is recommended to have nodes in odd number count for PXC to avoid condition of split brain.
 
 
 ## Accessing the Console
 
-Once the cluster is up and running use the following command to get the mesos-id of the host running one of the data nodes.
+Once the cluster is up and running, we need to have a mysql client version 5.7 on our local system to connect to the pxc cluster.
+
+We also need to find out Public facing DC/OS cluster hostname/IP for connecting from the mysql client.
+
+In our case since our DC/OS cluster is deployed on AWS infrastructure, we need to get the EC2 instance in the DC/OS cluster which is part of the "PublicSlaveSecurityGroup"
+
+Hence we us the following command using mysql client to connect to the PXC cluster on DC/OS :
 
 ```bash
-$ dcos node
+root@bf7132b3a085:/# mysql -uproxysql_user -ppassw0rd -h 18.179.47.46 -P 3306
+mysql: [Warning] Using a password on the command line interface can be insecure.
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 17
+Server version: 5.5.30 (ProxySQL)
+
+Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> 
+
 ```
 
-Using the mesos-id create a ssh localhost tunnel.
+Now we can check the pxc cluster values using the following command:
 
 ```bash
-$ dcos node ssh --master-proxy --mesos-id=... --option LocalForward=8091=localhost:8091
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
++--------------------+
+1 row in set (0.12 sec)
+
+mysql> select 1;
++---+
+| 1 |
++---+
+| 1 |
++---+
+1 row in set (0.14 sec)
+
+
 ```
 
-Now go to your browser and enter localhost:8091. When prompted for credentials enter Administrator / password.
 
-![Couchbase Creds](img/couch_creds.png)
 
-Which gets you to the console.
+Now we need to add more query rules in the proxysql service by connecting to it by referring to https://github.com/sysown/proxysql/wiki/ProxySQL-Configuration.  
 
-![Couchbase Dashboard](img/couch_dashboard.png)
+We will also need to get the proxysql endpoint hostname for connecting to it from the task using the below command:
+
+```bash
+dcos pxc endpoints lb-port
+```
+
+To connect to the proxysql service running on the cluster, we need to get the  task id for proxysql service using the below command.
+
+```bash
+$ dcos task
+```
+Then we need to get into the proxysql task by assigning bash shell to it in the following way
+
+```bash
+dcos task exec -ti proxysql-0-proxysql-task__cc6eb6cd-054e-460f-9a9b-842bda3930a4 bash
+```
+
+From the proxysql task we need to connect to the proxysql service using the below command:
+
+```bash
+mysql -uradminuser -pradminpass -h proxysql-0-proxysql-task.pxc.autoip.dcos.thisdcos.directory -P 6032
+mysql: [Warning] Using a password on the command line interface can be insecure.
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 82334
+Server version: 5.5.30 (ProxySQL Admin Module)
+
+Copyright (c) 2009-2018 Percona LLC and/or its affiliates
+Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql>     
+```
+Now we can setup query rules following the above mentioned link for proxysql configuration.
+
+
 
 ## Adding Nodes
 
@@ -63,179 +138,3 @@ You need to go and edit the configuration of your couchbase service, and increas
 
 ![Couchbase Edit configuration](img/couch_edit.png)
 
-A 3rd node gets added with a pending rebalance.
-
-![Couchbase 3rd](img/couch_3.png)
-
-You can rebalance by clicking the button in the couchbase console, or you can use the following dc/os cli command
-
-```bash
-$ dcos couchbase plan start rebalance
-```
-
-Voila we have a three data node cluster.
-
-![Couchbase cluster](img/couch_cluster.png)
-
-
-## Adding a Sync Gateway Node
-
-We will use the pouchdb getting started app to demonstrate the usage of the couchbase sync gateway. You will not have to build the app yourself we have it readily available in a docker image.
-
-First some prep before we create the sync gateway node. Create a bucket named ‘todo’ as shown below.
-
-![Data Bucket](img/data_bucket.png)
-
-Next create a user ‘todo’ with password ‘todo188’.
-
-![Add User](img/add_user.png)
-
-Followed by giving the ‘todo’ user access to the ‘todo’ bucket.
-
-![New User](img/new_user.png)
-
-Next use the dc/os console to create a secret with the id *couchbase/sync-gateway*, and the following json as value. This is the config json used by the sync gateway.
-
-```json
-{
-  "interface": "0.0.0.0:4984",
-  "adminInterface": "0.0.0.0:4985",
-  "log": [
-    "*"
-  ],
-  "databases": {
-    "todo": {
-      "server": "http://data.couchbase.l4lb.thisdcos.directory:8091",
-      "bucket": "todo",
-      "username": "todo",
-      "password": "todo188",
-      "users": {
-        "GUEST": {
-          "disabled": false,
-          "admin_channels": [
-            "*"
-          ]
-        }
-      }
-    }
-  },
-  "CORS": {
-    "Origin": [
-      "*"
-    ],
-    "LoginOrigin": [
-      "*"
-    ],
-    "Headers": [
-      "Content-Type"
-    ],
-    "MaxAge": 1728000
-  }
-}
-```
-
-Now we are ready to add a sync gateway node to our couchbase service.
-
-![Edit Configuration](img/edit_conf.png)
-
-Create a file named todo.json, with the following content. This is the pouchdb getting started app that accesses the sync gateway.
-
-
-```json
-{
-  "id": "todo",
-  "container": {
-    "type": "MESOS",
-    "docker": {
-      "image": "realmbgl/pdbtd",
-      "forcePullImage": true
-    }
-  },
-  "portDefinitions": [
-     {
-      "name": "api",
-      "port": 8000,
-      "protocol": "tcp",
-      "labels": {
-        "VIP_0": "todo:8000"
-      }
-     }
-  ],
-  "cmd": "python -m http.server $PORT0"
-}
-```
-
-Launch the todo app using the following command.
-
-```bash
-$ dcos marathon app add todo.json
-```
-
-Before we can play with it we need to expose the sync gateway service and the todo app using edge-lb. Install edge-lb.
-
-Create a file named lb-sync-gateway.json containing the following edge-lb configuration.
-
-```json
-{
-  "apiVersion": "V2",
-  "name": "lb-sync-gateway",
-  "count": 1,
-  "haproxy": {
-    "frontends": [
-      {
-        "bindPort": 4984,
-        "protocol": "HTTP",
-        "linkBackend": {
-          "defaultBackend": "sgw"
-        }
-      },
-      {
-        "bindPort": 8000,
-        "protocol": "HTTP",
-        "linkBackend": {
-          "defaultBackend": "todo"
-        }
-      }
-    ],
-    "backends": [
-     {
-      "name": "sgw",
-      "protocol": "HTTP",
-      "services": [{
-        "endpoint": {
-          "type": "ADDRESS",
-          "address": "sync-gateway.couchbase.l4lb.thisdcos.directory",
-          "port": 4984
-        }
-      }]
-    },
-    {
-      "name": "todo",
-      "protocol": "HTTP",
-      "services": [{
-        "endpoint": {
-          "type": "ADDRESS",
-          "address": "todo.marathon.l4lb.thisdcos.directory",
-          "port": 8000
-        }
-      }]
-    }]
-  }
-}
-```
-
-Launch the edge-lb configuration using the following command.
-
-```bash
-$ dcos edgelb create lb-sync-gateway.json
-```
-
-Now everything is in place.
-
-![running](img/running.png)
-
-Get the public ip of your dc/os public agent, and enter the following in your browser http://<public-ip>:8000 .
-
-![todos](img/todos.png)
-
-As you enter todo’s you will also be able to see them in the couchbase console in the ‘todo’ bucket. If you open another browser, you will also see the db there synced.
