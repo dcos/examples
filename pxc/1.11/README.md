@@ -138,3 +138,13 @@ You need to go and edit the configuration of your couchbase service, and increas
 
 ![PXC Node add configuration](img/PXC_add_nodes.png)
 
+
+## Limitations
+
+Limitations of the framework:
+
+* Non-root installation and installation on strict DC/OS cluster are not supported
+* Proxysql with TLS
+* Restore of PXC.
+* Encryption of Data at rest.
+* Metrics
