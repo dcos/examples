@@ -130,11 +130,11 @@ Now we can setup query rules following the above mentioned link for proxysql con
 
 ## Adding Nodes
 
-Let’s say we have two data nodes, and we want to go to three.
+Let’s say we have 3 PXC nodes, and we want to go to three.
 
-![Couchbase Data Nodes](img/couch_dnodes.png)
+![PXC Nodes](img/PXC_nodes.png)
 
-You need to go and edit the configuration of your couchbase service, and increase the data node count to 3.
+You need to go and edit the configuration of your couchbase service, and increase the PXC node count to 5.
 
-![Couchbase Edit configuration](img/couch_edit.png)
+![PXC Node add configuration](img/PXC_add_nodes.png)
 
