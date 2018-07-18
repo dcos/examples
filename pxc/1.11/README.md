@@ -16,7 +16,7 @@ dcos package install kafka-zookeeper
 
 and via DC/OS UI, kafka-zookeeper can be installed as shown below:
 
-img/kafka-zookeeper-ui-install.png
+![Kafka-Zookeeper Install](img/kafka-zookeeper-ui-install.png)
 
 PXC can be installed via either the DC/OS Catalog UI or by using the CLI. The following command will launch the install via the DC/OS CLI:
 
