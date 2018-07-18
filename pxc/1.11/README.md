@@ -132,7 +132,7 @@ Now we can setup query rules following the above mentioned link for proxysql con
 
 Let’s say we have 3 PXC nodes, and we want to go to three.
 
-![PXC Nodes](img/PXC_nodes.png)
+![PXC Nodes](img/PXC_Nodes.png)
 
 You need to go and edit the configuration of your couchbase service, and increase the PXC node count to 5.
 
