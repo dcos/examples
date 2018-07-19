@@ -143,13 +143,12 @@ You need to go and edit the configuration of your couchbase service, and increas
 
 Limitations of the framework:
 
-* Support for fault domains in the form of regions or zones
-* Software upgrade and downgrade 
+* Support for fault domains in the form of zones
+* PXC and Proxysql related configuration parameters are currently not exposed. 
 * TLS for proxysql
 * Backup and restore
 * Non-root install and install on Strict mode DC/OS cluster
 * Encryption for data at rest
-* Process in foreground
-* MOUNT volumes support
-* Metrics with prometheus and PMM
+* MOUNT volumes setup is not tested
+* Emit app metrics to DC/OS metrics API
 * Proxysql implementation with zookeeper based service discovery 
