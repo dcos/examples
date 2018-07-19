@@ -26,7 +26,12 @@ dcos package install pxc
 
 ![PXC Install](img/pxc_install.png)
 
-In either case a default cluster will come up with three PXC nodes and one ProxySQL node on the public DC/OS cluster node. 
+In either case a default cluster will come up with three PXC nodes and one ProxySQL node on the public DC/OS cluster node.
+
+Proxysql is the proxy which has will be deployed on the public agent of DC/OS cluster.
+It serves as a proxy/bridge between external mysql clients and the PXC cluster which resides on the private agents of the DC/OS cluster.
+
+So one can connect from an external mysql 5.7 client to the PXC cluster via ProxySQL.
 
 It is recommended to have nodes in odd number count for PXC to avoid condition of split brain.
 
@@ -35,7 +40,27 @@ It is recommended to have nodes in odd number count for PXC to avoid condition o
 
 Once the cluster is up and running, we need to have a mysql client version 5.7 on our local system to connect to the pxc cluster.
 
-We also need to find out Public facing DC/OS cluster hostname/IP for connecting from the mysql client.
+From a linux terminal, with docker installed, we can use the following command to spin up a mysql 5.7 client container
+
+```bash
+docker run --name mysql-cli -e MYSQL_ROOT_PASSWORD=root -d mysql:5.7
+```
+
+Next we need to run the following command to attach to the running container 
+
+
+```bash
+docker exec -ti mysql-cli bash
+```
+
+Doing this we will be inside the mysql client container and we can verify the mysql version by the following command 
+
+```bash
+mysql --version
+mysql  Ver 14.14 Distrib 5.7.22, for Linux (x86_64) using  EditLine wrapper
+```
+
+Now we need to find out Public facing DC/OS cluster hostname/IP for connecting from the mysql client.
 
 In our case since our DC/OS cluster is deployed on AWS infrastructure, we need to get the EC2 instance in the DC/OS cluster which is part of the "PublicSlaveSecurityGroup"
 
