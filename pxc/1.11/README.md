@@ -21,7 +21,7 @@ and via DC/OS UI, kafka-zookeeper can be installed as shown below:
 PXC can be installed via either the DC/OS Catalog UI or by using the CLI. The following command will launch the install via the DC/OS CLI:
 
 ```bash
-dcos package install pxc
+dcos package install percona-pxc-mysql
 ```
 
 ![PXC Install](img/pxc_install.png)
