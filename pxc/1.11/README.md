@@ -1,4 +1,4 @@
-# How to use PXC with DC/OS
+# How to use Percona-pxc-mysql with DC/OS
 
 ## Prerequisites
 
