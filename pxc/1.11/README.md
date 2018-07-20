@@ -6,7 +6,7 @@
 
 ## Install
 
-Before starting with installation of PXC, we need to install the kafka-zookeeper service on the same DC/OS cluster. Please refer kafka-zookeeper service docs as installation guide.
+Before starting with installation of Percona XtraDB Cluster(PXC), we need to install the kafka-zookeeper service on the same DC/OS cluster. Please refer kafka-zookeeper service docs as installation guide.
 
 For a basic kafka-zookeeper install from command line we need to use the following command:
 
