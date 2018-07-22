@@ -95,9 +95,9 @@ MongoDB is a flexible NoSQL document database. It stores records in a JSON-like 
             "10.0.1.211:27017"
           ],
           "dns": [
-            "mongo-0-mongod.percona-mongo.autoip.dcos.thisdcos.directory:27017",
-            "mongo-1-mongod.percona-mongo.autoip.dcos.thisdcos.directory:27017",
-            "mongo-2-mongod.percona-mongo.autoip.dcos.thisdcos.directory:27017"
+            "mongo-rs-0-mongod.percona-mongo.autoip.dcos.thisdcos.directory:27017",
+            "mongo-rs-1-mongod.percona-mongo.autoip.dcos.thisdcos.directory:27017",
+            "mongo-rs-2-mongod.percona-mongo.autoip.dcos.thisdcos.directory:27017"
           ]
         }
 	```
@@ -105,14 +105,14 @@ MongoDB is a flexible NoSQL document database. It stores records in a JSON-like 
 5. Connect to MongoDB and create a user and database called `products`.  
 
 ```
-$ mongo clusteruseradmin:clusteruseradminpassword@mongo-0-mongod.percona-mongo.autoip.dcos.thisdcos.directory,mongo-1-mongod.percona-mongo.autoip.dcos.thisdcos.directory,mongo-2-mongod.percona-mongo.autoip.dcos.thisdcos.directory:27017/admin?replicaSet=rs
+$ mongo mongodb://useradmin:useradminpassword@mongo-rs-0-mongod.percona-mongo.autoip.dcos.thisdcos.directory,mongo-rs-1-mongod.percona-mongo.autoip.dcos.thisdcos.directory,mongo-rs-2-mongod.percona-mongo.autoip.dcos.thisdcos.directory:27017/admin?replicaSet=rs
 > db.getSiblingDB('admin').createUser({'user' : 'user', 'pwd' : 'pass', roles: [ { 'role' : 'readWrite', 'db' : 'products' } ]})
 ```
 
 6. Connect to MongoDB with the user and add a product.
 
 ```
-$ mongo user:pass@mongo-0-mongod.percona-mongo.autoip.dcos.thisdcos.directory,mongo-1-mongod.percona-mongo.autoip.dcos.thisdcos.directory,mongo-2-mongod.percona-mongo.autoip.dcos.thisdcos.directory:27017/admin?replicaSet=rs
+$ mongo mongodb://user:pass@mongo-rs-0-mongod.percona-mongo.autoip.dcos.thisdcos.directory,mongo-rs-1-mongod.percona-mongo.autoip.dcos.thisdcos.directory,mongo-rs-2-mongod.percona-mongo.autoip.dcos.thisdcos.directory:27017/admin?replicaSet=rs
 > db.products.insert( { item: "card", qty: 15 } )
 ```
 
