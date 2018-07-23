@@ -115,7 +115,7 @@ Now we need to add more query rules in the proxysql service by connecting to it 
 We will also need to get the proxysql endpoint hostname for connecting to it from the task using the below command:
 
 ```bash
-dcos pxc endpoints lb-port
+dcos percona-pxc-mysql endpoints lb-port
 ```
 
 To connect to the proxysql service running on the cluster, we need to get the  task id for proxysql service using the below command.
