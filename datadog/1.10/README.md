@@ -1,10 +1,10 @@
 # How to use Datadog with DC/OS
 
-[Datadog][datadog] is a hosted platform for monitoring infrastructure and applications. Datadog has built-in integrations for collecting health and performance data from more than 150 technologies for aggregation, analytics, graphing, and alerting. 
+[Datadog][datadog] is a hosted platform for monitoring infrastructure and applications. Datadog has built-in integrations for collecting health and performance data from more than 150 technologies for aggregation, analytics, graphing, and alerting.
 
-DC/OS makes it very easy to deploy Datadog across all Mesos agent nodes in the cluster, and also configures Datadog to automatically collect metrics from Docker, Mesos, and other services running on those nodes. 
+DC/OS makes it very easy to deploy Datadog across all Mesos agent nodes in the cluster, and also configures Datadog to automatically collect metrics from Docker, Mesos, and other services running on those nodes.
 
-* Estimated time for completion: 5–10 minutes
+* Estimated time for completion: 10-15 minutes
 * Target audience: Anyone interested in monitoring a containerized environment
 * Scope:
     * [Configure and install](#install-datadog) Datadog on your agent and master nodes
@@ -13,14 +13,14 @@ DC/OS makes it very easy to deploy Datadog across all Mesos agent nodes in the c
 
 ## Prerequisites
 
-* A running DC/OS 1.9 cluster
+* A running DC/OS 1.10 cluster
 * A Datadog account (free trial account available [here][signup])
 
 ## Install Datadog
 
 You can deploy Datadog across all your agent nodes using [the DC/OS web interface](#installation-using-the-ui) or [the DC/OS CLI](#installation-using-the-cli). Datadog will automatically begin picking up metrics from both Mesos and Docker on your agent nodes.
 
-Whether you use the DC/OS web UI or the command line interface to deploy Datadog, you will need to provide two parameters: 
+Whether you use the DC/OS web UI or the command line interface to deploy Datadog, you will need to provide two parameters:
 
 1. Your Datadog API key (available [here][api-key])
 2. The number of instances (how many agent nodes you have in your cluster)
@@ -31,7 +31,7 @@ You can install the Datadog package using the DC/OS web UI by clicking on the Un
 
 ![The Datadog package on DC/OS Universe](img/dcos-universe.png)
 
-Click the "Install" button and select "Advanced Installation" to enter the two parameters mentioned above (API key and number of instances):
+Click the "Review & Run" button, and enter the two parameters mentioned above (API key and number of instances):
 
 ![Configuring the Datadog Agent on DC/OS](img/dcos-install.png)
 
@@ -62,21 +62,26 @@ Once you install the Datadog package on the agent nodes, you can move on to [ins
 
 Datadog also collects specialized metrics from Mesos master nodes. When you install Datadog on your master nodes, Datadog will automatically begin collecting and aggregating metrics from ZooKeeper and Marathon, in addition to monitoring Mesos and Docker (as is the case on agent nodes).
 
-To install Datadog on Linux, run the command below, providing your [Datadog API key][api-key] (see [the docs][dd-agent-docs] for an alternative command for Amazon Linux):
+To install Datadog on Linux, log in to the leader node with:
+
+```
+dcos node ssh --master-proxy --leader
+```
+
+Then run the command below, providing your [Datadog API key][api-key] (see [the docs][dd-agent-docs] for an alternative command for Amazon Linux):
 
 ```bash
-docker run -d --name dd-agent \
+docker run -d --name datadog-agent \
   -v /var/run/docker.sock:/var/run/docker.sock:ro \
   -v /proc/:/host/proc/:ro \
   -v /sys/fs/cgroup/:/host/sys/fs/cgroup:ro \
-  -e API_KEY=$YOUR_API_KEY \
+  -e DD_API_KEY=$YOUR_API_KEY \
   -e MESOS_MASTER=yes \
   -e MARATHON_URL=http://leader.mesos:8080 \
-  -e SD_BACKEND=docker \
-  datadog/docker-dd-agent:latest
+  datadog/agent:latest
 ```
 
-## Monitor metrics from your DC/OS cluster 
+## Monitor metrics from your DC/OS cluster
 
 Once you install Datadog, you can verify that your nodes are properly reporting metrics by opening up Datadog and viewing metrics from your nodes. You should be able to find your nodes on [the Datadog host map][host-map]. You can filter the map by hostname to spot check individual nodes or search "mesos" to drill down to your hosts running Mesos.
 
@@ -84,7 +89,7 @@ Once you install Datadog, you can verify that your nodes are properly reporting 
 
 You'll also see metrics from your cluster flowing into the [Mesos dashboard][mesos-dash] and the [Docker dashboard][docker-dash] in Datadog, so you can immediately start to track your cluster resources and how they are being consumed. Similarly, you will see [ZooKeeper metrics][zk-dash] flowing into Datadog from your master nodes.
 
-You can then build custom dashboards using any of the metrics or events being reported to Datadog; set alerts on performance metrics or task failures; or use the host map to look for hotspots in your infrastructure. 
+You can then build custom dashboards using any of the metrics or events being reported to Datadog; set alerts on performance metrics or task failures; or use the host map to look for hotspots in your infrastructure.
 
 ## Use Autodiscovery to monitor additional services
 
@@ -103,14 +108,20 @@ For other services, you can create monitoring configuration templates that Datad
 On your agent nodes, create a directory to house your custom configs and create a YAML file for the service you want to monitor (drawing on [the example YAML templates][yamls] that ship with the Datadog Agent). In this example we'll set up service discovery for MYSQL, which requires a password to access database metrics:
 
 ```bash
-mkdir -p /opt/dd-agent-conf.d/auto_conf/
-touch /opt/dd-agent-conf.d/auto_conf/mysql.yaml 
+# get a node ID
+dcos node
+# connect to a node selected from the previous command's output
+dcos node ssh --master-proxy --mesos-id=225ca9ef-f1bc-43c1-bf31-b9330f89bb50-S0
+# create a config folder for the mysql integration
+sudo mkdir -p /opt/datadog-agent-conf.d/mysql.d/
+# create a config file for AutoDiscovery in this folder
+sudo touch /opt/datadog-agent-conf.d/mysql.d/auto_conf.yaml
 ```
 
-Open your newly created `mysql.yaml` file and paste in [the basic config][mysql-docs] template from the Datadog Agent, then add a `docker_images` section at the top to tell Datadog which Docker images this template applies to (for this example we'll assume that your MySQL database already has [a `datadog` user created][mysql-docs] with the necessary permissions):
+Open your newly created `auto_conf.yaml` file and paste in [the basic config][mysql-docs] template from the Datadog Agent, then add a `ad_identifiers` section at the top to tell Datadog which Docker images this template applies to (for this example we'll assume that your MySQL database already has [a `datadog` user created][mysql-docs] with the necessary permissions):
 
 ```yaml
-docker_images:
+ad_identifiers:
   - mysql
 
 init_config:
@@ -124,55 +135,61 @@ instances:
 
 #### Apply the config template
 
-In order to apply your newly created config template, you need to mount the config files on the DC/OS agent node into the Datadog container running on that host. 
+In order to apply your newly created config template, you need to mount the config files on the DC/OS agent node into the Datadog container running on that host.
 
 You can do that easily in the DC/OS web UI by adding a new volume to the Datadog service. From the Services list, select Datadog, and then click the Edit button to modify the service parameters. Under "Volumes," add the following volume:
 
-* Container path: `/conf.d`  
-* Host path: `/opt/dd-agent-conf.d`  
-* Mode: Read Only  
+* Container path: `/conf.d`
+* Host path: `/opt/datadog-agent-conf.d`
+* Mode: Read Only
 
 ![Mounting a config volume in the Datadog Agent container](img/dcos-volume.png)
 
-Deploy the changes to the Datadog service. You can then verify that the configuration is correct by running the Datadog `info` command on your agent node. For MySQL the command and output should look something like the snippet below:
+Deploy the changes to the Datadog service. You can then verify that the configuration is correct by running the Datadog `status` command on your agent node. For MySQL the command and output should look something like the snippet below:
 
 ```bash
 [agent-01]# docker ps
 CONTAINER ID        IMAGE                                                             COMMAND                  CREATED             STATUS              PORTS                                                                NAMES
-7bc168abea39        datadog/docker-dd-agent:11.0.5112                                 "/entrypoint.sh super"   10 minutes ago      Up 10 minutes       7777/tcp, 8126/tcp, 0.0.0.0:8125->8125/udp, 0.0.0.0:9001->9001/tcp   mesos-xxx
+d37bf53a57d1        datadog/agent:latest   "/init"             3 hours ago         Up 3 hours (healthy)   8125/udp, 8126/tcp   datadog-agent
 22bb4ef7de7e        mysql:5.7.12                                                      "docker-entrypoint.sh"   22 minutes ago      Up 22 minutes       0.0.0.0:3306->3306/tcp                                               mesos-xxx
-[agent-01]# docker exec 7bc168abea39 service datadog-agent info
+[agent-01]# docker exec d37bf53a57d1 agent status
 
-...  
+...
     mysql
     -----
-      - instance #0 [OK]
-      - Collected 58 metrics, 0 events & 1 service check
-      - Dependencies:
-          - pymysql: 0.6.6.None
-  
+      Total Runs: 757
+      Metrics: 58, Total Metrics: 43906
+      Events: 0, Total Events: 0
+      Service Checks: 1, Total Service Checks: 757
+      Average Execution Time : 16ms
+
     mesos_slave
-    -----------
-      - instance #0 [OK]
-      - Collected 34 metrics, 0 events & 1 service check
-  
-    ntp
-    ---
-      - Collected 0 metrics, 0 events & 0 service checks
-  
+    ------------
+      Total Runs: 757
+      Metrics: 34, Total Metrics: 25738
+      Events: 0, Total Events: 0
+      Service Checks: 1, Total Service Checks: 757
+      Average Execution Time : 16ms
+
     disk
     ----
-      - instance #0 [OK]
-      - Collected 40 metrics, 0 events & 0 service checks
-  
-    docker_daemon
-    -------------
-      - instance #0 [OK]
-      - Collected 64 metrics, 0 events & 1 service check
-...
-``` 
+      Total Runs: 757
+      Metrics: 130, Total Metrics: 98410
+      Events: 0, Total Events: 0
+      Service Checks: 0, Total Service Checks: 0
+      Average Execution Time : 73ms
 
-Assuming that your configuration template is working and Datadog is able to connect to your newly added service, you can then [head over to the Datadog app][dd-app] to graph your metrics, build dashboards, and set alerts. 
+    docker
+    ------
+      Total Runs: 757
+      Metrics: 16, Total Metrics: 12110
+      Events: 0, Total Events: 2
+      Service Checks: 1, Total Service Checks: 757
+      Average Execution Time : 6ms
+...
+```
+
+Assuming that your configuration template is working and Datadog is able to connect to your newly added service, you can then [head over to the Datadog app][dd-app] to graph your metrics, build dashboards, and set alerts.
 
 [datadog]: https://www.datadoghq.com/
 [signup]: https://app.datadoghq.com/signup
