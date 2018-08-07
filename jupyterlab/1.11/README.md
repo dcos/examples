@@ -39,6 +39,12 @@ Related Docker Images:
  * Machine Learning Worker for Mesosphere DC/OS: https://hub.docker.com/r/dcoslabs/dcos-ml-worker/tags/
  * Apache Spark (with GPU support) for Mesosphere DC/OS: https://hub.docker.com/r/dcoslabs/dcos-spark/tags/
 
+## Known Limitations
+
+* Avoid using the host network (i.e., disabling the default CNI support) with OpenID Connect configurations as containers running on the same agent can bypass Authentication and Authorization checks.
+* Multiple notebooks exposed via marathon_lb having the same prefix (e.g., jupyter-notebook and jupyter-notebook-user1) might conflict during marathon_lb routing. We recommend using Marathon folders to separate different notebooks into to their own unique namespace - e.g., `/jupyter-notebook, /dev/jupyter-notebook` and `/prod/jupyter-notebook`.
+
+
 ## Prerequisites
 
 Required:
