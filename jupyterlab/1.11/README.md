@@ -355,9 +355,9 @@ When you reload your `Jupyter` page and click `Kernel` you can change now via `C
 
 ### Release Notes and Versions
 
-The initial release version was [1.1.0-0.33.4](https://github.com/dcos-labs/dcos-jupyterlab-service/releases/tag/1.1.0-0.33.4) and will be updated over time. A release history and the latest release can be found [here](https://github.com/dcos-labs/dcos-jupyterlab-service/releases).
+The initial release version was [1.2.0-0.33.7](https://github.com/dcos-labs/dcos-jupyterlab-service/releases/tag/1.2.0-0.33.7) and will be updated over time. A release history and the latest release can be found [here](https://github.com/dcos-labs/dcos-jupyterlab-service/releases).
 
 | Version | Release Notes | Github |
 |----------|----------|-------|
-| `1.1.0-0.33.4` | [here](https://github.com/dcos-labs/dcos-jupyterlab-service/releases/tag/1.1.0-0.33.4) | [here](https://github.com/dcos-labs/dcos-jupyterlab-service/tree/1.1.0-0.33.4)  |
-| `v1.11.3-0.32.1` | [here](https://github.com/dcos-labs/dcos-jupyterlab-service/releases/tag/v1.11.3-0.32.1) | [here](https://github.com/dcos-labs/dcos-jupyterlab-service/tree/v1.11.3-0.32.1)  |
+| `1.2.0-0.33.7` | [here](https://github.com/dcos-labs/dcos-jupyterlab-service/releases/tag/1.2.0-0.33.7) | [here](https://github.com/dcos-labs/dcos-jupyterlab-service/tree/1.2.0-0.33.7)  |
+
