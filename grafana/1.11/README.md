@@ -16,8 +16,8 @@ The DC/OS Grafana service enables you to connect to any of your metric backend s
 
 - [Prerequisites](#prerequisites)
 - [Install Grafana](#install-grafana)
- - [Configure Persistence](#configure-persistence)
- - [Provision Datasource](#provision-datasource)
+  - [UI Install](#ui-install)
+  - [CLI Install](#cli-install)
 - [Login to Grafana](#login-to-grafana)
 - [Verify Datasource](#verify-datasource)
 - [Create Dashboards](#create-dashboards)
