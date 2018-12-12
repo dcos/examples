@@ -22,37 +22,37 @@
 
 ## Install
 
-... create dc/os secret to store the cloudflare certificate ... default name is argotunnel/origincert-secret
+First we use the `DC/OS cli` to create a secret to store the cloudflare certificate. The default name of the secret is `argotunnel/origincert-secret`.
 ```
 dcos security secrets create -f ~/.cloudflared/cert.pem argotunnel/origincert-secret
 ```
 
-... in the following we use elasticsearch as our target service
+**Note:** In the following we use elasticsearch as our target service, but you can use any of your favorite services as a target to play with argo tunnel.
 
-... to create an instance pick cloudflare-argotunnel from catalog
+Next we create an instance picking `cloudflare-argotunnel` from the DC/OS catalog.
 
 ![Resources](img/inst01.png)
 
-... there are two configuration sections
+The argo tunnel service has two configuration section, the following shows section to configure the general service aspects.
 
-... the 1st for the general service aspects
 ![Resources](img/dns01.png)
 
-... the following two sections show how you can create a dns record or a load balancer
+In the next two steps we show how you use the argotunnel configuration section to create a `dns record` or a `load balancer`.
 
 ### DNS confuguration
 
-... configuration for dns record
+For creating a DNS record you have to fill in two fields, the `cloudflare hostname` and the `local service url`.
 ![Resources](img/dns02.png)
 
-... a look at the cloudflare console dns section
+Once the service runs you will see the following in the `cloudflare console DNS section`.
 ![Resources](img/dns03.png)
 
-... trying the service
+Go to to your browser and use your new `hostname`.
 ```
 https://app.testdcos.com/_cluster/health?pretty
 ```
 
+Since we use elasticsearch in your sample you will see the following.
 ```
 {
   "cluster_name" : "elastic",
@@ -64,12 +64,16 @@ https://app.testdcos.com/_cluster/health?pretty
 }
 ```
 
-### LB configuration
+### Load Balancer configuration
 
-... create lb with us-west pool
+In the 2nd sample we have two DC/OS clusters one on the west coast and one on the east coast. They can be with different cloud providers.
+
+We start of in the west coast cluster.
+
+For creating a Load Balancer you have to fill in three fields, the `cloudflare hostname`, `local service url`, and a `load balancer pool name`
 ![Resources](img/lb01.png)
 
-... a look at the cloudflare console traffic section, dont forget to add a health check for the 1st pool
+Once the service runs you will see the following in the `cloudflare console Traffic section`. Don't forget to add a health check for the 1st pool.
 ![Resources](img/lb02.png)
 
 ... next you do same on your east coast dc/os cluster
