@@ -4,7 +4,7 @@
 
 # Overview
 
-[Cloudflare] Argo Tunnel is the fastest way to make services that run on DC/OS private agents, that are only bound to the DC/OS interal network, accessible over the public internet. When you launch the tunnel for your service, it creates persistent outbound connections to the 2 closest Cloudflare PoPs over which the entire Cloudflare network will route through to reach the service associated with the tunnel. There is no need to configure DNS, update a NAT configuration, or modify firewall rules (connections are outbound). The argo tunnel exposed service gets all the QOS offered by the Cloudflare network, e.g. DDoS protection, Crypto, Firewall, WAF, Access, ... .
+[Cloudflare](https://www.cloudflare.com/) Argo Tunnel is the fastest way to make services that run on DC/OS private agents, that are only bound to the DC/OS interal network, accessible over the public internet. When you launch the tunnel for your service, it creates persistent outbound connections to the 2 closest Cloudflare PoPs over which the entire Cloudflare network will route through to reach the service associated with the tunnel. There is no need to configure DNS, update a NAT configuration, or modify firewall rules (connections are outbound). The argo tunnel exposed service gets all the QOS offered by the Cloudflare network, e.g. DDoS protection, Crypto, Firewall, WAF, Access, ... .
 
 ![Resources](img/over01.png)
 
