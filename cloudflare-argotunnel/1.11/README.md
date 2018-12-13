@@ -33,7 +33,7 @@ Next we create an instance picking `cloudflare-argotunnel` from the DC/OS catalo
 
 ![Resources](img/inst01.png)
 
-The argo tunnel service has two configuration section, the following shows section to configure the general service aspects.
+The argo tunnel service has two configuration sections, the following shows section to configure the general service aspects.
 
 ![Resources](img/dns01.png)
 
@@ -54,7 +54,7 @@ Go to to your browser and use your new `hostname`.
 https://app.testdcos.com/_cluster/health?pretty
 ```
 
-Since we use elasticsearch in your sample you will see the following.
+Since we use elasticsearch in our sample you will see the following.
 ```
 {
   "cluster_name" : "elastic",
@@ -70,7 +70,7 @@ Since we use elasticsearch in your sample you will see the following.
 
 In the 2nd sample we have two DC/OS clusters one on the west coast and one on the east coast. They can be with different cloud providers.
 
-**Note:** Using an elastic search cluster in each we call one `elatic-west`, and the other one `elastic-east`.
+**Note:** Using an elastic search cluster in each we call one `elatsic-west`, and the other one `elastic-east`.
 
 We start of in the west coast cluster.
 
@@ -82,7 +82,7 @@ Once the service runs you will see the following in the `cloudflare console Traf
 
 ![Resources](img/lb02.png)
 
-Next we sitch to the east coast DC/OS cluster.
+Next we switch to the east coast DC/OS cluster.
 
 Again we configure `cloudflare hostname`, `local service url`, and a `load balancer pool name`. The values for the 1st two are the same, but for the LB pool this time we enter `us-east`
 
@@ -101,7 +101,7 @@ Go to to your browser and use your new `hostname`.
 https://applb.testdcos.com/_cluster/health?pretty
 ```
 
-Depending on from where geographically you make the call you will get the response either  from the west or east cluster.
+Depending on your GEO location you will get the response either from the west or east cluster.
 ```
 {
   "cluster_name" : "elastic-west",
