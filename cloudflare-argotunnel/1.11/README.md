@@ -68,31 +68,36 @@ Since we use elasticsearch in your sample you will see the following.
 
 In the 2nd sample we have two DC/OS clusters one on the west coast and one on the east coast. They can be with different cloud providers.
 
+**Note:** Using an elastic search cluster in each we call one `elatic-west`, and the other one `elastic-east`.
+
 We start of in the west coast cluster.
 
-For creating a Load Balancer you have to fill in three fields, the `cloudflare hostname`, `local service url`, and a `load balancer pool name`
+For creating a Load Balancer you have to fill in three fields, the `cloudflare hostname`, `local service url`, and a `load balancer pool name`.
 ![Resources](img/lb01.png)
 
 Once the service runs you will see the following in the `cloudflare console Traffic section`. Don't forget to add a health check for the 1st pool.
 ![Resources](img/lb02.png)
 
-... next you do same on your east coast dc/os cluster
+Next we sitch to the east coast DC/OS cluster.
+
+Again we configure `cloudflare hostname`, `local service url`, and a `load balancer pool name`. The values for the 1st two are the same, but for the LB pool this time we enter `us-east`
 ![Resources](img/lb03.png)
 
-... a look at the cloudflare console traffic section, dont forget to add a health check for the 2nd pool
+Once the service runs you will see the following in the `cloudflare console Traffic section`. Don't forget to add a health check for the 2nd pool.
 ![Resources](img/lb04.png)
 
-... in the lb's settings configure geo steering
+Lastly we configure `GEO steering` for the load balancer
 ![Resources](img/lb05.png)
 
-... trying the service
+Go to to your browser and use your new `hostname`.
 ```
-https://app.testdcos.com/_cluster/health?pretty
+https://applb.testdcos.com/_cluster/health?pretty
 ```
 
+Depending on from where geographically you make the call you will get the response either  from the west or east cluster.
 ```
 {
-  "cluster_name" : "elastic",
+  "cluster_name" : "elastic-west",
   "status" : "green",
   "timed_out" : false,
   "number_of_nodes" : 5,
