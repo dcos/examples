@@ -42,9 +42,11 @@ In the next two steps we show how you use the argotunnel configuration section t
 ### DNS confuguration
 
 For creating a DNS record you have to fill in two fields, the `cloudflare hostname` and the `local service url`.
+
 ![Resources](img/dns02.png)
 
 Once the service runs you will see the following in the `cloudflare console DNS section`.
+
 ![Resources](img/dns03.png)
 
 Go to to your browser and use your new `hostname`.
@@ -73,20 +75,25 @@ In the 2nd sample we have two DC/OS clusters one on the west coast and one on th
 We start of in the west coast cluster.
 
 For creating a Load Balancer you have to fill in three fields, the `cloudflare hostname`, `local service url`, and a `load balancer pool name`.
+
 ![Resources](img/lb01.png)
 
 Once the service runs you will see the following in the `cloudflare console Traffic section`. Don't forget to add a health check for the 1st pool.
+
 ![Resources](img/lb02.png)
 
 Next we sitch to the east coast DC/OS cluster.
 
 Again we configure `cloudflare hostname`, `local service url`, and a `load balancer pool name`. The values for the 1st two are the same, but for the LB pool this time we enter `us-east`
+
 ![Resources](img/lb03.png)
 
 Once the service runs you will see the following in the `cloudflare console Traffic section`. Don't forget to add a health check for the 2nd pool.
+
 ![Resources](img/lb04.png)
 
 Lastly we configure `GEO steering` for the load balancer
+
 ![Resources](img/lb05.png)
 
 Go to to your browser and use your new `hostname`.
