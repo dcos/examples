@@ -74,7 +74,7 @@ In the 2nd sample we have two DC/OS clusters one on the west coast and one on th
 
 We start of in the west coast cluster.
 
-For creating a Load Balancer you have to fill in three fields, the `cloudflare hostname`, `local service url`, and a `load balancer pool name`.
+For creating a Load Balancer you have to fill in three fields, the `cloudflare hostname`, `local service url`, and a `load balancer pool name`. ... need to update image to show elasti-west in local url ...
 
 ![Resources](img/lb01.png)
 
@@ -84,7 +84,7 @@ Once the service runs you will see the following in the `cloudflare console Traf
 
 Next we switch to the east coast DC/OS cluster.
 
-Again we configure `cloudflare hostname`, `local service url`, and a `load balancer pool name`. The values for the 1st two are the same, but for the LB pool this time we enter `us-east`
+Again we configure `cloudflare hostname`, `local service url`, and a `load balancer pool name`. The value for the `cloudflare hostname` stays the same. We localy target elastic-east, and for the LB pool we enter `us-east`. ... need to update image to show elasti-east in local url ...
 
 ![Resources](img/lb03.png)
 
