@@ -4,11 +4,16 @@
 
 # Overview
 
-[Cloudflare](https://www.cloudflare.com/) Argo Tunnel is the fast way to make services that run on DC/OS private agents (that are only bound to the DC/OS internal network) accessible over the public internet. When you launch the tunnel for your service, it creates persistent outbound connections to the 2 closest Cloudflare PoPs over which the entire Cloudflare network will route through to reach the service associated with the tunnel. There is no need to configure DNS, update a NAT configuration, or modify firewall rules (connections are outbound). The argo tunnel exposed service gets all the QOS offered by the Cloudflare network, e.g. DDoS protection, Crypto, Firewall, WAF, Access, ... .
+[Cloudflare](https://www.cloudflare.com/) Argo Tunnel is a private connection between your services and Cloudflare. Tunnel makes it so that only traffic that routes through the Cloudflare network can reach your service.
+
+You can think of Argo Tunnel as a virtual P.O. box. It lets someone send you packets without knowing your real address. In other words, it’s a private link. Only Cloudflare can see the service and communicate with it, and for the rest of the internet, it’s unroutable, as if the service is not even there.
+
+Argo Tunnel is the fast way to make services that run on DC/OS private agents (that are only bound to the DC/OS internal network) accessible over the public internet. When you launch the tunnel for your service, it creates persistent outbound connections to the 2 closest Cloudflare PoPs over which the entire Cloudflare network will route through to reach the service associated with the tunnel. There is no need to configure DNS, update a NAT configuration, or modify firewall rules (connections are outbound). The argo tunnel exposed service gets all the QOS offered by the Cloudflare network, e.g. DDoS protection, Crypto, Firewall, WAF, Access, ... .
+
 
 ![Resources](img/over01.png)
 
-**Note:** The DC/OS Cloudflare Argo Tunnel Service only works with DC/OS Enterprise since it requires the secret capability.
+**Note:** The DC/OS Cloudflare Argo Tunnel service requires secret support so only works with DC/OS Enterprise.
 
 
 # Quick Start
