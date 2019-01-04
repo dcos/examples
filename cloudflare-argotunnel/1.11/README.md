@@ -1,6 +1,5 @@
 # DC/OS Cloudflare Argo Tunnel Service Guide
 
-**Note: Work in progress, this service hasn't been released**
 
 # Overview
 
