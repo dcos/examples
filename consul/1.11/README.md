@@ -58,7 +58,7 @@ For any non-demo developments you must generate your own gossip encryption key. 
 
 To install the customized configuration run `dcos package install consul --options=options.json`.
 
-After the framework has been started you can reach the HTTPS API via `https://api-tls.consul.l4lb.thisdcos.directory:8501`. The endpoint uses certificates signed by the cluster-internal DC/OS CA. So you need to either provide the CA certificate to your clients (recommended, see [DC/OS documentation](https://docs.mesosphere.com/1.12/security/ent/tls-ssl/get-cert/) on how to retrive it) or disable certificate checking (only do that for testing).
+After the framework has been started you can reach the HTTPS API via `https://api-tls.consul.l4lb.thisdcos.directory:8501`. The endpoint uses certificates signed by the cluster-internal DC/OS CA. So you need to either provide the CA certificate to your clients (recommended, see [DC/OS documentation](https://docs.mesosphere.com/latest/security/ent/tls-ssl/get-cert/) on how to retrieve it) or disable certificate checking (only do that for testing).
 
 
 ## Change configuration
