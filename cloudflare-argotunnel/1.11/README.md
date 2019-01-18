@@ -7,7 +7,7 @@
 
 You can think of Argo Tunnel as a virtual P.O. box. It lets someone send you packets without knowing your real address. In other words, it’s a private link. Only Cloudflare can see the service and communicate with it, and for the rest of the internet, it’s unroutable, as if the service is not even there.
 
-Argo Tunnel is the fast way to make services that run on DC/OS private agents (that are only bound to the DC/OS internal network) accessible over the public internet. When you launch the tunnel for your service, it creates persistent outbound connections to the 2 closest Cloudflare PoPs over which the entire Cloudflare network will route through to reach the service associated with the tunnel. There is no need to configure DNS, update a NAT configuration, or modify firewall rules (connections are outbound). The argo tunnel exposed service gets all the QOS offered by the Cloudflare network, e.g. DDoS protection, Crypto, Firewall, WAF, Access, ... .
+Argo Tunnel is a fast way to make services that run on DC/OS private agents (that are only bound to the DC/OS internal network) accessible over the public internet. When you launch the tunnel for your service, it creates persistent outbound connections to the 2 closest Cloudflare PoPs over which the entire Cloudflare network will route through to reach the service associated with the tunnel. There is no need to configure DNS, update a NAT configuration, or modify firewall rules (connections are outbound). The argo tunnel exposed service gets all the QOS offered by the Cloudflare network, e.g. DDoS protection, Crypto, Firewall, WAF, Access, ... .
 
 
 ![Resources](img/over01.png)
@@ -43,7 +43,7 @@ The argo tunnel service has two configuration sections, the following shows sect
 
 In the next two steps we show how you use the argotunnel configuration section to create a `dns record` or a `load balancer`.
 
-### DNS confuguration
+### DNS configuration
 
 For creating a DNS record you have to fill in two fields, the `cloudflare hostname` and the `local service url`.
 
