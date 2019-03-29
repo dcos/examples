@@ -8,13 +8,13 @@ RESTful API and is extended through Plugins, which provide extra functionality
 and services beyond the core platform.
 
 - Estimated time for completion: 15 minutes
-- Target audience: Anyone who wants to deploy an API Gateway on DC/OS. 
+- Target audience: Anyone who wants to deploy an API Gateway on DC/OS.
 - This package requires an intermediate/advanced DC/OS skill set.
 
 **Scope**:
  - Configure and launch the DC/OS cluster that will run the Kong instances.
  - Configure and launch the Marathon-LB package.
- - Configure and launch the Kong supported database.
+ - Configure and launch the Kong supported database or run Kong in DB-less mode.
  - Configure and launch the Kong package.
 
 # How to use Kong package on DC/OS
@@ -22,11 +22,11 @@ and services beyond the core platform.
 Kong can be provisioned on a Mesosphere DC/OS cluster using following
 steps:
 
-The following steps use AWS for provisioning the DC/OS cluster and assumes you 
-have basic knowledge of [DC/OS](https://dcos.io/docs/1.9/), 
-[Marathon](https://mesosphere.github.io/marathon/), 
-[VIPs](https://dcos.io/docs/1.9/networking/load-balancing-vips/virtual-ip-addresses/),
-and [Marathon-LB](https://dcos.io/docs/1.9/networking/marathon-lb/).
+The following steps use AWS for provisioning the DC/OS cluster and assumes you
+have basic knowledge of [DC/OS](https://dcos.io/docs/1.10/),
+[Marathon](https://mesosphere.github.io/marathon/),
+[VIPs](https://dcos.io/docs/1.10/networking/load-balancing-vips/virtual-ip-addresses/),
+and [Marathon-LB](https://dcos.io/docs/1.10/networking/marathon-lb/).
 
 1. **Initial setup**
 
@@ -41,18 +41,18 @@ and [Marathon-LB](https://dcos.io/docs/1.9/networking/marathon-lb/).
 
 2. **Deploy a DC/OS cluster**
 
-    Following the [DC/OS AWS documentation](https://dcos.io/docs/1.9/installing/cloud/aws/),
+    Following the [DC/OS AWS documentation](https://dcos.io/docs/1.10/installing/cloud/aws/),
     deploy a DC/OS cluster on which Kong will be provisioned
-    
+
     Once your cluster is ready, Kong can be deployed using the
-    [DC/OS CLI](https://dcos.io/docs/1.9/cli/) or the
-    [DC/OS GUI](https://dcos.io/docs/1.9/gui/).
+    [DC/OS CLI](https://dcos.io/docs/1.10/cli/) or the
+    [DC/OS GUI](https://dcos.io/docs/1.10/gui/).
 
 3. **Deploy Marathon-LB**
 
-    We will use [Marathon-LB](https://dcos.io/docs/1.9/networking/marathon-lb/)
+    We will use [Marathon-LB](https://dcos.io/docs/1.10/networking/marathon-lb/)
     for load balancing external traffic to cluster and
-    [VIPs](https://dcos.io/docs/1.9/networking/load-balancing-vips/virtual-ip-addresses/)
+    [VIPs](https://dcos.io/docs/1.10/networking/load-balancing-vips/virtual-ip-addresses/)
     for load balancing internal traffic. Using the package `marathon-lb` deploy
     the Marathon-LB:
 
@@ -62,7 +62,12 @@ and [Marathon-LB](https://dcos.io/docs/1.9/networking/marathon-lb/).
 
 4. **Deploy a Kong-supported database**
 
-    Before deploying Kong, you need to provision a Cassandra or PostgreSQL
+    Kong can run in a [DB-less](https://docs.konghq.com/latest/db-less-and-declarative-config/) mode or with a database.
+
+    To run Kong in DB-less mode, uncheck `configurations.database.migration`,
+    `configurations.database.use-postgres` and `configurations.database.use-cassandra`
+
+    For DB mode, you need to provision a Cassandra or a PostgreSQL
     instance.
 
     For Cassandra, use the `cassandra` package to deploy 3 nodes of Cassandra
@@ -146,7 +151,8 @@ and [Marathon-LB](https://dcos.io/docs/1.9/networking/marathon-lb/).
         "log-level": "notice",
         "database": {
           "migrations": true,
-          "use-cassandra": false
+          "use-cassandra": false,
+          "use-postgres": true
         },
         "postgres": {
           "host": "postgresql.marathon.l4lb.thisdcos.directory",
@@ -188,6 +194,7 @@ and [Marathon-LB](https://dcos.io/docs/1.9/networking/marathon-lb/).
     | `configurations.log_level`|Sets the Kong [`log_level`][configurations] configuration.|
     | `configurations.custom-envs`|A space-separated list of [Kong configurations][configurations].|
     | `configurations.database.use-cassandra`|If `true`, Cassandra is used as the Kong database.|
+    | `configurations.database.use-postgres`|If `true`, Postgres is used as the Kong database.|
     | `configurations.database.migration`| If `true`, Kong will run migrations during start.|
     | `configurations.postgres.host`| PostgreSQL host name.|
     | `configurations.postgres.port`| PostgreSQL port.|
@@ -210,11 +217,11 @@ and [Marathon-LB](https://dcos.io/docs/1.9/networking/marathon-lb/).
     | `networking.admin.vip-port`| Port number to be used for communication internally to the Admin API. Default is 8001.|
     | `networking.admin.vip-port-ssl`| Port number to be used for secure communication internally to the Admin API. Default is 8444.|
 
-    Note: Tweak the above configuration based on you datastore choice. 
+    Note: Tweak the above configuration based on you datastore choice.
 
     After saving the option to a file `kong.json` run the following command
     to install Kong package:
-    
+
     ```bash
     $ dcos package install kong --options=kong.json
     ```
@@ -235,37 +242,37 @@ and [Marathon-LB](https://dcos.io/docs/1.9/networking/marathon-lb/).
     Kong in the DC/OS UI
 
     ![Kong on DC/OS](img/kong-dcos.png)
-  
+
 7. **Using Kong**
-    
+
     Now that Kong is installed, to test the configuration, SSH into one of the
     instances in the cluster (such as a master), and try curl-ing the endpoints:
 
     - Admin
-    
+
       ```bash
       $ curl -i -X GET http://marathon-lb.marathon.mesos:10202
       HTTP/1.1 200 OK
-      Date: Fri, 02 Jun 2017 18:35:58 GMT
+      Date: Fri, 03 Nov 2017 18:35:58 GMT
       Content-Type: application/json; charset=utf-8
       Transfer-Encoding: chunked
       Connection: keep-alive
       Access-Control-Allow-Origin: *
-      Server: kong/0.10.3
+      Server: kong/0.11.1
       ..
 
       {..}
       ```
-    
+
     - Proxy
 
       ```bash
       $ curl -i -X GET http://marathon-lb.marathon.mesos:10201
       HTTP/1.1 404 Not Found
-      Date: Fri, 02 Jun 2017 18:41:23 GMT
+      Date: Fri, 03 Nov 2017 18:41:23 GMT
       Content-Type: application/json; charset=utf-8
       Transfer-Encoding: chunked
-      Server: kong/0.10.3
+      Server: kong/0.11.1
 
       {"message":"no API found with those values"}
       ```
@@ -280,7 +287,7 @@ and [Marathon-LB](https://dcos.io/docs/1.9/networking/marathon-lb/).
     Note: Kong returning 404 on proxy port is a valid response as no API
     registered yet with Kong.
 
-    You can quickly learn how to use Kong with the 
+    You can quickly learn how to use Kong with the
     [5-minute Quickstart](https://getkong.org//docs/latest/getting-started/quickstart).
 
 8.  **Uninstalling Kong**

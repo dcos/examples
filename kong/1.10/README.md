@@ -14,7 +14,7 @@ and services beyond the core platform.
 **Scope**:
  - Configure and launch the DC/OS cluster that will run the Kong instances.
  - Configure and launch the Marathon-LB package.
- - Configure and launch the Kong supported database.
+ - Configure and launch the Kong supported database or run Kong in DB-less mode.
  - Configure and launch the Kong package.
 
 # How to use Kong package on DC/OS
@@ -62,7 +62,12 @@ and [Marathon-LB](https://dcos.io/docs/1.10/networking/marathon-lb/).
 
 4. **Deploy a Kong-supported database**
 
-    Before deploying Kong, you need to provision a Cassandra or PostgreSQL
+    Kong can run in a [DB-less](https://docs.konghq.com/latest/db-less-and-declarative-config/) mode or with a database.
+
+    To run Kong in DB-less mode, uncheck `configurations.database.migration`,
+    `configurations.database.use-postgres` and `configurations.database.use-cassandra`
+
+    For DB mode, you need to provision a Cassandra or a PostgreSQL
     instance.
 
     For Cassandra, use the `cassandra` package to deploy 3 nodes of Cassandra
@@ -146,7 +151,8 @@ and [Marathon-LB](https://dcos.io/docs/1.10/networking/marathon-lb/).
         "log-level": "notice",
         "database": {
           "migrations": true,
-          "use-cassandra": false
+          "use-cassandra": false,
+          "use-postgres": true
         },
         "postgres": {
           "host": "postgresql.marathon.l4lb.thisdcos.directory",
@@ -188,6 +194,7 @@ and [Marathon-LB](https://dcos.io/docs/1.10/networking/marathon-lb/).
     | `configurations.log_level`|Sets the Kong [`log_level`][configurations] configuration.|
     | `configurations.custom-envs`|A space-separated list of [Kong configurations][configurations].|
     | `configurations.database.use-cassandra`|If `true`, Cassandra is used as the Kong database.|
+    | `configurations.database.use-postgres`|If `true`, Postgres is used as the Kong database.|
     | `configurations.database.migration`| If `true`, Kong will run migrations during start.|
     | `configurations.postgres.host`| PostgreSQL host name.|
     | `configurations.postgres.port`| PostgreSQL port.|
