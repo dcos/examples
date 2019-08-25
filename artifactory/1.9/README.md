@@ -1,4 +1,6 @@
 # How to use Artifactory on DC/OS
+**&ast;&ast;&ast; *Deprecation NOTICE* &ast;&ast;&ast;**  
+*The Artifactory on DC/OS integration is deprecated and no longer maintained. Please use another [installation](https://www.jfrog.com/confluence/display/RTF/Installing+Artifactory) method.*
 
 Currently you are only able to use licensed versions of Artifactory on DC/OS. To get a trial license, go to [JFrog's website](https://www.jfrog.com/artifactory/free-trial-mesosphere/).
 
