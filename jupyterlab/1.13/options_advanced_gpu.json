@@ -1,0 +1,100 @@
+{
+  "service": {
+    "name": "/jupyterlab-notebook",
+    "cmd": "/usr/local/bin/start.sh ${CONDA_DIR}/bin/jupyter lab --notebook-dir=${MESOS_SANDBOX}",
+    "cpus": 2,
+    "force_pull": false,
+    "gpu_support": {
+      "enabled": true,
+      "gpus": 1
+    },
+    "mem": 8192,
+    "user": "nobody"
+  },
+  "oidc": {
+    "enable_oidc": false,
+    "oidc_discover_uri": "https://keycloak.example.com/auth/realms/notebook/.well-known/openid-configuration",
+    "oidc_redirect_uri": "/oidc-redirect-callback",
+    "oidc_client_id": "notebook",
+    "oidc_client_secret": "b874f6e9-8f3f-41a6-a206-53e928d24fb1",
+    "oidc_tls_verify": "no",
+    "enable_windows": false,
+    "oidc_use_email": false,
+    "oidc_email": "user@example.com",
+    "oidc_upn": "user007",
+    "oidc_logout_path": "/logmeout",
+    "oidc_post_logout_redirect_uri": "https://<VHOST>/<optional PATH_PREFIX>/<Service Name>",
+    "oidc_use_spartan_resolver": true
+  },
+  "s3": {
+    "aws_region": "us-east-1",
+    "s3_endpoint": "s3.us-east-1.amazonaws.com",
+    "s3_https": 1,
+    "s3_ssl": 1
+  },
+  "spark": {
+    "enable_spark_monitor": true,
+    "spark_master_url": "mesos://zk://zk-1.zk:2181,zk-2.zk:2181,zk-3.zk:2181,zk-4.zk:2181,zk-5.zk:2181/mesos",
+    "spark_driver_cores": 2,
+    "spark_driver_memory": "6g",
+    "spark_driver_java_options": "\"-server -XX:+UseG1GC -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/mnt/mesos/sandbox\"",
+    "spark_history_fs_logdirectory": "hdfs://hdfs/history",
+    "spark_conf_spark_scheduler": "spark.scheduler.minRegisteredResourcesRatio=1.0",
+    "spark_conf_cores_max": "spark.cores.max=5",
+    "spark_conf_executor_cores": "spark.executor.cores=1",
+    "spark_conf_executor_memory": "spark.executor.memory=6g",
+    "spark_conf_executor_java_options": "spark.executor.extraJavaOptions=\"-server -XX:+UseG1GC -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/mnt/mesos/sandbox\"",
+    "spark_conf_eventlog_enabled": "spark.eventLog.enabled=false",
+    "spark_conf_eventlog_dir": "spark.eventLog.dir=hdfs://hdfs/",
+    "spark_conf_hadoop_fs_s3a_aws_credentials_provider": "spark.hadoop.fs.s3a.aws.credentials.provider=com.amazonaws.auth.InstanceProfileCredentialsProvider",
+    "spark_conf_jars_packages": "spark.jars.packages=org.apache.spark:spark-streaming-kafka-0-10_2.11:2.2.1,org.apache.kafka:kafka_2.11:0.10.2.1",
+    "spark_conf_mesos_executor_docker_image": "spark.mesos.executor.docker.image=dcoslabs/dcos-spark:1.11.4-2.2.1",
+    "spark_conf_mesos_executor_home": "spark.mesos.executor.home=/opt/spark",
+    "spark_conf_mesos_containerizer": "spark.mesos.containerizer=mesos",
+    "spark_conf_mesos_driver_labels": "spark.mesos.driver.labels=DCOS_SPACE:",
+    "spark_conf_mesos_task_labels": "spark.mesos.task.labels=DCOS_SPACE:",
+    "spark_conf_executor_krb5_config": "spark.executorEnv.KRB5_CONFIG=/mnt/mesos/sandbox/krb5.conf",
+    "spark_conf_executor_java_home": "spark.executorEnv.JAVA_HOME=/opt/jdk",
+    "spark_conf_executor_hadoop_hdfs_home": "spark.executorEnv.HADOOP_HDFS_HOME=/opt/hadoop",
+    "spark_conf_executor_hadoop_opts": "spark.executorEnv.HADOOP_OPTS=\"-Djava.library.path=/opt/hadoop/lib/native -Djava.security.krb5.conf=/mnt/mesos/sandbox/krb5.conf\"",
+    "spark_conf_mesos_executor_docker_forcepullimage": "spark.mesos.executor.docker.forcePullImage=true",
+    "spark_user": "nobody"
+  },
+  "storage": {
+    "persistence": {
+      "host_volume_size": 4000,
+      "enable": false
+    }
+  },
+  "networking": {
+    "cni_support": {
+      "enabled": false
+    },
+    "external_access": {
+      "enabled": true,
+      "external_public_agent_hostname": "fabianbaie-tf86a5-pub-agt-elb-1194315762.us-west-2.elb.amazonaws.com"
+    }
+  },
+  "environment": {
+    "secrets": false,
+    "service_credential": "jupyterlab-notebook/serviceCredential",
+    "conda_envs_path": "/mnt/mesos/sandbox/conda/envs:/opt/conda/envs",
+    "conda_pkgs_dir": "/mnt/mesos/sandbox/conda/pkgs:/opt/conda/pkgs",
+    "dcos_dir": "/mnt/mesos/sandbox/.dcos",
+    "hadoop_conf_dir": "/mnt/mesos/sandbox",
+    "home": "/mnt/mesos/sandbox",
+    "java_opts": "\"-server -XX:+UseG1GC -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/mnt/mesos/sandbox\"",
+    "jupyter_conf_urls": "",
+    "jupyter_config_dir": "/mnt/mesos/sandbox/.jupyter",
+    "jupyter_password": "",
+    "jupyter_runtime_dir": "/mnt/mesos/sandbox/.local/share/jupyter/runtime",
+    "nginx_log_level": "warn",
+    "start_dask_distributed": false,
+    "start_ray_head_node": false,
+    "start_spark_history_server": false,
+    "start_tensorboard": true,
+    "user": "nobody",
+    "tensorboard_logdir": "/mnt/mesos/sandbox",
+    "term": "xterm-256color"
+  }
+}
